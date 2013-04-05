@@ -175,6 +175,9 @@ var PlayerViewModel = function (data) {
         if (me.LastName() == null) return me.FirstName();
         return me.FirstName() + " " + me.LastName();
     });
+    this.FullNameWithPosition = ko.computed(function () {
+        return me.FullName() + " [" + me.Position() + "]";
+    });
     this.NextAvailability = function(game) {
         var abForEvent = _.find(me.Availability(), function (ab) {
             return ab.EventId() == game.Id();

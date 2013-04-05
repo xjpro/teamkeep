@@ -147,6 +147,7 @@ namespace TeamKeep.Services
                 playerData.GroupId = player.GroupId;
                 playerData.LastName = player.LastName;
                 playerData.FirstName = player.FirstName;
+                playerData.Position = player.Position;
                 playerData.Email = player.Email;
                 playerData.Phone = player.Phone;
                 entities.SaveChanges();

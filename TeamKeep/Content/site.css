@@ -277,6 +277,10 @@ i {
 .table-container table td.lastname input {
     width: 180px;
 }
+.table-container table th.position,
+.table-container table td.position input {
+    width: 135px;
+}
 .table-container table th.fullname,
 .table-container table td.fullname input {
     width: 180px;
@@ -334,6 +338,10 @@ i {
 .table-container table td.awayteam-points input:disabled,
 .table-container table td.awayteam-points input[readonly='readonly'] {
     background: #f9e4e3;
+}
+.table-container td .subtext {
+    padding: 0 5px;
+    font-size: 8pt;
 }
 .table-container table td > .dropdown-menu {
     top: auto;

@@ -185,7 +185,6 @@
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\PlayerGroup.cs" />
     <Compile Include="Models\Season.cs" />
-    <Compile Include="Models\ServiceResponses\PostUserResponse.cs" />
     <Compile Include="Models\ServiceResponses\ServiceResponse.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\User.cs" />

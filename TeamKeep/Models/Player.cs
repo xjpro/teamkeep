@@ -14,6 +14,7 @@ namespace TeamKeep.Models
             Id = data.Id;
             LastName = data.LastName;
             FirstName = data.FirstName;
+            Position = data.Position;
             Email = data.Email;
             Phone = data.Phone;
             GroupId = data.GroupId;

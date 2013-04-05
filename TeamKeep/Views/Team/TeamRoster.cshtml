@@ -40,13 +40,13 @@
         <tbody>
             <!-- ko if: PlayerGroups().length == 0 -->
             <tr>
-                <td class="fullinfo" colspan="5">No players have been added to this roster</td>
+                <td class="fullinfo" colspan="6">No players have been added to this roster</td>
             </tr>
             <!-- /ko -->
             
             <!-- ko foreach: PlayerGroups -->
             <tr>
-                <td class="fullheading" colspan="5">
+                <td class="fullheading" colspan="6">
                     <input class="mod" type="text" data-bind="value: Name, editable: $parent.Editable, event: { focus: Selected, change: Update } "/>
                     <!-- ko if: $parent.Editable -->
                     <div class="options pull-right">
@@ -63,7 +63,7 @@
             </tr>
             
             <!-- ko if: Players().length == 0 -->
-            <tr><td class="fullinfo" colspan="5">There are no players in this grouping</td></tr>
+            <tr><td class="fullinfo" colspan="6">There are no players in this grouping</td></tr>
             <!-- /ko -->
 
             <!-- ko template: { foreach: Players, afterAdd: ChildAdded } -->
@@ -93,6 +93,9 @@
                 </td>
                 <td class="max">
                     <input type="text" class="mod" data-bind="value: FirstName, editable: $parents[1].Editable, event: { change: Update }" />
+                </td>
+                <td  class="position">
+                    <input type="text" class="mod" data-bind="value: Position, editable: $parents[1].Editable, event: { change: Update }" />
                 </td>
                 <!-- ko if: $root.Editable -->
                 <td class="phone" data-bind="visible: $root.Columns()[3].Visible">
@@ -164,6 +167,14 @@
                 Visible: ko.observable(typeof localStorage["Column.First name.Visible"] !== "undefined" ? (localStorage["Column.First name.Visible"] == "true") : true),
                 Toggleable: false,
                 SortType: "firstname"
+            },
+            {
+                CssClass: "sort-position position",
+                Name: "Position",
+                ToolTip: "Team member position",
+                Visible: ko.observable(typeof localStorage["Column.Position.Visible"] !== "undefined" ? (localStorage["Column.Position.Visible"] == "true") : true),
+                Toggleable: true,
+                SortType: "position"
             },
             {
                 CssClass: "sort-phone phone",
@@ -280,6 +291,14 @@
                 heading: "#roster .sort-firstname",
                 isDescending: true
             },
+            position: {
+                heading: "#roster .sort-position",
+                isDescending: false
+            },
+            positionDescending: {
+                heading: "#roster .sort-position",
+                isDescending: true
+            },
             phone: {
                 heading: "#roster .sort-phone",
                 isDescending: false,
@@ -305,6 +324,9 @@
             else if (sortType == "firstname") {
                 me.SortType() == "firstname" ? me.SortType("firstnameDescending") : me.SortType("firstname");
             }
+            else if (sortType == "position") {
+                me.SortType() == "position" ? me.SortType("positionDescending") : me.SortType("position");
+            }
             else if (sortType == "phone") {
                 me.SortType() == "phone" ? me.SortType("phoneDescending") : me.SortType("phone");
             }
@@ -323,6 +345,10 @@
                 case "firstname":
                 case "firstnameDescending":
                     me.SortBy("FirstName", isDescending);
+                    break;
+                case "position":
+                case "positionDescending":
+                    me.SortBy("Position", isDescending);
                     break;
                 case "phone":
                 case "phoneDescending":
