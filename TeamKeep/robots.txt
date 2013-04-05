@@ -1,0 +1,5 @@
+﻿User-agent: *
+Disallow: /login
+Disallow: /users
+Disallow: /reset
+Disallow: /resetsent

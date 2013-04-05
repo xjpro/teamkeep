@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="AvailabilityData" EntityType="DatabaseModel.Store.AvailabilityData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GameData" EntityType="DatabaseModel.Store.GameData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GameLocationData" EntityType="DatabaseModel.Store.GameLocationData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PlayerData" EntityType="DatabaseModel.Store.PlayerData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PlayerGroupData" EntityType="DatabaseModel.Store.PlayerGroupData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SeasonData" EntityType="DatabaseModel.Store.SeasonData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TeamData" EntityType="DatabaseModel.Store.TeamData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TeamOwnerData" EntityType="DatabaseModel.Store.TeamOwnerData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TeamPrivacyData" EntityType="DatabaseModel.Store.TeamPrivacyData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserData" EntityType="DatabaseModel.Store.UserData" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="AvailabilityData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="AdminStatus" Type="smallint" />
+          <Property Name="RepliedStatus" Type="smallint" />
+          <Property Name="EmailSent" Type="datetime" />
+        </EntityType>
+        <EntityType Name="GameData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="HomeTeamId" Type="int" Nullable="false" />
+          <Property Name="AwayTeamId" Type="int" Nullable="false" />
+          <Property Name="SeasonId" Type="int" Nullable="false" />
+          <Property Name="OpponentName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="ScoredPoints" Type="smallint" />
+          <Property Name="AllowedPoints" Type="smallint" />
+          <Property Name="TiePoints" Type="smallint" />
+        </EntityType>
+        <EntityType Name="GameLocationData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GameId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="Link" Type="nvarchar" MaxLength="100" />
+          <Property Name="Street" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Postal" Type="nvarchar" MaxLength="10" />
+          <Property Name="InternalLocation" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PlayerData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="75" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="75" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="75" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PlayerGroupData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Order" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SeasonData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="LeagueId" Type="int" />
+          <Property Name="TeamId" Type="int" />
+          <Property Name="Order" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="75" />
+          <Property Name="Announcements" Type="ntext" />
+          <Property Name="Banner" Type="nvarchar" MaxLength="100" />
+          <Property Name="ResultsView" Type="smallint" Nullable="false" />
+          <Property Name="Postal" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="TeamOwnerData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamPrivacyData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="HomePage" Type="bit" Nullable="false" />
+          <Property Name="Roster" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="75" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="75" />
+          <Property Name="ActiveTeamId" Type="int" />
+          <Property Name="Password" Type="varbinary" MaxLength="100" />
+          <Property Name="LastSeen" Type="datetime" />
+          <Property Name="Reset" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DatabaseEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="GameDatas" EntityType="DatabaseModel.GameData" />
+          <EntitySet Name="GameLocationDatas" EntityType="DatabaseModel.GameLocationData" />
+          <EntitySet Name="PlayerDatas" EntityType="DatabaseModel.PlayerData" />
+          <EntitySet Name="PlayerGroupDatas" EntityType="DatabaseModel.PlayerGroupData" />
+          <EntitySet Name="SeasonDatas" EntityType="DatabaseModel.SeasonData" />
+          <EntitySet Name="TeamDatas" EntityType="DatabaseModel.TeamData" />
+          <EntitySet Name="TeamOwnerDatas" EntityType="DatabaseModel.TeamOwnerData" />
+          <EntitySet Name="TeamPrivacyDatas" EntityType="DatabaseModel.TeamPrivacyData" />
+          <EntitySet Name="UserDatas" EntityType="DatabaseModel.UserData" />
+          <EntitySet Name="AvailabilityDatas" EntityType="DatabaseModel.AvailabilityData" />
+        </EntityContainer>
+        <EntityType Name="GameData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="HomeTeamId" Type="Int32" Nullable="false" />
+          <Property Name="AwayTeamId" Type="Int32" Nullable="false" />
+          <Property Name="SeasonId" Type="Int32" Nullable="false" />
+          <Property Name="OpponentName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="ScoredPoints" Type="Int16" />
+          <Property Name="AllowedPoints" Type="Int16" />
+          <Property Name="TiePoints" Type="Int16" />
+        </EntityType>
+        <EntityType Name="GameLocationData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GameId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Link" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Street" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Postal" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="InternalLocation" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="PlayerData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="75" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="75" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="75" Unicode="true" FixedLength="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Type="String" Name="Position" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PlayerGroupData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Order" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SeasonData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="LeagueId" Type="Int32" />
+          <Property Name="TeamId" Type="Int32" />
+          <Property Name="Order" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="75" Unicode="true" FixedLength="false" />
+          <Property Name="Announcements" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Banner" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="ResultsView" Type="Int16" Nullable="false" />
+          <Property Name="Postal" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TeamOwnerData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamPrivacyData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="HomePage" Type="Boolean" Nullable="false" />
+          <Property Name="Roster" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="75" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="75" Unicode="true" FixedLength="false" />
+          <Property Name="ActiveTeamId" Type="Int32" />
+          <Property Name="Password" Type="Binary" MaxLength="100" FixedLength="false" />
+          <Property Name="LastSeen" Type="DateTime" Precision="3" />
+          <Property Name="Reset" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="AvailabilityData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PlayerId" Nullable="false" />
+          <Property Type="Int32" Name="EventId" Nullable="false" />
+          <Property Type="Int16" Name="AdminStatus" />
+          <Property Type="Int16" Name="RepliedStatus" />
+          <Property Type="DateTime" Name="EmailSent" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="GameDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.GameData">
+              <MappingFragment StoreEntitySet="GameData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HomeTeamId" ColumnName="HomeTeamId" />
+                <ScalarProperty Name="AwayTeamId" ColumnName="AwayTeamId" />
+                <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
+                <ScalarProperty Name="OpponentName" ColumnName="OpponentName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ScoredPoints" ColumnName="ScoredPoints" />
+                <ScalarProperty Name="AllowedPoints" ColumnName="AllowedPoints" />
+                <ScalarProperty Name="TiePoints" ColumnName="TiePoints" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameLocationDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.GameLocationData">
+              <MappingFragment StoreEntitySet="GameLocationData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Postal" ColumnName="Postal" />
+                <ScalarProperty Name="InternalLocation" ColumnName="InternalLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.PlayerData">
+              <MappingFragment StoreEntitySet="PlayerData">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerGroupDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.PlayerGroupData">
+              <MappingFragment StoreEntitySet="PlayerGroupData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeasonDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.SeasonData">
+              <MappingFragment StoreEntitySet="SeasonData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.TeamData">
+              <MappingFragment StoreEntitySet="TeamData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Announcements" ColumnName="Announcements" />
+                <ScalarProperty Name="Banner" ColumnName="Banner" />
+                <ScalarProperty Name="ResultsView" ColumnName="ResultsView" />
+                <ScalarProperty Name="Postal" ColumnName="Postal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamOwnerDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.TeamOwnerData">
+              <MappingFragment StoreEntitySet="TeamOwnerData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamPrivacyDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.TeamPrivacyData">
+              <MappingFragment StoreEntitySet="TeamPrivacyData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="HomePage" ColumnName="HomePage" />
+                <ScalarProperty Name="Roster" ColumnName="Roster" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.UserData">
+              <MappingFragment StoreEntitySet="UserData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ActiveTeamId" ColumnName="ActiveTeamId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LastSeen" ColumnName="LastSeen" />
+                <ScalarProperty Name="Reset" ColumnName="Reset" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailabilityDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.AvailabilityData">
+              <MappingFragment StoreEntitySet="AvailabilityData">
+                <ScalarProperty Name="EmailSent" ColumnName="EmailSent" />
+                <ScalarProperty Name="RepliedStatus" ColumnName="RepliedStatus" />
+                <ScalarProperty Name="AdminStatus" ColumnName="AdminStatus" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Default" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

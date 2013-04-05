@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>Team Keep | @ViewBag.Title</title>
+        <meta name="description" content="@ViewBag.Description"/>
+        @Html.Partial("Includes")
+    </head>
+    <body>
+        <div class="container-fluid">
+            @RenderBody()   
+            <footer id="footer">
+                @Html.Partial("Footer")
+            </footer> 
+        </div>
+    </body>
+</html>

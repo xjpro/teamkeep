@@ -1,0 +1,355 @@
+﻿
+<div class="table-container">
+    <div class="table-controls">
+        <div class="column-select pull-left">
+            <div class="btn-group">
+                <!-- ko if: Editable -->
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Columns <span class="caret"></span></a>
+                <ul class="dropdown-menu" data-bind="foreach: Columns">
+                    <!-- ko if: Toggleable === true -->
+                    <li><a data-bind="text: Name, css: { active: Visible }, click: $root.ToggleColumnVisible"></a></li>
+                    <!-- /ko -->
+                </ul>
+                <!-- /ko -->
+            </div>
+        </div>
+        
+        <!-- ko if: Editable -->
+        <div class="group-select pull-right">
+            <i class="icon-refresh icon-spin"></i>
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-plus-sign-alt"></i> Player
+            </button>
+            <ul class="dropdown-menu">
+                <li><label>Add to...</label></li>
+                <li class="divider"></li>
+                <!-- ko foreach: PlayerGroups -->
+                <li><a tabindex="-1" data-bind="text: Name, click: function() { $root.AddPlayer(Id()); }"></a></li>
+                <!-- /ko -->
+                <li><a tabindex="-1" data-bind="click: function() { AddPlayer(); }">New grouping</a></li>
+            </ul>
+        </div>
+        <!-- /ko -->
+
+        <div style="clear: both;"></div>
+    </div>
+    <table>
+        <thead>
+            <tr data-bind="toggleHeader: Columns"></tr>
+        </thead>
+        <tbody>
+            <!-- ko if: PlayerGroups().length == 0 -->
+            <tr>
+                <td class="fullinfo" colspan="5">No players have been added to this roster</td>
+            </tr>
+            <!-- /ko -->
+            
+            <!-- ko foreach: PlayerGroups -->
+            <tr>
+                <td class="fullheading" colspan="5">
+                    <input class="mod" type="text" data-bind="value: Name, editable: $parent.Editable, event: { focus: Selected, change: Update } "/>
+                    <!-- ko if: $parent.Editable -->
+                    <div class="options pull-right">
+                        <!-- ko if: Order() != 0 --> 
+                        <i class="icon-circle-arrow-up" data-bind="click: function() { IncrementOrder(-1); }"></i>
+                        <!-- /ko -->
+                        <!-- ko if: Order() != $root.PlayerGroups().length - 1 -->
+                        <i class="icon-circle-arrow-down" data-bind="click: function() { IncrementOrder(1); }"></i>
+                        <!-- /ko -->
+                        <i class="icon-trash" data-toggle="modal" data-target="#group-delete-modal" data-bind="click: Selected"></i>
+                    </div>
+                    <!-- /ko -->
+                </td>
+            </tr>
+            
+            <!-- ko if: Players().length == 0 -->
+            <tr><td class="fullinfo" colspan="5">There are no players in this grouping</td></tr>
+            <!-- /ko -->
+
+            <!-- ko template: { foreach: Players, afterAdd: ChildAdded } -->
+            <tr>
+                <td class="button" data-bind="visible: $root.Columns()[0].Visible">
+                    <a id="dropLabelRoster" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabelRoster">
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1">Move to</a>
+                            <ul class="dropdown-menu">
+                                <!-- ko foreach: $root.PlayerGroups -->
+                                    <!-- ko if: $data != $parents[1] -->
+                                    <li><a tabindex="-1" data-bind="text: Name, click: function() { $parent.MovePlayer($data, $element); }"></a></li>
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko if: $root.PlayerGroups().length > 1 -->
+                                <li class="divider"></li>
+                                <!-- /ko -->
+                                <li><a tabindex="-1" data-bind="click: function() {  MovePlayerToNewGroup($element); }">New grouping</a></li>
+                            </ul>
+                        </li>
+                        <li><a tabindex="-1" data-bind="click: RemovePlayer">Remove</a></li>
+                    </ul>
+                </td>
+                <td  class="lastname">
+                    <input type="text" class="mod" data-bind="value: LastName, editable: $parents[1].Editable, event: { change: Update }" />
+                </td>
+                <td class="max">
+                    <input type="text" class="mod" data-bind="value: FirstName, editable: $parents[1].Editable, event: { change: Update }" />
+                </td>
+                <!-- ko if: $root.Editable -->
+                <td class="phone" data-bind="visible: $root.Columns()[3].Visible">
+                    <input type="tel" class="mod" data-bind="value: Phone, editable: $parents[1].Editable, event: { change: Update }" />
+                </td>
+                <td class="email" data-bind="visible: $root.Columns()[4].Visible">
+                    <input type="email" class="mod" data-bind="value: Email, editable: $parents[1].Editable, event: { change: Update }" />
+                </td>
+                <!-- /ko -->
+            </tr>
+            <!-- /ko -->
+            <!-- /ko -->
+        </tbody>
+    </table>
+</div>
+
+<div id="group-delete-modal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Are you sure?</h3>
+    </div>
+    <div class="modal-body">
+        <p>Deleting this group will also remove all the players it contains.</p>
+        <p>This cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.RemoveSelectedGroup">Yes, please delete</button>
+    </div>
+</div>
+
+<script>
+
+    var TeamRosterViewModel = function () {
+        var me = this;
+
+        // From shared storage
+        this.Editable = teamViewModel.Editable;
+        this.PlayerGroups = teamViewModel.PlayerGroups;
+        this.Url = teamViewModel.Url;
+
+        $.extend(me, new SortableCollectionDataModel(me, {
+            TableElement: $("#roster table"),
+            CollectionName: "PlayerGroups",
+            ItemName: "Players"
+        }));
+
+        // Columns
+        this.Columns = ko.observableArray([
+            {
+                CssClass: "button",
+                Name: "",
+                Visible: ko.observable(me.Editable()),
+                Toggleable: false,
+                SortType: null
+            },
+            {
+                CssClass: "sort-lastname lastname", 
+                Name: "Last name",
+                ToolTip: "Team member last name",
+                Visible: ko.observable(typeof localStorage["Column.Last name.Visible"] !== "undefined" ? (localStorage["Column.Last name.Visible"] == "true") : true),
+                Toggleable: false,
+                SortType: "lastname"
+            },
+            {
+                CssClass: "sort-firstname max",
+                Name: "First name",
+                ToolTip: "Team member first name",
+                Visible: ko.observable(typeof localStorage["Column.First name.Visible"] !== "undefined" ? (localStorage["Column.First name.Visible"] == "true") : true),
+                Toggleable: false,
+                SortType: "firstname"
+            },
+            {
+                CssClass: "sort-phone phone",
+                Name: "Phone",
+                ToolTip: "Phone number",
+                Visible: ko.observable(me.Editable() && (typeof localStorage["Column.Phone.Visible"] !== "undefined" ? (localStorage["Column.Phone.Visible"] == "true") : true)),
+                Toggleable: true,
+                SortType: "phone"
+            },
+            {
+                CssClass: "sort-email email",
+                Name: "Email",
+                ToolTip: "E-mail address",
+                Visible: ko.observable(me.Editable() && (typeof localStorage["Column.Email.Visible"] !== "undefined" ? (localStorage["Column.Email.Visible"] == "true") : true)),
+                Toggleable: true,
+                SortType: "email"
+            }
+        ]);
+        
+        // Adding & removing
+        this.SelectedGroup = ko.observable(null);
+        this.AddGroup = function (successCallback) {
+            $.ajax({
+                type: "POST", url: me.Url() + "/groups",
+                data: {
+                    Name: "Players"
+                },
+                success: function (response) {
+                    me.PlayerGroups.push(new PlayerGroupViewModel(response));
+                    successCallback();
+                },
+                error: function () {
+                }
+            });
+        };
+        this.RemoveGroup = function (removedGroup) {
+            me.PlayerGroups.remove(removedGroup);
+            _.each(me.PlayerGroups(), function (group) {
+                if (group.Order() > removedGroup.Order()) {
+                    group.Order(group.Order() - 1);
+                }
+            });
+
+            $.ajax({
+                type: "DELETE", url: me.Url() + "/groups/" + removedGroup.Id(),
+                data: {}
+            });
+        };
+        this.RemoveSelectedGroup = function () {
+            me.RemoveGroup(me.SelectedGroup());
+        };
+
+        // groupId =
+        // -1 - add to most recent group
+        // undefined - create new group and add to that
+        // 1+ - add to this group id
+        this.AddPlayer = function (groupId) {
+
+            $(".group-select button").prop("disabled", true);
+            $(".group-select .icon-spin").show();
+
+            if (typeof groupId === "undefined" || me.PlayerGroups().length === 0) {
+                this.AddGroup(function () {
+                    me.AddPlayer(-1); // Call this again once group has been posted
+                });
+                return;
+            }
+
+            var parentGroup;
+            if (groupId === -1) {
+                parentGroup = me.PlayerGroups()[me.PlayerGroups().length - 1];
+            } else {
+                parentGroup = _.find(me.PlayerGroups(), function (group) { return group.Id() == groupId; });
+            }
+
+            $.ajax({
+                type: "POST", url: me.Url() + "/players",
+                data: {
+                    GroupId: parentGroup.Id()
+                },
+                success: function (response) {
+                    var newPlayer = new PlayerViewModel(response);
+                    parentGroup.Players.push(newPlayer);
+
+                    $(".group-select button").prop("disabled", false);
+                    $(".group-select .icon-spin").hide();
+                },
+                error: function () {
+                    $(".group-select button").prop("disabled", false);
+                    $(".group-select .icon-spin").hide();
+                }
+            });
+        };
+        
+        this.SortType = ko.observable("lastname");
+        this.SortType.subscribe(function () {
+            me.Sort();
+        });
+
+        var sortTypes = {
+            lastname: {
+                heading: "#roster .sort-lastname",
+                isDescending: false
+            },
+            lastnameDescending: {
+                heading: "#roster .sort-lastname",
+                isDescending: true
+            },
+            firstname: {
+                heading: "#roster .sort-firstname",
+                isDescending: false
+            },
+            firstnameDescending: {
+                heading: "#roster .sort-firstname",
+                isDescending: true
+            },
+            phone: {
+                heading: "#roster .sort-phone",
+                isDescending: false,
+            },
+            phoneDescending: {
+                heading: "#roster .sort-phone",
+                isDescending: true,
+            },
+            email: {
+                heading: "#roster .sort-email",
+                isDescending: false
+            },
+            emailDescending: {
+                heading: "#roster .sort-email",
+                isDescending: true
+            },
+        };
+
+        this.ToggleSort = function (sortType) {
+            if (sortType == "lastname") {
+                me.SortType() == "lastname" ? me.SortType("lastnameDescending") : me.SortType("lastname");
+            }
+            else if (sortType == "firstname") {
+                me.SortType() == "firstname" ? me.SortType("firstnameDescending") : me.SortType("firstname");
+            }
+            else if (sortType == "phone") {
+                me.SortType() == "phone" ? me.SortType("phoneDescending") : me.SortType("phone");
+            }
+            else if (sortType == "email") {
+                me.SortType() == "email" ? me.SortType("emailDescending") : me.SortType("email");
+            }
+        };
+        this.Sort = function () {
+
+            var isDescending = sortTypes[me.SortType()].isDescending;
+            switch (me.SortType()) {
+                case "lastname":
+                case "lastnameDescending":
+                    me.SortBy("LastName", isDescending);
+                    break;
+                case "firstname":
+                case "firstnameDescending":
+                    me.SortBy("FirstName", isDescending);
+                    break;
+                case "phone":
+                case "phoneDescending":
+                    me.SortBy("Phone", isDescending);
+                    break;
+                case "email":
+                case "emailDescending":
+                    me.SortBy("Email", isDescending);
+                    break;
+            }
+
+            $("#roster .table-container th").css({ "background-image": "none" });
+
+            var $sortedHeading = $(sortTypes[me.SortType()].heading);
+            if (!isDescending) {
+                $sortedHeading.css({ "background-image": "url('/img/sort-up.png')", "background-position": "top center" });
+            } else {
+                $sortedHeading.css({ "background-image": "url('/img/sort-down.png')", "background-position": "bottom center" });
+            }
+        };
+    };
+
+    $(function() {
+        window.teamRosterViewModel = new TeamRosterViewModel();
+        ko.applyBindings(window.teamRosterViewModel, document.getElementById("roster"));
+        window.teamRosterViewModel.Sort();
+    });
+
+    $("#roster table").tooltip({ selector: "*[data-toggle='tooltip']" });
+</script>

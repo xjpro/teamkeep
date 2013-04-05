@@ -1,0 +1,106 @@
+﻿<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <!-- ko if: User -->
+            <a class="brand" href="/home">
+                <img src="/img/logo-small.png" alt="Team Keep" />
+            </a>
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="nav-collapse collapse">
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span data-bind="">Teams</span> 
+                            <b class="caret"></b>
+                        </a>
+                        <ul id="team-list" class="dropdown-menu">
+                            <!-- ko foreach: User.Teams -->
+                            <li><a data-bind="text: Name, attr: { href: Url() }"></a></li>
+                            <!-- /ko -->
+                            <li class="divider"></li>
+                            <li><a href="#" data-toggle="modal" data-target="#newteam-modal">New team...</a></li>
+                        </ul>
+                    </li>
+                    <!--li><a href="#settings">Settings</a></!--li-->
+                    <li><a href="#" data-bind="click: Logout">Logout</a></li>
+                </ul>
+            </div>
+            <!-- /ko -->
+            <!-- ko ifnot: User -->
+            <a class="brand" href="/home">
+                <img src="/img/logo-small.png" alt="Team Keep" />
+            </a>
+            <div class="pull-right">
+                <span class="hidden-phone">
+                    <a href="/?register=true">Create an account</a> or 
+                </span>
+                <a class="btn btn-success" href="/">Sign in <i class="icon-lock icon-white"></i></a>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+</div>
+<form id="newteam-modal" class="modal hide fade" data-bind="submit: CreateTeam">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>New team</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-error hide">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <span></span>
+        </div>
+        <div>
+            <label>Name:</label>
+            <input type="text" placeholder="" data-bind="value: NewTeamName"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-primary">
+            <i class="icon-refresh icon-spin"></i> Create
+        </button>
+    </div>
+</form>
+<script>
+    var HeaderViewModel = function(data) {
+        var me = this;
+        ko.mapping.fromJS(data, {}, me);
+
+        this.NewTeamName = ko.observable("");
+        this.CreateTeam = function () {
+            
+            if (me.NewTeamName().length === 0) {
+                return window.ShowAlert("Team must have a name");
+            }
+
+            $("#newteam-modal button").prop("disabled", true);
+            $("#newteam-modal .icon-spin").show();
+            $.ajax({
+                type: "POST",
+                url: "/teams",
+                data: {
+                    Name: me.NewTeamName()
+                },
+                success: function (response) {
+                    window.location = response.Url;
+                },
+                error: function () {
+                    $("#newteam-modal button").prop("disabled", false);
+                    $("#newteam-modal .icon-spin").hide();
+                }
+            });
+        };
+        this.Logout = function() {
+            document.cookie = "teamkeep-token=notoken;path=/;expires=" + new Date(0).toGMTString();
+            document.location = "/";
+        };
+    };
+
+    window.headerViewModel = ko.mapping.fromJS(viewData, ko.mapping.toViewModel(HeaderViewModel));
+    ko.applyBindings(window.headerViewModel, document.getElementById("header"));
+</script>

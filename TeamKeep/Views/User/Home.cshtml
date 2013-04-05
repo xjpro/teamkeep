@@ -1,0 +1,28 @@
+﻿@model TeamKeep.Models.ViewModels.UserHomeViewModel
+@{
+    Layout = "~/Views/Shared/Master.cshtml";
+    ViewBag.Title = "Home";
+    ViewBag.Header = true;
+}
+
+<div class="section">
+    <h2>Teams</h2>
+    <ul id="team-heroes">
+        @foreach(var team in Model.User.Teams)
+        {
+            var backgroundImage = (team.BannerImage != null) ? "url('/TeamBanners/" + team.BannerImage + "')" : "url('/img/defaultbanner.png')";
+            <li>
+                <div class="team">
+                    <!--div class="team-image" style="background-image: @backgroundImage"></!--div-->
+                    <div class="team-name">
+                        <a href="@team.Url">@team.Name</a>
+                    </div>
+                    <!--<div class="team-record"></div>-->
+                </div>
+            </li>
+        }  
+        <li class="create">
+            <a data-toggle="modal" data-target="#newteam-modal">Create a new team</a>
+        </li>  
+    </ul>
+</div>
