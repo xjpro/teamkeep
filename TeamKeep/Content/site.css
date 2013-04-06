@@ -1,5 +1,6 @@
 ﻿body {
     padding-top: 60px;
+    overflow-x: hidden;
 }
 body a {
     cursor: pointer;
@@ -39,12 +40,6 @@ i {
     .showcase.row-fluid > div,
     .nonshowcase.row-fluid > div {
         padding: 0;
-    }
-
-    #team-announcement,
-    #footer {
-        padding-left: 10px;
-        padding-right: 10px;
     }
 }
 .showcase h1, .nonshowcase h3 {
@@ -98,7 +93,6 @@ i {
 }
 
 #footer {
-    margin: 15px 0;
     padding-top: 10px;
     padding-bottom: 10px;
     border-top: solid #eee 1px;   
@@ -475,13 +469,13 @@ i {
 
     #roster td:nth-of-type(2):before { content: "Last name"; border-right: dotted #ccc 1px; }
     #roster td:nth-of-type(3):before { content: "First name"; border-right: dotted #ccc 1px; }
-    #roster td:nth-of-type(4):before { content: "Phone"; border-right: dotted #ccc 1px; }
-    #roster td:nth-of-type(5):before { content: "Email"; border-right: dotted #ccc 1px; }
+    #roster td:nth-of-type(4):before { content: "Position"; border-right: dotted #ccc 1px; }
+    #roster td:nth-of-type(5):before { content: "Phone"; border-right: dotted #ccc 1px; }
+    #roster td:nth-of-type(6):before { content: "Email"; border-right: dotted #ccc 1px; }
 }
 
 #team-banner {
     position: relative;
-    width: 100%;
     height: 200px;
     margin-bottom: 50px;
     border: solid #000 1px;

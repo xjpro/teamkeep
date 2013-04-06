@@ -5,42 +5,45 @@
 }
 
 <div id="team-info">
-    <div class="row-fluid">
-        <div id="team-banner" class="span12" data-bind="style: { backgroundImage: BannerBackgroundImage }">
-            <h1 data-bind="text: Name"></h1>
-            <!-- ko if: Editable -->
-            <div class="hover-edit" data-toggle="modal" data-target="#team-banner-modal">
-                <i class="icon-pencil"></i> Edit banner image
-            </div>
-            <!-- /ko -->
+
+    <div id="team-banner" class="container" data-bind="style: { backgroundImage: BannerBackgroundImage }">
+        <h1 data-bind="text: Name"></h1>
+        <!-- ko if: Editable -->
+        <div class="hover-edit" data-toggle="modal" data-target="#team-banner-modal">
+            <i class="icon-pencil"></i> Edit banner image
         </div>
+        <!-- /ko -->
     </div>
 
-    <!-- ko if: Editable -->
-    <div id="team-functions" class="btn-group pull-right">
-        <!--<button class="btn btn-info">Message Team</button>-->
-        <button class="btn btn-info" data-toggle="modal" data-target="#team-settings-modal"><i class="icon-wrench icon-white"></i> Settings</button>
-    </div>
-    <!-- /ko -->
+    <div class="container">
+
+        <!-- ko if: Editable -->
+        <div id="team-functions" class="btn-group pull-right">
+            <!--<button class="btn btn-info">Message Team</button>-->
+            <button class="btn btn-info" data-toggle="modal" data-target="#team-settings-modal"><i class="icon-wrench icon-white"></i> Settings</button>
+        </div>
+        <!-- /ko -->
     
-    <!-- ko if: Editable() || (Announcement() != null && Announcement().trim().length > 0) -->
-    <div class="row-fluid">
-        <div id="team-announcement" class="span12 section">
-            <h2>Announcements</h2>
-            <!-- ko if: Editable -->
-            <textarea rows="4" data-bind="value: Announcement, event: { keydown: ShowAnnouncementOptions }"></textarea>
-            <!-- /ko -->
-            <!-- ko ifnot: Editable -->
-            <textarea rows="4" data-bind="value: Announcement, editable: false"></textarea>
-            <!-- /ko -->
-            <div class="options">
-                <button class="btn btn-info pull-right" data-bind="click: SaveAnnouncement">
-                    <i class="icon-refresh icon-spin" style="display: none"></i> Save Changes
-                </button>
+        <!-- ko if: Editable() || (Announcement() != null && Announcement().trim().length > 0) -->
+        <div class="row-fluid">
+            <div id="team-announcement" class="span12 section">
+                <h2>Announcements</h2>
+                <!-- ko if: Editable -->
+                <textarea rows="4" data-bind="value: Announcement, event: { keydown: ShowAnnouncementOptions }"></textarea>
+                <!-- /ko -->
+                <!-- ko ifnot: Editable -->
+                <textarea rows="4" data-bind="value: Announcement, editable: false"></textarea>
+                <!-- /ko -->
+                <div class="options">
+                    <button class="btn btn-info pull-right" data-bind="click: SaveAnnouncement">
+                        <i class="icon-refresh icon-spin" style="display: none"></i> Save Changes
+                    </button>
+                </div>
             </div>
         </div>
+        <!-- /ko -->
+
     </div>
-    <!-- /ko -->
 
     <form id="team-settings-modal" class="modal hide fade" data-bind="submit: SaveSettings">
         <div class="modal-header">
@@ -91,7 +94,7 @@
         </div>
     </form>
     
-    <div id="team-delete-modal" class="modal hide fade">
+    <form id="team-delete-modal" class="modal hide fade">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3>Are you sure?</h3>
@@ -109,7 +112,7 @@
                 <i class="icon-refresh icon-spin"></i> Yes, please delete
             </button>
         </div>
-    </div>
+    </form>
     
     <form id="team-banner-modal" class="modal hide fade" data-bind="submit: SaveBanner">
         <div class="modal-header">
@@ -143,8 +146,8 @@
 
 </div>
 
-<div class="row-fluid">
-    <div id="team-data" class="span12">
+<div class="container nophonepad">
+    <div id="team-data">
         <ul id="team-data-links" class="nav nav-tabs">
             <li class="active"><a href="#games" data-toggle="tab" onclick="javascript:location.hash='schedule';">Schedule</a></li>
             @if (Model.Team.Editable || Model.Team.Privacy.Roster)

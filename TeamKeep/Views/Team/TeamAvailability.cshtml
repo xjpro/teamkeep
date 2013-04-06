@@ -222,7 +222,7 @@
                 resizeTimeout = setTimeout(function () {
                     var windowWidth = $(window).width();
 
-                    if (windowWidth < 550) {
+                    if (windowWidth < 450) {
                         if (window.availabilityViewModel.EventsShown() != 2) {
                             window.availabilityViewModel.EventsShown(2);
                             $("#availability-prev").css({
@@ -231,16 +231,25 @@
                             $("#availability .position").hide();
                         }
                     }
-                    else if (windowWidth < 850) {
+                    else if (windowWidth < 775) {
                         if (window.availabilityViewModel.EventsShown() != 5) {
                             window.availabilityViewModel.EventsShown(5);
                             $("#availability-prev").css({
                                 right: "255px"
                             });
+                            $("#availability .position").hide();
+                        }
+                    }
+                    else if (windowWidth < 975) {
+                        if (window.availabilityViewModel.EventsShown() != 7) {
+                            window.availabilityViewModel.EventsShown(7);
+                            $("#availability-prev").css({
+                                right: "335px"
+                            });
                             $("#availability .position").show();
                         }
                     }
-                    else if (windowWidth < 1050) {
+                    else if (windowWidth < 1175) {
                         if (window.availabilityViewModel.EventsShown() != 10) {
                             window.availabilityViewModel.EventsShown(10);
                             $("#availability-prev").css({

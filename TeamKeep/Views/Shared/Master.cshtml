@@ -12,12 +12,9 @@
         <div id="header">
             @Html.Partial("Header")    
         </div>
-        <div class="container-fluid">  
-            @RenderBody()   
-            <footer id="footer">
-                @Html.Partial("Footer")
-            </footer>
-        </div>
+        
+        @RenderBody()   
+        @Html.Partial("Footer")
         
         <div id="message-modal" class="modal hide fade">
             <div class="alert alert-error">
