@@ -33,10 +33,18 @@ namespace TeamKeep.Controllers
         }
 
         [HttpGet]
-        public ActionResult AvailabilityLanding()
+        public ActionResult AvailabilityLanding(string token)
         {
-            var user = this.GetActiveUser(this.Request);
-            return View(new BaseViewModel { User = user });
+            var viewModel = new AvailabilityLandingViewModel();
+
+            if(!string.IsNullOrEmpty(token))
+            {
+                viewModel.AvailabilityRequest = _playerService.GetAvailabilityRequest(token);
+            }
+
+            viewModel.User = this.GetActiveUser(this.Request);
+
+            return View(viewModel);
         }
 
         [HttpGet]

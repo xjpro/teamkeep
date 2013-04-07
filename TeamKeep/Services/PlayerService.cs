@@ -86,7 +86,7 @@ namespace TeamKeep.Services
             {
                 foreach (var playerData in entities.PlayerDatas.Where(x => x.GroupId == group.Id))
                 {
-                    entities.DeleteObject(playerData);
+                    RemovePlayer(entities, playerData.Id, false);
                 }
 
                 var groupData = entities.PlayerGroupDatas.Single(x => x.Id == group.Id);
@@ -160,8 +160,42 @@ namespace TeamKeep.Services
         {
             using (var entities = Database.GetEntities())
             {
-                entities.DeleteObject(entities.PlayerDatas.Single(x => x.Id == player.Id));
+                RemovePlayer(entities, player.Id);
+            }
+        }
+
+        private void RemovePlayer(DatabaseEntities entities, int playerId, bool saveChanges = true)
+        {
+            entities.DeleteObject(entities.PlayerDatas.Single(x => x.Id == playerId));
+            foreach (var abData in entities.AvailabilityDatas.Where(x => x.PlayerId == playerId).ToList())
+            {
+                entities.DeleteObject(abData);
+            }
+
+            if(saveChanges) 
+            {
                 entities.SaveChanges();
+            }
+        }
+
+        public AvailabilityRequest GetAvailabilityRequest(string token)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var requestData = entities.AvailabilityDatas.FirstOrDefault(x => x.Token == token);
+                if (requestData == null) return null;
+                
+                var eventData = entities.GameDatas.Single(x => x.Id == requestData.EventId);
+                var eventLocationData = entities.GameLocationDatas.Single(x => x.GameId == requestData.EventId);
+                var abEvent = new Game(eventData);
+                abEvent.Location = eventLocationData;
+
+                var request = new AvailabilityRequest
+                {
+                    Event = abEvent
+                };
+
+                return request;
             }
         }
 

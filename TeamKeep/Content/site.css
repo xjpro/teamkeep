@@ -606,6 +606,23 @@ i {
 #availability-next { 
     right: 0;
 }
+#ab-data {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#ab-data li {
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+#ab-data label {
+    position: absolute;
+    display: block;
+}
+#ab-data span {
+    float: left;
+    padding-left: 95px;
+}
 
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }

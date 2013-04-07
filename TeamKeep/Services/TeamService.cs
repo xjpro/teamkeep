@@ -126,24 +126,6 @@ namespace TeamKeep.Services
             }
         }
 
-        public Season GetSeason(int seasonId)
-        {
-            using (var entities = Database.GetEntities())
-            {
-                var seasonData = entities.SeasonDatas.Single(x => x.Id == seasonId); 
-                return new Season(seasonData);
-            }
-        }
-
-        public Season GetMostRecentSeason(Team team)
-        {
-            using (var entities = Database.GetEntities())
-            {
-                var lastSeason = entities.SeasonDatas.FirstOrDefault(x => x.TeamId == team.Id);
-                return (lastSeason != null) ? new Season { Id = lastSeason.Id } : null;
-            }
-        }
-
         public Team AddTeam(Team team, User creator)
         {
             using (var entities = Database.GetEntities())
@@ -158,30 +140,6 @@ namespace TeamKeep.Services
 
                 team.Id = teamData.Id;
                 return team;
-            }
-        }
-
-        public Season AddSeason(Season season)
-        {
-            using (var entities = Database.GetEntities())
-            {
-                var order = entities.SeasonDatas.Count(x => x.TeamId == season.TeamId);
-
-                var seasonData = new SeasonData
-                {
-                    TeamId = season.TeamId,
-                    LeagueId = season.LeagueId,
-                    Name = season.Name,
-                    Order = (short) order
-                };
-
-                entities.SeasonDatas.AddObject(seasonData);
-                entities.SaveChanges();
-
-                season.Id = seasonData.Id;
-                season.Games = new List<Game>();
-                season.Order = seasonData.Order;
-                return season;
             }
         }
 
@@ -230,51 +188,16 @@ namespace TeamKeep.Services
             }
         }
 
-        public Season UpdateSeason(Season season)
-        {
-            using (var entities = Database.GetEntities())
-            {
-                var seasonData = entities.SeasonDatas.Single(x => x.Id == season.Id);
-                seasonData.Name = season.Name;
-
-                if (seasonData.Order != season.Order) // A reordering
-                {
-                    // Swapping
-                    var swapping = entities.SeasonDatas.FirstOrDefault(x => x.TeamId == season.TeamId && x.Order == season.Order);
-                    if (swapping != null)
-                    {
-                        swapping.Order = seasonData.Order; // Give it the current order
-                    }
-
-                    // Matching
-                    seasonData.Order = season.Order; // Give it the new order
-
-                    entities.SaveChanges();
-
-                    // Ensure proper ordering
-                    short order = 0;
-                    foreach (var orderedSeasonData in entities.SeasonDatas.Where(x => x.TeamId == season.TeamId).OrderBy(x => x.Order).ToList())
-                    {
-                        orderedSeasonData.Order = order;
-                        order++;
-                    }
-                }
-
-                entities.SaveChanges();
-
-                return season;
-            }
-        }
-
         public void RemoveTeam(int teamId)
         {
             using (var entities = Database.GetEntities())
             {
                 // Delete seasons and games
                 var seasonIds = entities.SeasonDatas.Where(x => x.TeamId == teamId).Select(x => x.Id).ToList();
+                var gameService = new GameService();
                 foreach (var seasonId in seasonIds)
                 {
-                    RemoveSeason(seasonId);
+                    gameService.RemoveSeason(seasonId);
                 }
 
                 // Delete owners
@@ -294,31 +217,6 @@ namespace TeamKeep.Services
                 }
 
                 entities.DeleteObject(entities.TeamDatas.Single(x => x.Id == teamId));
-                entities.SaveChanges();
-            }
-        }
-
-        public void RemoveSeason(int seasonId)
-        {
-            using (var entities = Database.GetEntities())
-            {
-                var gameDatas = entities.GameDatas.Where(x => x.SeasonId == seasonId).ToList();
-                foreach(var gameData in gameDatas)
-                {
-                    entities.GameDatas.DeleteObject(gameData);
-                }
-
-                var seasonData = entities.SeasonDatas.Single(x => x.Id == seasonId);
-                entities.SeasonDatas.DeleteObject(seasonData);
-                entities.SaveChanges();
-
-                // Ensure proper order
-                short order = 0;
-                foreach (var season in entities.SeasonDatas.OrderBy(x => x.Order).ToList())
-                {
-                    season.Order = order;
-                    order++;
-                }
                 entities.SaveChanges();
             }
         }

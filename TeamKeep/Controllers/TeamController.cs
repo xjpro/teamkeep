@@ -187,58 +187,6 @@ namespace TeamKeep.Controllers
             return Json(null);
         }
 
-        [HttpPost]
-        public JsonResult CreateSeason(int teamId, Season season)
-        {
-            var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
-            {
-                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to add seasons to this team");
-            }
-
-            season = _teamService.AddSeason(season);
-            return Json(season);
-        }
-
-        [HttpPut]
-        public JsonResult UpdateSeason(int teamId, Season season)
-        {
-            var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
-            {
-                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to update seasons for this team");
-            }
-
-            var existingSeason = _teamService.GetSeason(season.Id);
-            if (existingSeason.TeamId != teamId)
-            {
-                throw new HttpException((int)HttpStatusCode.Unauthorized, "Mismatch between team ID in path and season team ID");
-            }
-            
-            season = _teamService.UpdateSeason(season);    
-            return Json(season);
-        }
-
-        [HttpDelete]
-        public JsonResult DeleteSeason(int teamId, Season season)
-        {
-            var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
-            {
-                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to remove seasons from this team");
-            }
-
-            var existingSeason = _teamService.GetSeason(season.Id);
-            if (existingSeason.TeamId != teamId)
-            {
-                throw new HttpException((int)HttpStatusCode.Unauthorized, "Mismatch between team ID in path and season team ID");
-            }
-
-            _teamService.RemoveSeason(season.Id);
-
-            return Json(null);
-        }
-
         private bool ImageHeaderMatchesExtension(byte[] buffer, string extension)
         {
             if (extension.Equals("jpg") || extension.Equals("jpeg"))

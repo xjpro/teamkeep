@@ -46,9 +46,9 @@ namespace TeamKeep.App_Start
                 new { httpMethod = new HttpMethodConstraint("PUT") });
 
             // Seasons
-            routes.MapRoute("SeasonCreate", "teams/{teamId}/{teamName}/seasons", new { controller = "Team", action = "CreateSeason" }, new { httpMethod = new HttpMethodConstraint("POST") });
-            routes.MapRoute("SeasonUpdate", "teams/{teamId}/{teamName}/seasons/{id}", new { controller = "Team", action = "UpdateSeason" }, new { httpMethod = new HttpMethodConstraint("PUT") });
-            routes.MapRoute("SeasonDelete", "teams/{teamId}/{teamName}/seasons/{id}", new { controller = "Team", action = "DeleteSeason" }, new { httpMethod = new HttpMethodConstraint("DELETE") });
+            routes.MapRoute("SeasonCreate", "teams/{teamId}/{teamName}/seasons", new { controller = "Game", action = "CreateSeason" }, new { httpMethod = new HttpMethodConstraint("POST") });
+            routes.MapRoute("SeasonUpdate", "teams/{teamId}/{teamName}/seasons/{id}", new { controller = "Game", action = "UpdateSeason" }, new { httpMethod = new HttpMethodConstraint("PUT") });
+            routes.MapRoute("SeasonDelete", "teams/{teamId}/{teamName}/seasons/{id}", new { controller = "Game", action = "DeleteSeason" }, new { httpMethod = new HttpMethodConstraint("DELETE") });
 
             // Games
             routes.MapRoute("GameCreate", "games", new { controller = "Game", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });

@@ -27,6 +27,7 @@
           <Property Name="AdminStatus" Type="smallint" />
           <Property Name="RepliedStatus" Type="smallint" />
           <Property Name="EmailSent" Type="datetime" />
+          <Property Name="Token" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="GameData">
           <Key>
@@ -252,6 +253,7 @@
           <Property Type="Int16" Name="AdminStatus" />
           <Property Type="Int16" Name="RepliedStatus" />
           <Property Type="DateTime" Name="EmailSent" Precision="3" />
+          <Property Type="String" Name="Token" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -370,6 +372,7 @@
           <EntitySetMapping Name="AvailabilityDatas">
             <EntityTypeMapping TypeName="DatabaseModel.AvailabilityData">
               <MappingFragment StoreEntitySet="AvailabilityData">
+                <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="EmailSent" ColumnName="EmailSent" />
                 <ScalarProperty Name="RepliedStatus" ColumnName="RepliedStatus" />
                 <ScalarProperty Name="AdminStatus" ColumnName="AdminStatus" />

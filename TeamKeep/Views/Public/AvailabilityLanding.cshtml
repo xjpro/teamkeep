@@ -1,8 +1,39 @@
-﻿@{
+﻿@model TeamKeep.Models.ViewModels.AvailabilityLandingViewModel
+@{
     ViewBag.Title = "AvailabilityLanding";
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
 <div class="container">
-    <h2>AvailabilityLanding</h2>
+    @if (Model.AvailabilityRequest != null) 
+    {
+        var abEvent = Model.AvailabilityRequest.Event;
+               
+    <h1>Something vs. @abEvent.OpponentName</h1>
+    <p>
+        <!-- notes on event -->
+    </p>
+
+    <ul id="ab-data">
+        <li>
+            <label>When</label>
+            <span>@abEvent.When</span>
+        </li>
+        <li>
+            <label>Where</label>
+            <span>@abEvent.Where</span>
+        </li>
+        <li>
+            <label>Opponent</label>
+            <span>@abEvent.OpponentName</span>
+        </li>
+    </ul>
+
+    <h4>Going?</h4>
+    <p>
+        <button class="btn btn-success">I'll be there!</button>
+        <button class="btn">Can't make it</button>
+        <button class="btn">Maybe</button>
+    </p>
+    }
 </div>

@@ -9,6 +9,8 @@ namespace TeamKeep.Controllers
     {
         protected readonly UserService _userService = new UserService();
         protected readonly TeamService _teamService = new TeamService();
+        protected readonly PlayerService _playerService = new PlayerService();
+        protected readonly GameService _gameService = new GameService();
 
         protected User GetActiveUser(HttpRequestBase request)
         {

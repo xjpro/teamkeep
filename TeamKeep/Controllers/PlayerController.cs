@@ -9,8 +9,6 @@ namespace TeamKeep.Controllers
 {
     public class PlayerController : ViewController
     {
-        private readonly PlayerService _playerService = new PlayerService();
-
         [HttpPost]
         public JsonResult CreateGroup(int teamId, PlayerGroup playerGroup)
         {
@@ -143,9 +141,20 @@ namespace TeamKeep.Controllers
                 {
                     throw new HttpException((int)HttpStatusCode.BadRequest, "Not authorized to edit this player");
                 }
-
-                availability = _playerService.UpdatePlayerAvailability(knownPlayer.Id, availability);
             }
+
+            if (availability.EventId == null || availability.EventId == 0)
+            {
+                throw new HttpException((int)HttpStatusCode.BadRequest, "No event id was given");
+            }
+
+            var knownEvent = _gameService.GetGame(availability.EventId);
+            if (teamId != knownEvent.HomeTeamId)
+            {
+                throw new HttpException((int)HttpStatusCode.BadRequest, "Team ID mismatch");
+            }
+
+            availability = _playerService.UpdatePlayerAvailability(knownPlayer.Id, availability);
 
             return Json(availability);
         }

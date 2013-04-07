@@ -171,11 +171,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AuthToken.cs" />
+    <Compile Include="Models\AvailabilityRequest.cs" />
     <Compile Include="Models\DataModels\Entities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Entities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\AvailabilityLandingViewModel.cs" />
     <Compile Include="Services\Database.cs" />
     <Compile Include="Models\PasswordReset.cs" />
     <Compile Include="Models\Game.cs" />
