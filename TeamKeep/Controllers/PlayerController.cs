@@ -3,7 +3,6 @@ using System.Web;
 using System.Web.Mvc;
 using TeamKeep.Models;
 using TeamKeep.Models.DataModels;
-using TeamKeep.Services;
 
 namespace TeamKeep.Controllers
 {
@@ -143,9 +142,9 @@ namespace TeamKeep.Controllers
                 }
             }
 
-            if (availability.EventId == null || availability.EventId == 0)
+            if (availability.EventId == 0)
             {
-                throw new HttpException((int)HttpStatusCode.BadRequest, "No event id was given");
+                throw new HttpException((int)HttpStatusCode.BadRequest, "No event ID was given");
             }
 
             var knownEvent = _gameService.GetGame(availability.EventId);
@@ -156,6 +155,18 @@ namespace TeamKeep.Controllers
 
             availability = _playerService.UpdatePlayerAvailability(knownPlayer.Id, availability);
 
+            return Json(availability);
+        }
+
+        [HttpPut]
+        public JsonResult SetAvailability(AvailabilityData availability)
+        {
+            if (availability.RepliedStatus == 0 || availability.RepliedStatus > 3)
+            {
+                throw new HttpException((int)HttpStatusCode.BadRequest, "Invalid reply status");
+            }
+
+            availability = _playerService.SetPlayerAvailability(availability.Token, (short) availability.RepliedStatus);
             return Json(availability);
         }
     }

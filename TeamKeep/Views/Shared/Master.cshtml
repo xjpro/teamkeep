@@ -22,10 +22,17 @@
             </div>
         </div>
         <script>
+            window.alertTimeout = null;
             window.ShowAlert = function(message) {
+                if (window.alertTimeout != null) {
+                    clearTimeout(window.alertTimeout);
+                }
                 $("#message-modal .alert-error span").html(message);
                 $("#message-modal").modal({ backdrop: false }).modal("show");
-                setTimeout(function () { $("#message-modal").modal("hide"); }, 3000);
+                window.alertTimeout = setTimeout(function() {
+                    $("#message-modal").modal("hide");
+                    window.alertTimeout = null;
+                }, 3000);
             };
         </script>
         

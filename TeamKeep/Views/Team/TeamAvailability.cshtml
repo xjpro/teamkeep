@@ -18,13 +18,13 @@
                     <i class="icon-ban-circle"></i> &mdash; Not going<br/>
                     <i class="icon-question-sign"></i> &mdash; Maybe
                 </p>
-                <!-- coming soon
-                    <h5>Email confirmation</h5>
-                    <p>
-                        <span class="swatch going"></span> &mdash; Confirmed going<br/>
-                        <span class="swatch notgoing"></span> &mdash; Confirmed not going<br/>
-                        <span class="swatch maybe"></span> &mdash; Confirmed maybe
-                    </p>-->
+
+                <h5>Email confirmation</h5>
+                <p>
+                    <span class="swatch going"></span> &mdash; Confirmed going<br/>
+                    <span class="swatch notgoing"></span> &mdash; Confirmed not going<br/>
+                    <span class="swatch maybe"></span> &mdash; Confirmed maybe
+                </p>
             </div>
         </div>
         <div style="clear: both;"></div>
@@ -196,8 +196,9 @@
                 editor.css({
                     position: "absolute",
                     top: (clicked.position().top + 10) + "px",
-                    left: (clicked.offset().left - 190) + "px",
-                    zIndex: '1550'
+                    left: (clicked.offset().left - 290) + "px",
+                    zIndex: '1550',
+                    width: 210 + "px"
                 }).show();
                 
                 $(window).bind("mouseup.editor keyup.editor", function (docEvt) {

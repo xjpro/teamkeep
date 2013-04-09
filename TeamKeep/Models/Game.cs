@@ -30,7 +30,7 @@ namespace TeamKeep.Models
             get
             {
                 if(Date == null) return null;
-                return ((DateTime)Date).ToString("ddd MMM d, yyyy h:mmtt");
+                return ((DateTime)Date).ToString("ddd MMM d, yyyy h:mm tt");
             }
         }
 
@@ -39,7 +39,14 @@ namespace TeamKeep.Models
         {
             get
             {
-                if (Location == null) return null;
+                if (Location == null || 
+                    (string.IsNullOrWhiteSpace(Location.Description) && 
+                    string.IsNullOrWhiteSpace(Location.Street) && 
+                    string.IsNullOrWhiteSpace(Location.City) && 
+                    string.IsNullOrWhiteSpace(Location.Postal)))
+                {
+                    return null;
+                }
                 return Location.Description + " " + Location.Street + " " + Location.City + " " + Location.Postal;
             }
         }

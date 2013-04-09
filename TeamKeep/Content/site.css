@@ -1,6 +1,8 @@
-﻿body {
-    padding-top: 60px;
+﻿html {
     overflow-x: hidden;
+}
+body {
+    padding-top: 60px;
 }
 body a {
     cursor: pointer;
@@ -93,6 +95,7 @@ i {
 }
 
 #footer {
+    margin-top: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
     border-top: solid #eee 1px;   
@@ -608,8 +611,10 @@ i {
 }
 #ab-data {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 10px;
+    margin: 10px 0;
+    border: solid #aaa 1px;
+
 }
 #ab-data li {
     overflow: hidden;

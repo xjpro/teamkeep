@@ -64,7 +64,7 @@ namespace TeamKeep.Models
         {
             var bytes = new byte[input.Length * sizeof(char)];
             Buffer.BlockCopy(input.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return Convert.ToBase64String(MD5.Create().ComputeHash(bytes));
+            return Convert.ToBase64String(MD5.Create().ComputeHash(bytes)).Replace("+", "-");
         }
     }
 }

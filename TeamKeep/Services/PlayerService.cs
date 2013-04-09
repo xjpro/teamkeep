@@ -192,7 +192,9 @@ namespace TeamKeep.Services
 
                 var request = new AvailabilityRequest
                 {
-                    Event = abEvent
+                    Data = requestData,
+                    Event = abEvent,
+                    TeamName = entities.TeamDatas.Single(x => x.Id == abEvent.HomeTeamId).Name
                 };
 
                 return request;
@@ -215,6 +217,22 @@ namespace TeamKeep.Services
                 abData.RepliedStatus = availability.RepliedStatus;
                 abData.EmailSent = availability.EmailSent;
                 entities.SaveChanges();
+                return abData;
+            }
+        }
+
+        public AvailabilityData SetPlayerAvailability(string token, short status)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var abData = entities.AvailabilityDatas.SingleOrDefault(x => x.Token == token);
+                if (abData != null)
+                {
+                    abData.AdminStatus = status;
+                    abData.RepliedStatus = status;
+                    entities.SaveChanges();
+                }
+
                 return abData;
             }
         }

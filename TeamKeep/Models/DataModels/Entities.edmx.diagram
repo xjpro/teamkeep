@@ -13,8 +13,9 @@
         <EntityTypeShape EntityType="DatabaseModel.TeamData" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.TeamOwnerData" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.TeamPrivacyData" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.UserData" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.UserData" Width="1.5" PointX="9" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.AvailabilityData" Width="1.5" PointX="9" PointY="1.875" />
+        <EntityTypeShape EntityType="DatabaseModel.TeamSettingsData" Width="1.5" PointX="4.75" PointY="6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

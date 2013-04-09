@@ -134,6 +134,7 @@ namespace TeamKeep.Services
                 entities.TeamDatas.AddObject(teamData);
                 entities.SaveChanges();
 
+                entities.TeamSettingsDatas.AddObject(new TeamSettingsData { TeamId = teamData.Id });
                 entities.TeamPrivacyDatas.AddObject(new TeamPrivacyData { TeamId = teamData.Id, HomePage = true, Roster = true });
                 entities.TeamOwnerDatas.AddObject(new TeamOwnerData { TeamId = teamData.Id, UserId = creator.Id });
                 entities.SaveChanges();
@@ -217,6 +218,8 @@ namespace TeamKeep.Services
                 }
 
                 entities.DeleteObject(entities.TeamDatas.Single(x => x.Id == teamId));
+                entities.DeleteObject(entities.TeamSettingsDatas.Single(x => x.TeamId == teamId));
+                entities.DeleteObject(entities.TeamPrivacyDatas.Single(x => x.TeamId == teamId));
                 entities.SaveChanges();
             }
         }

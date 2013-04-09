@@ -224,6 +224,22 @@ namespace TeamKeep.Models.DataModels
             }
         }
         private ObjectSet<AvailabilityData> _AvailabilityDatas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TeamSettingsData> TeamSettingsDatas
+        {
+            get
+            {
+                if ((_TeamSettingsDatas == null))
+                {
+                    _TeamSettingsDatas = base.CreateObjectSet<TeamSettingsData>("TeamSettingsDatas");
+                }
+                return _TeamSettingsDatas;
+            }
+        }
+        private ObjectSet<TeamSettingsData> _TeamSettingsDatas;
 
         #endregion
 
@@ -307,6 +323,14 @@ namespace TeamKeep.Models.DataModels
         public void AddToAvailabilityDatas(AvailabilityData availabilityData)
         {
             base.AddObject("AvailabilityDatas", availabilityData);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TeamSettingsDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTeamSettingsDatas(TeamSettingsData teamSettingsData)
+        {
+            base.AddObject("TeamSettingsDatas", teamSettingsData);
         }
 
         #endregion
@@ -1936,6 +1960,112 @@ namespace TeamKeep.Models.DataModels
         private global::System.Boolean _Roster;
         partial void OnRosterChanging(global::System.Boolean value);
         partial void OnRosterChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DatabaseModel", Name="TeamSettingsData")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TeamSettingsData : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TeamSettingsData object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="teamId">Initial value of the TeamId property.</param>
+        public static TeamSettingsData CreateTeamSettingsData(global::System.Int32 id, global::System.Int32 teamId)
+        {
+            TeamSettingsData teamSettingsData = new TeamSettingsData();
+            teamSettingsData.Id = id;
+            teamSettingsData.TeamId = teamId;
+            return teamSettingsData;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TeamId
+        {
+            get
+            {
+                return _TeamId;
+            }
+            set
+            {
+                OnTeamIdChanging(value);
+                ReportPropertyChanging("TeamId");
+                _TeamId = StructuralObject.SetValidValue(value, "TeamId");
+                ReportPropertyChanged("TeamId");
+                OnTeamIdChanged();
+            }
+        }
+        private global::System.Int32 _TeamId;
+        partial void OnTeamIdChanging(global::System.Int32 value);
+        partial void OnTeamIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int16> AvailabilityEmailMinutes
+        {
+            get
+            {
+                return _AvailabilityEmailMinutes;
+            }
+            set
+            {
+                OnAvailabilityEmailMinutesChanging(value);
+                ReportPropertyChanging("AvailabilityEmailMinutes");
+                _AvailabilityEmailMinutes = StructuralObject.SetValidValue(value, "AvailabilityEmailMinutes");
+                ReportPropertyChanged("AvailabilityEmailMinutes");
+                OnAvailabilityEmailMinutesChanged();
+            }
+        }
+        private Nullable<global::System.Int16> _AvailabilityEmailMinutes;
+        partial void OnAvailabilityEmailMinutesChanging(Nullable<global::System.Int16> value);
+        partial void OnAvailabilityEmailMinutesChanged();
 
         #endregion
 

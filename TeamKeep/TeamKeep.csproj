@@ -49,6 +49,10 @@
     <Reference Include="Microsoft.CSharp">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Quartz, Version=2.1.2.400, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
@@ -163,6 +167,7 @@
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\RedirectHttpsAttribute.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\TokenAuthorizeAttribute.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -178,6 +183,7 @@
       <DependentUpon>Entities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\AvailabilityLandingViewModel.cs" />
+    <Compile Include="Services\AutomatedTasksService.cs" />
     <Compile Include="Services\Database.cs" />
     <Compile Include="Models\PasswordReset.cs" />
     <Compile Include="Models\Game.cs" />
@@ -209,6 +215,9 @@
     </Content>
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Emails\availability.htm" />
+    <Content Include="Emails\welcome.htm" />
+    <Content Include="Libraries\Quartz.dll" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Scripts\jquery.autosize-min.js" />

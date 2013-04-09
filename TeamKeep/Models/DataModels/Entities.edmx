@@ -15,6 +15,7 @@
           <EntitySet Name="TeamData" EntityType="DatabaseModel.Store.TeamData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TeamOwnerData" EntityType="DatabaseModel.Store.TeamOwnerData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TeamPrivacyData" EntityType="DatabaseModel.Store.TeamPrivacyData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TeamSettingsData" EntityType="DatabaseModel.Store.TeamSettingsData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserData" EntityType="DatabaseModel.Store.UserData" store:Type="Tables" Schema="dbo" />
         </EntityContainer>
         <EntityType Name="AvailabilityData">
@@ -116,6 +117,14 @@
           <Property Name="HomePage" Type="bit" Nullable="false" />
           <Property Name="Roster" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="TeamSettingsData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="AvailabilityEmailMinutes" Type="smallint" />
+        </EntityType>
         <EntityType Name="UserData">
           <Key>
             <PropertyRef Name="Id" />
@@ -143,6 +152,7 @@
           <EntitySet Name="TeamPrivacyDatas" EntityType="DatabaseModel.TeamPrivacyData" />
           <EntitySet Name="UserDatas" EntityType="DatabaseModel.UserData" />
           <EntitySet Name="AvailabilityDatas" EntityType="DatabaseModel.AvailabilityData" />
+          <EntitySet Name="TeamSettingsDatas" EntityType="DatabaseModel.TeamSettingsData" />
         </EntityContainer>
         <EntityType Name="GameData">
           <Key>
@@ -254,6 +264,14 @@
           <Property Type="Int16" Name="RepliedStatus" />
           <Property Type="DateTime" Name="EmailSent" Precision="3" />
           <Property Type="String" Name="Token" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TeamSettingsData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TeamId" Nullable="false" />
+          <Property Type="Int16" Name="AvailabilityEmailMinutes" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -378,6 +396,15 @@
                 <ScalarProperty Name="AdminStatus" ColumnName="AdminStatus" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamSettingsDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.TeamSettingsData">
+              <MappingFragment StoreEntitySet="TeamSettingsData">
+                <ScalarProperty Name="AvailabilityEmailMinutes" ColumnName="AvailabilityEmailMinutes" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

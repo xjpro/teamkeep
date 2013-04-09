@@ -13,9 +13,9 @@ namespace TeamKeep.App_Start
             routes.MapRoute("PublicIndex", "", new { controller = "Public", action = "Index" });
             routes.MapRoute("PublicPasswordReset", "reset", new { controller = "Public", action = "PasswordReset" });
             routes.MapRoute("PublicPasswordResetSent", "resetsent", new { controller = "Public", action = "PasswordResetSent" });
-            routes.MapRoute("PublicAvailability", "rsvp", new { controller = "Public", action = "AvailabilityLanding" });
+            routes.MapRoute("PublicAvailability", "rsvp", new { controller = "Public", action = "AvailabilityLanding" }, new { httpMethod = new HttpMethodConstraint("GET") });
             routes.MapRoute("PublicAbout", "about", new { controller = "Public", action = "About" });
-            routes.MapRoute("PublicInfo", "info", new { controller = "Public", action = "Info" });
+            routes.MapRoute("PublicTest", "test", new { controller = "Public", action = "Test" });
 
             // User
             routes.MapRoute("UserCreate", "users", new { controller = "User", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
@@ -43,6 +43,8 @@ namespace TeamKeep.App_Start
 
             // Availability
             routes.MapRoute("PlayerAvailabilityUpdate", "teams/{teamId}/{teamName}/players/{playerId}/availability", new { controller = "Player", action = "UpdateAvailability" }, 
+                new { httpMethod = new HttpMethodConstraint("PUT") });
+            routes.MapRoute("PlayerAvailabilityRsvp", "rsvp", new { controller = "Player", action = "SetAvailability" },
                 new { httpMethod = new HttpMethodConstraint("PUT") });
 
             // Seasons

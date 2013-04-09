@@ -1,17 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using TeamKeep.Models;
-using TeamKeep.Models.DataModels;
 
 namespace TeamKeep.Services
 {
     public class EmailService
     {
-        private Queue<MailMessage> UnsentMessages = new Queue<MailMessage>();
+        private bool _automaticallySend = true;
+        public bool AutomaticallySend
+        {
+            get { return _automaticallySend; }
+            set { _automaticallySend = value; }
+        }
+        
+        private readonly Queue<MailMessage> UnsentMessages = new Queue<MailMessage>();
 
         public void EmailPassword(PasswordReset passwordReset)
         {
@@ -22,7 +28,7 @@ namespace TeamKeep.Services
             body.Append("<p>Thank you for using Team Keep.</p>");
 
             Enqueue(passwordReset.Email, "teamkeep-noreply@teamkeep.com", "Password Reset for Team Keep", body.ToString());
-            SendQueuedMessages();
+            if(AutomaticallySend) SendQueuedMessages();
         }
 
         public void EmailWelcome(string email)
@@ -43,11 +49,33 @@ namespace TeamKeep.Services
             body.Append("<p>Thanks again for choosing Team Keep!</p>");
 
             Enqueue(email, "info@teamkeep.com", "Welcome to Team Keep", body.ToString());
-            SendQueuedMessages();
+            if (AutomaticallySend) SendQueuedMessages();
         }
 
-        public void EmailAvailability(string email)
+        public void EmailAvailability(AvailabilityRequest abRequest)
         {
+            var replyEmail = "https://teamkeep.com/rsvp?token=" + abRequest.Data.Token;
+
+            var body = new StringBuilder();
+            body.Append(string.Format("<h2>{0} vs. {1}</h2>", abRequest.TeamName, abRequest.Event.OpponentName));
+            //body.Append(string.Format("<p>{0}</p>", "The event description would go here, if there was one."));
+
+            body.Append("<table>");
+	        body.Append(string.Format("<tr><td style='width: 80px'>When:</td><td>{0}</tr>", abRequest.Event.When));
+	        body.Append(string.Format("<tr><td>Where:</td><td>{0}</td></tr>", abRequest.Event.Where));
+            body.Append("</table>");
+
+            body.Append("<h4>Can you make it?</h4>");
+            body.Append("<p style='overflow: hidden'>");
+            body.Append(string.Format("<a style='float: left; display: block; width: 100px; border: solid black 1px; padding: 5px; margin-right: 10px; text-align: center;' href='{0}'>Yes</a>", replyEmail + "&reply=1"));
+            body.Append(string.Format("<a style='float: left; display: block; width: 100px; border: solid black 1px; padding: 5px; margin-right: 10px; text-align: center;' href='{0}'>No</a>", replyEmail + "&reply=2"));
+            body.Append(string.Format("<a style='float: left; display: block; width: 100px; border: solid black 1px; padding: 5px; margin-right: 10px; text-align: center;' href='{0}'>Maybe</a>", replyEmail + "&reply=3"));
+            body.Append("</p>");
+
+            Enqueue(abRequest.Email, "teamkeep-noreply@teamkeep.com", 
+                "[" + abRequest.TeamName + "] vs. " + abRequest.Event.OpponentName + " @ " + abRequest.Event.When, body.ToString());
+
+            if (AutomaticallySend) SendQueuedMessages();
         }
 
         public void SendQueuedMessages()
@@ -105,7 +133,14 @@ namespace TeamKeep.Services
                {
                    foreach (var message in UnsentMessages)
                    {
-                       emailServer.Send(message);
+                       try
+                       {
+                           emailServer.Send(message);
+                       }
+                       catch (Exception e)
+                       {
+                           // TODO Fake email? smtp server is down? what should happen?
+                       }
                    }
                    UnsentMessages.Clear();
                }

@@ -2,7 +2,6 @@
 using System.Web;
 using System.Web.Mvc;
 using TeamKeep.Models;
-using TeamKeep.Services;
 
 namespace TeamKeep.Controllers
 {

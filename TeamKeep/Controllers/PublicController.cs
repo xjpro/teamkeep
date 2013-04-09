@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using TeamKeep.Models.ViewModels;
+using TeamKeep.Services;
 
 namespace TeamKeep.Controllers
 {
@@ -55,8 +56,11 @@ namespace TeamKeep.Controllers
         }
 
         [HttpGet]
-        public ActionResult Info()
+        public ActionResult Test()
         {
+            new AutomatedTasksService.AutomatedEmailsJob().Execute(null);
+
+
             string debug;
             #if DEBUG
                 debug = "debug";
