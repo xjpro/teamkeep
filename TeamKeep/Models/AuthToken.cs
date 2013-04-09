@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace TeamKeep.Models
@@ -11,15 +12,21 @@ namespace TeamKeep.Models
         public string Key { get; set; }
         public string AsString { get { return string.Format("{0}_{1}_{2}", UserId, TimeStamp, Key); } }
 
-        public static AuthToken Generate(int userId, string passwordHash)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uniqueId">Unique ID, usually the user ID</param>
+        /// <param name="uniqueString">Unique string, usually the password hash</param>
+        /// <returns></returns>
+        public static AuthToken Generate(int uniqueId, string uniqueString)
         {
             var timestamp = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
 
             return new AuthToken
             {
-                UserId = userId,
+                UserId = uniqueId,
                 TimeStamp = timestamp,
-                Key = Hash(userId + timestamp + passwordHash)
+                Key = Hash(uniqueId + timestamp + uniqueString)
             };
         }
 
@@ -43,6 +50,13 @@ namespace TeamKeep.Models
             };
         }
 
+        public static string GenerateKey(string uniqueString)
+        {
+            var timestamp = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
+            var hash = Hash(timestamp + uniqueString);
+            return new Regex("[^A-Za-z0-9]").Replace(hash, "$"); // Make web safe
+        }
+
         public static AuthToken Generate(int userId, byte[] passwordHash)
         {
             return Generate(userId, Convert.ToBase64String(passwordHash));
@@ -64,7 +78,7 @@ namespace TeamKeep.Models
         {
             var bytes = new byte[input.Length * sizeof(char)];
             Buffer.BlockCopy(input.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return Convert.ToBase64String(MD5.Create().ComputeHash(bytes)).Replace("+", "-");
+            return Convert.ToBase64String(MD5.Create().ComputeHash(bytes));
         }
     }
 }

@@ -3,6 +3,7 @@ using TeamKeep.Models;
 using TeamKeep.Models.DataModels;
 using System.Collections.Generic;
 using System;
+using TeamKeep.Models.ViewModels;
 
 namespace TeamKeep.Services
 {
@@ -25,7 +26,8 @@ namespace TeamKeep.Services
 
                 var team = new Team(teamData);
 
-                // Retrieve privacy
+                // Retrieve settings & privacy
+                team.Settings = entities.TeamSettingsDatas.SingleOrDefault(x => x.TeamId == team.Id);
                 team.Privacy = entities.TeamPrivacyDatas.Single(x => x.TeamId == team.Id);
 
                 // Retrieve owners
@@ -41,7 +43,8 @@ namespace TeamKeep.Services
                         Id = groupData.Id,
                         TeamId = groupData.TeamId,
                         Name = groupData.Name,
-                        Order = groupData.Order
+                        Order = groupData.Order,
+                        SendConfirmations = groupData.SendConfirmations
                     }).ToList();
 
                 foreach (var playerGroup in playerGroupDatas)
@@ -157,23 +160,47 @@ namespace TeamKeep.Services
             }
         }
 
-        public Team UpdateSettings(Team team)
+        public TeamSettingsViewModel UpdateSettings(TeamSettingsViewModel settings)
         {
             using (var entities = Database.GetEntities())
             {
-                var teamData = entities.TeamDatas.Single(x => x.Id == team.Id);
-                teamData.Name = team.Name;
+                var teamData = entities.TeamDatas.Single(x => x.Id == settings.TeamId);
+                teamData.Name = settings.Name;
 
-                if (team.Privacy != null)
+                // Update settings
+                var settingsData = entities.TeamSettingsDatas.Single(x => x.TeamId == settings.TeamId);
+                if (settings.SendConfirmations)
                 {
-                    var teamPrivacyData = entities.TeamPrivacyDatas.Single(x => x.TeamId == team.Id);
-                    teamPrivacyData.HomePage = team.Privacy.HomePage;
-                    teamPrivacyData.Roster = team.Privacy.Roster;
+                    settingsData.ConfirmationEmailMinutes = 4320; // 3 days currently
+                }
+                else
+                {
+                    settingsData.ConfirmationEmailMinutes = null;
+                }
+
+                // Update player groups
+                var playerGroups = entities.PlayerGroupDatas.Where(x => x.TeamId == settings.TeamId).ToList();
+                playerGroups.ForEach(x => x.SendConfirmations = false);
+                if (settings.SendConfirmationGroups != null)
+                {
+                    foreach (var playerGroupSettingId in settings.SendConfirmationGroups)
+                    {
+                        var playerGroup = playerGroups.FirstOrDefault(x => x.Id == playerGroupSettingId);
+                        if (playerGroup != null) playerGroup.SendConfirmations = true;
+                    }
+                }
+
+                // Update privacy
+                if (settings.Privacy != null)
+                {
+                    var teamPrivacyData = entities.TeamPrivacyDatas.Single(x => x.TeamId == settings.TeamId);
+                    teamPrivacyData.HomePage = settings.Privacy.HomePage;
+                    teamPrivacyData.Roster = settings.Privacy.Roster;
                 }
 
                 entities.SaveChanges();
 
-                return team;
+                return settings;
             }
         }
 

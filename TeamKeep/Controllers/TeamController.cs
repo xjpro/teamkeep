@@ -93,7 +93,7 @@ namespace TeamKeep.Controllers
         }
 
         [HttpPut]
-        public JsonResult UpdateSettings(int id, Team team)
+        public JsonResult UpdateSettings(int id, TeamSettingsViewModel settings)
         {
             var activeUser = this.GetActiveUser(this.Request);
             if (!_teamService.CanEdit(id, activeUser.Id))
@@ -101,8 +101,13 @@ namespace TeamKeep.Controllers
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team's settings");
             }
 
-            team = _teamService.UpdateSettings(team);
-            return Json(team);
+            if (id != settings.TeamId)
+            {
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Team ID mismatch");
+            }
+
+            settings = _teamService.UpdateSettings(settings);
+            return Json(settings);
         }
 
         [HttpPut]

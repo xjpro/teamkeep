@@ -1,6 +1,6 @@
 ﻿@model TeamKeep.Models.ViewModels.AvailabilityLandingViewModel
 @{
-    ViewBag.Title = "AvailabilityLanding";
+    ViewBag.Title = @Model.AvailabilityRequest.TeamName + " Event";
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
@@ -8,27 +8,43 @@
 {
     var abData = Model.AvailabilityRequest.Data;
     var abEvent = Model.AvailabilityRequest.Event;
+    var opponentName = abEvent.OpponentName ?? "[To Be Determined]";
     
     <div id="ab-landing" class="container">          
-        <h1>@Model.AvailabilityRequest.TeamName vs. @abEvent.OpponentName</h1>
+        <h1>@Model.AvailabilityRequest.TeamName vs. @opponentName</h1>
 
         <ul id="ab-data">
-            <li>
-                <!--
+            <!--<li>
                 <label>Notes</label>
                 <span>blah blah blah blah blah asdas as lbasdf asd sa sd sa d</span>
-                -->
-            </li>
-            <li>
-                <label>When</label>
-                <span>@abEvent.When</span>
-            </li>
-            @if(abEvent.Where != null)
+            </li>-->
+            @if (abEvent.When != null)
             {
-            <li>
-                <label>Where</label>
-                <span>@abEvent.Where</span>
-            </li>
+                <li>
+                    <label>When</label>
+                    <span>@abEvent.When</span>
+                </li>
+            }
+            @if (abEvent.Where != null)
+            {
+                <li>
+                    <label>Where</label>
+                    <span>@abEvent.Where</span>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <label>Where</label>
+                    <span>To Be Determined</span>
+                </li>
+            }
+            @if (abEvent.Location != null && !string.IsNullOrWhiteSpace(abEvent.Location.InternalLocation))
+            {
+                <li>
+                    <label>Arena</label>
+                    <span>@abEvent.Location.InternalLocation</span>
+                </li>
             }
         </ul>
         <div id="replies" class="btn-group">
@@ -43,31 +59,30 @@
             var me = this;
 
             this.Selected = ko.observable(@abData.RepliedStatus);
-            this.Selected.subscribe(function (value) {
+            this.Selected.subscribe(function () {
                 $.ajax({
                     type: "PUT", url: "/rsvp",
                     data: {
                         Token: "@abData.Token",
                         RepliedStatus: me.Selected()
                     },
-                    success: function (response) {
-                        console.log(response);
+                    success: function () {
+                        //console.log(response);
                     }
                 });
             });
         };
         ko.applyBindings(window.viewModel, document.getElementById("ab-landing"));
 
-        if (location.search.indexOf("reply=1") != 0) {
+        if (location.search.indexOf("reply=1") != -1) {
             $("#replies button:eq(0)").click();
         }
-        else if (location.search.indexOf("reply=2") != 0) {
+        else if (location.search.indexOf("reply=2") != -1) {
             $("#replies button:eq(1)").click();
         }
-        else if (location.search.indexOf("reply=3") != 0) {
+        else if (location.search.indexOf("reply=3") != -1) {
             $("#replies button:eq(2)").click();
         }
-
     </script>
 }
 else

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using TeamKeep.Models;
 
@@ -57,23 +58,37 @@ namespace TeamKeep.Services
             var replyEmail = "https://teamkeep.com/rsvp?token=" + abRequest.Data.Token;
 
             var body = new StringBuilder();
-            body.Append(string.Format("<h2>{0} vs. {1}</h2>", abRequest.TeamName, abRequest.Event.OpponentName));
+            body.Append(string.Format("<h2>{0} vs. {1}</h2>", abRequest.TeamName, abRequest.Event.OpponentName ?? "[To Be Determined]"));
             //body.Append(string.Format("<p>{0}</p>", "The event description would go here, if there was one."));
 
             body.Append("<table>");
-	        body.Append(string.Format("<tr><td style='width: 80px'>When:</td><td>{0}</tr>", abRequest.Event.When));
-	        body.Append(string.Format("<tr><td>Where:</td><td>{0}</td></tr>", abRequest.Event.Where));
+            if (abRequest.Event.When != null)
+            {
+                body.Append(string.Format("<tr><td style='width: 80px'>When:</td><td>{0}</tr>", abRequest.Event.When));
+            }
+            if (abRequest.Event.Where != null)
+	        {
+	            body.Append(string.Format("<tr><td>Where:</td><td>{0}</td></tr>", abRequest.Event.Where));
+	        }
+            else
+            {
+                body.Append(string.Format("<tr><td>Where:</td><td>{0}</td></tr>", "To Be Determined"));
+            }
+            if (abRequest.Event.Location != null && !string.IsNullOrWhiteSpace(abRequest.Event.Location.InternalLocation))
+            {
+                body.Append(string.Format("<tr><td>Arena:</td><td>{0}</tr>", abRequest.Event.Location.InternalLocation));
+            }
             body.Append("</table>");
 
             body.Append("<h4>Can you make it?</h4>");
             body.Append("<p style='overflow: hidden'>");
-            body.Append(string.Format("<a style='float: left; display: block; width: 100px; border: solid black 1px; padding: 5px; margin-right: 10px; text-align: center;' href='{0}'>Yes</a>", replyEmail + "&reply=1"));
-            body.Append(string.Format("<a style='float: left; display: block; width: 100px; border: solid black 1px; padding: 5px; margin-right: 10px; text-align: center;' href='{0}'>No</a>", replyEmail + "&reply=2"));
-            body.Append(string.Format("<a style='float: left; display: block; width: 100px; border: solid black 1px; padding: 5px; margin-right: 10px; text-align: center;' href='{0}'>Maybe</a>", replyEmail + "&reply=3"));
+            body.Append(string.Format("<a style='float: left; display: block; width: 80px; border: solid #666 1px; padding: 8px 5px; margin-right: 10px; text-align: center;' href='{0}'>Yes</a>", replyEmail + "&reply=1"));
+            body.Append(string.Format("<a style='float: left; display: block; width: 80px; border: solid #666 1px; padding: 8px 5px; margin-right: 10px; text-align: center;' href='{0}'>No</a>", replyEmail + "&reply=2"));
+            body.Append(string.Format("<a style='float: left; display: block; width: 80px; border: solid #666 1px; padding: 8px 5px; margin-right: 10px; text-align: center;' href='{0}'>Maybe</a>", replyEmail + "&reply=3"));
             body.Append("</p>");
 
             Enqueue(abRequest.Email, "teamkeep-noreply@teamkeep.com", 
-                "[" + abRequest.TeamName + "] vs. " + abRequest.Event.OpponentName + " @ " + abRequest.Event.When, body.ToString());
+                "[" + abRequest.TeamName + "] vs. " + (abRequest.Event.OpponentName ?? "TBD") + " @ " + abRequest.Event.When, body.ToString());
 
             if (AutomaticallySend) SendQueuedMessages();
         }
@@ -85,6 +100,14 @@ namespace TeamKeep.Services
 
         private void Enqueue(string to, string from, string subject, string body)
         {
+            if (IsValidEmail(to))
+            {
+                MailMessage message = BaseMessage(subject, from);
+                message.To.Add(to);
+                message.Body = body;
+                UnsentMessages.Enqueue(message);
+            }
+
             /*using (var entities = Database.GetEntities())
             {
                 entities.EmailQueueDatas.AddObject(new EmailQueueData
@@ -96,10 +119,6 @@ namespace TeamKeep.Services
                 });
                 entities.SaveChanges();
             }*/
-            MailMessage message = BaseMessage(subject, from);
-            message.To.Add(to);
-            message.Body = body;
-            UnsentMessages.Enqueue(message);
         }
 
         private void ProcessQueue()
@@ -137,7 +156,7 @@ namespace TeamKeep.Services
                        {
                            emailServer.Send(message);
                        }
-                       catch (Exception e)
+                       catch (Exception)
                        {
                            // TODO Fake email? smtp server is down? what should happen?
                        }
@@ -156,6 +175,12 @@ namespace TeamKeep.Services
                 IsBodyHtml = true,
                 From = new MailAddress(from, "Team Keep")
             };
+        }
+
+        public static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email)) return false;
+            return new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)\b", RegexOptions.IgnoreCase).IsMatch(email.Trim());
         }
     }
 }

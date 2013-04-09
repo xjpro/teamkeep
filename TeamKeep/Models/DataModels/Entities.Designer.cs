@@ -148,22 +148,6 @@ namespace TeamKeep.Models.DataModels
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<TeamData> TeamDatas
-        {
-            get
-            {
-                if ((_TeamDatas == null))
-                {
-                    _TeamDatas = base.CreateObjectSet<TeamData>("TeamDatas");
-                }
-                return _TeamDatas;
-            }
-        }
-        private ObjectSet<TeamData> _TeamDatas;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<TeamOwnerData> TeamOwnerDatas
         {
             get
@@ -240,6 +224,22 @@ namespace TeamKeep.Models.DataModels
             }
         }
         private ObjectSet<TeamSettingsData> _TeamSettingsDatas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TeamData> TeamDatas
+        {
+            get
+            {
+                if ((_TeamDatas == null))
+                {
+                    _TeamDatas = base.CreateObjectSet<TeamData>("TeamDatas");
+                }
+                return _TeamDatas;
+            }
+        }
+        private ObjectSet<TeamData> _TeamDatas;
 
         #endregion
 
@@ -286,14 +286,6 @@ namespace TeamKeep.Models.DataModels
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the TeamDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToTeamDatas(TeamData teamData)
-        {
-            base.AddObject("TeamDatas", teamData);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the TeamOwnerDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToTeamOwnerDatas(TeamOwnerData teamOwnerData)
@@ -331,6 +323,14 @@ namespace TeamKeep.Models.DataModels
         public void AddToTeamSettingsDatas(TeamSettingsData teamSettingsData)
         {
             base.AddObject("TeamSettingsDatas", teamSettingsData);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TeamDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTeamDatas(TeamData teamData)
+        {
+            base.AddObject("TeamDatas", teamData);
         }
 
         #endregion
@@ -1244,13 +1244,15 @@ namespace TeamKeep.Models.DataModels
         /// <param name="teamId">Initial value of the TeamId property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="order">Initial value of the Order property.</param>
-        public static PlayerGroupData CreatePlayerGroupData(global::System.Int32 id, global::System.Int32 teamId, global::System.String name, global::System.Int16 order)
+        /// <param name="sendConfirmations">Initial value of the SendConfirmations property.</param>
+        public static PlayerGroupData CreatePlayerGroupData(global::System.Int32 id, global::System.Int32 teamId, global::System.String name, global::System.Int16 order, global::System.Boolean sendConfirmations)
         {
             PlayerGroupData playerGroupData = new PlayerGroupData();
             playerGroupData.Id = id;
             playerGroupData.TeamId = teamId;
             playerGroupData.Name = name;
             playerGroupData.Order = order;
+            playerGroupData.SendConfirmations = sendConfirmations;
             return playerGroupData;
         }
 
@@ -1356,6 +1358,30 @@ namespace TeamKeep.Models.DataModels
         private global::System.Int16 _Order;
         partial void OnOrderChanging(global::System.Int16 value);
         partial void OnOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean SendConfirmations
+        {
+            get
+            {
+                return _SendConfirmations;
+            }
+            set
+            {
+                OnSendConfirmationsChanging(value);
+                ReportPropertyChanging("SendConfirmations");
+                _SendConfirmations = StructuralObject.SetValidValue(value, "SendConfirmations");
+                ReportPropertyChanged("SendConfirmations");
+                OnSendConfirmationsChanged();
+            }
+        }
+        private global::System.Boolean _SendConfirmations;
+        partial void OnSendConfirmationsChanging(global::System.Boolean value);
+        partial void OnSendConfirmationsChanged();
 
         #endregion
 
@@ -2048,24 +2074,24 @@ namespace TeamKeep.Models.DataModels
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> AvailabilityEmailMinutes
+        public Nullable<global::System.Int16> ConfirmationEmailMinutes
         {
             get
             {
-                return _AvailabilityEmailMinutes;
+                return _ConfirmationEmailMinutes;
             }
             set
             {
-                OnAvailabilityEmailMinutesChanging(value);
-                ReportPropertyChanging("AvailabilityEmailMinutes");
-                _AvailabilityEmailMinutes = StructuralObject.SetValidValue(value, "AvailabilityEmailMinutes");
-                ReportPropertyChanged("AvailabilityEmailMinutes");
-                OnAvailabilityEmailMinutesChanged();
+                OnConfirmationEmailMinutesChanging(value);
+                ReportPropertyChanging("ConfirmationEmailMinutes");
+                _ConfirmationEmailMinutes = StructuralObject.SetValidValue(value, "ConfirmationEmailMinutes");
+                ReportPropertyChanged("ConfirmationEmailMinutes");
+                OnConfirmationEmailMinutesChanged();
             }
         }
-        private Nullable<global::System.Int16> _AvailabilityEmailMinutes;
-        partial void OnAvailabilityEmailMinutesChanging(Nullable<global::System.Int16> value);
-        partial void OnAvailabilityEmailMinutesChanged();
+        private Nullable<global::System.Int16> _ConfirmationEmailMinutes;
+        partial void OnConfirmationEmailMinutesChanging(Nullable<global::System.Int16> value);
+        partial void OnConfirmationEmailMinutesChanged();
 
         #endregion
 

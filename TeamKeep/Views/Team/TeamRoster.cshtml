@@ -94,14 +94,14 @@
                 <td class="max">
                     <input type="text" class="mod" data-bind="value: FirstName, editable: $parents[1].Editable, event: { change: Update }" />
                 </td>
-                <td  class="position">
+                <td  class="position" data-bind="visible: $root.Columns()[3].Visible">
                     <input type="text" class="mod" data-bind="value: Position, editable: $parents[1].Editable, event: { change: Update }" />
                 </td>
                 <!-- ko if: $root.Editable -->
-                <td class="phone" data-bind="visible: $root.Columns()[3].Visible">
+                <td class="phone" data-bind="visible: $root.Columns()[4].Visible">
                     <input type="tel" class="mod" data-bind="value: Phone, editable: $parents[1].Editable, event: { change: Update }" />
                 </td>
-                <td class="email" data-bind="visible: $root.Columns()[4].Visible">
+                <td class="email" data-bind="visible: $root.Columns()[5].Visible">
                     <input type="email" class="mod" data-bind="value: Email, editable: $parents[1].Editable, event: { change: Update }" />
                 </td>
                 <!-- /ko -->
@@ -230,7 +230,7 @@
         // groupId =
         // -1 - add to most recent group
         // undefined - create new group and add to that
-        // 1+ - add to this group id
+        // 1+ - add to this groupId
         this.AddPlayer = function (groupId) {
 
             $(".group-select button").prop("disabled", true);

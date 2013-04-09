@@ -77,6 +77,7 @@
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Order" Type="smallint" Nullable="false" />
+          <Property Name="SendConfirmations" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SeasonData">
           <Key>
@@ -123,7 +124,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TeamId" Type="int" Nullable="false" />
-          <Property Name="AvailabilityEmailMinutes" Type="smallint" />
+          <Property Name="ConfirmationEmailMinutes" Type="smallint" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -147,12 +148,12 @@
           <EntitySet Name="PlayerDatas" EntityType="DatabaseModel.PlayerData" />
           <EntitySet Name="PlayerGroupDatas" EntityType="DatabaseModel.PlayerGroupData" />
           <EntitySet Name="SeasonDatas" EntityType="DatabaseModel.SeasonData" />
-          <EntitySet Name="TeamDatas" EntityType="DatabaseModel.TeamData" />
           <EntitySet Name="TeamOwnerDatas" EntityType="DatabaseModel.TeamOwnerData" />
           <EntitySet Name="TeamPrivacyDatas" EntityType="DatabaseModel.TeamPrivacyData" />
           <EntitySet Name="UserDatas" EntityType="DatabaseModel.UserData" />
           <EntitySet Name="AvailabilityDatas" EntityType="DatabaseModel.AvailabilityData" />
           <EntitySet Name="TeamSettingsDatas" EntityType="DatabaseModel.TeamSettingsData" />
+          <EntitySet Name="TeamDatas" EntityType="DatabaseModel.TeamData" />
         </EntityContainer>
         <EntityType Name="GameData">
           <Key>
@@ -201,6 +202,7 @@
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="Order" Type="Int16" Nullable="false" />
+          <Property Type="Boolean" Name="SendConfirmations" Nullable="false" />
         </EntityType>
         <EntityType Name="SeasonData">
           <Key>
@@ -212,17 +214,6 @@
           <Property Name="LeagueId" Type="Int32" />
           <Property Name="TeamId" Type="Int32" />
           <Property Name="Order" Type="Int16" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TeamData">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="75" Unicode="true" FixedLength="false" />
-          <Property Name="Announcements" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Banner" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="ResultsView" Type="Int16" Nullable="false" />
-          <Property Name="Postal" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
         </EntityType>
         <EntityType Name="TeamOwnerData">
           <Key>
@@ -271,7 +262,18 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="TeamId" Nullable="false" />
-          <Property Type="Int16" Name="AvailabilityEmailMinutes" />
+          <Property Type="Int16" Name="ConfirmationEmailMinutes" />
+        </EntityType>
+        <EntityType Name="TeamData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Announcements" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Banner" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int16" Name="ResultsView" Nullable="false" />
+          <Property Type="String" Name="Postal" MaxLength="25" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -324,6 +326,7 @@
           <EntitySetMapping Name="PlayerGroupDatas">
             <EntityTypeMapping TypeName="DatabaseModel.PlayerGroupData">
               <MappingFragment StoreEntitySet="PlayerGroupData">
+                <ScalarProperty Name="SendConfirmations" ColumnName="SendConfirmations" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -340,18 +343,6 @@
                 <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TeamDatas">
-            <EntityTypeMapping TypeName="DatabaseModel.TeamData">
-              <MappingFragment StoreEntitySet="TeamData">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Announcements" ColumnName="Announcements" />
-                <ScalarProperty Name="Banner" ColumnName="Banner" />
-                <ScalarProperty Name="ResultsView" ColumnName="ResultsView" />
-                <ScalarProperty Name="Postal" ColumnName="Postal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -403,8 +394,20 @@
           <EntitySetMapping Name="TeamSettingsDatas">
             <EntityTypeMapping TypeName="DatabaseModel.TeamSettingsData">
               <MappingFragment StoreEntitySet="TeamSettingsData">
-                <ScalarProperty Name="AvailabilityEmailMinutes" ColumnName="AvailabilityEmailMinutes" />
+                <ScalarProperty Name="ConfirmationEmailMinutes" ColumnName="ConfirmationEmailMinutes" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.TeamData">
+              <MappingFragment StoreEntitySet="TeamData">
+                <ScalarProperty Name="Postal" ColumnName="Postal" />
+                <ScalarProperty Name="ResultsView" ColumnName="ResultsView" />
+                <ScalarProperty Name="Banner" ColumnName="Banner" />
+                <ScalarProperty Name="Announcements" ColumnName="Announcements" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

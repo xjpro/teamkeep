@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using TeamKeep.Models.DataModels;
 
 namespace TeamKeep.Models
@@ -47,7 +48,14 @@ namespace TeamKeep.Models
                 {
                     return null;
                 }
-                return Location.Description + " " + Location.Street + " " + Location.City + " " + Location.Postal;
+
+                var address = new StringBuilder();
+                if (!string.IsNullOrWhiteSpace(Location.Description)) address.Append(Location.Description);
+                if (!string.IsNullOrWhiteSpace(Location.Street)) address.Append(" " + Location.Street);
+                if (!string.IsNullOrWhiteSpace(Location.City)) address.Append(" " + Location.City);
+                if (!string.IsNullOrWhiteSpace(Location.Postal)) address.Append(" " + Location.Postal);
+                //if (!string.IsNullOrWhiteSpace(Location.InternalLocation)) address.Append(", " + Location.InternalLocation);
+                return address.ToString().Trim();
             }
         }
     }

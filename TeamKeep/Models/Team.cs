@@ -29,6 +29,7 @@ namespace TeamKeep.Models
         public List<User> Owners { get; set; }
         public List<PlayerGroup> PlayerGroups { get; set; }
         public List<Season> Seasons { get; set; }
+        public TeamSettingsData Settings { get; set; }
         public TeamPrivacyData Privacy { get; set; }
         public bool Editable { get; set; }
 

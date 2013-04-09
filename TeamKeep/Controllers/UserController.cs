@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using TeamKeep.Models.ViewModels;
 using TeamKeep.Models;
-using System.Text.RegularExpressions;
 using TeamKeep.Services;
 
 namespace TeamKeep.Controllers
@@ -14,7 +13,7 @@ namespace TeamKeep.Controllers
         [HttpPost]
         public JsonResult Create(User user)
         {
-            if (string.IsNullOrEmpty(user.Email) || !IsValidEmail(user.Email))
+            if (string.IsNullOrEmpty(user.Email) || !EmailService.IsValidEmail(user.Email))
             {
                 Response.StatusCode = 400;
                 return Json("Please use a valid e-mail address");
@@ -142,7 +141,7 @@ namespace TeamKeep.Controllers
         [HttpPost]
         public JsonResult PasswordReset(PasswordReset reset)
         {
-            if (!IsValidEmail(reset.Email))
+            if (!EmailService.IsValidEmail(reset.Email))
             {
                 Response.StatusCode = 400;
                 return Json("Please enter your e-mail address");
@@ -156,14 +155,13 @@ namespace TeamKeep.Controllers
                 return Json("That e-mail is not registered");
             }
 
-            reset.ResetToken = AuthToken.Generate(user.Id, user.Email).Key;
+            reset.ResetToken = AuthToken.GenerateKey(user.Email);
             _userService.SetResetHash(user.Id, reset.ResetToken);
 
             // Make this async or something? it seems to fail sending back or something...
             try
             {
                 _emailService.EmailPassword(reset);
-                //_emailService.SendAllQueuedEmails();
             }
             catch (Exception)
             {
@@ -173,12 +171,6 @@ namespace TeamKeep.Controllers
             }
 
             return Json("");
-        }
-
-        private bool IsValidEmail(string test)
-        {
-            if (string.IsNullOrEmpty(test)) return false;
-            return new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)\b", RegexOptions.IgnoreCase).IsMatch(test.Trim());
         }
     }
 }

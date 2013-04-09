@@ -42,6 +42,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Common.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -183,7 +187,9 @@
       <DependentUpon>Entities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\AvailabilityLandingViewModel.cs" />
-    <Compile Include="Services\AutomatedTasksService.cs" />
+    <Compile Include="Models\ViewModels\TeamSettingsViewModel.cs" />
+    <Compile Include="Services\AutomatedEmailsJob.cs" />
+    <Compile Include="Services\AutomatedScheduler.cs" />
     <Compile Include="Services\Database.cs" />
     <Compile Include="Models\PasswordReset.cs" />
     <Compile Include="Models\Game.cs" />
@@ -217,6 +223,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Emails\availability.htm" />
     <Content Include="Emails\welcome.htm" />
+    <Content Include="Libraries\Common.Logging.dll" />
     <Content Include="Libraries\Quartz.dll" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\font-awesome.min.css" />

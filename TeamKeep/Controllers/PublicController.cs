@@ -58,8 +58,7 @@ namespace TeamKeep.Controllers
         [HttpGet]
         public ActionResult Test()
         {
-            new AutomatedTasksService.AutomatedEmailsJob().Execute(null);
-
+            new AutomatedEmailsJob().Execute(null);
 
             string debug;
             #if DEBUG

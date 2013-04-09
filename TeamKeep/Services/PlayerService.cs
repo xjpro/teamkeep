@@ -187,8 +187,7 @@ namespace TeamKeep.Services
                 
                 var eventData = entities.GameDatas.Single(x => x.Id == requestData.EventId);
                 var eventLocationData = entities.GameLocationDatas.Single(x => x.GameId == requestData.EventId);
-                var abEvent = new Game(eventData);
-                abEvent.Location = eventLocationData;
+                var abEvent = new Game(eventData) {Location = eventLocationData};
 
                 var request = new AvailabilityRequest
                 {

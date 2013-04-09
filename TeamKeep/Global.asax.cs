@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using TeamKeep.App_Start;
+using TeamKeep.Services;
 
 namespace TeamKeep
 {
@@ -15,6 +16,13 @@ namespace TeamKeep
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
+            AutomatedScheduler.Start();
+        }
+
+        protected void Application_End()
+        {
+            AutomatedScheduler.Stop();
         }
     }
 }

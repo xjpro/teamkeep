@@ -62,6 +62,20 @@
                         <label>Name</label><input type="text" data-bind="value: NewName"/>
                     </li>
                 </ul>
+                
+                <!-- ko if: PlayerGroups().length > 0 -->
+                <h4>Event Confirmation</h4>
+                <label class="checkbox">
+                    <input type="checkbox" data-bind="checked: Settings.ConfirmationEmailMinutes"/> Send event confirmation to members of these groups:
+                </label>
+                <fieldset data-bind="foreach: PlayerGroups">
+                    <div>
+                        <label class="checkbox">
+                            <input type="checkbox" data-bind="checked: SendConfirmations" /> <span data-bind="text: Name"></span>    
+                        </label>
+                    </div>
+                </fieldset>
+                <!-- /ko -->
 
                 <h4>Privacy</h4>
                 <ul>
@@ -219,9 +233,19 @@
         ko.applyBindings(window.teamLinksViewModel, document.getElementById("team-data-links"));
     });
 
-    var TeamHomeViewModel = function(data) {
+    var TeamHomeViewModel = function() {
         var me = this;
-        ko.mapping.fromJS(data, {}, this);
+        
+        // From shared storage
+        this.Editable = teamViewModel.Editable;
+        this.PlayerGroups = teamViewModel.PlayerGroups;
+        this.Id = teamViewModel.Id;
+        this.Url = teamViewModel.Url;
+        this.Name = teamViewModel.Name;
+        this.BannerImage = teamViewModel.BannerImage;
+        this.Announcement = teamViewModel.Announcement;
+        this.Settings = teamViewModel.Settings;
+        this.Privacy = teamViewModel.Privacy;
 
         this.NewName = ko.observable(me.Name());
 
@@ -258,12 +282,20 @@
 
             $("#team-settings-modal .icon-refresh").show();
             $("#team-settings-modal button").prop("disabled", true);
+
+            var confirmationGroups = _.select(me.PlayerGroups(), function (group) { return group.SendConfirmations(); });
+            var confirmationGroupsList = [];
+            _.each(confirmationGroups, function (group) { confirmationGroupsList.push(group.Id()); });
+
             $.ajax({
                 type: "PUT",
                 url: me.Url() + "/settings", contentType: "application/json",
                 data: JSON.stringify({
+                    TeamId: me.Id(),
                     Name: me.NewName(),
-                    Privacy: ko.mapping.toJS(me.Privacy)
+                    Privacy: ko.mapping.toJS(me.Privacy),
+                    SendConfirmations: me.Settings.ConfirmationEmailMinutes(),
+                    SendConfirmationGroups: confirmationGroupsList
                 }),
                 success: function (response) {
                     window.location = response.Url;
@@ -314,9 +346,12 @@
             });
         };
     };
-    window.teamHomeViewModel = ko.mapping.fromJS(viewData.Team, ko.mapping.toViewModel(TeamHomeViewModel));
-    ko.applyBindings(window.teamHomeViewModel, document.getElementById("team-info"));
     
+    $(function() {
+        window.teamHomeViewModel = new TeamHomeViewModel();
+        ko.applyBindings(window.teamHomeViewModel, document.getElementById("team-info"));
+    });
+
     $("#team-announcement textarea").autosize();
     $("#banner-file").change(function() {
         $("#banner-file-name").val($(this).val());

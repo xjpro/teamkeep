@@ -114,7 +114,7 @@ i {
     list-style: none;
     padding: 0;
     margin: 0;
-    border: solid #666;
+    border: solid #999;
     border-width: 1px 0;
     margin-bottom: 30px;
 }
@@ -135,6 +135,14 @@ i {
 
 #team-settings li:last-child {
     border-bottom: none;
+}
+#team-settings fieldset {
+    margin: 10px 0 20px 0;
+    padding: 10px 0;
+    border: solid #999 1px;   
+}
+#team-settings fieldset > div {
+    margin-left: 20px;
 }
 
 .insert-form {
