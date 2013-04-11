@@ -186,6 +186,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Entities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ServiceResponses\EmailConfirmationsServiceResponse.cs" />
     <Compile Include="Models\ViewModels\AvailabilityLandingViewModel.cs" />
     <Compile Include="Models\ViewModels\TeamSettingsViewModel.cs" />
     <Compile Include="Services\AutomatedEmailsJob.cs" />

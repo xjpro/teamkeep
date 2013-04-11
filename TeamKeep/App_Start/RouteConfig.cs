@@ -56,6 +56,7 @@ namespace TeamKeep.App_Start
             routes.MapRoute("GameCreate", "games", new { controller = "Game", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
             routes.MapRoute("GameUpdate", "games/{gameId}", new { controller = "Game", action = "Update" }, new { httpMethod = new HttpMethodConstraint("PUT") });
             routes.MapRoute("GameDelete", "games/{gameId}", new { controller = "Game", action = "Delete" }, new { httpMethod = new HttpMethodConstraint("DELETE") });
+            routes.MapRoute("GameConfirmations", "games/{gameId}/confirmations", new { controller = "Game", action = "SendConfirmations" }, new { httpMethod = new HttpMethodConstraint("POST") });
         }
     }
 }

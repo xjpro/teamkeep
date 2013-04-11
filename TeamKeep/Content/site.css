@@ -83,6 +83,20 @@ i {
     top: 4%;
 }
 
+#email-modal .event {
+    margin-bottom: 20px;
+}
+#email-modal .event label {
+    display: inline-block;
+    width: 80px;
+}
+#email-modal .heading {
+    border-bottom: solid #999 1px;
+}
+#email-modal label.disabled {
+    color: #ccc;
+}
+
 #front-header button {
     margin-left: 10px;
 }
@@ -360,6 +374,7 @@ i {
     -ms-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);*/
+    position: relative;
     height: 64px;
     padding: 0;
     border-width: 1px 0;
@@ -380,6 +395,12 @@ i {
     line-height: 0.5em;
     letter-spacing: 1px;
 }
+.table-container th.angled > span > span {
+    cursor: pointer;
+}
+.table-container th.angled > span > span.past {
+    cursor: default;
+}
 .table-container th.angled > span > span:after {
     content: '';
     position: absolute;
@@ -398,6 +419,11 @@ i {
 }
 .table-container th.angled:last-child > span > span:after {
     border-top-width: 1px;
+}
+.table-container th.angled button {
+    position: absolute;
+    bottom: 0px;
+    right: -16px;
 }
 
 .swatch {

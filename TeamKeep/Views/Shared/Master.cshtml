@@ -23,11 +23,19 @@
         </div>
         <script>
             window.alertTimeout = null;
-            window.ShowAlert = function(message) {
+            window.ShowAlert = function(message, cssClass) {
                 if (window.alertTimeout != null) {
                     clearTimeout(window.alertTimeout);
                 }
-                $("#message-modal .alert-error span").html(message);
+
+                $("#message-modal .alert").removeClass("alert-error alert-success alert-info");
+                if (typeof cssClass !== "undefined") {
+                    $("#message-modal .alert").addClass(cssClass);
+                } else {
+                    $("#message-modal .alert").addClass("alert-error");
+                }
+
+                $("#message-modal .alert span").html(message);
                 $("#message-modal").modal({ backdrop: false }).modal("show");
                 window.alertTimeout = setTimeout(function() {
                     $("#message-modal").modal("hide");

@@ -3,6 +3,7 @@ using TeamKeep.Models;
 using TeamKeep.Models.DataModels;
 using System;
 using System.Collections.Generic;
+using TeamKeep.Models.ServiceResponses;
 
 namespace TeamKeep.Services
 {
@@ -234,5 +235,74 @@ namespace TeamKeep.Services
                 entities.SaveChanges();
             }
         }
+
+        public EmailConfirmationsServiceResponse SendConfirmationEmails(int gameId, List<int> playerIds)
+        {
+            var game = GetGame(gameId);
+            if (game == null) return new EmailConfirmationsServiceResponse {Error = true, Message = "Event not found"};
+            if (game.Date == null) return new EmailConfirmationsServiceResponse { Error = true, Message = "Cannot send confirmations for an event with no date" };
+            // TODO we also need to check with time zones in mind!
+            if (game.Date.Value.CompareTo(DateTime.Now) <= 0) return new EmailConfirmationsServiceResponse { Error = true, Message = "Event has already past" }; 
+
+            var emailService = new EmailService { AutomaticallySend = false };
+            var alreadySentEmails = new List<string>();
+            var updatedAvailabilites = new List<AvailabilityData>();
+
+            using (var entities = Database.GetEntities())
+            {
+                var playerDatas = playerIds.Select(playerId => entities.PlayerDatas.Single(x => x.Id == playerId)).ToList();
+                foreach (var playerData in playerDatas)
+                {
+                    // Preliminary filtering 
+                    if (!EmailService.IsValidEmail(playerData.Email)) continue;
+                    if (entities.PlayerGroupDatas.Single(x => x.Id == playerData.GroupId).TeamId != game.HomeTeamId) continue; // Player doesn't belong to this team, what?
+                    // End filtering
+
+                    // Retrieve availability data
+                    var abData = entities.AvailabilityDatas.SingleOrDefault(x => x.EventId == gameId && x.PlayerId == playerData.Id);
+                    if (abData != null && abData.EmailSent != null) continue; // Email was already sent to this player ID
+
+                    if (abData == null) // Generate an availability entry for them
+                    {
+                        abData = new AvailabilityData { EventId = gameId, PlayerId = playerData.Id };
+                        entities.AvailabilityDatas.AddObject(abData);
+                    }
+
+                    if (alreadySentEmails.Contains(playerData.Email.ToLower())) // An email was already sent to this address
+                    {
+                        if (abData.EmailSent == null)
+                        {
+                            abData.EmailSent = DateTime.Now; // Prevents double sending on a second try
+                            updatedAvailabilites.Add(abData);
+                            entities.SaveChanges();
+                        }
+                        continue; 
+                    }
+
+                    // Okay, we've made it past the filtering
+
+                    abData.Token = AuthToken.GenerateKey(playerData.Email); // TODO this might be accidently sent to client BAD
+                    abData.EmailSent = DateTime.Now;
+                    updatedAvailabilites.Add(abData);
+                    entities.SaveChanges();
+                    
+                    var abRequest = new AvailabilityRequest
+                    {
+                        Data = abData,
+                        Event = game,
+                        Email = playerData.Email,
+                        TeamName = entities.TeamDatas.Single(x => x.Id == game.HomeTeamId).Name
+                    };
+
+                    // Send out the email!
+                    emailService.EmailAvailability(abRequest);
+                    alreadySentEmails.Add(playerData.Email.ToLower());
+                }
+            }
+
+            emailService.SendQueuedMessages();
+            return new EmailConfirmationsServiceResponse { UpdatedAvailabilities = updatedAvailabilites };
+        }
+
     }
 }

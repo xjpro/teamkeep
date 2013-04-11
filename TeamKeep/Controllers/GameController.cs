@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TeamKeep.Models;
@@ -115,6 +116,32 @@ namespace TeamKeep.Controllers
             _gameService.RemoveSeason(season.Id);
 
             return Json(null);
+        }
+
+        [HttpPost]
+        public JsonResult SendConfirmations(int gameId, List<int> playerIds)
+        {
+            var activeUser = this.GetActiveUser(this.Request);
+            if (!_gameService.CanEditGame(activeUser.Id, gameId))
+            {
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to send emails for this team");
+            }
+
+            if (playerIds == null || playerIds.Count == 0)
+            {
+                Response.StatusCode = 400;
+                return Json("You must specify at least one player to send confirmation to");
+            }
+
+            var serviceResponse = _gameService.SendConfirmationEmails(gameId, playerIds);
+
+            if (serviceResponse.Error)
+            {
+                Response.StatusCode = 400;
+                return Json(serviceResponse.Message);
+            }
+           
+            return Json(serviceResponse);
         }
     }
 }

@@ -41,6 +41,9 @@ var PlayerGroupViewModel = function (data) {
         "DELETE": window.viewData.Team.Url + "/groups/" + me.Id()
     }));
 
+    this.FindPlayer = function (id) {
+        return _.find(me.Players(), function(player) { return player.Id() == id; });
+    }
     this.Selected = function () {
         window.teamRosterViewModel.SelectedGroup(me);
     };
@@ -218,10 +221,18 @@ var PlayerViewModel = function (data) {
 
         return null;
     };
-    this.AvailabilityIcon = function(game) {
+    this.AvailabilityForEvent = function (event) {
         var availability = _.find(me.Availability(), function (ab) {
-            return ab.EventId() == game.Id();
+            return ab.EventId() == event.Id();
         });
+        return availability;
+    };
+    this.AvailabilityEmailSent = function (game) {
+        var availability = me.AvailabilityForEvent(game);
+        return (availability && availability.EmailSent() != null) ? moment(parseInt(availability.EmailSent().substr(6))).format("M/D") : null;
+    };
+    this.AvailabilityIcon = function(game) {
+        var availability = me.AvailabilityForEvent(game);
 
         if (availability) {
             switch (availability.AdminStatus()) {
@@ -233,9 +244,7 @@ var PlayerViewModel = function (data) {
         return "";
     };
     this.AvailabilityCss = function(game) {
-        var availability = _.find(me.Availability(), function (ab) {
-            return ab.EventId() == game.Id();
-        });
+        var availability = me.AvailabilityForEvent(game);
         
         if (availability) {
             switch (availability.RepliedStatus()) {
