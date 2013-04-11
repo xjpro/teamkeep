@@ -110,7 +110,7 @@
         </ul>
         <!-- /ko -->
         
-        <h4>Send emails to:</h4>
+        <h4>Send reminders to:</h4>
         <!-- ko foreach: PlayerGroups -->
         <!-- ko if: Players().length > 0 -->
         <ul class="unstyled">
@@ -239,7 +239,7 @@
         };
         
         // Confirmation Emails
-        this.SelectedEvent = ko.observable(me.Seasons()[0].Games()[0]);
+        this.SelectedEvent = ko.observable();
         this.SelectedPlayers = ko.observableArray([]);
         this.TogglePlayerGroupSelected = function (domElement) {
             var checked = $(domElement).is(":checked");
@@ -290,6 +290,8 @@
                             player.Availability.push(koAb);
                         }
                     });
+
+                    $("#email-modal input[type='checkbox']:checked").click();
                 },
                 error: function (response) {
                     window.ShowAlert(JSON.parse(response.responseText));

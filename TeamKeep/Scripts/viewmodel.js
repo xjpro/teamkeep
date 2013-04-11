@@ -174,6 +174,7 @@ var PlayerViewModel = function (data) {
     }));
 
     this.FullName = ko.computed(function () {
+        if (me.FirstName() == null && me.LastName() == null) return "[Unnamed]";
         if (me.FirstName() == null) return me.LastName();
         if (me.LastName() == null) return me.FirstName();
         return me.FirstName() + " " + me.LastName();
@@ -222,6 +223,7 @@ var PlayerViewModel = function (data) {
         return null;
     };
     this.AvailabilityForEvent = function (event) {
+        if (!event) return null;
         var availability = _.find(me.Availability(), function (ab) {
             return ab.EventId() == event.Id();
         });

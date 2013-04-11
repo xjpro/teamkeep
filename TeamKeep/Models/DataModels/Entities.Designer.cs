@@ -116,22 +116,6 @@ namespace TeamKeep.Models.DataModels
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PlayerGroupData> PlayerGroupDatas
-        {
-            get
-            {
-                if ((_PlayerGroupDatas == null))
-                {
-                    _PlayerGroupDatas = base.CreateObjectSet<PlayerGroupData>("PlayerGroupDatas");
-                }
-                return _PlayerGroupDatas;
-            }
-        }
-        private ObjectSet<PlayerGroupData> _PlayerGroupDatas;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<SeasonData> SeasonDatas
         {
             get
@@ -240,6 +224,22 @@ namespace TeamKeep.Models.DataModels
             }
         }
         private ObjectSet<TeamData> _TeamDatas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PlayerGroupData> PlayerGroupDatas
+        {
+            get
+            {
+                if ((_PlayerGroupDatas == null))
+                {
+                    _PlayerGroupDatas = base.CreateObjectSet<PlayerGroupData>("PlayerGroupDatas");
+                }
+                return _PlayerGroupDatas;
+            }
+        }
+        private ObjectSet<PlayerGroupData> _PlayerGroupDatas;
 
         #endregion
 
@@ -267,14 +267,6 @@ namespace TeamKeep.Models.DataModels
         public void AddToPlayerDatas(PlayerData playerData)
         {
             base.AddObject("PlayerDatas", playerData);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PlayerGroupDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPlayerGroupDatas(PlayerGroupData playerGroupData)
-        {
-            base.AddObject("PlayerGroupDatas", playerGroupData);
         }
     
         /// <summary>
@@ -331,6 +323,14 @@ namespace TeamKeep.Models.DataModels
         public void AddToTeamDatas(TeamData teamData)
         {
             base.AddObject("TeamDatas", teamData);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PlayerGroupDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPlayerGroupDatas(PlayerGroupData playerGroupData)
+        {
+            base.AddObject("PlayerGroupDatas", playerGroupData);
         }
 
         #endregion
@@ -1244,15 +1244,13 @@ namespace TeamKeep.Models.DataModels
         /// <param name="teamId">Initial value of the TeamId property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="order">Initial value of the Order property.</param>
-        /// <param name="sendConfirmations">Initial value of the SendConfirmations property.</param>
-        public static PlayerGroupData CreatePlayerGroupData(global::System.Int32 id, global::System.Int32 teamId, global::System.String name, global::System.Int16 order, global::System.Boolean sendConfirmations)
+        public static PlayerGroupData CreatePlayerGroupData(global::System.Int32 id, global::System.Int32 teamId, global::System.String name, global::System.Int16 order)
         {
             PlayerGroupData playerGroupData = new PlayerGroupData();
             playerGroupData.Id = id;
             playerGroupData.TeamId = teamId;
             playerGroupData.Name = name;
             playerGroupData.Order = order;
-            playerGroupData.SendConfirmations = sendConfirmations;
             return playerGroupData;
         }
 
@@ -1358,30 +1356,6 @@ namespace TeamKeep.Models.DataModels
         private global::System.Int16 _Order;
         partial void OnOrderChanging(global::System.Int16 value);
         partial void OnOrderChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean SendConfirmations
-        {
-            get
-            {
-                return _SendConfirmations;
-            }
-            set
-            {
-                OnSendConfirmationsChanging(value);
-                ReportPropertyChanging("SendConfirmations");
-                _SendConfirmations = StructuralObject.SetValidValue(value, "SendConfirmations");
-                ReportPropertyChanged("SendConfirmations");
-                OnSendConfirmationsChanged();
-            }
-        }
-        private global::System.Boolean _SendConfirmations;
-        partial void OnSendConfirmationsChanging(global::System.Boolean value);
-        partial void OnSendConfirmationsChanged();
 
         #endregion
 

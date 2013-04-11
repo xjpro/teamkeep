@@ -43,8 +43,7 @@ namespace TeamKeep.Services
                         Id = groupData.Id,
                         TeamId = groupData.TeamId,
                         Name = groupData.Name,
-                        Order = groupData.Order,
-                        SendConfirmations = groupData.SendConfirmations
+                        Order = groupData.Order
                     }).ToList();
 
                 foreach (var playerGroup in playerGroupDatas)
@@ -185,18 +184,6 @@ namespace TeamKeep.Services
                 else
                 {
                     settingsData.ConfirmationEmailMinutes = null;
-                }
-
-                // Update player groups
-                var playerGroups = entities.PlayerGroupDatas.Where(x => x.TeamId == settings.TeamId).ToList();
-                playerGroups.ForEach(x => x.SendConfirmations = false);
-                if (settings.SendConfirmationGroups != null)
-                {
-                    foreach (var playerGroupSettingId in settings.SendConfirmationGroups)
-                    {
-                        var playerGroup = playerGroups.FirstOrDefault(x => x.Id == playerGroupSettingId);
-                        if (playerGroup != null) playerGroup.SendConfirmations = true;
-                    }
                 }
 
                 // Update privacy

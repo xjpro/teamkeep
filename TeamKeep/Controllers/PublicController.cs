@@ -43,6 +43,7 @@ namespace TeamKeep.Controllers
                 viewModel.AvailabilityRequest = _playerService.GetAvailabilityRequest(token);
             }
 
+            viewModel.Title = (viewModel.AvailabilityRequest != null) ? viewModel.AvailabilityRequest.TeamName + " Event" : "Not found";
             viewModel.User = this.GetActiveUser(this.Request);
 
             return View(viewModel);

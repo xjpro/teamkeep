@@ -428,8 +428,9 @@ i {
 
 .swatch {
     display: inline-block;
-    width: 25px;
-    height: 25px;
+    width: 14px;
+    height: 14px;
+    border: solid gray 1px;
 }
 .going {
     background: #d9fcd1;
@@ -636,6 +637,7 @@ i {
     position: absolute;
     top: 54px;
     text-decoration: none;
+    z-index: 1500;
 }
 #availability-prev {
     right: 457px;

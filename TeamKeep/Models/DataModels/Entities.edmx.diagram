@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="DatabaseModel.GameData" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.GameLocationData" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.PlayerData" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.PlayerGroupData" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.SeasonData" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.TeamOwnerData" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.TeamPrivacyData" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
@@ -16,6 +15,7 @@
         <EntityTypeShape EntityType="DatabaseModel.AvailabilityData" Width="1.5" PointX="9" PointY="1.875" />
         <EntityTypeShape EntityType="DatabaseModel.TeamSettingsData" Width="1.5" PointX="4.75" PointY="6.125" />
         <EntityTypeShape EntityType="DatabaseModel.TeamData" Width="1.5" PointX="4.75" PointY="3.625" />
+        <EntityTypeShape EntityType="DatabaseModel.PlayerGroupData" Width="1.5" PointX="0.75" PointY="3.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
