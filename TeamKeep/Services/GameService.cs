@@ -246,7 +246,7 @@ namespace TeamKeep.Services
 
             var emailService = new EmailService { AutomaticallySend = false };
             var alreadySentEmails = new List<string>();
-            var updatedAvailabilites = new List<AvailabilityData>();
+            var updatedAvailabilites = new List<Availability>();
 
             using (var entities = Database.GetEntities())
             {
@@ -273,7 +273,7 @@ namespace TeamKeep.Services
                         if (abData.EmailSent == null)
                         {
                             abData.EmailSent = DateTime.Now; // Prevents double sending on a second try
-                            updatedAvailabilites.Add(abData);
+                            updatedAvailabilites.Add(new Availability(abData));
                             entities.SaveChanges();
                         }
                         continue; 
@@ -283,7 +283,7 @@ namespace TeamKeep.Services
 
                     abData.Token = AuthToken.GenerateKey(playerData.Email); // TODO this might be accidently sent to client BAD
                     abData.EmailSent = DateTime.Now;
-                    updatedAvailabilites.Add(abData);
+                    updatedAvailabilites.Add(new Availability(abData));
                     entities.SaveChanges();
                     
                     var abRequest = new AvailabilityRequest

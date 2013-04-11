@@ -54,7 +54,16 @@ namespace TeamKeep.Services
                     var playerDatas = entities.PlayerDatas.Where(x => x.GroupId == playerGroup.Id).ToList();
                     foreach (var player in playerDatas.Select(playerData => new Player(playerData)))
                     {
-                        player.Availability = entities.AvailabilityDatas.Where(x => x.PlayerId == player.Id).ToList();
+                        player.Availability = entities.AvailabilityDatas.Where(x => x.PlayerId == player.Id).Select(abData => new Availability
+                        {
+                            Id = abData.Id,
+                            EventId = abData.EventId,
+                            PlayerId = abData.PlayerId,
+                            EmailSent = abData.EmailSent,
+                            Token = abData.Token,
+                            AdminStatus = abData.AdminStatus,
+                            RepliedStatus = abData.RepliedStatus
+                        }).ToList();
                         players.Add(player);
                     }
 

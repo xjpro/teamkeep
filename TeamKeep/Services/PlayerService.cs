@@ -112,7 +112,17 @@ namespace TeamKeep.Services
                 if (playerData == null) return null;
 
                 var player = new Player(playerData);
-                player.Availability = entities.AvailabilityDatas.Where(x => x.PlayerId == player.Id).ToList();
+                player.Availability = entities.AvailabilityDatas.Where(x => x.PlayerId == player.Id).Select(abData => new Availability
+                {
+                    Id = abData.Id,
+                    EventId = abData.EventId,
+                    PlayerId = abData.PlayerId,
+                    EmailSent = abData.EmailSent,
+                    Token = abData.Token,
+                    AdminStatus = abData.AdminStatus,
+                    RepliedStatus = abData.RepliedStatus
+                }).ToList();
+
                 return player;
             }
         }
@@ -134,7 +144,7 @@ namespace TeamKeep.Services
                 entities.SaveChanges();
 
                 player.Id = playerData.Id;
-                player.Availability = new List<AvailabilityData>();
+                player.Availability = new List<Availability>();
                 return player;
             }
         }

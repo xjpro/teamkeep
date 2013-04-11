@@ -180,6 +180,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AuthToken.cs" />
+    <Compile Include="Models\Availability.cs" />
     <Compile Include="Models\AvailabilityRequest.cs" />
     <Compile Include="Models\DataModels\Entities.Designer.cs">
       <AutoGen>True</AutoGen>

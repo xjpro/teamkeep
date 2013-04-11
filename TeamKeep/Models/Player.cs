@@ -20,6 +20,6 @@ namespace TeamKeep.Models
             GroupId = data.GroupId;
         }
 
-        public List<AvailabilityData> Availability { get; set; }
+        public List<Availability> Availability { get; set; }
     }
 }
