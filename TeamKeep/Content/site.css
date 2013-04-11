@@ -568,7 +568,7 @@ i {
 }
 
 .editor {
-    z-index: 1500;
+    z-index: 1000;
     display: none;
     position:absolute;
     padding: 15px;
@@ -637,7 +637,7 @@ i {
     position: absolute;
     top: 54px;
     text-decoration: none;
-    z-index: 1500;
+    z-index: 1000;
 }
 #availability-prev {
     right: 457px;

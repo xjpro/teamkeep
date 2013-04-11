@@ -286,7 +286,7 @@
 
                         if (player != null) {
                             var koAb = ko.mapping.fromJS(ab);
-                            player.Availability.remove(koAb); // if it exists, we'll replace it
+                            player.Availability.remove(function (curr) { return curr.Id() == koAb.Id(); }); // if it exists, we'll replace it
                             player.Availability.push(koAb);
                         }
                     });

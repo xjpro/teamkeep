@@ -275,10 +275,6 @@
             $("#team-settings-modal .icon-refresh").show();
             $("#team-settings-modal button").prop("disabled", true);
 
-            var confirmationGroups = _.select(me.PlayerGroups(), function (group) { return group.SendConfirmations(); });
-            var confirmationGroupsList = [];
-            _.each(confirmationGroups, function (group) { confirmationGroupsList.push(group.Id()); });
-
             $.ajax({
                 type: "PUT",
                 url: me.Url() + "/settings", contentType: "application/json",
@@ -286,11 +282,10 @@
                     TeamId: me.Id(),
                     Name: me.NewName(),
                     Privacy: ko.mapping.toJS(me.Privacy),
-                    SendConfirmations: me.Settings.ConfirmationEmailMinutes(),
-                    SendConfirmationGroups: confirmationGroupsList
+                    SendConfirmations: me.Settings.ConfirmationEmailMinutes()
                 }),
                 success: function (response) {
-                    window.location = response.Url;
+                    window.location = "/teams/" + me.Id();
                 }
             });
         };
@@ -315,7 +310,7 @@
                     xhr.setRequestHeader("X-File-Name", file.name);
                     xhr.setRequestHeader("Content-Type", "multipart/form-data");
                 },
-                success: function() {
+                success: function () {
                     window.location.reload();
                 },
                 error: function (response) {
