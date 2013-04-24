@@ -1,5 +1,4 @@
-﻿using TeamKeep.Models.DataModels;
-namespace TeamKeep.Models.ViewModels
+﻿namespace TeamKeep.Models.ViewModels
 {
     public class AvailabilityLandingViewModel : BaseViewModel
     {

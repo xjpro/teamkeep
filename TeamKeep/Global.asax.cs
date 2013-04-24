@@ -1,7 +1,9 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using TeamKeep.App_Start;
+using log4net;
 
 namespace TeamKeep
 {
@@ -19,6 +21,14 @@ namespace TeamKeep
 
         protected void Application_End()
         {
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            var error = Server.GetLastError();
+
+            ILog log = LogManager.GetLogger("Log");
+            log.Fatal("Exception: " + error.Message + " | Stack: " + error.StackTrace);
         }
     }
 }

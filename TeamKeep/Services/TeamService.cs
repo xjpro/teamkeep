@@ -35,6 +35,17 @@ namespace TeamKeep.Services
                 team.Owners = teamOwnerUserIds.Select(ownerId => entities.UserDatas.Single(x => x.Id == ownerId))
                     .Select(userData => new User(userData)).ToList();
 
+                // Retrieve messages
+                team.Messages = entities.MessageDatas.Where(x => x.TeamId == team.Id).Select(msgData => new Message
+                {
+                    Id = msgData.Id,
+                    TeamId = msgData.TeamId,
+                    Date = msgData.Date,
+                    To = msgData.To,
+                    Subject = msgData.Subject,
+                    Content = msgData.Content
+                }).ToList();
+
                 // Retrieve player groups
 
                 var playerGroupDatas = entities.PlayerGroupDatas.Where(x => x.TeamId == team.Id).OrderBy(x => x.Order)
@@ -70,7 +81,8 @@ namespace TeamKeep.Services
                 }
                 team.PlayerGroups = playerGroupDatas;
 
-                // Retrieve team-submitted seasons
+                // Retrieve Seasons
+
                 var seasons = entities.SeasonDatas.Where(x => x.TeamId == team.Id).OrderBy(x => x.Order)
                     .Select(seasonData => new Season
                     {

@@ -9,6 +9,7 @@
           <EntitySet Name="AvailabilityData" EntityType="DatabaseModel.Store.AvailabilityData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GameData" EntityType="DatabaseModel.Store.GameData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GameLocationData" EntityType="DatabaseModel.Store.GameLocationData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MessageData" EntityType="DatabaseModel.Store.MessageData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PlayerData" EntityType="DatabaseModel.Store.PlayerData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PlayerGroupData" EntityType="DatabaseModel.Store.PlayerGroupData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SeasonData" EntityType="DatabaseModel.Store.SeasonData" store:Type="Tables" Schema="dbo" />
@@ -56,6 +57,17 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="Postal" Type="nvarchar" MaxLength="10" />
           <Property Name="InternalLocation" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MessageData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Content" Type="ntext" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="To" Type="ntext" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayerData">
           <Key>
@@ -153,6 +165,7 @@
           <EntitySet Name="TeamSettingsDatas" EntityType="DatabaseModel.TeamSettingsData" />
           <EntitySet Name="TeamDatas" EntityType="DatabaseModel.TeamData" />
           <EntitySet Name="PlayerGroupDatas" EntityType="DatabaseModel.PlayerGroupData" />
+          <EntitySet Name="MessageDatas" EntityType="DatabaseModel.MessageData" />
         </EntityContainer>
         <EntityType Name="GameData">
           <Key>
@@ -272,6 +285,17 @@
           <Property Type="Int32" Name="TeamId" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int16" Name="Order" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="Date" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="TeamId" Nullable="false" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="To" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -405,6 +429,18 @@
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.MessageData">
+              <MappingFragment StoreEntitySet="MessageData">
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

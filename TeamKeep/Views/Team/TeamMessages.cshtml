@@ -1,0 +1,107 @@
+﻿<div class="table-container">
+    <div class="table-controls">
+        <div class="column-select pull-left">
+        </div>
+        <div class="pull-right">
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <table>
+        <thead>
+            <tr data-bind="toggleHeader: Columns"></tr>
+        </thead>
+        <tbody>
+            <!-- ko if: Messages().length == 0 -->
+            <tr>
+                <td class="fullinfo" colspan="3">No messages have been recorded</td>
+            </tr>
+            <!-- /ko -->
+            
+            <!-- ko foreach: Messages -->
+            <tr>
+                <td class="button">
+                    <a id="dropLabelRoster" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabelRoster">
+                        <li><a tabindex="-1" data-bind="">Remove</a></li>
+                    </ul>
+                </td>
+                <td  class="date">
+                    <input type="text" class="mod" data-bind="value: DateTime, editable: false, event: { change: Update }" />
+                </td>
+                <td class="max">
+                    <input type="text" class="mod" data-toggle="modal" data-target="#sent-message-modal" data-bind="value: Subject, editable: false, click: function() { $root.SelectedMessage($data); }" />
+                </td>
+            </tr>
+            <!-- /ko -->
+            
+        </tbody>
+    </table>
+</div>
+<div id="sent-message-modal" class="modal hide fade" data-bind="with: SelectedMessage">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Sent message</h3>
+    </div>
+    <div class="modal-body">
+        <div class="horizontal">
+            <label>Sent</label>
+            <span data-bind="text: DateTime"></span>
+        </div>
+        <div class="horizontal">
+            <label>To</label>
+            <span data-bind="text: To"></span>
+        </div>
+        
+
+        <h4 data-bind="text: Subject"></h4>
+        <textarea data-bind="text: Content, editable: false">
+        </textarea>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Done</button>
+    </div>
+</div>
+<script>
+    var MessagesViewModel = function() {
+        var me = this;
+
+        this.Editable = teamViewModel.Editable;
+        this.Messages = teamViewModel.Messages;
+
+        this.Columns = ko.observableArray([
+            {
+                CssClass: "button",
+                Name: "",
+                Visible: ko.observable(true),
+                Toggleable: false,
+                SortType: null
+            },
+            {
+                CssClass: "sort-date date",
+                Name: "Date",
+                ToolTip: "Date message was sent",
+                Visible: ko.observable(true),
+                Toggleable: false,
+                SortType: "date"
+            },
+            {
+                CssClass: "sort-message max",
+                Name: "Subject",
+                ToolTip: "Subject of the message",
+                Visible: ko.observable(true),
+                Toggleable: false,
+                SortType: null
+            }
+        ]);
+
+        this.SelectedMessage = ko.observable();
+    };
+
+    $(function () {
+        window.messagesViewModel = new MessagesViewModel();
+        ko.applyBindings(window.messagesViewModel, document.getElementById("messages"));
+        // TODO sort?
+    });
+    
+    $("#messages table").tooltip({ selector: "*[data-toggle='tooltip']" });
+</script>

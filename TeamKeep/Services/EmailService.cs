@@ -1,4 +1,7 @@
-﻿using System;
+﻿using System.Linq;
+using TeamKeep.Models.DataModels;
+using log4net;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -11,6 +14,8 @@ namespace TeamKeep.Services
 {
     public class EmailService
     {
+        private ILog log = LogManager.GetLogger("Log");
+
         private bool _automaticallySend = true;
         public bool AutomaticallySend
         {
@@ -82,15 +87,56 @@ namespace TeamKeep.Services
 
             body.Append("<h4>Can you make it?</h4>");
             body.Append("<p style='overflow: hidden'>");
-            body.Append(string.Format("<a style='float: left; display: block; width: 80px; border: solid #666 1px; padding: 8px 5px; margin-right: 10px; text-align: center;' href='{0}'>Yes</a>", replyEmail + "&reply=1"));
-            body.Append(string.Format("<a style='float: left; display: block; width: 80px; border: solid #666 1px; padding: 8px 5px; margin-right: 10px; text-align: center;' href='{0}'>No</a>", replyEmail + "&reply=2"));
-            body.Append(string.Format("<a style='float: left; display: block; width: 80px; border: solid #666 1px; padding: 8px 5px; margin-right: 10px; text-align: center;' href='{0}'>Maybe</a>", replyEmail + "&reply=3"));
+            body.Append(string.Format("<a style='float: left; display: block; width: 70px; border: solid #666 1px; padding: 8px 5px; margin-right: 7px; text-align: center;' href='{0}'>Yes</a>", replyEmail + "&reply=1"));
+            body.Append(string.Format("<a style='float: left; display: block; width: 70px; border: solid #666 1px; padding: 8px 5px; margin-right: 7px; text-align: center;' href='{0}'>No</a>", replyEmail + "&reply=2"));
+            body.Append(string.Format("<a style='float: left; display: block; width: 70px; border: solid #666 1px; padding: 8px 5px; margin-right: 7px; text-align: center;' href='{0}'>Maybe</a>", replyEmail + "&reply=3"));
             body.Append("</p>");
 
             Enqueue(abRequest.Email, "teamkeep-noreply@teamkeep.com", 
                 "[" + abRequest.TeamName + "] vs. " + (abRequest.Event.OpponentName ?? "TBD") + " @ " + abRequest.Event.When, body.ToString());
 
             if (AutomaticallySend) SendQueuedMessages();
+        }
+
+        public Message EmailMessage(Message message)
+        {
+            var body = new StringBuilder();
+            body.Append(message.Content);
+
+            using (var entities = Database.GetEntities())
+            {
+                var sentToEmails = new List<string>();
+                foreach (var recipentId in message.RecipientPlayerIds)
+                {
+                    var playerData = entities.PlayerDatas.Single(x => x.Id == recipentId);
+
+                    if (string.IsNullOrEmpty(playerData.Email)) continue;
+                    if (sentToEmails.Contains(playerData.Email, StringComparer.InvariantCultureIgnoreCase)) continue;
+
+                    //Enqueue(playerData.Email, "teamkeep-noreply@teamkeep.com", message.Subject, body.ToString());
+                    sentToEmails.Add(playerData.Email);
+                }
+
+                // Store sent e-mail in db as MessageData
+                string to = sentToEmails.Aggregate("", (current, sentTo) => current + (sentTo + "; ")).Trim();
+
+                var messageData = new MessageData
+                {
+                    TeamId = message.TeamId,
+                    Date = DateTime.Now,
+                    To = to,
+                    Subject = message.Subject,
+                    Content = message.Content
+                };
+                entities.MessageDatas.AddObject(messageData);
+                entities.SaveChanges();
+
+                message.Id = messageData.Id;
+            }
+
+            if (AutomaticallySend) SendQueuedMessages();
+
+            return message;
         }
 
         public void SendQueuedMessages()
@@ -145,7 +191,7 @@ namespace TeamKeep.Services
 
            using (var emailServer = new SmtpClient("smtp.gmail.com", 587))
            {
-               emailServer.Credentials = new NetworkCredential("teamkeep.info@gmail.com", "wtfMate?1");
+               emailServer.Credentials = new NetworkCredential("teamkeep.info@gmail.com", "ThisIsBatCountry");
                emailServer.EnableSsl = true;
 
                lock (UnsentMessages)
@@ -155,10 +201,11 @@ namespace TeamKeep.Services
                        try
                        {
                            emailServer.Send(message);
+                           log.Info("Sent '" + message.Subject + "' to " + message.To);
                        }
-                       catch (Exception)
+                       catch (Exception ex)
                        {
-                           // TODO Fake email? smtp server is down? what should happen?
+                           log.Error("Failed to send '" + message.Subject + "' to " + message.To + " with exception: " +  ex.Message);
                        }
                    }
                    UnsentMessages.Clear();

@@ -19,8 +19,8 @@
 
         <!-- ko if: Editable -->
         <div id="team-functions" class="btn-group pull-right">
-            <!--<button class="btn btn-info">Message Team</button>-->
-            <button class="btn btn-info" data-toggle="modal" data-target="#team-settings-modal"><i class="icon-wrench icon-white"></i> Settings</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#team-message-modal">Message team</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#team-settings-modal"><i class="icon-cog"></i></button>
         </div>
         <!-- /ko -->
     
@@ -48,7 +48,7 @@
     <form id="team-settings-modal" class="modal hide fade" data-bind="submit: SaveSettings">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3><i class="icon-wrench"></i> <span data-bind="text: Name() + ' Settings'"></span></h3>
+            <h3><i class="icon-cog"></i> <span data-bind="text: Name() + ' Settings'"></span></h3>
         </div>
         <div class="modal-body">
             <div class="alert alert-error hide">
@@ -149,6 +149,52 @@
             </button>
         </div>
     </form>
+    
+    <form id="team-message-modal" class="modal hide fade" data-bind="submit: SendMessage">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Send message</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error hide">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <span></span>
+            </div>
+            
+            <h4>Send message to:</h4>
+            <!-- ko foreach: PlayerGroups -->
+            <!-- ko if: Players().length > 0 -->
+            <ul class="unstyled">
+                <li class="player-group">
+                    <label class="checkbox heading">
+                        <input type="checkbox" data-bind="click: function() { return $root.TogglePlayerGroupSelected($element); }"/> 
+                        <h5 data-bind="text: Name"></h5>
+                    </label>
+                    <ul data-bind="foreach: Players">
+                        <label class="checkbox">
+                            <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerSelected($element, $data); }"/> 
+                            <span data-bind="text: FullName"></span>
+                        </label>   
+                    </ul>
+                </li>
+            </ul>
+            <!-- /ko -->
+            <!-- /ko -->
+
+            <label>Subject</label>
+            <input type="text" data-bind="value: MessageSubject"/>
+            
+            <div>
+                <textarea rows="4" data-bind="value: MessageContent"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-success">
+                <i class="icon-refresh icon-spin" style="display: none"></i> Send message
+            </button>
+        </div>
+    </form>
 
 </div>
 
@@ -163,13 +209,14 @@
             @if (Model.Team.Editable)
             {
                 <li>
-                <!-- ko if: AvailabilityVisible -->
-                <a href="#availability" data-toggle="tab" onclick="javascript:location.hash='availability';">Availability</a>
-                <!-- /ko -->
-                <!-- ko ifnot: AvailabilityVisible -->
-                <a class="disabled" data-toggle="tooltip" data-original-title="Will become available once you've added a dated event to your schedule and at least one member to your roster">Availability</a>
-                <!-- /ko -->
+                    <!-- ko if: AvailabilityVisible -->
+                    <a href="#availability" data-toggle="tab" onclick="javascript:location.hash='availability';">Availability</a>
+                    <!-- /ko -->
+                    <!-- ko ifnot: AvailabilityVisible -->
+                    <a class="disabled" data-toggle="tooltip" data-original-title="Will become available once you've added a dated event to your schedule and at least one member to your roster">Availability</a>
+                    <!-- /ko -->
                 </li>
+                <li><a href="#messages" data-toggle="tab" onclick="javascript:location.hash='messages';">Messages</a></li>
             }
         </ul>
         <div class="tab-content">
@@ -184,9 +231,12 @@
             }
             @if (Model.Team.Editable)
             {
-            <div id="availability" class="tab-pane">
-                @Html.Partial("TeamAvailability")
-            </div>
+                <div id="availability" class="tab-pane">
+                    @Html.Partial("TeamAvailability")
+                </div>
+                <div id="messages" class="tab-pane">
+                    @Html.Partial("TeamMessages")
+                </div>
             }
         </div>
     </div>
@@ -250,6 +300,72 @@
             }
             return true;
         };
+        
+        // Message
+        this.MessageSubject = ko.observable("");
+        this.MessageContent = ko.observable("");
+        this.SelectedPlayers = ko.observableArray([]);
+        this.TogglePlayerGroupSelected = function (domElement) {
+            var checked = $(domElement).is(":checked");
+            var childCheckboxes = $(domElement).parentsUntil(".player-group").parent().children("ul").find("input[type='checkbox']");
+            if (checked) {
+                childCheckboxes.filter(":not(:checked)").click();
+            } else {
+                childCheckboxes.filter(":checked").click();
+            }
+            return true;
+        };
+        this.TogglePlayerSelected = function (domElement, player) {
+            var selected = $(domElement).is(":checked");
+            if (selected) {
+                me.SelectedPlayers.push(player);
+            } else {
+                me.SelectedPlayers.remove(player);
+            }
+            return true;
+        };
+
+        this.SendMessage = function () {
+            
+            if (me.MessageSubject().length == 0) {
+                me.MessageSubject("[No Subject]");
+            }
+            if (me.MessageContent().length == 0) {
+                return window.ShowAlert("Message must have content");
+            }
+
+            var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
+            if (recipients.length == 0) {
+                return window.ShowAlert("Message must have at least one recipient");
+            }
+
+            $("#team-message-modal button").prop("disabled", true);
+            $("#team-message-modal .icon-spin").show();
+            $.ajax({
+                type: "POST",
+                url: me.Url() + "/messages",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    RecipientPlayerIds: recipients,
+                    Subject: me.MessageSubject(),
+                    Content: me.MessageContent()
+                }),
+                success: function (response) {
+                    window.ShowAlert("Message sent successfully", "alert-success");
+                    $("#team-message-modal").modal("hide");
+                    $("#team-message-modal input[type='checkbox']:checked").click();
+                    $("#team-message-modal button").prop("disabled", false);
+                    $("#team-message-modal .icon-spin").hide();
+                    // TODO update messages table with new message
+                },
+                error: function (response) {
+                    window.ShowAlert(JSON.parse(response.responseText));
+                    $("#team-message-modal button").prop("disabled", false);
+                    $("#team-message-modal .icon-spin").hide();
+                }
+            });
+        };
+
         this.SaveAnnouncement = function () {
             $("#team-announcement").find("textarea, button").prop("disabled", true);
             $("#team-announcement .icon-refresh").show();
@@ -284,7 +400,7 @@
                     Privacy: ko.mapping.toJS(me.Privacy),
                     SendConfirmations: me.Settings.ConfirmationEmailMinutes()
                 }),
-                success: function (response) {
+                success: function () {
                     window.location = "/teams/" + me.Id();
                 }
             });
@@ -340,6 +456,8 @@
     });
 
     $("#team-announcement textarea").autosize();
+    $("#team-message-modal textarea").autosize();
+
     $("#banner-file").change(function() {
         $("#banner-file-name").val($(this).val());
     });

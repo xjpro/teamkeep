@@ -298,11 +298,22 @@ var PlayerViewModel = function (data) {
     };
 };
 
+var MessageViewModel = function(data) {
+    var me = this;
+    ko.mapping.fromJS(data, {}, this);
+
+    $.extend(me, new RowDataModel({
+        "PUT": window.viewData.Team.Url + "/messages/" + me.Id(),
+        "DELETE": window.viewData.Team.Url + "/messages/" + me.Id()
+    }));
+};
+
 // Master view model, containing attributes of the team (id, name, etc) as well as 
 // all its child collections
 var TeamViewModel = function(data) {
     ko.mapping.fromJS(data, {
         "Seasons": ko.mapping.toViewModel(SeasonViewModel),
-        "PlayerGroups": ko.mapping.toViewModel(PlayerGroupViewModel)
+        "PlayerGroups": ko.mapping.toViewModel(PlayerGroupViewModel),
+        "Messages": ko.mapping.toViewModel(MessageViewModel)
     }, this);
 };

@@ -27,6 +27,7 @@ namespace TeamKeep.Models
         public string BannerImage { get; set; }
         [ScriptIgnore]
         public List<User> Owners { get; set; }
+        public List<Message> Messages { get; set; } 
         public List<PlayerGroup> PlayerGroups { get; set; }
         public List<Season> Seasons { get; set; }
         public TeamSettingsData Settings { get; set; }

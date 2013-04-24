@@ -46,16 +46,8 @@ namespace TeamKeep.Controllers
             // Redirect new user to home
             login.AuthToken = authToken;
             login.Redirect = "/home";
-
-            try
-            {
-                _emailService.EmailWelcome(user.Email);
-                //_emailService.SendAllQueuedEmails();
-            }
-            catch (Exception)
-            {
-                // Swallow this and TODO log it
-            }
+    
+            _emailService.EmailWelcome(user.Email);
 
             return Json(login, JsonRequestBehavior.AllowGet);
         }
@@ -124,18 +116,6 @@ namespace TeamKeep.Controllers
 
             var viewModel = new UserHomeViewModel { User = activeUser };
             return View("Home", viewModel);
-        }
-
-        [HttpGet]
-        public ActionResult EditProfile()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult EditSettings()
-        {
-            return View();
         }
 
         [HttpPost]

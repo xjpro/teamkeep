@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using TeamKeep.Models.ViewModels;
 using TeamKeep.Models;
 using System;
+using TeamKeep.Services;
 
 namespace TeamKeep.Controllers
 {
@@ -43,6 +44,9 @@ namespace TeamKeep.Controllers
                     viewModel.Team = null;
                     return View("TeamPrivateHome", viewModel);
                 }
+
+                // Hide messages in public view
+                team.Messages = null;
 
                 // Hide email & phone in public view
                 foreach (var player in team.PlayerGroups.SelectMany(playerGroup => playerGroup.Players))
@@ -190,6 +194,36 @@ namespace TeamKeep.Controllers
 
             _teamService.RemoveTeam(id);
             return Json(null);
+        }
+
+        [HttpPost]
+        public JsonResult SendMessage(int id, Message message)
+        {
+            var activeUser = this.GetActiveUser(this.Request);
+            var team = _teamService.GetTeam(id);
+            if (!team.CanEdit(activeUser.Id))
+            {
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to send messages for this team");
+            }
+
+            // Check message for errors
+            if (string.IsNullOrWhiteSpace(message.Subject))
+            {
+                Response.StatusCode = 400;
+                return Json("Message must have a subject");
+            }
+            if (string.IsNullOrWhiteSpace(message.Content))
+            {
+                Response.StatusCode = 400;
+                return Json("Message must have some content");
+            }
+
+            message.TeamId = id;
+            message.TeamName = team.Name;
+
+            message = new EmailService().EmailMessage(message);
+
+            return Json(message);
         }
 
         private bool ImageHeaderMatchesExtension(byte[] buffer, string extension)
