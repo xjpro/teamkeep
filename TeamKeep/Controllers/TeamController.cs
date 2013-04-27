@@ -8,6 +8,7 @@ using TeamKeep.Models.ViewModels;
 using TeamKeep.Models;
 using System;
 using TeamKeep.Services;
+using System.Collections.Generic;
 
 namespace TeamKeep.Controllers
 {
@@ -46,7 +47,7 @@ namespace TeamKeep.Controllers
                 }
 
                 // Hide messages in public view
-                team.Messages = null;
+                team.Messages = new List<Message>();
 
                 // Hide email & phone in public view
                 foreach (var player in team.PlayerGroups.SelectMany(playerGroup => playerGroup.Players))

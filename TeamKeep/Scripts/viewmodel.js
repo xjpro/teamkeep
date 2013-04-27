@@ -41,6 +41,9 @@ var PlayerGroupViewModel = function (data) {
         "DELETE": window.viewData.Team.Url + "/groups/" + me.Id()
     }));
 
+    this.PlayersWithEmail = ko.computed(function () {
+        return _.filter(me.Players(), function (player) { return player.Email() != null && player.Email().length > 0; });
+    });
     this.FindPlayer = function (id) {
         return _.find(me.Players(), function(player) { return player.Id() == id; });
     }

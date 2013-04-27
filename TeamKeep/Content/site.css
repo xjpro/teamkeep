@@ -193,8 +193,8 @@ i {
     border: solid #666 2px;
     border-radius: 2px;
 }
-.table-container table {
-    min-height: 140px;
+#games .table-container table {
+    min-height: 142px;
 }
 .table-container a,
 .table-container td.icon {
@@ -246,17 +246,15 @@ i {
     padding: 20px 0;
     text-align: center;
 }
- .table-container table th {
-     padding: 6px 0;
-     background-repeat: no-repeat;
-     background-position: bottom center;
- }
-
+.table-container table th {
+    padding: 6px 0;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+}
 .table-container table td, .table-container table th {
     border: solid #999 1px;
     text-align: center;
 }
-
 .table-container table td {
     text-align: left;
 }
@@ -326,6 +324,9 @@ i {
 .table-container table th.sublocation,
 .table-container table td.sublocation input {
     width: 70px;
+}
+#messages .table-container table td.max input {
+    cursor: pointer;
 }
 .table-container table td.button,
 .table-container table td.digit,
@@ -458,44 +459,44 @@ i {
 */
 @media (max-width: 767px) { /* phone width */
 
-    #games .table-container table, #roster .table-container table,
-    #games .table-container thead, #roster .table-container thead, 
-    #games .table-container tbody, #roster .table-container tbody, 
-    #games .table-container th, #roster .table-container th, 
-    #games .table-container td, #roster .table-container td, 
-    #games .table-container tr, #roster .table-container tr  {
+    .table-container.stacks table,
+    .table-container.stacks thead, 
+    .table-container.stacks tbody,
+    .table-container.stacks th,
+    .table-container.stacks td,
+    .table-container.stacks tr {
         display: block;
     }
     
-    #games .table-container thead tr, #roster .table-container thead tr { 
+    .table-container.stacks thead tr { 
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
 	}
-	#games .table-container tr, #roster .table-container tr {
+	.table-container.stacks tr {
 	     border: 1px solid #ccc;
 	}
 
-	#games .table-container td, #roster .table-container td { /* Behave  like a "row" */
+	.table-container.stacks td { /* Behave  like a "row" */
 		border: none;
 		border-bottom: 1px solid #eee; 
 		position: relative;
 		padding-left: 105px; 
 	}
-    #games .table-container td > input, #roster .table-container td > input {
+    .table-container.stacks td > input {
         width: 85% !important;
         margin-left: 10px;
     }
 
-    #games .table-container table td.digit, #roster .table-container table td.digit {
+    .table-container.stacks table td.digit {
         text-align: left;
     }
 
-    #games .table-container td.fullheading, #roster .table-container td.fullheading {
+    .table-container.stacks td.fullheading {
         padding-left: 0;
     }
 	
-	#games .table-container td:before, #roster .table-container td:before { 
+	.table-container.stacks td:before { 
 		/* Now like a table header */
 		position: absolute;
 		/* Top/left values mimic padding */
@@ -519,6 +520,10 @@ i {
     #roster td:nth-of-type(4):before { content: "Position"; border-right: dotted #ccc 1px; }
     #roster td:nth-of-type(5):before { content: "Phone"; border-right: dotted #ccc 1px; }
     #roster td:nth-of-type(6):before { content: "Email"; border-right: dotted #ccc 1px; }
+
+    #messages td:nth-of-type(1) { padding-left: 0; }
+    #messages td:nth-of-type(2):before { content: "Date"; border-right: dotted #ccc 1px; }
+    #messages td:nth-of-type(3):before { content: "Subject"; border-right: dotted #ccc 1px; }
 }
 
 #team-banner {
@@ -564,6 +569,7 @@ i {
 }
 #team-announcement textarea[readonly='readonly'],
 #sent-message-modal textarea[readonly='readonly'] {
+    border: 0;
     background: #fff;
     cursor: default;
 }

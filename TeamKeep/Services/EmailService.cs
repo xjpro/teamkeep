@@ -14,7 +14,7 @@ namespace TeamKeep.Services
 {
     public class EmailService
     {
-        private ILog log = LogManager.GetLogger("Log");
+        private readonly ILog log = LogManager.GetLogger("Log");
 
         private bool _automaticallySend = true;
         public bool AutomaticallySend
@@ -109,7 +109,9 @@ namespace TeamKeep.Services
                 foreach (var recipentId in message.RecipientPlayerIds)
                 {
                     var playerData = entities.PlayerDatas.Single(x => x.Id == recipentId);
+                    var teamId = entities.PlayerGroupDatas.Single(x => x.Id == playerData.GroupId).TeamId;
 
+                    if (message.TeamId != teamId) continue;
                     if (string.IsNullOrEmpty(playerData.Email)) continue;
                     if (sentToEmails.Contains(playerData.Email, StringComparer.InvariantCultureIgnoreCase)) continue;
 
@@ -132,6 +134,8 @@ namespace TeamKeep.Services
                 entities.SaveChanges();
 
                 message.Id = messageData.Id;
+                message.To = messageData.To;
+                message.Date = messageData.Date;
             }
 
             if (AutomaticallySend) SendQueuedMessages();
@@ -153,42 +157,10 @@ namespace TeamKeep.Services
                 message.Body = body;
                 UnsentMessages.Enqueue(message);
             }
-
-            /*using (var entities = Database.GetEntities())
-            {
-                entities.EmailQueueDatas.AddObject(new EmailQueueData
-                {
-                    Recipient = to,
-                    From = from,
-                    Subject = subject,
-                    Message = body
-                });
-                entities.SaveChanges();
-            }*/
         }
 
         private void ProcessQueue()
         {
-            /*using (var entities = Database.GetEntities())
-            using (var emailServer = new SmtpClient("smtp.gmail.com", 587))
-            {
-                emailServer.Credentials = new NetworkCredential("teamkeep.info@gmail.com", "wtfMate?1");
-                emailServer.EnableSsl = true;
-
-                var emailDatas = entities.EmailQueueDatas.Select(x => x).ToList();
-
-                foreach (var emailData in emailDatas)
-                {
-                    entities.DeleteObject(emailData);
-                    entities.SaveChanges();
-
-                    MailMessage message = BaseMessage(emailData.Subject, emailData.From);
-                    message.To.Add(emailData.Recipient);
-                    message.Body = emailData.Message;
-                    emailServer.Send(message);
-                }
-            }*/
-
            using (var emailServer = new SmtpClient("smtp.gmail.com", 587))
            {
                emailServer.Credentials = new NetworkCredential("teamkeep.info@gmail.com", "ThisIsBatCountry");

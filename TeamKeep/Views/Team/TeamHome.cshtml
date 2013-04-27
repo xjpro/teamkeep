@@ -19,7 +19,12 @@
 
         <!-- ko if: Editable -->
         <div id="team-functions" class="btn-group pull-right">
+            <!-- ko if: EnableMessageButton -->
             <button class="btn btn-info" data-toggle="modal" data-target="#team-message-modal">Message team</button>
+            <!-- /ko -->
+            <!-- ko ifnot: EnableMessageButton -->
+            <button class="btn btn-info disabled" data-toggle="tooltip" data-original-title="Requires one member in your roster">Message team</button>
+            <!-- /ko -->
             <button class="btn btn-info" data-toggle="modal" data-target="#team-settings-modal"><i class="icon-cog"></i></button>
         </div>
         <!-- /ko -->
@@ -163,14 +168,14 @@
             
             <h4>Send message to:</h4>
             <!-- ko foreach: PlayerGroups -->
-            <!-- ko if: Players().length > 0 -->
+            <!-- ko if: PlayersWithEmail().length > 0 -->
             <ul class="unstyled">
                 <li class="player-group">
                     <label class="checkbox heading">
                         <input type="checkbox" data-bind="click: function() { return $root.TogglePlayerGroupSelected($element); }"/> 
                         <h5 data-bind="text: Name"></h5>
                     </label>
-                    <ul data-bind="foreach: Players">
+                    <ul data-bind="foreach: PlayersWithEmail">
                         <label class="checkbox">
                             <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerSelected($element, $data); }"/> 
                             <span data-bind="text: FullName"></span>
@@ -294,6 +299,17 @@
         this.BannerBackgroundImage = ko.computed(function() {
             return (me.BannerImage() != null) ? "url('/TeamBanners/" + me.BannerImage() + "')" : "url('/img/defaultbanner.jpg')";
         });
+
+        this.EnableMessageButton = ko.computed(function() {
+            var somePlayersHaveEmail = false;
+            _.each(me.PlayerGroups(), function(group) {
+                if(group.PlayersWithEmail().length > 0) {
+                    somePlayersHaveEmail = true;
+                    return false;
+                }
+            });
+            return somePlayersHaveEmail;
+        });
         this.ShowAnnouncementOptions = function (obj, event) {
             if (event.keyCode != 9) {
                 $("#team-announcement .options").show();
@@ -351,12 +367,17 @@
                     Content: me.MessageContent()
                 }),
                 success: function (response) {
+
                     window.ShowAlert("Message sent successfully", "alert-success");
                     $("#team-message-modal").modal("hide");
                     $("#team-message-modal input[type='checkbox']:checked").click();
                     $("#team-message-modal button").prop("disabled", false);
                     $("#team-message-modal .icon-spin").hide();
-                    // TODO update messages table with new message
+                    
+                    me.MessageSubject("");
+                    me.MessageContent("");
+
+                    teamViewModel.Messages.push(new MessageViewModel(response));
                 },
                 error: function (response) {
                     window.ShowAlert(JSON.parse(response.responseText));
@@ -456,7 +477,7 @@
     });
 
     $("#team-announcement textarea").autosize();
-    $("#team-message-modal textarea").autosize();
+    $("#team-message-modal textarea").autosize({ append: "\n" });
 
     $("#banner-file").change(function() {
         $("#banner-file-name").val($(this).val());
@@ -473,5 +494,5 @@
         $("#team-data .nav a[href='" + location.hash + "']").click();
     }
     
-    $("#team-data-links").tooltip({ selector: "*[data-toggle='tooltip']" });
+    $("#team-data-links, #team-functions").tooltip({ selector: "*[data-toggle='tooltip']" });
 </script>
