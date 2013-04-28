@@ -23,7 +23,7 @@
                 <td class="button">
                     <a id="dropLabelRoster" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabelRoster">
-                        <li><a tabindex="-1" data-bind="">Remove</a></li>
+                        <li><a tabindex="-1" data-bind="click: $root.RemoveMessage">Remove</a></li>
                     </ul>
                 </td>
                 <td  class="date">
@@ -65,7 +65,30 @@
         var me = this;
 
         this.Editable = teamViewModel.Editable;
+        this.Url = teamViewModel.Url;
         this.Messages = teamViewModel.Messages;
+
+        this.SelectedMessage = ko.observable();
+
+        $.extend(me, new SortableCollectionDataModel(me, {
+            TableElement: $("#messages table"),
+            ItemName: "Messages"
+        }));
+
+        this.RemoveMessage = function (message) {
+            $.ajax({
+                type: "DELETE", url: me.Url() + "/messages",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    Message: {
+                        Id: message.Id()
+                    }
+                }),
+                complete: function (response) {
+                    me.Messages.remove(message);
+                }
+            });
+        };
 
         this.Columns = ko.observableArray([
             {
@@ -81,25 +104,80 @@
                 ToolTip: "Date message was sent",
                 Visible: ko.observable(true),
                 Toggleable: false,
-                SortType: "date"
+                SortType: "dateTime"
             },
             {
-                CssClass: "sort-message max",
+                CssClass: "sort-subject max",
                 Name: "Subject",
                 ToolTip: "Subject of the message",
                 Visible: ko.observable(true),
                 Toggleable: false,
-                SortType: null
+                SortType: "subject"
             }
         ]);
 
-        this.SelectedMessage = ko.observable();
+        // Sorting
+        this.SortType = ko.observable("dateTimeDescending");
+        this.SortType.subscribe(function () {
+            me.Sort();
+        });
+
+        var sortTypes = {
+            dateTime: {
+                heading: "#messages .sort-date",
+                isDescending: false
+            },
+            dateTimeDescending: {
+                heading: "#messages .sort-date",
+                isDescending: true
+            },
+            subject: {
+                heading: "#messages .sort-subject",
+                isDescending: false,
+            },
+            subjectDescending: {
+                heading: "#messages .sort-subject",
+                isDescending: true,
+            }
+        };
+
+        this.ToggleSort = function (sortType) {
+            if (sortType == "dateTime") {
+                me.SortType() == "dateTime" ? me.SortType("dateTimeDescending") : me.SortType("dateTime");
+            }
+            else if (sortType == "subject") {
+                me.SortType() == "subjectDescending" ? me.SortType("subject") : me.SortType("subjectDescending");
+            }
+        };
+        this.Sort = function () {
+
+            var isDescending = sortTypes[me.SortType()].isDescending;
+            switch (me.SortType()) {
+                case "dateTime":
+                case "dateTimeDescending":
+                    me.SortByDate(isDescending);
+                    break;
+                case "subject":
+                case "subjectDescending":
+                    me.SortBy("Subject", isDescending);
+                    break;
+            }
+
+            $("#messages .table-container th").css({ "background-image": "none" });
+
+            var $sortedHeading = $(sortTypes[me.SortType()].heading);
+            if (!isDescending) {
+                $sortedHeading.css({ "background-image": "url('/img/sort-up.png')", "background-position": "top center" });
+            } else {
+                $sortedHeading.css({ "background-image": "url('/img/sort-down.png')", "background-position": "bottom center" });
+            }
+        };
     };
 
     $(function () {
         window.messagesViewModel = new MessagesViewModel();
         ko.applyBindings(window.messagesViewModel, document.getElementById("messages"));
-        // TODO sort?
+        window.messagesViewModel.Sort();
     });
     
     $("#messages table").tooltip({ selector: "*[data-toggle='tooltip']" });

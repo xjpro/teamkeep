@@ -145,8 +145,8 @@ var SortableCollectionDataModel = function (model, options) {
     
     var defaults = {
         TableElement: null,
-        CollectionName: "Items",
-        ItemName: "Item"
+        CollectionName: null,
+        ItemName: null
     };
 
     var settings = $.extend({}, defaults, options);
@@ -173,50 +173,67 @@ var SortableCollectionDataModel = function (model, options) {
             return 0;
         });
     };
-    this.SortBy = function (type, descending) {
-        _.each(this[settings.CollectionName](), function (collection) {
-            collection[settings.ItemName].sort(function (a, b) {
+    this.SortItems = function (items, type, descending) {
+        items.sort(function (a, b) {
 
-                var aSortOn = a[type]();
-                var bSortOn = b[type]();
+            var aSortOn = a[type]();
+            var bSortOn = b[type]();
 
-                if (aSortOn === null && bSortOn === null) return 0;
-                else if (!aSortOn && aSortOn !== 0) return (descending) ? -1 : 1;
-                else if (!bSortOn && bSortOn !== 0) return (descending) ? 1 : -1;
+            if (aSortOn === null && bSortOn === null) return 0;
+            else if (!aSortOn && aSortOn !== 0) return (descending) ? -1 : 1;
+            else if (!bSortOn && bSortOn !== 0) return (descending) ? 1 : -1;
 
-                if (typeof aSortOn.toLowerCase === "function") {
-                    aSortOn = aSortOn.toLowerCase();
-                }
-                if (typeof bSortOn.toLowerCase === "function") {
-                    bSortOn = bSortOn.toLowerCase();
-                }
+            if (typeof aSortOn.toLowerCase === "function") {
+                aSortOn = aSortOn.toLowerCase();
+            }
+            if (typeof bSortOn.toLowerCase === "function") {
+                bSortOn = bSortOn.toLowerCase();
+            }
 
-                if (aSortOn > bSortOn) return (descending) ? -1 : 1;
-                if (aSortOn < bSortOn) return (descending) ? 1 : -1;
-                return 0;
-            });
+            if (aSortOn > bSortOn) return (descending) ? -1 : 1;
+            if (aSortOn < bSortOn) return (descending) ? 1 : -1;
+            return 0;
         });
     };
-    this.SortByDate = function (descending) {
-        _.each(this[settings.CollectionName](), function (collection) {
-            collection[settings.ItemName].sort(function (a, b) {
+    this.SortItemsByDate = function (items, descending) {
+        items.sort(function (a, b) {
 
-                var aDateTime = a.DateTime();
-                var bDateTime = b.DateTime();
+            var aDateTime = a.DateTime();
+            var bDateTime = b.DateTime();
 
-                // Null dates go to top
-                if (!aDateTime && !bDateTime) return 0;
-                else if (!aDateTime) return (descending) ? 1 : -1;
-                else if (!bDateTime) return (descending) ? -1 : 1;
+            // Null dates go to top
+            if (!aDateTime && !bDateTime) return 0;
+            else if (!aDateTime) return (descending) ? 1 : -1;
+            else if (!bDateTime) return (descending) ? -1 : 1;
 
-                var aMoment = moment(aDateTime);
-                var bMoment = moment(bDateTime);
+            var aMoment = moment(aDateTime);
+            var bMoment = moment(bDateTime);
 
-                if (aMoment.isAfter(bMoment)) return (descending) ? -1 : 1;
-                if (aMoment.isBefore(bMoment)) return (descending) ? 1 : -1;
-                return 0;
-            });
+            if (aMoment.isAfter(bMoment)) return (descending) ? -1 : 1;
+            if (aMoment.isBefore(bMoment)) return (descending) ? 1 : -1;
+            return 0;
         });
+    };
+    this.SortBy = function (type, descending) {
+        var me = this;
+        if (!settings.CollectionName) {
+            me.SortItems(this[settings.ItemName], type, descending);
+        } else {
+            _.each(this[settings.CollectionName](), function (collection) {
+                me.SortItems(collection[settings.ItemName], type, descending);
+            });
+        }
+    };
+    this.SortByDate = function (descending) {
+        var me = this;
+        if (!settings.CollectionName) {
+            me.SortItemsByDate(this[settings.ItemName], descending);
+        }
+        else {
+            _.each(this[settings.CollectionName](), function (collection) {
+                me.SortItemsByDate(collection[settings.ItemName], descending);
+            });
+        }
     };
     this.Changed = function () {
         // In order to not move the row while the user is interacting with it,

@@ -344,10 +344,10 @@
         this.SendMessage = function () {
             
             if (me.MessageSubject().length == 0) {
-                me.MessageSubject("[No Subject]");
+                return window.ShowAlert("Please include a message subject");
             }
             if (me.MessageContent().length == 0) {
-                return window.ShowAlert("Message must have content");
+                return window.ShowAlert("Please include content for your message");
             }
 
             var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
@@ -378,6 +378,7 @@
                     me.MessageContent("");
 
                     teamViewModel.Messages.push(new MessageViewModel(response));
+                    messagesViewModel.Sort();
                 },
                 error: function (response) {
                     window.ShowAlert(JSON.parse(response.responseText));

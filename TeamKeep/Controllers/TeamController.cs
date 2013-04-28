@@ -227,6 +227,23 @@ namespace TeamKeep.Controllers
             return Json(message);
         }
 
+        [HttpDelete]
+        public JsonResult DeleteMessage(int id, Message message)
+        {
+            var activeUser = this.GetActiveUser(this.Request);
+            var team = _teamService.GetTeam(id);
+            if (!team.CanEdit(activeUser.Id))
+            {
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to send messages for this team");
+            }
+
+            message.TeamId = id;
+
+            _teamService.RemoveMessage(message);
+
+            return Json(message);
+        }
+
         private bool ImageHeaderMatchesExtension(byte[] buffer, string extension)
         {
             if (extension.Equals("jpg") || extension.Equals("jpeg"))

@@ -100,8 +100,18 @@ namespace TeamKeep.Services
 
         public Message EmailMessage(Message message)
         {
+            var paragraphs = Regex.Split(message.Content, "\n\n");
+
             var body = new StringBuilder();
-            body.Append(message.Content);
+            foreach (var p in paragraphs)
+            {
+                var formattedParagraph = System.Web.HttpUtility.HtmlEncode(p);
+                formattedParagraph = Regex.Replace(formattedParagraph, "\n", "<br/>");
+                body.Append(string.Format("<p>{0}</p>", formattedParagraph));
+            }
+
+            // And now for the TeamKeep parts
+            body.Append(string.Format("<hr/><p>This message sent on behalf of {0} by TeamKeep.com</p>", message.TeamName));
 
             using (var entities = Database.GetEntities())
             {
@@ -115,7 +125,7 @@ namespace TeamKeep.Services
                     if (string.IsNullOrEmpty(playerData.Email)) continue;
                     if (sentToEmails.Contains(playerData.Email, StringComparer.InvariantCultureIgnoreCase)) continue;
 
-                    //Enqueue(playerData.Email, "teamkeep-noreply@teamkeep.com", message.Subject, body.ToString());
+                    Enqueue(playerData.Email, "teamkeep-noreply@teamkeep.com", "[" + message.TeamName + "] " + message.Subject, body.ToString());
                     sentToEmails.Add(playerData.Email);
                 }
 

@@ -258,5 +258,15 @@ namespace TeamKeep.Services
                 entities.SaveChanges();
             }
         }
+
+        public void RemoveMessage(Message message)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var messageData = entities.MessageDatas.Single(x => x.TeamId == message.TeamId && x.Id == message.Id);
+                entities.MessageDatas.DeleteObject(messageData);
+                entities.SaveChanges();
+            }
+        }
     }
 }
