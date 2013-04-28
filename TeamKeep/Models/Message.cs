@@ -20,6 +20,7 @@ namespace TeamKeep.Models
         }
 
         public new string To { get; set; }
+        public string From { get; set; }
         public IEnumerable<int> RecipientPlayerIds { get; set; }
         public string TeamName { get; set; }
         public string DateTime { get { return Date.ToString("MMM d, yyyy, h:mm tt"); } }

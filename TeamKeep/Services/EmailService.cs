@@ -33,7 +33,7 @@ namespace TeamKeep.Services
             body.Append(string.Format("<p><a href='{0}?email={1}&token={2}'>Reset your password</a></p>", "https://teamkeep.com/reset", passwordReset.Email, passwordReset.ResetToken));
             body.Append("<p>Thank you for using Team Keep.</p>");
 
-            Enqueue(passwordReset.Email, "teamkeep-noreply@teamkeep.com", "Password Reset for Team Keep", body.ToString());
+            Enqueue(passwordReset.Email, "Password Reset for Team Keep", body.ToString(), "teamkeep-noreply@teamkeep.com", null);
             if(AutomaticallySend) SendQueuedMessages();
         }
 
@@ -54,7 +54,7 @@ namespace TeamKeep.Services
 
             body.Append("<p>Thanks again for choosing Team Keep!</p>");
 
-            Enqueue(email, "info@teamkeep.com", "Welcome to Team Keep", body.ToString());
+            Enqueue(email, "Welcome to Team Keep", body.ToString(), "info@teamkeep.com", null);
             if (AutomaticallySend) SendQueuedMessages();
         }
 
@@ -92,8 +92,8 @@ namespace TeamKeep.Services
             body.Append(string.Format("<a style='float: left; display: block; width: 70px; border: solid #666 1px; padding: 8px 5px; margin-right: 7px; text-align: center;' href='{0}'>Maybe</a>", replyEmail + "&reply=3"));
             body.Append("</p>");
 
-            Enqueue(abRequest.Email, "teamkeep-noreply@teamkeep.com", 
-                "[" + abRequest.TeamName + "] vs. " + (abRequest.Event.OpponentName ?? "TBD") + " @ " + abRequest.Event.When, body.ToString());
+            Enqueue(abRequest.Email, "[" + abRequest.TeamName + "] vs. " + (abRequest.Event.OpponentName ?? "TBD") + " @ " + abRequest.Event.When, 
+                body.ToString(), "teamkeep-noreply@teamkeep.com", null);
 
             if (AutomaticallySend) SendQueuedMessages();
         }
@@ -125,7 +125,7 @@ namespace TeamKeep.Services
                     if (string.IsNullOrEmpty(playerData.Email)) continue;
                     if (sentToEmails.Contains(playerData.Email, StringComparer.InvariantCultureIgnoreCase)) continue;
 
-                    Enqueue(playerData.Email, "teamkeep-noreply@teamkeep.com", "[" + message.TeamName + "] " + message.Subject, body.ToString());
+                    Enqueue(playerData.Email, "[" + message.TeamName + "] " + message.Subject, body.ToString(), "teamkeep-noreply@teamkeep.com", message.From);
                     sentToEmails.Add(playerData.Email);
                 }
 
@@ -158,11 +158,11 @@ namespace TeamKeep.Services
             new Thread(ProcessQueue).Start();
         }
 
-        private void Enqueue(string to, string from, string subject, string body)
+        private void Enqueue(string to, string subject, string body, string from, string replyTo)
         {
             if (IsValidEmail(to))
             {
-                MailMessage message = BaseMessage(subject, from);
+                MailMessage message = BaseMessage(subject, from, replyTo);
                 message.To.Add(to);
                 message.Body = body;
                 UnsentMessages.Enqueue(message);
@@ -195,15 +195,22 @@ namespace TeamKeep.Services
            }
         }
 
-        private MailMessage BaseMessage(string subject, string from)
+        private MailMessage BaseMessage(string subject, string sender, string replyTo = null)
         {
-            return new MailMessage
+            var message = new MailMessage
             {
                 Subject = subject,
                 BodyEncoding = Encoding.ASCII,
                 IsBodyHtml = true,
-                From = new MailAddress(from, "Team Keep")
+                Sender = new MailAddress(sender, "Team Keep")
             };
+
+            if (!string.IsNullOrEmpty(replyTo))
+            {
+                message.ReplyTo = new MailAddress(replyTo);
+            }
+
+            return message;
         }
 
         public static bool IsValidEmail(string email)

@@ -23,7 +23,7 @@
             <button class="btn btn-info" data-toggle="modal" data-target="#team-message-modal">Message team</button>
             <!-- /ko -->
             <!-- ko ifnot: EnableMessageButton -->
-            <button class="btn btn-info disabled" data-toggle="tooltip" data-original-title="Requires one member in your roster">Message team</button>
+            <button class="btn btn-info disabled" data-toggle="tooltip" data-original-title="Requires one member with e-mail">Message team</button>
             <!-- /ko -->
             <button class="btn btn-info" data-toggle="modal" data-target="#team-settings-modal"><i class="icon-cog"></i></button>
         </div>
@@ -343,16 +343,16 @@
 
         this.SendMessage = function () {
             
+            var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
+            if (recipients.length == 0) {
+                return window.ShowAlert("Message must have at least one recipient");
+            }
+
             if (me.MessageSubject().length == 0) {
                 return window.ShowAlert("Please include a message subject");
             }
             if (me.MessageContent().length == 0) {
                 return window.ShowAlert("Please include content for your message");
-            }
-
-            var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
-            if (recipients.length == 0) {
-                return window.ShowAlert("Message must have at least one recipient");
             }
 
             $("#team-message-modal button").prop("disabled", true);
@@ -495,5 +495,5 @@
         $("#team-data .nav a[href='" + location.hash + "']").click();
     }
     
-    $("#team-data-links, #team-functions").tooltip({ selector: "*[data-toggle='tooltip']" });
+    $("#team-data-links, #team-functions").tooltip({ selector: "[data-toggle='tooltip']" });
 </script>

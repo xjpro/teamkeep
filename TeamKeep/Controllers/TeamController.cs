@@ -221,6 +221,7 @@ namespace TeamKeep.Controllers
 
             message.TeamId = id;
             message.TeamName = team.Name;
+            message.From = activeUser.Email;
 
             message = new EmailService().EmailMessage(message);
 
