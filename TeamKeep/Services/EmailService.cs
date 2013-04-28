@@ -92,6 +92,9 @@ namespace TeamKeep.Services
             body.Append(string.Format("<a style='float: left; display: block; width: 70px; border: solid #666 1px; padding: 8px 5px; margin-right: 7px; text-align: center;' href='{0}'>Maybe</a>", replyEmail + "&reply=3"));
             body.Append("</p>");
 
+            // And now for the TeamKeep parts
+            body.Append(string.Format("<hr/><p>This message sent on behalf of {0} by TeamKeep.com</p>", abRequest.TeamName));
+
             Enqueue(abRequest.Email, "[" + abRequest.TeamName + "] vs. " + (abRequest.Event.OpponentName ?? "TBD") + " @ " + abRequest.Event.When, 
                 body.ToString(), "teamkeep-noreply@teamkeep.com", null);
 
@@ -138,7 +141,7 @@ namespace TeamKeep.Services
                     Date = DateTime.Now,
                     To = to,
                     Subject = message.Subject,
-                    Content = message.Content
+                    Content = body.ToString()
                 };
                 entities.MessageDatas.AddObject(messageData);
                 entities.SaveChanges();
@@ -146,6 +149,8 @@ namespace TeamKeep.Services
                 message.Id = messageData.Id;
                 message.To = messageData.To;
                 message.Date = messageData.Date;
+                message.Subject = messageData.Subject;
+                message.Content = messageData.Content;
             }
 
             if (AutomaticallySend) SendQueuedMessages();

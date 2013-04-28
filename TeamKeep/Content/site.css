@@ -558,6 +558,10 @@ i {
     font-family: 'Fjalla One', sans-serif;
 }
 
+#sent-message-modal h4 {
+    margin-top: 28px;
+    border-bottom: solid #ddd 1px;
+}
 #team-announcement textarea,
 #team-message-modal textarea,
 #sent-message-modal textarea {
