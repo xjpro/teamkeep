@@ -44,57 +44,115 @@
         </form>
     </div>
 </div>
-<div class="row-fluid nonshowcase">
-    <div class="span5">
-        <h3>Intuitive Interface</h3>
-        <p>
-            No manual required! Edit on the fly by simply clicking fields you'd like to change &mdash; changes are uploaded and saved automatically. 
-        </p>
-        <p>
-            Schedule and roster tables are easy to use and adapt to your needs. You can sort on any columns or turn off those you don't need.
-        </p>
+
+<div class="row">
+    <div id="myCarousel" class="span6 carousel slide">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="carousel-image">
+                    <img src="/img/promo1.png" alt="Team Keep interface"/>
+                </div>
+                <div class="carousel-caption">
+                    <h4>Intuitive Interface</h4>
+                    <p>
+                        No manual required! Edit on the fly by simply clicking fields you'd like to change &mdash; changes are uploaded and saved automatically. 
+                        Schedule and roster tables are easy to use and adapt to your needs. You can sort on any columns or turn off those you don't need.
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="carousel-image">
+                    <img src="/img/promo2.png" alt="Team Keep team pages"/>
+                </div>
+                <div class="carousel-caption">
+                    <h4>Team Home Page</h4>
+                    <p>
+                        Publish an online site for your team. With our privacy controls you control what is visible 
+                        to the public. Your team stays up to date with a central location for announcements and updated schedule information. 
+                        Throw out the paperwork! Everything you need to manage is now all in one place, automatically organized, where your team can view it anytime.
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="carousel-image">
+                    <img src="/img/promo3.png" alt="Team Keep rsesponsive design"/>
+                </div>
+                <div class="carousel-caption">
+                    <h4>Responsive Design</h4>
+                    <p>
+                        Access our site from your phone or tablet &mdash; the responsive interface automatically resizes to accomodate any screen size. 
+                        Make updates anytime, anywhere.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Carousel nav -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
     </div>
-    <div class="span7">
-        <img src="/img/promo1.png" alt="Team Keep interface"/>
-    </div>
-</div>
-<div class="row-fluid nonshowcase">
-    <div class="span5">
-        <h3>Team Home Page</h3>
-        <p>
-            Publish an online site for your team. With our privacy controls you control what is visible 
-            to the public. Your team stays up to date with a central location for announcements and updated schedule information. 
-        </p>
-        <p>
-            Throw out the paperwork! Everything you need to manage is now all in one place, automatically organized, where your team can view it anytime.
-        </p>
-    </div>
-    <div class="span7">
-        <img src="/img/promo2.png" alt="Team Keep team pages"/>
-    </div>
-</div>
-<div class="row-fluid nonshowcase">
-    <div class="span5">
-        <h3>Responsive Design</h3>
-        <p>
-            Access our site from your phone or tablet &mdash; the responsive interface automatically resizes to accomodate any screen size. 
-            Make updates anytime, anywhere.
-        </p>
-    </div>
-    <div class="span7">
-        <img src="/img/promo3.png" alt="Team Keep rsesponsive design"/>
+    <div id="features" class="span6">
+        <h3>Features</h3>
+        <table>
+            <tr>
+                <td class="heading">Roster</td>
+                <td class="spacer"></td>
+                <td class="available"><i class="icon-check icon-2x"></i></td>
+            </tr>
+            <tr>
+                <td class="heading">Schedule</td>
+                <td class="spacer"></td>
+                <td class="available"><i class="icon-check icon-2x"></i></td>
+            </tr>
+            <tr>
+                <td class="heading">Messages</td>
+                <td class="spacer"></td>
+                <td class="available"><i class="icon-check icon-2x"></i></td>
+            </tr>
+            <tr>
+                <td class="heading">Availability</td>
+                <td class="spacer"></td>
+                <td class="available"><i class="icon-check icon-2x"></i></td>
+            </tr>
+            <tr>
+                <td class="heading">Privacy</td>
+                <td class="spacer"></td>
+                <td class="available"><i class="icon-check icon-2x"></i></td>
+            </tr>
+            <tr>
+                <td class="heading">Home page</td>
+                <td class="spacer"></td>
+                <td class="available"><i class="icon-check icon-2x"></i></td>
+            </tr>
+            <tr>
+                <td class="heading">Custom banner</td>
+                <td class="spacer"></td>
+                <td class="available"><i class="icon-check icon-2x"></i></td>
+            </tr>
+            <tr>
+                <td class="heading">Costs</td>
+                <td class="spacer"></td>
+                <td class="available"><strong>FREE</strong></td>
+            </tr>
+        </table>
     </div>
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <p class="text-center">
+        <h3 class="text-center">
             Get started with Team Keep
-        </p>
+        </h3>
         <p class="text-center">
             <button class="btn btn-info btn-large" data-toggle="modal" data-target="#register-modal">Sign up now</button>
         </p>
     </div>
 </div>
+
 <form id="register-modal" class="modal hide fade" data-bind="submit: RegisterUser">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

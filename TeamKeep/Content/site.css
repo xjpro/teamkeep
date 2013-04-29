@@ -51,6 +51,9 @@ i {
 .showcase .alert-error {
     font-size: 10pt;
 }
+#myCarousel .carousel-image {
+    text-align: center;
+}
 
 .hover-edit {
     display: none;
@@ -72,6 +75,26 @@ i {
     font-style: italic;
 }
 
+#features td {
+    margin-bottom: 10px;
+}
+#features table .heading {
+    display: inline-block;
+    width: 128px;
+    font-size: 16pt;
+}
+#features table .spacer {
+    width: 100%;
+    background: url('/img/spacer.gif');
+    background-repeat: repeat-x;
+    background-position: center;
+}
+#features table .available {
+    display: inline-block;
+    width: 40px;
+    color: #277415;
+    text-align: right;
+}
 #newteam-modal form {
     margin-bottom: 0;
 }
