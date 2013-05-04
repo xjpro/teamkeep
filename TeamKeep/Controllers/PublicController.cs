@@ -57,6 +57,13 @@ namespace TeamKeep.Controllers
         }
 
         [HttpGet]
+        public ActionResult Features()
+        {
+            var user = this.GetActiveUser(this.Request);
+            return View(new BaseViewModel { User = user });
+        }
+
+        [HttpGet]
         public ActionResult Test()
         {
             new AutomatedEmailsJob().Execute(null);

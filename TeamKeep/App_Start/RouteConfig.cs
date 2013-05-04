@@ -15,6 +15,7 @@ namespace TeamKeep.App_Start
             routes.MapRoute("PublicPasswordResetSent", "resetsent", new { controller = "Public", action = "PasswordResetSent" });
             routes.MapRoute("PublicAvailability", "rsvp", new { controller = "Public", action = "AvailabilityLanding" }, new { httpMethod = new HttpMethodConstraint("GET") });
             routes.MapRoute("PublicAbout", "about", new { controller = "Public", action = "About" });
+            routes.MapRoute("PublicFeatures", "features", new { controller = "Public", action = "Features" });
             routes.MapRoute("PublicTest", "test", new { controller = "Public", action = "Test" });
 
             // User

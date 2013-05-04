@@ -34,16 +34,6 @@ i {
     border-radius: 6px;
     background: #e9e9e9;
 }
-@media (max-width: 767px) {
-    .showcase {
-        border: none;
-        background: none;
-    }    
-    .showcase.row-fluid > div,
-    .nonshowcase.row-fluid > div {
-        padding: 0;
-    }
-}
 .showcase h1, .nonshowcase h3 {
     font-family: 'Fjalla One';
     font-size: 32pt;
@@ -53,6 +43,22 @@ i {
 }
 #myCarousel .carousel-image {
     text-align: center;
+}
+#myCarousel .carousel-image img {
+    margin-bottom: 100px;
+}
+@media (max-width: 767px) {
+    .showcase {
+        border: none;
+        background: none;
+    }    
+    .showcase.row-fluid > div,
+    .nonshowcase.row-fluid > div {
+        padding: 0;
+    }
+    #myCarousel .carousel-image img {
+        margin-bottom: 0;
+    }
 }
 
 .hover-edit {
@@ -94,6 +100,11 @@ i {
     width: 40px;
     color: #277415;
     text-align: right;
+}
+#features .row {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: dotted #aaa 1px;
 }
 #newteam-modal form {
     margin-bottom: 0;
