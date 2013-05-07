@@ -28,3 +28,12 @@
         </ul>
     </div>
 </div>
+<script>
+    $(function () {
+
+        // No teams? pop open modal automatically
+        if ($("#team-heroes li").length == 1) {
+            $("#newteam-modal").modal("show");
+        }
+    });
+</script>

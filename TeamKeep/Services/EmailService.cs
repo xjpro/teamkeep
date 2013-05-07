@@ -207,6 +207,7 @@ namespace TeamKeep.Services
                 Subject = subject,
                 BodyEncoding = Encoding.ASCII,
                 IsBodyHtml = true,
+                From = new MailAddress(sender, "Team Keep"),
                 Sender = new MailAddress(sender, "Team Keep")
             };
 
