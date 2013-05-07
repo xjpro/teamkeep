@@ -113,42 +113,42 @@
         <h3>Features</h3>
         <table>
             <tr>
-                <td class="heading">Roster</td>
+                <td class="heading"><a title="Organize your team contact and player information including positions, emails, and more">Roster</a></td>
                 <td class="spacer"></td>
                 <td class="available"><i class="icon-check icon-2x"></i></td>
             </tr>
             <tr>
-                <td class="heading">Schedule</td>
+                <td class="heading"><a title="Keep track of your upcoming events, who you're playing, and how well you've done">Schedule</a></td>
                 <td class="spacer"></td>
                 <td class="available"><i class="icon-check icon-2x"></i></td>
             </tr>
             <tr>
-                <td class="heading">Messages</td>
+                <td class="heading"><a title="Message your entire team in one step from any device and send out updates as they happen">Messages</a></td>
                 <td class="spacer"></td>
                 <td class="available"><i class="icon-check icon-2x"></i></td>
             </tr>
             <tr>
-                <td class="heading">Availability</td>
+                <td class="heading"><a title="Manage player availability for your entire schedule and request confirmations via email">Availability</a></td>
                 <td class="spacer"></td>
                 <td class="available"><i class="icon-check icon-2x"></i></td>
             </tr>
             <tr>
-                <td class="heading">Privacy</td>
+                <td class="heading"><a title="Instantly publish a team home page where members and fans can check your up to date schedule">Home page</a></td>
                 <td class="spacer"></td>
                 <td class="available"><i class="icon-check icon-2x"></i></td>
             </tr>
             <tr>
-                <td class="heading">Home page</td>
+                <td class="heading"><a title="With built in privacy controls, you control what the public sees">Privacy</a></td>
                 <td class="spacer"></td>
                 <td class="available"><i class="icon-check icon-2x"></i></td>
             </tr>
             <tr>
-                <td class="heading">Custom banner</td>
+                <td class="heading"><a title="Customize your home page with your own banner">Custom banner</a></td>
                 <td class="spacer"></td>
                 <td class="available"><i class="icon-check icon-2x"></i></td>
             </tr>
             <tr>
-                <td class="heading">Costs</td>
+                <td class="heading"><a title="Team Keep is absolutely free">Costs</a></td>
                 <td class="spacer"></td>
                 <td class="available"><strong>FREE</strong></td>
             </tr>
@@ -319,6 +319,8 @@
         } else {
             $("#input-email").focus();
         }
+
+        $(document).tooltip({ items: "a[title]" });
     });
 
 </script>

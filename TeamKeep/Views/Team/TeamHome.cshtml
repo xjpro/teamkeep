@@ -23,7 +23,7 @@
             <button class="btn btn-info" data-toggle="modal" data-target="#team-message-modal">Message team</button>
             <!-- /ko -->
             <!-- ko ifnot: EnableMessageButton -->
-            <button class="btn btn-info disabled" data-toggle="tooltip" data-original-title="Requires one member with e-mail">Message team</button>
+            <button class="btn btn-info disabled" title="Will become available once you've added a team member email to your roster">Message team</button>
             <!-- /ko -->
             <button class="btn btn-info" data-toggle="modal" data-target="#team-settings-modal"><i class="icon-cog"></i></button>
         </div>
@@ -218,7 +218,7 @@
                     <a href="#availability" data-toggle="tab" onclick="javascript:location.hash='availability';">Availability</a>
                     <!-- /ko -->
                     <!-- ko ifnot: AvailabilityVisible -->
-                    <a class="disabled" data-toggle="tooltip" data-original-title="Will become available once you've added a dated event to your schedule and at least one member to your roster">Availability</a>
+                    <a class="disabled" title="Will become available once you've added a dated event to your schedule and at least one member to your roster">Availability</a>
                     <!-- /ko -->
                 </li>
                 <li><a href="#messages" data-toggle="tab" onclick="javascript:location.hash='messages';">Messages</a></li>
@@ -495,5 +495,5 @@
         $("#team-data .nav a[href='" + location.hash + "']").click();
     }
     
-    $("#team-data-links, #team-functions").tooltip({ selector: "[data-toggle='tooltip']" });
+    $(document).tooltip({ items: "*[title]", track: true });
 </script>

@@ -7,6 +7,11 @@ body {
 body a {
     cursor: pointer;
 }
+.ui-tooltip {
+    font-size: 10pt;
+    border: solid #ccc 1px;
+    border-radius: 2px;
+}
 #sidebar a, #main a {
     text-decoration: none;
 }

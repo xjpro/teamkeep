@@ -188,7 +188,7 @@
             {
                 CssClass: "sort-date date", 
                 Name: "Date",
-                ToolTip: "Date and time of game",
+                ToolTip: "Date and time event occurs",
                 Visible: ko.observable(typeof localStorage["Column.Date.Visible"] !== "undefined" ? (localStorage["Column.Date.Visible"] == "true") : true),
                 Toggleable: true,
                 SortType: "dateTime"
@@ -197,7 +197,7 @@
                 Id: "sort-scoredpoints",
                 CssClass: "sort-scoredpoints digit",
                 Name: "PS",
-                ToolTip: "Points scored",
+                ToolTip: "Points scored by your team",
                 Visible: ko.observable(typeof localStorage["Column.PS.Visible"] !== "undefined" ? (localStorage["Column.PS.Visible"] == "true") : true),
                 Toggleable: true,
                 SortType: "scoredPoints"
@@ -205,7 +205,7 @@
             {
                 CssClass: "sort-allowedpoints digit",
                 Name: "PA",
-                ToolTip: "Points allowed",
+                ToolTip: "Points scored by opposing team",
                 Visible: ko.observable(typeof localStorage["Column.PA.Visible"] !== "undefined" ? (localStorage["Column.PA.Visible"] == "true") : true),
                 Toggleable: true,
                 SortType: "allowedPoints"
@@ -221,7 +221,7 @@
             {
                 CssClass: "sort-location location",
                 Name: "Location",
-                ToolTip: "Game location",
+                ToolTip: "Location where the event takes place",
                 Visible: ko.observable(typeof localStorage["Column.Location.Visible"] !== "undefined" ? (localStorage["Column.Location.Visible"] == "true") : true),
                 Toggleable: true,
                 SortType: "location"
@@ -488,7 +488,4 @@
             $(window).unbind(".editor");
         });
     });
-
-    $("#games table").tooltip({ selector: "*[data-toggle='tooltip']" });
-
 </script>

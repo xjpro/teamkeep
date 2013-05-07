@@ -68,7 +68,7 @@ ko.bindingHandlers.toggleHeader = {
         var html = [];
         $.each(columns, function (i, column) {
             html.push("<th class='" + column.CssClass + "' style='display: " + (column.Visible() ? "table-cell" : "none") + "'>");
-            html.push("<a sorttype='" + column.SortType + "' data-toggle='tooltip' data-original-title='" + (column.ToolTip || "") + "'>" + column.Name + "</a>");
+            html.push("<a sorttype='" + column.SortType + "' title='" + (column.ToolTip || "") + "'>" + column.Name + "</a>");
             html.push("</th>");
         });
         $(element).empty().append(html.join(''));

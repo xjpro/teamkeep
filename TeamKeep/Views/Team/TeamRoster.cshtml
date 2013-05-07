@@ -179,7 +179,7 @@
             {
                 CssClass: "sort-phone phone",
                 Name: "Phone",
-                ToolTip: "Phone number",
+                ToolTip: "Primary contact phone number",
                 Visible: ko.observable(me.Editable() && (typeof localStorage["Column.Phone.Visible"] !== "undefined" ? (localStorage["Column.Phone.Visible"] == "true") : true)),
                 Toggleable: true,
                 SortType: "phone"
@@ -376,6 +376,4 @@
         ko.applyBindings(window.teamRosterViewModel, document.getElementById("roster"));
         window.teamRosterViewModel.Sort();
     });
-
-    $("#roster table").tooltip({ selector: "*[data-toggle='tooltip']" });
 </script>

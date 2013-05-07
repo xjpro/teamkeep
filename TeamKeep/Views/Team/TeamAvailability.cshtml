@@ -126,11 +126,9 @@
                     </label>   
                     <!-- /ko -->
                     <!-- ko if: AvailabilityEmailSent($root.SelectedEvent()) != null -->
-                    <label class="disabled">
+                    <label class="disabled" title="Availability request email sent">
                         <i class="icon-envelope"></i>
-                        <span data-toggle="tooltip" 
-                            data-original-title="Email sent" 
-                            data-bind="text: FullName, attr: { 'data-original-title': 'Email sent on ' + AvailabilityEmailSent($root.SelectedEvent()) }"></span>
+                        <span data-bind="text: FullName, attr: { 'data-original-title': 'Email sent on ' + AvailabilityEmailSent($root.SelectedEvent()) }"></span>
                     </label>  
                     <!-- /ko -->
                 </ul>
@@ -398,7 +396,5 @@
         };
         $(window).resize(size);
         $(window).trigger("resize");
-
-        $("#availability").tooltip({ selector: "*[data-toggle='tooltip']" });
     });
 </script>

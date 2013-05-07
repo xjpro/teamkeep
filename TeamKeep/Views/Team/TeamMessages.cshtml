@@ -101,7 +101,7 @@
             {
                 CssClass: "sort-date date",
                 Name: "Date",
-                ToolTip: "Date message was sent",
+                ToolTip: "Date and time this message was sent",
                 Visible: ko.observable(true),
                 Toggleable: false,
                 SortType: "dateTime"
@@ -179,6 +179,4 @@
         ko.applyBindings(window.messagesViewModel, document.getElementById("messages"));
         window.messagesViewModel.Sort();
     });
-    
-    $("#messages table").tooltip({ selector: "*[data-toggle='tooltip']" });
 </script>
