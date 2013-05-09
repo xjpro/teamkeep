@@ -9,8 +9,10 @@ body a {
 }
 .ui-tooltip {
     font-size: 10pt;
-    border: solid #ccc 1px;
-    border-radius: 2px;
+    border-radius: 3px;
+    background: #333;
+    color: #eee;
+    box-shadow: none;
 }
 #sidebar a, #main a {
     text-decoration: none;
@@ -46,24 +48,11 @@ i {
 .showcase .alert-error {
     font-size: 10pt;
 }
-#myCarousel .carousel-image {
+#features-carousel .carousel-image {
     text-align: center;
 }
-#myCarousel .carousel-image img {
+#features-carousel .carousel-image img {
     margin-bottom: 100px;
-}
-@media (max-width: 767px) {
-    .showcase {
-        border: none;
-        background: none;
-    }    
-    .showcase.row-fluid > div,
-    .nonshowcase.row-fluid > div {
-        padding: 0;
-    }
-    #myCarousel .carousel-image img {
-        margin-bottom: 0;
-    }
 }
 
 .hover-edit {
@@ -86,6 +75,9 @@ i {
     font-style: italic;
 }
 
+#features a {
+    cursor: pointer;
+}
 #features td {
     margin-bottom: 10px;
 }
@@ -232,9 +224,6 @@ i {
     border: solid #666 2px;
     border-radius: 2px;
 }
-#games .table-container table {
-    min-height: 142px;
-}
 .table-container a,
 .table-container td.icon {
     cursor: pointer;
@@ -249,6 +238,9 @@ i {
     padding: 3px 20px;
     margin:0;
     cursor: auto;
+}
+.table-container .table-controls .dropdown-menu li label.heading {
+    color: #999;
 }
 .table-container .table-controls .column-select,
 .table-container .table-controls .season-select,
@@ -711,7 +703,6 @@ i {
     padding: 10px;
     margin: 10px 0;
     border: solid #aaa 1px;
-
 }
 #ab-data li {
     overflow: hidden;
@@ -745,3 +736,38 @@ i {
 .ui-timepicker-rtl{ direction: rtl; }
 .ui-timepicker-rtl dl { text-align: right; }
 .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
+
+/* mobile styling */
+@media (max-width: 767px) {
+    .showcase {
+        border: none;
+        background: none;
+    }    
+    .showcase.row-fluid > div,
+    .nonshowcase.row-fluid > div {
+        padding: 0;
+    }
+    #features-carousel .carousel-image img {
+        margin-bottom: 0;
+    }
+    #team-banner {
+        margin-bottom: 30px;
+        border-left-width: 0;
+        border-right-width: 0;
+    }
+    #team-banner h1 {
+        left: 0;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 36pt;
+    }
+    #team-functions {
+        float: none;
+    }
+    .nophonepad .table-container {
+        border-left-width: 0;
+        border-right-width: 0;
+        border-radius: 0;
+    }
+}

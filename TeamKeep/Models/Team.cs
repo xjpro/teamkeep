@@ -17,7 +17,6 @@ namespace TeamKeep.Models
             Name = teamData.Name;
             Announcement = teamData.Announcements;
             BannerImage = teamData.Banner;
-            ResultsView = teamData.ResultsView;
             Postal = teamData.Postal;
         }
 

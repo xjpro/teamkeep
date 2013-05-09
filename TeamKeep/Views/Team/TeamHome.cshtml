@@ -92,6 +92,45 @@
                     </li>
                 </ul>
                 
+                <h4>Columns</h4>
+                <ul>
+                    <li>
+                        <label>Arena</label>
+                        <span class="info btn-group" data-toggle="buttons-radio">
+                            <button class="btn btn-small" data-bind="css: { active: Settings.ArenaColumn() == true }, click: function() { Settings.ArenaColumn(true); }">Show</button>
+                            <button class="btn btn-small" data-bind="css: { active: Settings.ArenaColumn() == false }, click: function() { Settings.ArenaColumn(false); }">Hide</button>
+                        </span>  
+                    </li>
+                    <li>
+                        <label>Last name</label>
+                        <span class="info btn-group" data-toggle="buttons-radio">
+                            <button class="btn btn-small" data-bind="css: { active: Settings.LastNameColumn() == true }, click: function () { Settings.LastNameColumn(true); }">Show</button>
+                            <button class="btn btn-small" data-bind="css: { active: Settings.LastNameColumn() == false }, click: function () { Settings.LastNameColumn(false); }">Hide</button>
+                        </span>  
+                    </li>
+                    <li>
+                        <label>Position</label>
+                        <span class="info btn-group" data-toggle="buttons-radio">
+                            <button class="btn btn-small" data-bind="css: { active: Settings.PositionColumn() == true }, click: function () { Settings.PositionColumn(true); }">Show</button>
+                            <button class="btn btn-small" data-bind="css: { active: Settings.PositionColumn() == false }, click: function () { Settings.PositionColumn(false); }">Hide</button>
+                        </span>  
+                    </li>
+                    <li>
+                        <label>Phone</label>
+                        <span class="info btn-group" data-toggle="buttons-radio">
+                            <button class="btn btn-small" data-bind="css: { active: Settings.PhoneColumn() == true }, click: function () { Settings.PhoneColumn(true); }">Show</button>
+                            <button class="btn btn-small" data-bind="css: { active: Settings.PhoneColumn() == false }, click: function () { Settings.PhoneColumn(false); }">Hide</button>
+                        </span>  
+                    </li>
+                    <li>
+                        <label>Email</label>
+                        <span class="info btn-group" data-toggle="buttons-radio">
+                            <button class="btn btn-small" data-bind="css: { active: Settings.EmailColumn() == true }, click: function () { Settings.EmailColumn(true); }">Show</button>
+                            <button class="btn btn-small" data-bind="css: { active: Settings.EmailColumn() == false }, click: function () { Settings.EmailColumn(false); }">Hide</button>
+                        </span>  
+                    </li>
+                </ul>
+                
                 <button class="btn btn-link" data-dismiss="modal" data-toggle="modal" data-target="#team-delete-modal">
                     Delete this team
                 </button>
@@ -405,7 +444,7 @@
             });
         };
         this.SaveSettings = function () {
-            
+
             if (me.NewName().length == 0) {
                 return window.ShowAlert("Team must have a name");
             }
@@ -420,10 +459,10 @@
                     TeamId: me.Id(),
                     Name: me.NewName(),
                     Privacy: ko.mapping.toJS(me.Privacy),
-                    SendConfirmations: me.Settings.ConfirmationEmailMinutes()
+                    Settings: ko.mapping.toJS(me.Settings)
                 }),
                 success: function () {
-                    window.location = "/teams/" + me.Id();
+                    window.location.reload();
                 }
             });
         };

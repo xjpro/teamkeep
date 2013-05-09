@@ -2190,11 +2190,23 @@ namespace TeamKeep.Models.DataModels
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="teamId">Initial value of the TeamId property.</param>
-        public static TeamSettingsData CreateTeamSettingsData(global::System.Int32 id, global::System.Int32 teamId)
+        /// <param name="resultsView">Initial value of the ResultsView property.</param>
+        /// <param name="arenaColumn">Initial value of the ArenaColumn property.</param>
+        /// <param name="lastNameColumn">Initial value of the LastNameColumn property.</param>
+        /// <param name="positionColumn">Initial value of the PositionColumn property.</param>
+        /// <param name="phoneColumn">Initial value of the PhoneColumn property.</param>
+        /// <param name="emailColumn">Initial value of the EmailColumn property.</param>
+        public static TeamSettingsData CreateTeamSettingsData(global::System.Int32 id, global::System.Int32 teamId, global::System.Byte resultsView, global::System.Boolean arenaColumn, global::System.Boolean lastNameColumn, global::System.Boolean positionColumn, global::System.Boolean phoneColumn, global::System.Boolean emailColumn)
         {
             TeamSettingsData teamSettingsData = new TeamSettingsData();
             teamSettingsData.Id = id;
             teamSettingsData.TeamId = teamId;
+            teamSettingsData.ResultsView = resultsView;
+            teamSettingsData.ArenaColumn = arenaColumn;
+            teamSettingsData.LastNameColumn = lastNameColumn;
+            teamSettingsData.PositionColumn = positionColumn;
+            teamSettingsData.PhoneColumn = phoneColumn;
+            teamSettingsData.EmailColumn = emailColumn;
             return teamSettingsData;
         }
 
@@ -2276,6 +2288,150 @@ namespace TeamKeep.Models.DataModels
         private Nullable<global::System.Int16> _ConfirmationEmailMinutes;
         partial void OnConfirmationEmailMinutesChanging(Nullable<global::System.Int16> value);
         partial void OnConfirmationEmailMinutesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte ResultsView
+        {
+            get
+            {
+                return _ResultsView;
+            }
+            set
+            {
+                OnResultsViewChanging(value);
+                ReportPropertyChanging("ResultsView");
+                _ResultsView = StructuralObject.SetValidValue(value, "ResultsView");
+                ReportPropertyChanged("ResultsView");
+                OnResultsViewChanged();
+            }
+        }
+        private global::System.Byte _ResultsView;
+        partial void OnResultsViewChanging(global::System.Byte value);
+        partial void OnResultsViewChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ArenaColumn
+        {
+            get
+            {
+                return _ArenaColumn;
+            }
+            set
+            {
+                OnArenaColumnChanging(value);
+                ReportPropertyChanging("ArenaColumn");
+                _ArenaColumn = StructuralObject.SetValidValue(value, "ArenaColumn");
+                ReportPropertyChanged("ArenaColumn");
+                OnArenaColumnChanged();
+            }
+        }
+        private global::System.Boolean _ArenaColumn;
+        partial void OnArenaColumnChanging(global::System.Boolean value);
+        partial void OnArenaColumnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean LastNameColumn
+        {
+            get
+            {
+                return _LastNameColumn;
+            }
+            set
+            {
+                OnLastNameColumnChanging(value);
+                ReportPropertyChanging("LastNameColumn");
+                _LastNameColumn = StructuralObject.SetValidValue(value, "LastNameColumn");
+                ReportPropertyChanged("LastNameColumn");
+                OnLastNameColumnChanged();
+            }
+        }
+        private global::System.Boolean _LastNameColumn;
+        partial void OnLastNameColumnChanging(global::System.Boolean value);
+        partial void OnLastNameColumnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean PositionColumn
+        {
+            get
+            {
+                return _PositionColumn;
+            }
+            set
+            {
+                OnPositionColumnChanging(value);
+                ReportPropertyChanging("PositionColumn");
+                _PositionColumn = StructuralObject.SetValidValue(value, "PositionColumn");
+                ReportPropertyChanged("PositionColumn");
+                OnPositionColumnChanged();
+            }
+        }
+        private global::System.Boolean _PositionColumn;
+        partial void OnPositionColumnChanging(global::System.Boolean value);
+        partial void OnPositionColumnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean PhoneColumn
+        {
+            get
+            {
+                return _PhoneColumn;
+            }
+            set
+            {
+                OnPhoneColumnChanging(value);
+                ReportPropertyChanging("PhoneColumn");
+                _PhoneColumn = StructuralObject.SetValidValue(value, "PhoneColumn");
+                ReportPropertyChanged("PhoneColumn");
+                OnPhoneColumnChanged();
+            }
+        }
+        private global::System.Boolean _PhoneColumn;
+        partial void OnPhoneColumnChanging(global::System.Boolean value);
+        partial void OnPhoneColumnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean EmailColumn
+        {
+            get
+            {
+                return _EmailColumn;
+            }
+            set
+            {
+                OnEmailColumnChanging(value);
+                ReportPropertyChanging("EmailColumn");
+                _EmailColumn = StructuralObject.SetValidValue(value, "EmailColumn");
+                ReportPropertyChanged("EmailColumn");
+                OnEmailColumnChanged();
+            }
+        }
+        private global::System.Boolean _EmailColumn;
+        partial void OnEmailColumnChanging(global::System.Boolean value);
+        partial void OnEmailColumnChanged();
 
         #endregion
 

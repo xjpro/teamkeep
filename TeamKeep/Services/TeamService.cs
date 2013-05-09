@@ -157,9 +157,30 @@ namespace TeamKeep.Services
                 entities.TeamDatas.AddObject(teamData);
                 entities.SaveChanges();
 
-                entities.TeamSettingsDatas.AddObject(new TeamSettingsData { TeamId = teamData.Id });
-                entities.TeamPrivacyDatas.AddObject(new TeamPrivacyData { TeamId = teamData.Id, HomePage = true, Roster = true });
-                entities.TeamOwnerDatas.AddObject(new TeamOwnerData { TeamId = teamData.Id, UserId = creator.Id });
+                entities.TeamSettingsDatas.AddObject(new TeamSettingsData 
+                { 
+                    TeamId = teamData.Id, 
+                    ResultsView = 0,
+                    ArenaColumn = true, 
+                    LastNameColumn = true, 
+                    PositionColumn = true,
+                    PhoneColumn = true,
+                    EmailColumn = true
+                });
+
+                entities.TeamPrivacyDatas.AddObject(new TeamPrivacyData 
+                {
+                    TeamId = teamData.Id, 
+                    HomePage = true, 
+                    Roster = true 
+                });
+
+                entities.TeamOwnerDatas.AddObject(new TeamOwnerData 
+                { 
+                    TeamId = teamData.Id, 
+                    UserId = creator.Id 
+                });
+
                 entities.SaveChanges();
 
                 team.Id = teamData.Id;
@@ -180,35 +201,35 @@ namespace TeamKeep.Services
             }
         }
 
-        public TeamSettingsViewModel UpdateSettings(TeamSettingsViewModel settings)
+        public TeamSettingsViewModel UpdateSettings(TeamSettingsViewModel teamSettings)
         {
             using (var entities = Database.GetEntities())
             {
-                var teamData = entities.TeamDatas.Single(x => x.Id == settings.TeamId);
-                teamData.Name = settings.Name;
+                var teamData = entities.TeamDatas.Single(x => x.Id == teamSettings.TeamId);
+                teamData.Name = teamSettings.Name;
 
                 // Update settings
-                var settingsData = entities.TeamSettingsDatas.Single(x => x.TeamId == settings.TeamId);
-                if (settings.SendConfirmations)
+                if (teamSettings.Settings != null)
                 {
-                    settingsData.ConfirmationEmailMinutes = 4320; // 3 days currently
-                }
-                else
-                {
-                    settingsData.ConfirmationEmailMinutes = null;
+                    var settingsData = entities.TeamSettingsDatas.Single(x => x.TeamId == teamSettings.TeamId);
+                    settingsData.ArenaColumn = teamSettings.Settings.ArenaColumn;
+                    settingsData.LastNameColumn = teamSettings.Settings.LastNameColumn;
+                    settingsData.PositionColumn = teamSettings.Settings.PositionColumn;
+                    settingsData.PhoneColumn = teamSettings.Settings.PhoneColumn;
+                    settingsData.EmailColumn = teamSettings.Settings.EmailColumn;
                 }
 
                 // Update privacy
-                if (settings.Privacy != null)
+                if (teamSettings.Privacy != null)
                 {
-                    var teamPrivacyData = entities.TeamPrivacyDatas.Single(x => x.TeamId == settings.TeamId);
-                    teamPrivacyData.HomePage = settings.Privacy.HomePage;
-                    teamPrivacyData.Roster = settings.Privacy.Roster;
+                    var privacyData = entities.TeamPrivacyDatas.Single(x => x.TeamId == teamSettings.TeamId);
+                    privacyData.HomePage = teamSettings.Privacy.HomePage;
+                    privacyData.Roster = teamSettings.Privacy.Roster;
                 }
 
                 entities.SaveChanges();
 
-                return settings;
+                return teamSettings;
             }
         }
 

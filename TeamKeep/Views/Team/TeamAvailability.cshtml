@@ -40,7 +40,9 @@
         <thead>
             <tr>
                 <th class="max">&nbsp;</th>
+                <!-- ko if: Settings.PositionColumn() -->
                 <th class="position">&nbsp;</th>
+                <!-- /ko -->
                 <!-- ko if: Events().length == 0 -->
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
@@ -78,9 +80,11 @@
                 <td class="max">
                     <input class="mod" type="text" data-bind="editable: false, value: FullName" />
                 </td>
+                <!-- ko if: $root.Settings.PositionColumn() -->
                 <td class="position">
                     <input class="mod" type="text" data-bind="editable: false, value: Position" />
                 </td>
+                <!-- /ko -->
                 <!-- ko foreach: { data: $root.Events, as: 'game' } -->
                 <td class="icon" data-bind="css: $root.AvailabilityCss(player, game), click: function() { $root.RotateAvailability(player, game); }">
                     <span class="mod">
@@ -150,6 +154,7 @@
         var me = this;
         this.PlayerGroups = teamViewModel.PlayerGroups;
         this.Seasons = teamViewModel.Seasons;
+        this.Settings = teamViewModel.Settings;
 
         this.EventsIndex = ko.observable(0);
         this.EventsShown = ko.observable(10);

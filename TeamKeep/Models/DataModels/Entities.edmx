@@ -136,6 +136,12 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="ConfirmationEmailMinutes" Type="smallint" />
+          <Property Name="ResultsView" Type="tinyint" Nullable="false" />
+          <Property Name="ArenaColumn" Type="bit" Nullable="false" />
+          <Property Name="LastNameColumn" Type="bit" Nullable="false" />
+          <Property Name="PositionColumn" Type="bit" Nullable="false" />
+          <Property Name="PhoneColumn" Type="bit" Nullable="false" />
+          <Property Name="EmailColumn" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -265,6 +271,12 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="TeamId" Nullable="false" />
           <Property Type="Int16" Name="ConfirmationEmailMinutes" />
+          <Property Type="Byte" Name="ResultsView" Nullable="false" />
+          <Property Type="Boolean" Name="ArenaColumn" Nullable="false" />
+          <Property Type="Boolean" Name="LastNameColumn" Nullable="false" />
+          <Property Type="Boolean" Name="PositionColumn" Nullable="false" />
+          <Property Type="Boolean" Name="PhoneColumn" Nullable="false" />
+          <Property Type="Boolean" Name="EmailColumn" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamData">
           <Key>
@@ -405,6 +417,12 @@
           <EntitySetMapping Name="TeamSettingsDatas">
             <EntityTypeMapping TypeName="DatabaseModel.TeamSettingsData">
               <MappingFragment StoreEntitySet="TeamSettingsData">
+                <ScalarProperty Name="EmailColumn" ColumnName="EmailColumn" />
+                <ScalarProperty Name="PhoneColumn" ColumnName="PhoneColumn" />
+                <ScalarProperty Name="PositionColumn" ColumnName="PositionColumn" />
+                <ScalarProperty Name="LastNameColumn" ColumnName="LastNameColumn" />
+                <ScalarProperty Name="ArenaColumn" ColumnName="ArenaColumn" />
+                <ScalarProperty Name="ResultsView" ColumnName="ResultsView" />
                 <ScalarProperty Name="ConfirmationEmailMinutes" ColumnName="ConfirmationEmailMinutes" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

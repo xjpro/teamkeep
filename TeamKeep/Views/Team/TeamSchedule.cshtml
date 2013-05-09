@@ -19,7 +19,7 @@
                 <i class="icon-plus-sign-alt"></i> Game
             </button>
             <ul class="dropdown-menu">
-                <li><label>Add to...</label></li>
+                <li><label class="heading">Add to...</label></li>
                 <li class="divider"></li>
                 <!-- ko foreach: Seasons -->
                 <li><a tabindex="-1" data-bind="text: Name, click: function() { $root.AddGame(Id()); }"></a></li>
@@ -230,8 +230,9 @@
                 CssClass: "sort-sublocation sublocation",
                 Name: "Arena",
                 ToolTip: "Field, court, or rink",
-                Visible: ko.observable(typeof localStorage["Column.Arena.Visible"] !== "undefined" ? (localStorage["Column.Arena.Visible"] == "true") : true),
-                Toggleable: true,
+                Visible: ko.observable(teamViewModel.Settings.ArenaColumn() &&
+                    (typeof localStorage["Column.Arena.Visible"] !== "undefined" ? (localStorage["Column.Arena.Visible"] == "true") : true)),
+                Toggleable: teamViewModel.Settings.ArenaColumn(),
                 SortType: "sublocation"
             }
         ]);

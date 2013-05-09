@@ -21,7 +21,7 @@
                 <i class="icon-plus-sign-alt"></i> Player
             </button>
             <ul class="dropdown-menu">
-                <li><label>Add to...</label></li>
+                <li><label class="heading">Add to...</label></li>
                 <li class="divider"></li>
                 <!-- ko foreach: PlayerGroups -->
                 <li><a tabindex="-1" data-bind="text: Name, click: function() { $root.AddPlayer(Id()); }"></a></li>
@@ -88,7 +88,7 @@
                         <li><a tabindex="-1" data-bind="click: RemovePlayer">Remove</a></li>
                     </ul>
                 </td>
-                <td  class="lastname">
+                <td  class="lastname" data-bind="visible: $root.Columns()[1].Visible">
                     <input type="text" class="mod" data-bind="value: LastName, editable: $parents[1].Editable, event: { change: Update }" />
                 </td>
                 <td class="max">
@@ -156,15 +156,15 @@
                 CssClass: "sort-lastname lastname", 
                 Name: "Last name",
                 ToolTip: "Team member last name",
-                Visible: ko.observable(typeof localStorage["Column.Last name.Visible"] !== "undefined" ? (localStorage["Column.Last name.Visible"] == "true") : true),
+                Visible: ko.observable(teamViewModel.Settings.LastNameColumn()),
                 Toggleable: false,
                 SortType: "lastname"
             },
             {
                 CssClass: "sort-firstname max",
-                Name: "First name",
+                Name: teamViewModel.Settings.LastNameColumn() ? "First name" : "Name",
                 ToolTip: "Team member first name",
-                Visible: ko.observable(typeof localStorage["Column.First name.Visible"] !== "undefined" ? (localStorage["Column.First name.Visible"] == "true") : true),
+                Visible: ko.observable(true),
                 Toggleable: false,
                 SortType: "firstname"
             },
@@ -172,24 +172,27 @@
                 CssClass: "sort-position position",
                 Name: "Position",
                 ToolTip: "Team member position",
-                Visible: ko.observable(typeof localStorage["Column.Position.Visible"] !== "undefined" ? (localStorage["Column.Position.Visible"] == "true") : true),
-                Toggleable: true,
+                Visible: ko.observable(teamViewModel.Settings.PositionColumn() &&
+                    (typeof localStorage["Column.Position.Visible"] !== "undefined" ? (localStorage["Column.Position.Visible"] == "true") : true)),
+                Toggleable: teamViewModel.Settings.PositionColumn(),
                 SortType: "position"
             },
             {
                 CssClass: "sort-phone phone",
                 Name: "Phone",
                 ToolTip: "Primary contact phone number",
-                Visible: ko.observable(me.Editable() && (typeof localStorage["Column.Phone.Visible"] !== "undefined" ? (localStorage["Column.Phone.Visible"] == "true") : true)),
-                Toggleable: true,
+                Visible: ko.observable(me.Editable() && teamViewModel.Settings.PhoneColumn() &&
+                    (typeof localStorage["Column.Phone.Visible"] !== "undefined" ? (localStorage["Column.Phone.Visible"] == "true") : true)),
+                Toggleable: teamViewModel.Settings.PhoneColumn(),
                 SortType: "phone"
             },
             {
                 CssClass: "sort-email email",
                 Name: "Email",
                 ToolTip: "E-mail address",
-                Visible: ko.observable(me.Editable() && (typeof localStorage["Column.Email.Visible"] !== "undefined" ? (localStorage["Column.Email.Visible"] == "true") : true)),
-                Toggleable: true,
+                Visible: ko.observable(me.Editable() && teamViewModel.Settings.EmailColumn() &&
+                    (typeof localStorage["Column.Email.Visible"] !== "undefined" ? (localStorage["Column.Email.Visible"] == "true") : true)),
+                Toggleable: teamViewModel.Settings.EmailColumn(),
                 SortType: "email"
             }
         ]);

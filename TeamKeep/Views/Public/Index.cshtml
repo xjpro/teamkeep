@@ -45,11 +45,11 @@
 </div>
 
 <div class="row">
-    <div id="myCarousel" class="span7 carousel slide">
+    <div id="features-carousel" class="span7 carousel slide">
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#features-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#features-carousel" data-slide-to="1"></li>
+            <li data-target="#features-carousel" data-slide-to="2"></li>
         </ol>
         <!-- Carousel items -->
         <div class="carousel-inner">
@@ -106,8 +106,8 @@
             </div>
         </div>
         <!-- Carousel nav -->
-        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        <a class="carousel-control left" href="#features-carousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#features-carousel" data-slide="next">&rsaquo;</a>
     </div>
     <div id="features" class="span5">
         <h3>Features</h3>
@@ -320,7 +320,7 @@
             $("#input-email").focus();
         }
 
-        $(document).tooltip({ items: "a[title]" });
+        $(document).tooltip({ items: "a[title]", track: true });
     });
 
 </script>
