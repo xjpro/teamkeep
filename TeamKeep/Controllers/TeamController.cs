@@ -75,6 +75,29 @@ namespace TeamKeep.Controllers
             return null;
         }
 
+        [HttpGet]
+        public ActionResult Settings(int teamId)
+        {
+            var activeUser = this.GetActiveUser(this.Request);
+            var team = _teamService.GetTeam(teamId);
+            if (team == null)
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound, "Team not found");
+            }
+            if (!team.CanEdit(activeUser.Id))
+            {
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to view team settings");
+            }
+
+            var viewModel = new TeamViewModel 
+            { 
+                User = activeUser,
+                Team = team 
+            };
+
+            return View("TeamSettings", viewModel);
+        }
+
         [HttpPost]
         public JsonResult Create(Team team)
         {

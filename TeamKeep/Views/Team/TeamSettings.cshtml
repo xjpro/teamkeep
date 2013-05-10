@@ -1,0 +1,177 @@
+﻿@model TeamKeep.Models.ViewModels.TeamViewModel
+@{
+    ViewBag.Title = @Model.Team.Name + " Settings";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+<div id="team-settings" class="container">
+    
+    <div class="row">
+        <div class="span12">
+            <a data-bind="attr: { href: Url() }">
+                <h1 data-bind="text: NewName"></h1>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span12">
+            <h4>General</h4>
+            <ul>
+                <li>
+                    <label>Name</label><input type="text" data-bind="value: NewName"/>
+                </li>
+            </ul>
+        </div>
+    </div>
+              
+    <div class="row">
+        <div class="span6">
+            <h4>Privacy</h4>
+            <ul>
+                <li>
+                    <label>Home page</label>
+                    <span class="info btn-group" data-toggle="buttons-radio">
+                        <button class="btn btn-small" data-bind="css: { active: Privacy.HomePage() == true }, click: function() { Privacy.HomePage(true); }">Public</button>
+                        <button class="btn btn-small" data-bind="css: { active: Privacy.HomePage() == false }, click: function() { Privacy.HomePage(false); }">Private</button>
+                    </span>          
+                </li>
+                <li>
+                    <label>Roster tab</label>
+                    <span class="info btn-group" data-toggle="buttons-radio">
+                        <button class="btn btn-small" data-bind="css: { active: Privacy.Roster() == true }, click: function() { Privacy.Roster(true); }">Public</button>
+                        <button class="btn btn-small" data-bind="css: { active: Privacy.Roster() == false }, click: function() { Privacy.Roster(false); }">Private</button>
+                    </span>          
+                </li>
+            </ul>
+        </div>    
+        <div class="span6">
+            <h4>Columns</h4>
+            <ul>
+                <li>
+                    <label>Arena</label>
+                    <span class="info btn-group" data-toggle="buttons-radio">
+                        <button class="btn btn-small" data-bind="css: { active: Settings.ArenaColumn() == true }, click: function() { Settings.ArenaColumn(true); }">Show</button>
+                        <button class="btn btn-small" data-bind="css: { active: Settings.ArenaColumn() == false }, click: function() { Settings.ArenaColumn(false); }">Hide</button>
+                    </span>  
+                </li>
+                <li>
+                    <label>Last name</label>
+                    <span class="info btn-group" data-toggle="buttons-radio">
+                        <button class="btn btn-small" data-bind="css: { active: Settings.LastNameColumn() == true }, click: function () { Settings.LastNameColumn(true); }">Show</button>
+                        <button class="btn btn-small" data-bind="css: { active: Settings.LastNameColumn() == false }, click: function () { Settings.LastNameColumn(false); }">Hide</button>
+                    </span>  
+                </li>
+                <li>
+                    <label>Position</label>
+                    <span class="info btn-group" data-toggle="buttons-radio">
+                        <button class="btn btn-small" data-bind="css: { active: Settings.PositionColumn() == true }, click: function () { Settings.PositionColumn(true); }">Show</button>
+                        <button class="btn btn-small" data-bind="css: { active: Settings.PositionColumn() == false }, click: function () { Settings.PositionColumn(false); }">Hide</button>
+                    </span>  
+                </li>
+                <li>
+                    <label>Phone</label>
+                    <span class="info btn-group" data-toggle="buttons-radio">
+                        <button class="btn btn-small" data-bind="css: { active: Settings.PhoneColumn() == true }, click: function () { Settings.PhoneColumn(true); }">Show</button>
+                        <button class="btn btn-small" data-bind="css: { active: Settings.PhoneColumn() == false }, click: function () { Settings.PhoneColumn(false); }">Hide</button>
+                    </span>  
+                </li>
+                <li>
+                    <label>Email</label>
+                    <span class="info btn-group" data-toggle="buttons-radio">
+                        <button class="btn btn-small" data-bind="css: { active: Settings.EmailColumn() == true }, click: function () { Settings.EmailColumn(true); }">Show</button>
+                        <button class="btn btn-small" data-bind="css: { active: Settings.EmailColumn() == false }, click: function () { Settings.EmailColumn(false); }">Hide</button>
+                    </span>  
+                </li>
+            </ul>
+        </div>    
+    </div>  
+              
+    <div class="row">
+        <div class="span12">
+            <button class="btn btn-link" data-dismiss="modal" data-toggle="modal" data-target="#team-delete-modal">
+                Delete this team
+            </button>
+        </div>  
+    </div>
+        <form id="team-delete-modal" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Are you sure?</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Deleting this team will permanently remove all its associated schedule and roster data. This cannot be undone.
+            </p>
+            <p>
+                If you wish to hide the team tempoararily you can 
+                <a data-dismiss="modal" data-toggle="modal" data-target="#team-settings-modal">set its home page to private</a> instead.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-warning" data-bind="click: DeleteTeam">
+                <i class="icon-refresh icon-spin"></i> Yes, please delete
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    var SettingsViewModel = function () {
+        var me = this;
+
+        // From shared storage
+        this.Editable = teamViewModel.Editable;
+        this.Id = teamViewModel.Id;
+        this.Url = teamViewModel.Url;
+        this.Name = teamViewModel.Name;
+        this.Settings = teamViewModel.Settings;
+        this.Privacy = teamViewModel.Privacy;
+
+        this.NewName = ko.observable(me.Name());
+
+        me.NewName.subscribe(function () { me.SaveSettings(); });
+        me.Privacy.HomePage.subscribe(function () { me.SaveSettings(); });
+        me.Privacy.Roster.subscribe(function () { me.SaveSettings(); });
+        me.Settings.ArenaColumn.subscribe(function () { me.SaveSettings(); });
+        me.Settings.LastNameColumn.subscribe(function () { me.SaveSettings(); });
+        me.Settings.PositionColumn.subscribe(function () { me.SaveSettings(); });
+        me.Settings.PhoneColumn.subscribe(function () { me.SaveSettings(); });
+        me.Settings.EmailColumn.subscribe(function () { me.SaveSettings(); });
+
+        this.SaveSettings = function () {
+
+            if (me.NewName().length == 0) {
+                window.ShowAlert("Team must have a name");
+                me.NewName(me.Name());
+            }
+
+            $.ajax({
+                type: "PUT",
+                url: me.Url() + "/settings", contentType: "application/json",
+                data: JSON.stringify({
+                    TeamId: me.Id(),
+                    Name: me.NewName(),
+                    Privacy: ko.mapping.toJS(me.Privacy),
+                    Settings: ko.mapping.toJS(me.Settings)
+                })
+            });
+        };
+        this.DeleteTeam = function () {
+            $("#team-delete-modal button").prop("disabled", true);
+            $("#team-delete-modal .icon-spin").show();
+            $.ajax({
+                type: "DELETE",
+                url: me.Url(),
+                data: {},
+                complete: function () {
+                    window.location = "/home";
+                }
+            });
+        };
+    };
+
+    $(function () {
+        window.settingsViewModel = new SettingsViewModel();
+        ko.applyBindings(window.settingsViewModel, document.getElementById("team-settings"));
+    });
+</script>

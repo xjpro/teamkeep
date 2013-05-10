@@ -25,7 +25,7 @@
             <!-- ko ifnot: EnableMessageButton -->
             <button class="btn btn-info disabled" title="Will become available once you've added a team member email to your roster">Message team</button>
             <!-- /ko -->
-            <button class="btn btn-info" data-toggle="modal" data-target="#team-settings-modal"><i class="icon-cog"></i></button>
+            <a class="btn btn-info" data-bind="attr: { href: Url() + '/settings' }"><i class="icon-cog"></i></a>
         </div>
         <!-- /ko -->
     
@@ -47,123 +47,8 @@
             </div>
         </div>
         <!-- /ko -->
-
     </div>
 
-    <form id="team-settings-modal" class="modal hide fade" data-bind="submit: SaveSettings">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3><i class="icon-cog"></i> <span data-bind="text: Name() + ' Settings'"></span></h3>
-        </div>
-        <div class="modal-body">
-            <div class="alert alert-error hide">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <span></span>
-            </div>
-            <div id="team-settings">
-                <h4>General</h4>
-                <ul>
-                    <li>
-                        <label>Name</label><input type="text" data-bind="value: NewName"/>
-                    </li>
-                </ul>
-                
-                <!-- 
-                <h4>Event Confirmation</h4>
-                <label class="checkbox">
-                    <input type="checkbox" data-bind="checked: Settings.ConfirmationEmailMinutes"/> Remind me via e-mail to send event confirmations
-                </label> -->
-
-                <h4>Privacy</h4>
-                <ul>
-                    <li>
-                        <label>Home page</label>
-                        <span class="info btn-group" data-toggle="buttons-radio">
-                            <button class="btn btn-small" data-bind="css: { active: Privacy.HomePage() == true }, click: function() { Privacy.HomePage(true); }">Public</button>
-                            <button class="btn btn-small" data-bind="css: { active: Privacy.HomePage() == false }, click: function() { Privacy.HomePage(false); }">Private</button>
-                        </span>          
-                    </li>
-                    <li>
-                        <label>Roster tab</label>
-                        <span class="info btn-group" data-toggle="buttons-radio">
-                            <button class="btn btn-small" data-bind="css: { active: Privacy.Roster() == true }, click: function() { Privacy.Roster(true); }">Public</button>
-                            <button class="btn btn-small" data-bind="css: { active: Privacy.Roster() == false }, click: function() { Privacy.Roster(false); }">Private</button>
-                        </span>          
-                    </li>
-                </ul>
-                
-                <h4>Columns</h4>
-                <ul>
-                    <li>
-                        <label>Arena</label>
-                        <span class="info btn-group" data-toggle="buttons-radio">
-                            <button class="btn btn-small" data-bind="css: { active: Settings.ArenaColumn() == true }, click: function() { Settings.ArenaColumn(true); }">Show</button>
-                            <button class="btn btn-small" data-bind="css: { active: Settings.ArenaColumn() == false }, click: function() { Settings.ArenaColumn(false); }">Hide</button>
-                        </span>  
-                    </li>
-                    <li>
-                        <label>Last name</label>
-                        <span class="info btn-group" data-toggle="buttons-radio">
-                            <button class="btn btn-small" data-bind="css: { active: Settings.LastNameColumn() == true }, click: function () { Settings.LastNameColumn(true); }">Show</button>
-                            <button class="btn btn-small" data-bind="css: { active: Settings.LastNameColumn() == false }, click: function () { Settings.LastNameColumn(false); }">Hide</button>
-                        </span>  
-                    </li>
-                    <li>
-                        <label>Position</label>
-                        <span class="info btn-group" data-toggle="buttons-radio">
-                            <button class="btn btn-small" data-bind="css: { active: Settings.PositionColumn() == true }, click: function () { Settings.PositionColumn(true); }">Show</button>
-                            <button class="btn btn-small" data-bind="css: { active: Settings.PositionColumn() == false }, click: function () { Settings.PositionColumn(false); }">Hide</button>
-                        </span>  
-                    </li>
-                    <li>
-                        <label>Phone</label>
-                        <span class="info btn-group" data-toggle="buttons-radio">
-                            <button class="btn btn-small" data-bind="css: { active: Settings.PhoneColumn() == true }, click: function () { Settings.PhoneColumn(true); }">Show</button>
-                            <button class="btn btn-small" data-bind="css: { active: Settings.PhoneColumn() == false }, click: function () { Settings.PhoneColumn(false); }">Hide</button>
-                        </span>  
-                    </li>
-                    <li>
-                        <label>Email</label>
-                        <span class="info btn-group" data-toggle="buttons-radio">
-                            <button class="btn btn-small" data-bind="css: { active: Settings.EmailColumn() == true }, click: function () { Settings.EmailColumn(true); }">Show</button>
-                            <button class="btn btn-small" data-bind="css: { active: Settings.EmailColumn() == false }, click: function () { Settings.EmailColumn(false); }">Hide</button>
-                        </span>  
-                    </li>
-                </ul>
-                
-                <button class="btn btn-link" data-dismiss="modal" data-toggle="modal" data-target="#team-delete-modal">
-                    Delete this team
-                </button>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary">
-                <i class="icon-refresh icon-spin" style="display: none"></i> Save settings
-            </button>
-        </div>
-    </form>
-    
-    <form id="team-delete-modal" class="modal hide fade">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Are you sure?</h3>
-        </div>
-        <div class="modal-body">
-            <p>Deleting this team will permanently remove all its associated schedule and roster data. This cannot be undone.</p>
-            <p>
-                If you wish to hide the team tempoararily you can 
-                <a data-dismiss="modal" data-toggle="modal" data-target="#team-settings-modal">set its home page to private</a> instead.
-            </p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-warning" data-bind="click: DeleteTeam">
-                <i class="icon-refresh icon-spin"></i> Yes, please delete
-            </button>
-        </div>
-    </form>
-    
     <form id="team-banner-modal" class="modal hide fade" data-bind="submit: SaveBanner">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -330,10 +215,7 @@
         this.Name = teamViewModel.Name;
         this.BannerImage = teamViewModel.BannerImage;
         this.Announcement = teamViewModel.Announcement;
-        this.Settings = teamViewModel.Settings;
         this.Privacy = teamViewModel.Privacy;
-
-        this.NewName = ko.observable(me.Name());
 
         this.BannerBackgroundImage = ko.computed(function() {
             return (me.BannerImage() != null) ? "url('/TeamBanners/" + me.BannerImage() + "')" : "url('/img/defaultbanner.jpg')";
@@ -443,29 +325,6 @@
                 }
             });
         };
-        this.SaveSettings = function () {
-
-            if (me.NewName().length == 0) {
-                return window.ShowAlert("Team must have a name");
-            }
-
-            $("#team-settings-modal .icon-refresh").show();
-            $("#team-settings-modal button").prop("disabled", true);
-
-            $.ajax({
-                type: "PUT",
-                url: me.Url() + "/settings", contentType: "application/json",
-                data: JSON.stringify({
-                    TeamId: me.Id(),
-                    Name: me.NewName(),
-                    Privacy: ko.mapping.toJS(me.Privacy),
-                    Settings: ko.mapping.toJS(me.Settings)
-                }),
-                success: function () {
-                    window.location.reload();
-                }
-            });
-        };
         this.SaveBanner = function () {
             
             if ($("#banner-file").val().length === 0) {
@@ -494,18 +353,6 @@
                     window.ShowAlert(JSON.parse(response.responseText));
                     $("#team-banner-modal .icon-refresh").hide();
                     $("#team-banner-modal button").prop("disabled", false);
-                }
-            });
-        };
-        this.DeleteTeam = function () {
-            $("#team-delete-modal button").prop("disabled", true);
-            $("#team-delete-modal .icon-spin").show();
-            $.ajax({
-                type: "DELETE",
-                url: me.Url(),
-                data: {},
-                complete: function () {
-                    window.location = "/home";
                 }
             });
         };
