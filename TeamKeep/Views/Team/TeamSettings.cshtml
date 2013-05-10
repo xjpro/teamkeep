@@ -104,7 +104,7 @@
             </p>
             <p>
                 If you wish to hide the team tempoararily you can 
-                <a data-dismiss="modal" data-toggle="modal" data-target="#team-settings-modal">set its home page to private</a> instead.
+                <a data-dismiss="modal" data-toggle="modal" data-target="#team-settings-modal" data-bind="click: SetPrivate">set its home page to private</a> instead.
             </p>
         </div>
         <div class="modal-footer">
@@ -138,6 +138,9 @@
         me.Settings.PhoneColumn.subscribe(function () { me.SaveSettings(); });
         me.Settings.EmailColumn.subscribe(function () { me.SaveSettings(); });
 
+        this.SetPrivate = function () {
+            me.Privacy.HomePage(false);
+        };
         this.SaveSettings = function () {
 
             if (me.NewName().length == 0) {
