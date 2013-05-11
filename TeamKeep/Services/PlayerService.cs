@@ -90,12 +90,15 @@ namespace TeamKeep.Services
                 }
 
                 var groupData = entities.PlayerGroupDatas.Single(x => x.Id == group.Id);
+                int teamId = groupData.TeamId;
+
                 entities.DeleteObject(groupData);
                 entities.SaveChanges();
 
                 // Ensure proper ordering
                 short order = 0;
-                foreach (var playerGroupData in entities.PlayerGroupDatas.OrderBy(x => x.Order).ToList())
+                foreach (var playerGroupData in entities.PlayerGroupDatas
+                    .Where(x => x.TeamId == teamId).OrderBy(x => x.Order).ToList())
                 {
                     playerGroupData.Order = order;
                     order++;

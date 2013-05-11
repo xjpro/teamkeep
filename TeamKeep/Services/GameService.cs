@@ -222,12 +222,15 @@ namespace TeamKeep.Services
                 }
 
                 var seasonData = entities.SeasonDatas.Single(x => x.Id == seasonId);
+                int teamId = seasonData.TeamId ?? -1;
+
                 entities.SeasonDatas.DeleteObject(seasonData);
                 entities.SaveChanges();
 
                 // Ensure proper order
                 short order = 0;
-                foreach (var season in entities.SeasonDatas.OrderBy(x => x.Order).ToList())
+                foreach (var season in entities.SeasonDatas
+                    .Where(x => x.TeamId == teamId).OrderBy(x => x.Order).ToList())
                 {
                     season.Order = order;
                     order++;
