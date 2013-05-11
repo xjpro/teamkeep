@@ -68,7 +68,7 @@ ko.bindingHandlers.toggleHeader = {
         var html = [];
         $.each(columns, function (i, column) {
             html.push("<th class='" + column.CssClass + "' style='display: " + (column.Visible() ? "table-cell" : "none") + "'>");
-            html.push("<a sorttype='" + column.SortType + "' title='" + (column.ToolTip || "") + "'>" + column.Name + "</a>");
+            html.push("<a sorttype='" + column.SortType + "' title='" + (column.ToolTip || "") + "'>" + column.Name() + "</a>");
             html.push("</th>");
         });
         $(element).empty().append(html.join(''));
@@ -158,10 +158,10 @@ var SortableCollectionDataModel = function (model, options) {
         event.stopPropagation(); // Stop from closing menu
         if (column.Visible() === false) {
             column.Visible(true);
-            localStorage["Column." + column.Name + ".Visible"] = true;
+            localStorage["column." + column.SortType + ".visible"] = true;
         } else {
             column.Visible(false);
-            localStorage["Column." + column.Name + ".Visible"] = false;
+            localStorage["column." + column.SortType + ".visible"] = false;
         }
     };
 

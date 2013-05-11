@@ -212,6 +212,7 @@ namespace TeamKeep.Services
                 if (teamSettings.Settings != null)
                 {
                     var settingsData = entities.TeamSettingsDatas.Single(x => x.TeamId == teamSettings.TeamId);
+                    settingsData.ResultsView = teamSettings.Settings.ResultsView;
                     settingsData.ArenaColumn = teamSettings.Settings.ArenaColumn;
                     settingsData.LastNameColumn = teamSettings.Settings.LastNameColumn;
                     settingsData.PositionColumn = teamSettings.Settings.PositionColumn;

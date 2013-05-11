@@ -17,14 +17,14 @@
             <h4>Privacy</h4>
             <ul>
                 <li>
-                    <label>Home page</label>
+                    <label title="Set to private to hide your team site from the public">Home page</label>
                     <span class="info btn-group" data-toggle="buttons-radio">
                         <button class="btn btn-small" data-bind="css: { active: Privacy.HomePage() == true }, click: function() { Privacy.HomePage(true); }">Public</button>
                         <button class="btn btn-small" data-bind="css: { active: Privacy.HomePage() == false }, click: function() { Privacy.HomePage(false); }">Private</button>
                     </span>          
                 </li>
                 <li>
-                    <label>Roster tab</label>
+                    <label title="Set to private to hide your roster from the public">Roster tab</label>
                     <span class="info btn-group" data-toggle="buttons-radio">
                         <button class="btn btn-small" data-bind="css: { active: Privacy.Roster() == true }, click: function() { Privacy.Roster(true); }">Public</button>
                         <button class="btn btn-small" data-bind="css: { active: Privacy.Roster() == false }, click: function() { Privacy.Roster(false); }">Private</button>
@@ -36,35 +36,39 @@
             <h4>Columns</h4>
             <ul>
                 <li>
-                    <label>Arena</label>
+                    <label title="Type of result columns displayed on schedule">Event results</label>
+                    <select data-bind="options: ResultsViewOptions, optionsText: 'Text', optionsValue: 'Value', value: $root.Settings.ResultsView"></select>
+                </li>
+                <li>
+                    <label title="The internal location where an event takes place, e.g. rink, field, court">Arena</label>
                     <span class="info btn-group" data-toggle="buttons-radio">
                         <button class="btn btn-small" data-bind="css: { active: Settings.ArenaColumn() == true }, click: function() { Settings.ArenaColumn(true); }">Show</button>
                         <button class="btn btn-small" data-bind="css: { active: Settings.ArenaColumn() == false }, click: function() { Settings.ArenaColumn(false); }">Hide</button>
                     </span>  
                 </li>
                 <li>
-                    <label>Last name</label>
+                    <label title="Last name column on roster">Last name</label>
                     <span class="info btn-group" data-toggle="buttons-radio">
                         <button class="btn btn-small" data-bind="css: { active: Settings.LastNameColumn() == true }, click: function () { Settings.LastNameColumn(true); }">Show</button>
                         <button class="btn btn-small" data-bind="css: { active: Settings.LastNameColumn() == false }, click: function () { Settings.LastNameColumn(false); }">Hide</button>
                     </span>  
                 </li>
                 <li>
-                    <label>Position</label>
+                    <label title="Position column on roster">Position</label>
                     <span class="info btn-group" data-toggle="buttons-radio">
                         <button class="btn btn-small" data-bind="css: { active: Settings.PositionColumn() == true }, click: function () { Settings.PositionColumn(true); }">Show</button>
                         <button class="btn btn-small" data-bind="css: { active: Settings.PositionColumn() == false }, click: function () { Settings.PositionColumn(false); }">Hide</button>
                     </span>  
                 </li>
                 <li>
-                    <label>Phone</label>
+                    <label title="Phone column on roster">Phone</label>
                     <span class="info btn-group" data-toggle="buttons-radio">
                         <button class="btn btn-small" data-bind="css: { active: Settings.PhoneColumn() == true }, click: function () { Settings.PhoneColumn(true); }">Show</button>
                         <button class="btn btn-small" data-bind="css: { active: Settings.PhoneColumn() == false }, click: function () { Settings.PhoneColumn(false); }">Hide</button>
                     </span>  
                 </li>
                 <li>
-                    <label>Email</label>
+                    <label title="Email column on roster">Email</label>
                     <span class="info btn-group" data-toggle="buttons-radio">
                         <button class="btn btn-small" data-bind="css: { active: Settings.EmailColumn() == true }, click: function () { Settings.EmailColumn(true); }">Show</button>
                         <button class="btn btn-small" data-bind="css: { active: Settings.EmailColumn() == false }, click: function () { Settings.EmailColumn(false); }">Hide</button>
@@ -115,11 +119,27 @@
         this.Settings = teamViewModel.Settings;
         this.Privacy = teamViewModel.Privacy;
 
+        this.ResultsViewOptions = ko.observableArray([
+            {
+                Value: 0, Text: "Points scored"
+            },
+            {
+                Value: 1, Text: "Tournament / best of"
+            },
+            {
+                Value: 2, Text: "Win / loss"
+            },
+            {
+                Value: 3, Text: "Hide"
+            }
+        ]);
+
         this.NewName = ko.observable(me.Name());
 
         me.NewName.subscribe(function () { me.SaveSettings(); });
         me.Privacy.HomePage.subscribe(function () { me.SaveSettings(); });
         me.Privacy.Roster.subscribe(function () { me.SaveSettings(); });
+        me.Settings.ResultsView.subscribe(function () { me.SaveSettings(); });
         me.Settings.ArenaColumn.subscribe(function () { me.SaveSettings(); });
         me.Settings.LastNameColumn.subscribe(function () { me.SaveSettings(); });
         me.Settings.PositionColumn.subscribe(function () { me.SaveSettings(); });

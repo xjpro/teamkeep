@@ -93,14 +93,14 @@
         this.Columns = ko.observableArray([
             {
                 CssClass: "button",
-                Name: "",
+                Name: ko.observable(""),
                 Visible: ko.observable(true),
                 Toggleable: false,
                 SortType: null
             },
             {
                 CssClass: "sort-date date",
-                Name: "Date",
+                Name: ko.observable("Date"),
                 ToolTip: "Date and time message was sent",
                 Visible: ko.observable(true),
                 Toggleable: false,
@@ -108,7 +108,7 @@
             },
             {
                 CssClass: "sort-subject max",
-                Name: "Subject",
+                Name: ko.observable("Subject"),
                 ToolTip: "Subject of the message",
                 Visible: ko.observable(true),
                 Toggleable: false,

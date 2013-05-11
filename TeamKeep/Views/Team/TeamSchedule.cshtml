@@ -7,7 +7,7 @@
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Columns <span class="caret"></span></a>
                 <ul class="dropdown-menu" data-bind="foreach: Columns">
                     <!-- ko if: Toggleable() === true -->
-                    <li><a data-bind="text: Name, css: { active: Visible }, click: $root.ToggleColumnVisible"></a></li>
+                    <li><a data-bind="text: ($data.ToggleName ? ToggleName() : Name()), css: { active: Visible }, click: $root.ToggleColumnVisible"></a></li>
                     <!-- /ko -->
                 </ul>
             </div>
@@ -37,7 +37,7 @@
         <tbody>
             <!-- ko if: Seasons().length == 0 -->
             <tr>
-                <td class="fullinfo" colspan="7">
+                <td class="fullinfo" colspan="8">
                     No games have been posted for this team
                 </td>
             </tr>
@@ -45,7 +45,7 @@
 
             <!-- ko foreach: Seasons -->
             <tr>
-                <td class="fullheading" colspan="7">
+                <td class="fullheading" colspan="8">
                     <input class="mod" type="text" data-bind="value: Name, editable: $parent.Editable, event: { focus: Selected, change: Update } "/>
                     <!-- ko if: $parent.Editable -->
                     <div class="options pull-right">
@@ -102,6 +102,9 @@
                 <td class="awayteam-points digit" data-bind="visible: $root.Columns()[3].Visible">
                     <input class="mod" type="text" data-bind="value: AllowedPoints, editable: $parents[1].Editable, event: { change: Update }" />
                 </td>
+                <td class="tiepoints digit" data-bind="visible: $root.Columns()[4].Visible">
+                    <input class="mod" type="text" data-bind="value: TiePoints, editable: $parents[1].Editable, event: { change: Update }" />
+                </td>
                 <td class="max">
                     <!-- ko if: AwayTeamId() != 0 -->
                     <a data-bind="text: OpponentName, attr: { href: '/teams/' + AwayTeamId() }"></a>
@@ -110,7 +113,7 @@
                     <input class="mod" type="text" data-bind="value: OpponentName, editable: $parents[1].Editable, event: { change: Update }" />
                     <!-- /ko -->
                 </td>
-                <td class="location" data-bind="visible: $root.Columns()[5].Visible">
+                <td class="location" data-bind="visible: $root.Columns()[6].Visible">
                     <input class="mod" type="text" data-bind="value: LocationDisplay, enable: $parents[1].Editable() || LocationEditorEligible(), attr: { locid: Location.Id }" readonly="readonly" />
                     <div class="editor">
                         <!-- ko if: $parents[1].Editable() || Location.Description() -->
@@ -134,7 +137,7 @@
                         </div>
                     </div>
                 </td>
-                <td class="sublocation" data-bind="visible: $root.Columns()[6].Visible">
+                <td class="sublocation" data-bind="visible: $root.Columns()[7].Visible">
                     <input class="mod" type="text" data-bind="value: Location.InternalLocation, editable: $parents[1].Editable, event: { change: Update }" />
                 </td>
             </tr>            
@@ -177,42 +180,60 @@
         }));
         
         // Columns
+        if (typeof localStorage["column.dateTime.visible"] === "undefined") { localStorage["column.dateTime.visible"] = true; }
+        if (typeof localStorage["column.scoredPoints.visible"] === "undefined") { localStorage["column.scoredPoints.visible"] = true; }
+        if (typeof localStorage["column.allowedPoints.visible"] === "undefined") { localStorage["column.allowedPoints.visible"] = true; }
+        if (typeof localStorage["column.tiePoints.visible"] === "undefined") { localStorage["column.tiePoints.visible"] = true; }
+        if (typeof localStorage["column.location.visible"] === "undefined") { localStorage["column.location.visible"] = true; }
+        if (typeof localStorage["column.sublocation.visible"] === "undefined") { localStorage["column.sublocation.visible"] = true; }
+
         this.Columns = ko.observableArray([
             {
                 CssClass: "button",
-                Name: "",
+                Name: ko.observable(""),
                 Visible: ko.observable(me.Editable()),
                 Toggleable: ko.observable(false),
                 SortType: null
             },
             {
                 CssClass: "sort-date date", 
-                Name: "Date",
+                Name: ko.observable("Date"),
                 ToolTip: "Date and time event occurs",
-                Visible: ko.observable(typeof localStorage["Column.Date.Visible"] !== "undefined" ? (localStorage["Column.Date.Visible"] == "true") : true),
+                Visible: ko.observable(localStorage["column.dateTime.visible"] == "true"),
                 Toggleable: ko.observable(true),
                 SortType: "dateTime"
             },
             {
                 Id: "sort-scoredpoints",
                 CssClass: "sort-scoredpoints digit",
-                Name: "PS",
+                Name: ko.observable("PS"),
                 ToolTip: "Points scored by your team",
-                Visible: ko.observable(typeof localStorage["Column.PS.Visible"] !== "undefined" ? (localStorage["Column.PS.Visible"] == "true") : true),
+                Visible: ko.observable(true),
                 Toggleable: ko.observable(true),
+                ToggleName: ko.observable("Points scored"),
                 SortType: "scoredPoints"
             },
             {
                 CssClass: "sort-allowedpoints digit",
-                Name: "PA",
+                Name: ko.observable("PA"),
                 ToolTip: "Points scored by opposing team",
-                Visible: ko.observable(typeof localStorage["Column.PA.Visible"] !== "undefined" ? (localStorage["Column.PA.Visible"] == "true") : true),
+                Visible: ko.observable(true),
                 Toggleable: ko.observable(true),
+                ToggleName: ko.observable("Points scored"),
                 SortType: "allowedPoints"
             },
             {
+                CssClass: "sort-tiepoints digit",
+                Name: ko.observable("PT"),
+                ToolTip: "Points tie",
+                Visible: ko.observable(true),
+                Toggleable: ko.observable(teamViewModel.Settings.ResultsView() == 1),
+                ToggleName: ko.observable("Points tie"),
+                SortType: "tiePoints"
+            },
+            {
                 CssClass: "sort-opponent max",
-                Name: "Opponent",
+                Name: ko.observable("Opponent"),
                 ToolTip: "Name of opposing team",
                 Visible: ko.observable(true),
                 Toggleable: ko.observable(false),
@@ -220,25 +241,89 @@
             },
             {
                 CssClass: "sort-location location",
-                Name: "Location",
+                Name: ko.observable("Location"),
                 ToolTip: "Location where the event takes place",
-                Visible: ko.observable(typeof localStorage["Column.Location.Visible"] !== "undefined" ? (localStorage["Column.Location.Visible"] == "true") : true),
+                Visible: ko.observable(localStorage["column.location.visible"] == "true"),
                 Toggleable: ko.observable(true),
                 SortType: "location"
             },
             {
                 CssClass: "sort-sublocation sublocation",
-                Name: "Arena",
+                Name: ko.observable("Arena"),
                 ToolTip: "Field, court, or rink",
-                Visible: ko.observable(teamViewModel.Settings.ArenaColumn() &&
-                    (typeof localStorage["Column.Arena.Visible"] !== "undefined" ? (localStorage["Column.Arena.Visible"] == "true") : true)),
+                Visible: ko.observable(teamViewModel.Settings.ArenaColumn() && localStorage["column.sublocation.visible"] == "true"),
                 Toggleable: ko.observable(teamViewModel.Settings.ArenaColumn()),
                 SortType: "sublocation"
             }
         ]);
 
+        this.AssignResultValues = function (resultsView) {
+            switch (resultsView) {
+                case 0: // points scored / allowed
+                    me.Columns()[2].Name("PS");
+                    me.Columns()[2].ToolTip = "Point scored";
+                    me.Columns()[2].Visible(localStorage["column.scoredPoints.visible"] == "true");
+                    me.Columns()[2].Toggleable(true);
+                    me.Columns()[2].ToggleName("Point scored");
+
+                    me.Columns()[3].Name("PA");
+                    me.Columns()[3].ToolTip = "Point allowed";
+                    me.Columns()[3].Visible(localStorage["column.allowedPoints.visible"] == "true");
+                    me.Columns()[3].Toggleable(true);
+                    me.Columns()[3].ToggleName("Point allowed");
+
+                    me.Columns()[4].Visible(false);
+                    me.Columns()[4].Toggleable(false);
+                    break;
+                case 1: // Best of
+                    me.Columns()[2].Name("W");
+                    me.Columns()[2].ToolTip = "Games won";
+                    me.Columns()[2].Visible(localStorage["column.scoredPoints.visible"] == "true");
+                    me.Columns()[2].Toggleable(true);
+                    me.Columns()[2].ToggleName("Wins");
+
+                    me.Columns()[3].Name("L");
+                    me.Columns()[3].ToolTip = "Games lost";
+                    me.Columns()[3].Visible(localStorage["column.allowedPoints.visible"] == "true");
+                    me.Columns()[3].Toggleable(true);
+                    me.Columns()[3].ToggleName("Losses");
+
+                    me.Columns()[4].Name("T");
+                    me.Columns()[4].ToolTip = "Games tied";
+                    me.Columns()[4].Visible(localStorage["column.tiePoints.visible"] == "true");
+                    me.Columns()[4].Toggleable(true);
+                    me.Columns()[4].ToggleName("Ties");
+                    break;
+                case 2: // Win/lose (binary result)
+                    me.Columns()[2].Name("W/L");
+                    me.Columns()[2].ToolTip = "Final result (win/loss)";
+                    me.Columns()[2].Visible(localStorage["column.scoredPoints.visible"] == "true");
+                    me.Columns()[2].Toggleable(true);
+                    me.Columns()[2].ToggleName("Result (W/L)");
+
+                    me.Columns()[3].Visible(false);
+                    me.Columns()[3].Toggleable(false);
+
+                    me.Columns()[4].Visible(false);
+                    me.Columns()[4].Toggleable(false);
+                    break;
+                case 3: // no results
+                    me.Columns()[2].Visible(false);
+                    me.Columns()[2].Toggleable(false);
+
+                    me.Columns()[3].Visible(false);
+                    me.Columns()[3].Toggleable(false);
+
+                    me.Columns()[4].Visible(false);
+                    me.Columns()[4].Toggleable(false);
+                    break;
+            }
+        };
+        me.AssignResultValues(teamViewModel.Settings.ResultsView());
+
         // Observe settings changes
-        teamViewModel.Settings.ArenaColumn.subscribe(function (value) { me.Columns()[6].Visible(value); me.Columns()[6].Toggleable(value); });
+        teamViewModel.Settings.ResultsView.subscribe(function (value) { me.AssignResultValues(value); });
+        teamViewModel.Settings.ArenaColumn.subscribe(function (value) { me.Columns()[7].Visible(value); me.Columns()[7].Toggleable(value); });
 
         // Seasons
 
@@ -351,6 +436,14 @@
                 heading: "#schedule .sort-allowedpoints",
                 isDescending: true
             },
+            tiePoints: {
+                heading: "#schedule .sort-tiepoints",
+                isDescending: false
+            },
+            tiePointsDescending: {
+                heading: "#schedule .sort-tiepoints",
+                isDescending: true
+            },
             opponentName: {
                 heading: "#schedule .sort-opponent",
                 isDescending: false
@@ -387,6 +480,9 @@
             else if (sortType == "allowedPoints") {
                 me.SortType() == "allowedPointsDescending" ? me.SortType("allowedPoints") : me.SortType("allowedPointsDescending");
             }
+            else if (sortType == "tiePoints") {
+                me.SortType() == "tiePointsDescending" ? me.SortType("tiePoints") : me.SortType("tiePointsDescending");
+            }
             else if (sortType == "opponentName") {
                 me.SortType() == "opponentName" ? me.SortType("opponentNameDescending") : me.SortType("opponentName");
             }
@@ -412,6 +508,10 @@
             case "allowedPoints":
             case "allowedPointsDescending":
                 me.SortBy("AllowedPoints", isDescending);
+                break;
+            case "tiePoints":
+            case "tiePointsDescending":
+                me.SortBy("TiePoints", isDescending);
                 break;
             case "opponentName":
             case "opponentNameDescending":

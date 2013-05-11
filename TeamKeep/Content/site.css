@@ -412,6 +412,12 @@ i {
 .table-container table td.awayteam-points input[readonly='readonly'] {
     background: #f9e4e3;
 }
+.table-container table td.tiepoints,
+.table-container table td.tiepoints input,
+.table-container table td.tiepoints input:disabled,
+.table-container table td.tiepoints input[readonly='readonly'] {
+    background: #FFFFD6;
+}
 .table-container td .subtext {
     padding: 0 5px;
     font-size: 8pt;
@@ -555,9 +561,10 @@ i {
     #schedule td:nth-of-type(2):before { content: "Date"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(3):before { content: "Scored"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(4):before { content: "Allowed"; border-right: dotted #ccc 1px; }
-    #schedule td:nth-of-type(5):before { content: "Opponent"; border-right: dotted #ccc 1px; }
-    #schedule td:nth-of-type(6):before { content: "Location"; border-right: dotted #ccc 1px; }
-    #schedule td:nth-of-type(7):before { content: "Arena"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(5):before { content: "Tie"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(6):before { content: "Opponent"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(7):before { content: "Location"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(8):before { content: "Arena"; border-right: dotted #ccc 1px; }
 
     #roster td:nth-of-type(1) { padding-left: 0; }
     #roster td:nth-of-type(2):before { content: "Last name"; border-right: dotted #ccc 1px; }
@@ -850,7 +857,7 @@ i {
         float: none;
     }
     #team-nav li a {
-        width: 100%;
+        display: block;
         border: none;
     }
     #team-nav li.active a:after, #team-nav li.active a:before {
