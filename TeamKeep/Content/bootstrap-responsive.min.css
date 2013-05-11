@@ -27,3 +27,6 @@
         margin-right: 0;
     }
 }
+.navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+    margin-bottom: 0;
+}

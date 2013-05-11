@@ -14,8 +14,8 @@ var SeasonViewModel = function (data) {
         window.teamScheduleViewModel.SelectedSeason(me);
     };
     this.IncrementOrder = function (incBy) {
-        $("#games button, #roster i").prop("disabled", true);
-        $("#games .icon-spin").show();
+        $("#schedule button, #roster i").prop("disabled", true);
+        $("#schedule .icon-spin").show();
 
         var swapping = _.find(window.teamViewModel.Seasons(), function (collection) { return collection.Order() == me.Order() + incBy; });
         if (swapping) {
@@ -24,8 +24,8 @@ var SeasonViewModel = function (data) {
         me.Order(Math.max(0, me.Order() + incBy));
         me.UpdateWithCallback(me, function () {
             window.teamScheduleViewModel.SortCollections();
-            $("#games button, #games i").prop("disabled", false);
-            $("#games .icon-spin").hide();
+            $("#schedule button, #schedule i").prop("disabled", false);
+            $("#schedule .icon-spin").hide();
         });
     };
 };

@@ -325,6 +325,12 @@
   <ItemGroup>
     <Content Include="Views\Team\TeamSettings.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Team\Compose.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Team\TeamHeader.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

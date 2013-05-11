@@ -28,7 +28,6 @@ namespace TeamKeep.App_Start
             // Team
             routes.MapRoute("TeamCreate", "teams", new { controller = "Team", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
             routes.MapRoute("TeamHome", "teams/{teamId}/{teamName}", new { controller = "Team", action = "Home" }, new { httpMethod = new HttpMethodConstraint("GET")});
-            routes.MapRoute("TeamSettings", "teams/{teamId}/{teamName}/settings", new { controller = "Team", action = "Settings" }, new { httpMethod = new HttpMethodConstraint("GET") });
             routes.MapRoute("TeamRedirect", "teams/{teamId}", new { controller = "Team", action = "HomeRedirect" }, new { httpMethod = new HttpMethodConstraint("GET") });
             routes.MapRoute("TeamSendMessage", "teams/{id}/{teamName}/messages", new { controller = "Team", action = "SendMessage" }, new { httpMethod = new HttpMethodConstraint("POST") });
             routes.MapRoute("TeamDeleteMessage", "teams/{id}/{teamName}/messages", new { controller = "Team", action = "DeleteMessage" }, new { httpMethod = new HttpMethodConstraint("DELETE") });

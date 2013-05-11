@@ -3,10 +3,10 @@
     <div class="table-controls">
         <div class="column-select pull-left">
             <div class="btn-group">
-                <!-- ko if: Editable -->
+                <!-- ko if: Editable() && HasToggleableColumn() -->
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Columns <span class="caret"></span></a>
                 <ul class="dropdown-menu" data-bind="foreach: Columns">
-                    <!-- ko if: Toggleable === true -->
+                    <!-- ko if: Toggleable() === true -->
                     <li><a data-bind="text: Name, css: { active: Visible }, click: $root.ToggleColumnVisible"></a></li>
                     <!-- /ko -->
                 </ul>
@@ -149,7 +149,7 @@
                 CssClass: "button",
                 Name: "",
                 Visible: ko.observable(me.Editable()),
-                Toggleable: false,
+                Toggleable: ko.observable(false),
                 SortType: null
             },
             {
@@ -157,7 +157,7 @@
                 Name: "Last name",
                 ToolTip: "Team member last name",
                 Visible: ko.observable(teamViewModel.Settings.LastNameColumn()),
-                Toggleable: false,
+                Toggleable: ko.observable(false),
                 SortType: "lastname"
             },
             {
@@ -165,7 +165,7 @@
                 Name: teamViewModel.Settings.LastNameColumn() ? "First name" : "Name",
                 ToolTip: "Team member first name",
                 Visible: ko.observable(true),
-                Toggleable: false,
+                Toggleable: ko.observable(false),
                 SortType: "firstname"
             },
             {
@@ -174,7 +174,7 @@
                 ToolTip: "Team member position",
                 Visible: ko.observable(teamViewModel.Settings.PositionColumn() &&
                     (typeof localStorage["Column.Position.Visible"] !== "undefined" ? (localStorage["Column.Position.Visible"] == "true") : true)),
-                Toggleable: teamViewModel.Settings.PositionColumn(),
+                Toggleable: ko.observable(teamViewModel.Settings.PositionColumn()),
                 SortType: "position"
             },
             {
@@ -183,7 +183,7 @@
                 ToolTip: "Primary contact phone number",
                 Visible: ko.observable(me.Editable() && teamViewModel.Settings.PhoneColumn() &&
                     (typeof localStorage["Column.Phone.Visible"] !== "undefined" ? (localStorage["Column.Phone.Visible"] == "true") : true)),
-                Toggleable: teamViewModel.Settings.PhoneColumn(),
+                Toggleable: ko.observable(teamViewModel.Settings.PhoneColumn()),
                 SortType: "phone"
             },
             {
@@ -192,11 +192,21 @@
                 ToolTip: "E-mail address",
                 Visible: ko.observable(me.Editable() && teamViewModel.Settings.EmailColumn() &&
                     (typeof localStorage["Column.Email.Visible"] !== "undefined" ? (localStorage["Column.Email.Visible"] == "true") : true)),
-                Toggleable: teamViewModel.Settings.EmailColumn(),
+                Toggleable: ko.observable(teamViewModel.Settings.EmailColumn()),
                 SortType: "email"
             }
         ]);
         
+        // Observe settings changes
+        teamViewModel.Settings.LastNameColumn.subscribe(function (value) { me.Columns()[1].Visible(value); });
+        teamViewModel.Settings.PositionColumn.subscribe(function (value) { me.Columns()[3].Visible(value); me.Columns()[3].Toggleable(value); });
+        teamViewModel.Settings.PhoneColumn.subscribe(function (value) { me.Columns()[4].Visible(value); me.Columns()[4].Toggleable(value); });
+        teamViewModel.Settings.EmailColumn.subscribe(function (value) { me.Columns()[5].Visible(value); me.Columns()[5].Toggleable(value); });
+
+        this.HasToggleableColumn = ko.computed(function() {
+            return _.find(me.Columns(), function(column) { return column.Toggleable(); });
+        });
+
         // Adding & removing
         this.SelectedGroup = ko.observable(null);
         this.AddGroup = function (successCallback) {

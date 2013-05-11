@@ -1,18 +1,6 @@
-﻿@model TeamKeep.Models.ViewModels.TeamViewModel
-@{
-    ViewBag.Title = @Model.Team.Name + " Settings";
-    Layout = "~/Views/Shared/Master.cshtml";
-}
+﻿
 <div id="team-settings" class="container">
     
-    <div class="row">
-        <div class="span12">
-            <a data-bind="attr: { href: Url() }">
-                <h1 data-bind="text: NewName"></h1>
-            </a>
-        </div>
-    </div>
-
     <div class="row">
         <div class="span12">
             <h4>General</h4>
@@ -156,7 +144,10 @@
                     Name: me.NewName(),
                     Privacy: ko.mapping.toJS(me.Privacy),
                     Settings: ko.mapping.toJS(me.Settings)
-                })
+                }), 
+                success: function() {
+                    me.Name(me.NewName());
+                }
             });
         };
         this.DeleteTeam = function () {

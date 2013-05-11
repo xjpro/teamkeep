@@ -6,7 +6,7 @@
             <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Columns <span class="caret"></span></a>
                 <ul class="dropdown-menu" data-bind="foreach: Columns">
-                    <!-- ko if: Toggleable === true -->
+                    <!-- ko if: Toggleable() === true -->
                     <li><a data-bind="text: Name, css: { active: Visible }, click: $root.ToggleColumnVisible"></a></li>
                     <!-- /ko -->
                 </ul>
@@ -171,7 +171,7 @@
         this.Url = teamViewModel.Url;
 
         $.extend(me, new SortableCollectionDataModel(me, {
-            TableElement: $("#games table"),
+            TableElement: $("#schedule table"),
             CollectionName: "Seasons",
             ItemName: "Games"
         }));
@@ -182,7 +182,7 @@
                 CssClass: "button",
                 Name: "",
                 Visible: ko.observable(me.Editable()),
-                Toggleable: false,
+                Toggleable: ko.observable(false),
                 SortType: null
             },
             {
@@ -190,7 +190,7 @@
                 Name: "Date",
                 ToolTip: "Date and time event occurs",
                 Visible: ko.observable(typeof localStorage["Column.Date.Visible"] !== "undefined" ? (localStorage["Column.Date.Visible"] == "true") : true),
-                Toggleable: true,
+                Toggleable: ko.observable(true),
                 SortType: "dateTime"
             },
             {
@@ -199,7 +199,7 @@
                 Name: "PS",
                 ToolTip: "Points scored by your team",
                 Visible: ko.observable(typeof localStorage["Column.PS.Visible"] !== "undefined" ? (localStorage["Column.PS.Visible"] == "true") : true),
-                Toggleable: true,
+                Toggleable: ko.observable(true),
                 SortType: "scoredPoints"
             },
             {
@@ -207,7 +207,7 @@
                 Name: "PA",
                 ToolTip: "Points scored by opposing team",
                 Visible: ko.observable(typeof localStorage["Column.PA.Visible"] !== "undefined" ? (localStorage["Column.PA.Visible"] == "true") : true),
-                Toggleable: true,
+                Toggleable: ko.observable(true),
                 SortType: "allowedPoints"
             },
             {
@@ -215,7 +215,7 @@
                 Name: "Opponent",
                 ToolTip: "Name of opposing team",
                 Visible: ko.observable(true),
-                Toggleable: false,
+                Toggleable: ko.observable(false),
                 SortType: "opponentName"
             },
             {
@@ -223,7 +223,7 @@
                 Name: "Location",
                 ToolTip: "Location where the event takes place",
                 Visible: ko.observable(typeof localStorage["Column.Location.Visible"] !== "undefined" ? (localStorage["Column.Location.Visible"] == "true") : true),
-                Toggleable: true,
+                Toggleable: ko.observable(true),
                 SortType: "location"
             },
             {
@@ -232,10 +232,13 @@
                 ToolTip: "Field, court, or rink",
                 Visible: ko.observable(teamViewModel.Settings.ArenaColumn() &&
                     (typeof localStorage["Column.Arena.Visible"] !== "undefined" ? (localStorage["Column.Arena.Visible"] == "true") : true)),
-                Toggleable: teamViewModel.Settings.ArenaColumn(),
+                Toggleable: ko.observable(teamViewModel.Settings.ArenaColumn()),
                 SortType: "sublocation"
             }
         ]);
+
+        // Observe settings changes
+        teamViewModel.Settings.ArenaColumn.subscribe(function (value) { me.Columns()[6].Visible(value); me.Columns()[6].Toggleable(value); });
 
         // Seasons
 
@@ -325,51 +328,51 @@
 
         var sortTypes = {
             dateTime: {
-                heading: "#games .sort-date",
+                heading: "#schedule .sort-date",
                 isDescending: false
             },
             dateTimeDescending: {
-                heading: "#games .sort-date",
+                heading: "#schedule .sort-date",
                 isDescending: true
             },
             scoredPoints: {
-                heading: "#games .sort-scoredpoints",
+                heading: "#schedule .sort-scoredpoints",
                 isDescending: false,
             },
             scoredPointsDescending: {
-                heading: "#games .sort-scoredpoints",
+                heading: "#schedule .sort-scoredpoints",
                 isDescending: true,
             },
             allowedPoints: {
-                heading: "#games .sort-allowedpoints",
+                heading: "#schedule .sort-allowedpoints",
                 isDescending: false
             },
             allowedPointsDescending: {
-                heading: "#games .sort-allowedpoints",
+                heading: "#schedule .sort-allowedpoints",
                 isDescending: true
             },
             opponentName: {
-                heading: "#games .sort-opponent",
+                heading: "#schedule .sort-opponent",
                 isDescending: false
             },
             opponentNameDescending: {
-                heading: "#games .sort-opponent",
+                heading: "#schedule .sort-opponent",
                 isDescending: true
             },
             location: {
-                heading: "#games .sort-location",
+                heading: "#schedule .sort-location",
                 isDescending: false
             },
             locationDescending: {
-                heading: "#games .sort-location",
+                heading: "#schedule .sort-location",
                 isDescending: true
             },
             sublocation: {
-                heading: "#games .sort-sublocation",
+                heading: "#schedule .sort-sublocation",
                 isDescending: false
             },
             sublocationDescending: {
-                heading: "#games .sort-sublocation",
+                heading: "#schedule .sort-sublocation",
                 isDescending: true
             }
         };
@@ -424,7 +427,7 @@
                 break;
             }
 
-            $("#games .table-container th").css({ "background-image": "none" });
+            $("#schedule .table-container th").css({ "background-image": "none" });
 
             var $sortedHeading = $(sortTypes[me.SortType()].heading);
             if (!isDescending) {
@@ -437,16 +440,16 @@
 
     $(function() {
         window.teamScheduleViewModel = new TeamScheduleViewModel();
-        ko.applyBindings(window.teamScheduleViewModel, document.getElementById("games"));
+        ko.applyBindings(window.teamScheduleViewModel, document.getElementById("schedule"));
         window.teamScheduleViewModel.Sort();
     });
 
-    $("#games table").on("click, focus", "input.mod", function () {
+    $("#schedule table").on("click, focus", "input.mod", function () {
         //$(this).select(); TODO implement this somehow
     });
 
     // Location editor
-    $("#games table").on("click focus", "td.location > input.mod", function (evt) {
+    $("#schedule table").on("click focus", "td.location > input.mod", function (evt) {
         evt.stopPropagation();
 
         if (!$(evt.target).attr("locid") && $(".editor:visible").length > 0) return;

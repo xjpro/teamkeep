@@ -2,7 +2,7 @@
     overflow-x: hidden;
 }
 body {
-    padding-top: 60px;
+    padding-top: 44px;
 }
 body a {
     cursor: pointer;
@@ -58,8 +58,8 @@ i {
 .hover-edit {
     display: none;
     position: absolute;
-    bottom: 5px;
-    right: 5px;
+    top: 10px;
+    right: 20px;
     padding: 4px 6px 4px 4px;
     border: solid #444 1px;
     border-radius: 3px;
@@ -75,8 +75,9 @@ i {
     font-style: italic;
 }
 
-#features a {
-    cursor: pointer;
+#features a, #features a:hover {
+    cursor: default;
+    text-decoration: none;
 }
 #features td {
     margin-bottom: 10px;
@@ -130,10 +131,14 @@ i {
 }
 .player-group ul {
     overflow: hidden;
+    margin: 0;
+}
+.player-group h5 {
+    border-bottom: solid #999 1px;
 }
 .player-group ul > label {
     float: left;
-    width: 45%;
+    width: 44%;
 }
 
 #front-header button {
@@ -142,8 +147,8 @@ i {
 #registration input {
     display: block;
 }
-#register-modal .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
-#login .icon-spin, #games .icon-spin, #roster .icon-spin, #reset .icon-spin, #reset-modal .icon-spin {
+#main .icon-spin, #register-modal .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
+#login .icon-spin, #schedule .icon-spin, #roster .icon-spin, #reset .icon-spin, #reset-modal .icon-spin {
     display: none;
 }
 
@@ -198,6 +203,18 @@ i {
     margin-left: 20px;
 }
 
+.compose {
+    overflow: hidden;
+}
+.compose input, .compose textarea {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+}
+.compose textarea {
+    resize: vertical;
+}
+
 .insert-form {
     overflow: hidden;
     padding: 15px;
@@ -221,7 +238,7 @@ i {
     clear: both;
 }
 .table-container {
-    border: solid #666 2px;
+    border: solid #bbb 1px;
     border-radius: 2px;
 }
 .table-container a,
@@ -231,7 +248,7 @@ i {
 .table-container .table-controls {
     position: relative;
     padding: 10px;
-    background-color: #e9e9e9;
+    background-color: #eee;
     background-repeat: repeat-x;
 }
 .table-container .table-controls .dropdown-menu li label {
@@ -241,6 +258,7 @@ i {
 }
 .table-container .table-controls .dropdown-menu li label.heading {
     color: #999;
+    cursor: default;
 }
 .table-container .table-controls .column-select,
 .table-container .table-controls .season-select,
@@ -283,7 +301,7 @@ i {
     background-position: bottom center;
 }
 .table-container table td, .table-container table th {
-    border: solid #999 1px;
+    border: solid #bbb 1px;
     text-align: center;
 }
 .table-container table td {
@@ -537,13 +555,13 @@ i {
 		white-space: nowrap;
 	}
 
-    #games td:nth-of-type(1) { padding-left: 0; }
-    #games td:nth-of-type(2):before { content: "Date"; border-right: dotted #ccc 1px; }
-    #games td:nth-of-type(3):before { content: "Scored"; border-right: dotted #ccc 1px; }
-    #games td:nth-of-type(4):before { content: "Allowed"; border-right: dotted #ccc 1px; }
-    #games td:nth-of-type(5):before { content: "Opponent"; border-right: dotted #ccc 1px; }
-    #games td:nth-of-type(6):before { content: "Location"; border-right: dotted #ccc 1px; }
-    #games td:nth-of-type(7):before { content: "Arena"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(1) { padding-left: 0; }
+    #schedule td:nth-of-type(2):before { content: "Date"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(3):before { content: "Scored"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(4):before { content: "Allowed"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(5):before { content: "Opponent"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(6):before { content: "Location"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(7):before { content: "Arena"; border-right: dotted #ccc 1px; }
 
     #roster td:nth-of-type(1) { padding-left: 0; }
     #roster td:nth-of-type(2):before { content: "Last name"; border-right: dotted #ccc 1px; }
@@ -560,8 +578,6 @@ i {
 #team-banner {
     position: relative;
     height: 200px;
-    margin-bottom: 50px;
-    border: solid #000 1px;
     background-repeat: no-repeat;
     background-position: center top;
     background-color: #000;
@@ -570,7 +586,7 @@ i {
 
 #team-banner h1 {
     position: absolute;
-    bottom: -25px;
+    bottom: 5px;
     margin-left: 25px;
     color: white;
     line-height: 1em;
@@ -578,6 +594,71 @@ i {
     font-family: 'Fjalla One', sans-serif;
     text-shadow: black 0.1em 0.1em 0.2em;
     filter: Shadow(Color=black, Direction=130, Strength=3); /* IE Proprietary Filter*/
+}
+#team-functions {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;   
+}
+
+#team-nav {
+    list-style: none;
+    background: #eee;
+    border: solid #bbb 1px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+#team-nav li {
+    float: left;
+}
+#team-nav li a {
+    position: relative;
+    display: inline-block;
+    padding: 12px 20px;
+    border: solid #bbb 1px;
+    border-width: 0 1px;
+}
+#team-nav li a:first-child {
+    border-left-width: 0;
+}
+#team-nav li a:hover {
+    text-decoration: none;
+    background: #ddd;
+}
+#team-nav li.active a {
+    background: #eee;
+    color: #333;
+    font-weight: bold;
+}
+#team-nav li a.disabled {
+    color: #aaa;
+}
+#team-nav li a.disabled:hover {
+    background: #eee;
+}
+
+/* inset arrow */
+#team-nav li.active a:after, #team-nav li.active a:before {
+	bottom: -1px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+#team-nav li.active a:after {
+	border-bottom-color: #FFF;
+	border-width: 10px;
+	left: 50%;
+	margin-left: -10px;
+}
+#team-nav li.active a:before {
+	border-bottom-color: #bbb;
+	border-width: 11px;
+	left: 50%;
+	margin-left: -11px;
 }
 
 .section {
@@ -750,20 +831,34 @@ i {
     #features-carousel .carousel-image img {
         margin-bottom: 0;
     }
-    #team-banner {
-        margin-bottom: 30px;
+    #team-banner, #team-nav {
         border-left-width: 0;
         border-right-width: 0;
+        padding: 0;
     }
     #team-banner h1 {
+        top: 5px;
         left: 0;
         margin-left: 0;
         width: 100%;
         text-align: center;
         font-size: 36pt;
     }
-    #team-functions {
+    .hover-edit {
+        top: auto;
+        right: auto;
+        bottom: 10px;
+        left: 20px;
+    }
+    #team-nav li {
         float: none;
+    }
+    #team-nav li a {
+        width: 100%;
+        border: none;
+    }
+    #team-nav li.active a:after, #team-nav li.active a:before {
+        content: none;
     }
     .nophonepad .table-container {
         border-left-width: 0;

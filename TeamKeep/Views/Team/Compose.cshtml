@@ -1,0 +1,132 @@
+﻿<div id="main" class="container">
+    <div class="row">
+        <div class="compose span7">
+
+            <label>Subject</label>
+            <input type="text" data-bind="value: MessageSubject"/>
+            
+            <div>
+                <textarea rows="4" data-bind="value: MessageContent"></textarea>
+            </div>
+            
+            <div class="pull-right">
+                <button type="button" class="btn btn-success" data-bind="click: SendMessage">
+                    <i class="icon-refresh icon-spin"></i> Send message
+                </button>
+            </div>
+        </div>
+
+        <div class="span5">
+            <h4>Recipients:</h4>
+            <!-- ko foreach: PlayerGroups -->
+            <!-- ko if: PlayersWithEmail().length > 0 -->
+            <ul class="unstyled">
+                <li class="player-group">
+                    <label class="checkbox heading">
+                        <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerGroupSelected($element); }"/> 
+                        <h5 data-bind="text: Name"></h5>
+                    </label>
+                    <ul data-bind="foreach: PlayersWithEmail">
+                        <label class="checkbox">
+                            <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerSelected($element, $data); }"/> 
+                            <span data-bind="text: FullName"></span>
+                        </label>   
+                    </ul>
+                </li>
+            </ul>
+            <!-- /ko -->
+            <!-- /ko -->
+        </div>
+        
+    </div>
+</div>
+<script>
+    var ComposeViewModel = function () {
+        var me = this;
+
+        // From shared storage
+        this.Id = teamViewModel.Id;
+        this.Url = teamViewModel.Url;
+        this.Name = teamViewModel.Name;
+        this.PlayerGroups = teamViewModel.PlayerGroups;
+
+        this.MessageSubject = ko.observable("");
+        this.MessageContent = ko.observable("");
+        
+        // Player selecting
+        this.SelectedPlayers = ko.observableArray([]);
+        this.TogglePlayerGroupSelected = function (domElement) {
+            var checked = $(domElement).is(":checked");
+            var childCheckboxes = $(domElement).parentsUntil(".player-group").parent().children("ul").find("input[type='checkbox']");
+            if (checked) {
+                childCheckboxes.filter(":not(:checked)").click();
+            } else {
+                childCheckboxes.filter(":checked").click();
+            }
+            return true;
+        };
+        this.TogglePlayerSelected = function (domElement, player) {
+            var selected = $(domElement).is(":checked");
+            if (selected) {
+                me.SelectedPlayers.push(player);
+            } else {
+                me.SelectedPlayers.remove(player);
+            }
+            return true;
+        };
+
+        this.SendMessage = function () {
+
+            var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
+            if (recipients.length == 0) {
+                return window.ShowAlert("Message must have at least one recipient");
+            }
+            if (me.MessageSubject().length == 0) {
+                return window.ShowAlert("Please include a message subject");
+            }
+            if (me.MessageContent().length == 0) {
+                return window.ShowAlert("Please include content for your message");
+            }
+            
+            $("#main button").prop("disabled", true);
+            $("#main .icon-spin").show();
+
+            $.ajax({
+                type: "POST",
+                url: me.Url() + "/messages",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    RecipientPlayerIds: recipients,
+                    Subject: me.MessageSubject(),
+                    Content: me.MessageContent()
+                }),
+                success: function (response) {
+
+                    window.ShowAlert("Message sent successfully", "alert-success");
+                    
+                    $("#main input[type='checkbox']:checked").prop("checked", false);
+                    $("#main button").prop("disabled", false);
+                    $("#main .icon-spin").hide();
+
+                    me.SelectedPlayers([]);
+                    me.MessageSubject("");
+                    me.MessageContent("");
+
+                    teamViewModel.Messages.push(new MessageViewModel(response));
+                },
+                error: function (response) {
+                    window.ShowAlert(JSON.parse(response.responseText));
+                    $("#main button").prop("disabled", false);
+                    $("#main .icon-spin").hide();
+                }
+            });
+        };
+    };
+
+    $(function () {
+        window.composeViewModel = new ComposeViewModel();
+        ko.applyBindings(window.composeViewModel, document.getElementById("main"));
+        
+        $("#main .compose textarea").autosize({ append: "\n" });
+    });
+</script>

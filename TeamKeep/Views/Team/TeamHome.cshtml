@@ -1,34 +1,12 @@
 ﻿@model TeamKeep.Models.ViewModels.TeamViewModel
 @{
     ViewBag.Title = @Model.Team.Name;
+    ViewBag.TeamHeader = true;
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
 <div id="team-info">
-
-    <div id="team-banner" class="container" data-bind="style: { backgroundImage: BannerBackgroundImage }">
-        <h1 data-bind="text: Name"></h1>
-        <!-- ko if: Editable -->
-        <div class="hover-edit" data-toggle="modal" data-target="#team-banner-modal">
-            <i class="icon-pencil"></i> Edit banner image
-        </div>
-        <!-- /ko -->
-    </div>
-
     <div class="container">
-
-        <!-- ko if: Editable -->
-        <div id="team-functions" class="btn-group pull-right">
-            <!-- ko if: EnableMessageButton -->
-            <button class="btn btn-info" data-toggle="modal" data-target="#team-message-modal">Message team</button>
-            <!-- /ko -->
-            <!-- ko ifnot: EnableMessageButton -->
-            <button class="btn btn-info disabled" title="Will become available once you've added a team member email to your roster">Message team</button>
-            <!-- /ko -->
-            <a class="btn btn-info" data-bind="attr: { href: Url() + '/settings' }"><i class="icon-cog"></i></a>
-        </div>
-        <!-- /ko -->
-    
         <!-- ko if: Editable() || (Announcement() != null && Announcement().trim().length > 0) -->
         <div class="row-fluid">
             <div id="team-announcement" class="span12 section">
@@ -47,109 +25,13 @@
             </div>
         </div>
         <!-- /ko -->
-    </div>
-
-    <form id="team-banner-modal" class="modal hide fade" data-bind="submit: SaveBanner">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Edit banner</h3>
-        </div>
-        <div class="modal-body">
-            <div class="alert alert-error hide">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <span></span>
-            </div>
-            <p>
-                Please resize images so as to not exceed 2MB in size. 
-                For best results banner images should be wide, short images (height around 200 pixels).
-            </p>
-            <p>
-                <input id="banner-file" type="file" style="display: none"/>
-                <div class="input-append">
-                    <input id="banner-file-name" type="text"/>
-                    <button class="btn btn-info" type="button" onclick="$('#banner-file').click();">Browse</button>
-                </div>
-            </p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-success">
-                <i class="icon-refresh icon-spin" style="display: none"></i> Change banner image
-            </button>
-        </div>
-    </form>
-    
-    <form id="team-message-modal" class="modal hide fade" data-bind="submit: SendMessage">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Send message</h3>
-        </div>
-        <div class="modal-body">
-            <div class="alert alert-error hide">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <span></span>
-            </div>
-            
-            <h4>Send message to:</h4>
-            <!-- ko foreach: PlayerGroups -->
-            <!-- ko if: PlayersWithEmail().length > 0 -->
-            <ul class="unstyled">
-                <li class="player-group">
-                    <label class="checkbox heading">
-                        <input type="checkbox" data-bind="click: function() { return $root.TogglePlayerGroupSelected($element); }"/> 
-                        <h5 data-bind="text: Name"></h5>
-                    </label>
-                    <ul data-bind="foreach: PlayersWithEmail">
-                        <label class="checkbox">
-                            <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerSelected($element, $data); }"/> 
-                            <span data-bind="text: FullName"></span>
-                        </label>   
-                    </ul>
-                </li>
-            </ul>
-            <!-- /ko -->
-            <!-- /ko -->
-
-            <label>Subject</label>
-            <input type="text" data-bind="value: MessageSubject"/>
-            
-            <div>
-                <textarea rows="4" data-bind="value: MessageContent"></textarea>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-success">
-                <i class="icon-refresh icon-spin" style="display: none"></i> Send message
-            </button>
-        </div>
-    </form>
-
+    </div>  
 </div>
 
 <div class="container nophonepad">
     <div id="team-data">
-        <ul id="team-data-links" class="nav nav-tabs">
-            <li class="active"><a href="#games" data-toggle="tab" onclick="javascript:location.hash='schedule';">Schedule</a></li>
-            @if (Model.Team.Editable || Model.Team.Privacy.Roster)
-            {
-            <li><a href="#roster" data-toggle="tab" onclick="javascript:location.hash='roster';">Roster</a></li>
-            }
-            @if (Model.Team.Editable)
-            {
-                <li>
-                    <!-- ko if: AvailabilityVisible -->
-                    <a href="#availability" data-toggle="tab" onclick="javascript:location.hash='availability';">Availability</a>
-                    <!-- /ko -->
-                    <!-- ko ifnot: AvailabilityVisible -->
-                    <a class="disabled" title="Will become available once you've added a dated event to your schedule and at least one member to your roster">Availability</a>
-                    <!-- /ko -->
-                </li>
-                <li><a href="#messages" data-toggle="tab" onclick="javascript:location.hash='messages';">Messages</a></li>
-            }
-        </ul>
         <div class="tab-content">
-            <div id="games" class="tab-pane active">
+            <div id="schedule" class="tab-pane active">
                 @Html.Partial("TeamSchedule")
             </div>
             @if (Model.Team.Editable || Model.Team.Privacy.Roster)
@@ -166,44 +48,18 @@
                 <div id="messages" class="tab-pane">
                     @Html.Partial("TeamMessages")
                 </div>
+                <div id="compose" class="tab-pane">
+                    @Html.Partial("Compose")
+                </div>
+                <div id="settings" class="tab-pane">
+                    @Html.Partial("TeamSettings")
+                </div>
             }
         </div>
     </div>
 </div>
 
 <script>
-    var TeamLinksViewModel = function () {
-        var me = this;
-        
-        this.AllEvents = ko.computed(function () {
-            var games = [];
-            _.each(teamViewModel.Seasons(), function (season) {
-                _.each(season.Games(), function (game) {
-                    games.push(game);
-                });
-            });
-            return _.filter(games, function(game) { return game.DateTimeMoment() != null; });
-        });
-        this.AllPlayers = ko.computed(function () {
-            var players = [];
-            _.each(teamViewModel.PlayerGroups(), function (group) {
-                _.each(group.Players(), function (player) {
-                    players.push(player);
-                });
-            });
-            return players;
-        });
-
-        // Tab toggle
-        this.AvailabilityVisible = ko.computed(function () {
-            return me.AllPlayers().length > 0 && me.AllEvents().length > 0;
-        });
-    };
-    $(function() {
-        window.teamLinksViewModel = new TeamLinksViewModel();
-        ko.applyBindings(window.teamLinksViewModel, document.getElementById("team-data-links"));
-    });
-
     var TeamHomeViewModel = function() {
         var me = this;
         
@@ -212,14 +68,8 @@
         this.PlayerGroups = teamViewModel.PlayerGroups;
         this.Id = teamViewModel.Id;
         this.Url = teamViewModel.Url;
-        this.Name = teamViewModel.Name;
-        this.BannerImage = teamViewModel.BannerImage;
         this.Announcement = teamViewModel.Announcement;
         this.Privacy = teamViewModel.Privacy;
-
-        this.BannerBackgroundImage = ko.computed(function() {
-            return (me.BannerImage() != null) ? "url('/TeamBanners/" + me.BannerImage() + "')" : "url('/img/defaultbanner.jpg')";
-        });
 
         this.EnableMessageButton = ko.computed(function() {
             var somePlayersHaveEmail = false;
@@ -236,77 +86,6 @@
                 $("#team-announcement .options").show();
             }
             return true;
-        };
-        
-        // Message
-        this.MessageSubject = ko.observable("");
-        this.MessageContent = ko.observable("");
-        this.SelectedPlayers = ko.observableArray([]);
-        this.TogglePlayerGroupSelected = function (domElement) {
-            var checked = $(domElement).is(":checked");
-            var childCheckboxes = $(domElement).parentsUntil(".player-group").parent().children("ul").find("input[type='checkbox']");
-            if (checked) {
-                childCheckboxes.filter(":not(:checked)").click();
-            } else {
-                childCheckboxes.filter(":checked").click();
-            }
-            return true;
-        };
-        this.TogglePlayerSelected = function (domElement, player) {
-            var selected = $(domElement).is(":checked");
-            if (selected) {
-                me.SelectedPlayers.push(player);
-            } else {
-                me.SelectedPlayers.remove(player);
-            }
-            return true;
-        };
-
-        this.SendMessage = function () {
-            
-            var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
-            if (recipients.length == 0) {
-                return window.ShowAlert("Message must have at least one recipient");
-            }
-
-            if (me.MessageSubject().length == 0) {
-                return window.ShowAlert("Please include a message subject");
-            }
-            if (me.MessageContent().length == 0) {
-                return window.ShowAlert("Please include content for your message");
-            }
-
-            $("#team-message-modal button").prop("disabled", true);
-            $("#team-message-modal .icon-spin").show();
-            $.ajax({
-                type: "POST",
-                url: me.Url() + "/messages",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    RecipientPlayerIds: recipients,
-                    Subject: me.MessageSubject(),
-                    Content: me.MessageContent()
-                }),
-                success: function (response) {
-
-                    window.ShowAlert("Message sent successfully", "alert-success");
-                    $("#team-message-modal").modal("hide");
-                    $("#team-message-modal input[type='checkbox']:checked").click();
-                    $("#team-message-modal button").prop("disabled", false);
-                    $("#team-message-modal .icon-spin").hide();
-                    
-                    me.MessageSubject("");
-                    me.MessageContent("");
-
-                    teamViewModel.Messages.push(new MessageViewModel(response));
-                    messagesViewModel.Sort();
-                },
-                error: function (response) {
-                    window.ShowAlert(JSON.parse(response.responseText));
-                    $("#team-message-modal button").prop("disabled", false);
-                    $("#team-message-modal .icon-spin").hide();
-                }
-            });
         };
 
         this.SaveAnnouncement = function () {
@@ -325,37 +104,7 @@
                 }
             });
         };
-        this.SaveBanner = function () {
-            
-            if ($("#banner-file").val().length === 0) {
-                return window.ShowAlert("Please select a valid image file");
-            }
-
-            $("#team-banner-modal .icon-refresh").show();
-            $("#team-banner-modal button").prop("disabled", true);
-
-            var file = document.getElementById("banner-file").files[0];
-
-            // http://holyhoehle.wordpress.com/2010/09/19/uploading-files-using-ajax/
-            $.ajax({
-                type: "PUT", url: me.Url() + "/banner",
-                processData: false,
-                data: file,
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Cache-Control", "no-cache");
-                    xhr.setRequestHeader("X-File-Name", file.name);
-                    xhr.setRequestHeader("Content-Type", "multipart/form-data");
-                },
-                success: function () {
-                    window.location.reload();
-                },
-                error: function (response) {
-                    window.ShowAlert(JSON.parse(response.responseText));
-                    $("#team-banner-modal .icon-refresh").hide();
-                    $("#team-banner-modal button").prop("disabled", false);
-                }
-            });
-        };
+        
     };
     
     $(function() {
@@ -364,22 +113,7 @@
     });
 
     $("#team-announcement textarea").autosize();
-    $("#team-message-modal textarea").autosize({ append: "\n" });
-
-    $("#banner-file").change(function() {
-        $("#banner-file-name").val($(this).val());
-    });
-    $("#team-banner").hover(
-        function () {
-            $("#team-banner .hover-edit").show();
-        },
-        function() {
-            $("#team-banner .hover-edit").hide();
-        });
-    
-    if (location.hash != "#schedule") {
-        $("#team-data .nav a[href='" + location.hash + "']").click();
-    }
     
     $(document).tooltip({ items: "*[title]", track: true });
+    $("#team-info").hide();
 </script>

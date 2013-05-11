@@ -12,6 +12,10 @@
         <div id="header">
             @Html.Partial("Header")    
         </div>
+        @if (ViewBag.TeamHeader != null && ViewBag.TeamHeader)
+        {
+            @Html.Partial("~/Views/Team/TeamHeader.cshtml")
+        }
         
         @RenderBody()   
         @Html.Partial("Footer")
