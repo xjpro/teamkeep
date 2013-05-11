@@ -122,10 +122,6 @@ i {
     display: inline-block;
     width: 80px;
 }
-#email-modal .heading,
-#team-message-modal .heading {
-    border-bottom: solid #999 1px;
-}
 #email-modal label.disabled {
     color: #ccc;
 }
@@ -133,7 +129,7 @@ i {
     overflow: hidden;
     margin: 0;
 }
-.player-group h5 {
+.player-group > label {
     border-bottom: solid #999 1px;
 }
 .player-group ul > label {
