@@ -19,6 +19,9 @@ body a {
 i {
     display: inline-block;
 }
+.container.main {
+    margin-top: 30px;
+}
 
 .showcase, .nonshowcase {
     overflow: hidden;

@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using TeamKeep.App_Start;
 using log4net;
+using System.Web;
 
 namespace TeamKeep
 {
@@ -29,6 +30,11 @@ namespace TeamKeep
 
             ILog log = LogManager.GetLogger("Log");
             log.Fatal("Exception: " + error.Message + " | Stack: " + error.StackTrace);
+
+            if(Response.StatusCode == 404) 
+            {
+                HttpContext.Current.Server.TransferRequest("~/404");
+            }
         }
     }
 }

@@ -64,6 +64,14 @@ namespace TeamKeep.Controllers
         }
 
         [HttpGet]
+        public ActionResult NotFound()
+        {
+            Response.StatusCode = 404;
+            var user = this.GetActiveUser(this.Request);
+            return View(new BaseViewModel { User = user });
+        }
+
+        [HttpGet]
         public ActionResult Test()
         {
             new AutomatedEmailsJob().Execute(null);

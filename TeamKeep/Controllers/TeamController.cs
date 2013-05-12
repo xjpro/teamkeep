@@ -21,6 +21,7 @@ namespace TeamKeep.Controllers
             var team = _teamService.GetTeam(teamId);
             if (team == null)
             {
+                Response.StatusCode = 404;
                 throw new HttpException((int)HttpStatusCode.NotFound, "Team not found");
             }
 

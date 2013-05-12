@@ -16,6 +16,7 @@ namespace TeamKeep.App_Start
             routes.MapRoute("PublicAvailability", "rsvp", new { controller = "Public", action = "AvailabilityLanding" }, new { httpMethod = new HttpMethodConstraint("GET") });
             routes.MapRoute("PublicAbout", "about", new { controller = "Public", action = "About" });
             routes.MapRoute("PublicFeatures", "features", new { controller = "Public", action = "Features" });
+            routes.MapRoute("PublicNotFound", "404", new { controller = "Public", action = "NotFound" });
             routes.MapRoute("PublicTest", "test", new { controller = "Public", action = "Test" });
 
             // User
@@ -60,6 +61,9 @@ namespace TeamKeep.App_Start
             routes.MapRoute("GameUpdate", "games/{gameId}", new { controller = "Game", action = "Update" }, new { httpMethod = new HttpMethodConstraint("PUT") });
             routes.MapRoute("GameDelete", "games/{gameId}", new { controller = "Game", action = "Delete" }, new { httpMethod = new HttpMethodConstraint("DELETE") });
             routes.MapRoute("GameConfirmations", "games/{gameId}/confirmations", new { controller = "Game", action = "SendConfirmations" }, new { httpMethod = new HttpMethodConstraint("POST") });
+
+            // Default
+            routes.MapRoute("Default", "{*whatever}", new { controller = "Public", action = "NotFound" }, new { httpMethod = new HttpMethodConstraint("GET") });
         }
     }
 }

@@ -10,49 +10,53 @@
     var abEvent = Model.AvailabilityRequest.Event;
     var opponentName = abEvent.OpponentName ?? "[To Be Determined]";
     
-    <div id="ab-landing" class="container">          
-        <h1>@Model.AvailabilityRequest.TeamName vs. @opponentName</h1>
+    <div id="ab-landing" class="container main">  
+        <div class="row">
+            <div class="span12">
+                <h1>@Model.AvailabilityRequest.TeamName vs. @opponentName</h1>
 
-        <ul id="ab-data">
-            <!--<li>
-                <label>Notes</label>
-                <span>blah blah blah blah blah asdas as lbasdf asd sa sd sa d</span>
-            </li>-->
-            @if (abEvent.When != null)
-            {
-                <li>
-                    <label>When</label>
-                    <span>@abEvent.When</span>
-                </li>
-            }
-            @if (abEvent.Where != null)
-            {
-                <li>
-                    <label>Where</label>
-                    <span>@abEvent.Where</span>
-                </li>
-            }
-            else
-            {
-                <li>
-                    <label>Where</label>
-                    <span>To Be Determined</span>
-                </li>
-            }
-            @if (abEvent.Location != null && !string.IsNullOrWhiteSpace(abEvent.Location.InternalLocation))
-            {
-                <li>
-                    <label>Arena</label>
-                    <span>@abEvent.Location.InternalLocation</span>
-                </li>
-            }
-        </ul>
-        <div id="replies" class="btn-group">
-            <button class="btn btn-large btn-success" data-bind="css: { active: Selected() == 1 }, click: function () { Selected(1); }">I'll be there!</button>
-            <button class="btn btn-large" data-bind="css: { active: Selected() == 2 }, click: function () { Selected(2); }">Can't make it</button>
-            <button class="btn btn-large" data-bind="css: { active: Selected() == 3 }, click: function () { Selected(3); }">Maybe</button>
-        </div>
+                <ul id="ab-data">
+                    <!--<li>
+                        <label>Notes</label>
+                        <span>blah blah blah blah blah asdas as lbasdf asd sa sd sa d</span>
+                    </li>-->
+                    @if (abEvent.When != null)
+                    {
+                        <li>
+                            <label>When</label>
+                            <span>@abEvent.When</span>
+                        </li>
+                    }
+                    @if (abEvent.Where != null)
+                    {
+                        <li>
+                            <label>Where</label>
+                            <span>@abEvent.Where</span>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <label>Where</label>
+                            <span>To Be Determined</span>
+                        </li>
+                    }
+                    @if (abEvent.Location != null && !string.IsNullOrWhiteSpace(abEvent.Location.InternalLocation))
+                    {
+                        <li>
+                            <label>Arena</label>
+                            <span>@abEvent.Location.InternalLocation</span>
+                        </li>
+                    }
+                </ul>
+                <div id="replies" class="btn-group">
+                    <button class="btn btn-large btn-success" data-bind="css: { active: Selected() == 1 }, click: function () { Selected(1); }">I'll be there!</button>
+                    <button class="btn btn-large" data-bind="css: { active: Selected() == 2 }, click: function () { Selected(2); }">Can't make it</button>
+                    <button class="btn btn-large" data-bind="css: { active: Selected() == 3 }, click: function () { Selected(3); }">Maybe</button>
+                </div>
     
+            </div>
+        </div>
     </div>
     <script>
         window.viewModel = new function () {
@@ -87,10 +91,14 @@
 }
 else
 {
-    <div class="container">
-        <h1>Event not found</h1>
-        <p>
-            The event you've requested could not be found. The event owner may have deleted the event.
-        </p>
+    <div class="container main">
+        <div class="row">
+            <div class="span12">
+                <h1>Event not found</h1>
+                <p>
+                    The event you've requested could not be found. The event owner may have deleted the event.
+                </p>
+            </div>
+        </div>
     </div>
 }
