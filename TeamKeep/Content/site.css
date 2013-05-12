@@ -1,7 +1,4 @@
-﻿html {
-    overflow-x: hidden;
-}
-body {
+﻿body {
     padding-top: 44px;
 }
 body a {
@@ -431,11 +428,6 @@ i {
 }
 
 .table-container th.angled {
-    /*-webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);*/
     position: relative;
     height: 64px;
     padding: 0;
@@ -444,14 +436,14 @@ i {
 .table-container th.angled > span > span {
     position: absolute;
     white-space: nowrap;
-    -moz-transform: rotate(45deg) translate(-118px, 65px);
-    -webkit-transform: rotate(45deg) translate(-104px, 53px);
-    -o-transform: rotate(45deg) translate(-104px, 53px);
-    -ms-transform: rotate(45deg) translate(-118px, 67px);
+    -moz-transform: rotate(45deg) translate(-122px, 70px);
+    -webkit-transform: rotate(45deg) translate(-106px, 57px);
+    -o-transform: rotate(45deg) translate(-105px, 56px);
+    -ms-transform: rotate(45deg) translate(-121px, 71px);
     border: 0;
-    padding: 8px;
+    padding: 7px;
     height: inherit;
-    width: 123px;
+    width: 125px;
     font-size: 10pt;
     font-weight: normal;
     line-height: 0.5em;
