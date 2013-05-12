@@ -120,18 +120,10 @@
         this.Privacy = teamViewModel.Privacy;
 
         this.ResultsViewOptions = ko.observableArray([
-            {
-                Value: 0, Text: "Points scored"
-            },
-            {
-                Value: 1, Text: "Tournament / best of"
-            },
-            {
-                Value: 2, Text: "Win / loss"
-            },
-            {
-                Value: 3, Text: "Hide"
-            }
+            { Value: 0, Text: "Points scored" },
+            { Value: 1, Text: "Tournament / best of" },
+            /*{ Value: 2, Text: "Win / loss" },*/
+            { Value: 3, Text: "Hide" }
         ]);
 
         this.NewName = ko.observable(me.Name());

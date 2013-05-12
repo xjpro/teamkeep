@@ -51,12 +51,12 @@
                     <!-- ko if: $parent.Editable -->
                     <div class="options pull-right">
                         <!-- ko if: Order() != 0 --> 
-                        <i class="icon-circle-arrow-up" data-bind="click: function() { IncrementOrder(-1); }"></i>
+                        <i class="icon-circle-arrow-up" title="Move grouping up" data-bind="click: function() { IncrementOrder(-1); }"></i>
                         <!-- /ko -->
                         <!-- ko if: Order() != $root.PlayerGroups().length - 1 -->
-                        <i class="icon-circle-arrow-down" data-bind="click: function() { IncrementOrder(1); }"></i>
+                        <i class="icon-circle-arrow-down" title="Move grouping down" data-bind="click: function() { IncrementOrder(1); }"></i>
                         <!-- /ko -->
-                        <i class="icon-trash" data-toggle="modal" data-target="#group-delete-modal" data-bind="click: Selected"></i>
+                        <i class="icon-trash" title="Delete grouping" data-toggle="modal" data-target="#group-delete-modal" data-bind="click: Selected"></i>
                     </div>
                     <!-- /ko -->
                 </td>
@@ -198,7 +198,22 @@
         ]);
         
         // Observe settings changes
-        teamViewModel.Settings.LastNameColumn.subscribe(function (value) { me.Columns()[1].Visible(value); me.Columns()[1].Name(teamViewModel.Settings.LastNameColumn() ? "First name" : "Name"); });
+        this.AssignNameValues = function (value) {
+            me.Columns()[1].Visible(value);
+            if (value) {
+                me.Columns()[2].Tooltip = "Team member first name";
+                me.Columns()[2].Name("First name");
+                $("body").append("<style>@@media (max-width: 767px) { #roster td:nth-of-type(3):before { content: 'First name'; } }</style>");
+            } 
+            else {
+                me.Columns()[2].Tooltip = "Team member name";
+                me.Columns()[2].Name("Name");
+                $("body").append("<style>@@media (max-width: 767px) { #roster td:nth-of-type(3):before { content: 'Name'; } }</style>");
+            }
+        };
+        me.AssignNameValues(teamViewModel.Settings.LastNameColumn());
+
+        teamViewModel.Settings.LastNameColumn.subscribe(function (value) { me.AssignNameValues(value); });
         teamViewModel.Settings.PositionColumn.subscribe(function (value) { me.Columns()[3].Visible(value); me.Columns()[3].Toggleable(value); });
         teamViewModel.Settings.PhoneColumn.subscribe(function (value) { me.Columns()[4].Visible(value); me.Columns()[4].Toggleable(value); });
         teamViewModel.Settings.EmailColumn.subscribe(function (value) { me.Columns()[5].Visible(value); me.Columns()[5].Toggleable(value); });
