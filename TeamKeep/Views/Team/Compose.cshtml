@@ -112,7 +112,7 @@
                     me.MessageSubject("");
                     me.MessageContent("");
 
-                    teamViewModel.Messages.push(new MessageViewModel(response));
+                    teamViewModel.Messages.unshift(new MessageViewModel(response));
                 },
                 error: function (response) {
                     window.ShowAlert(JSON.parse(response.responseText));

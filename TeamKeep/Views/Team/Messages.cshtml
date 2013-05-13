@@ -7,7 +7,7 @@
             <h6>
                 <a data-toggle="modal" data-target="#sent-message-modal" data-bind="text: Subject, click: function() { $root.SelectedMessage($data); }" ></a>
             </h6>
-            <time data-bind="text: TimePast">A time would go here</time>
+            <time data-bind="text: TimePast"></time>
             <p data-bind="text: AbbrevContent"></p>
         </article>
     </li>
@@ -43,6 +43,8 @@
         this.Url = teamViewModel.Url;
         this.Messages = teamViewModel.Messages;
 
+        this.SelectedMessage = ko.observable();
+
         me.Messages.sort(function (a, b) {
             var aMoment = moment(a.DateTime());
             var bMoment = moment(b.DateTime());
@@ -50,8 +52,6 @@
             if (aMoment.isBefore(bMoment)) return 1;
             return 0;
         });
-
-        this.SelectedMessage = ko.observable();
 
         this.RemoveMessage = function (message) {
             $.ajax({
@@ -62,7 +62,7 @@
                         Id: message.Id()
                     }
                 }),
-                complete: function (response) {
+                complete: function () {
                     me.Messages.remove(message);
                 }
             });

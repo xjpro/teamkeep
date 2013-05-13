@@ -315,7 +315,7 @@ var MessageViewModel = function(data) {
         return dateMoment.fromNow();
     });
     this.AbbrevContent = ko.computed(function () {
-        return me.Content().substr(0, 125);
+        return me.Content().substr(0, 100).replace(/<[^\/]+\/>|<[^>]+>/gi, "");
     });
 };
 
