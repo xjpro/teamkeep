@@ -317,7 +317,7 @@
     <Content Include="log4.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Team\TeamMessages.cshtml" />
+    <Content Include="Views\Team\Messages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\Features.cshtml" />

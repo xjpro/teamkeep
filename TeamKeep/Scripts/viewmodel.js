@@ -309,6 +309,14 @@ var MessageViewModel = function(data) {
         "PUT": window.viewData.Team.Url + "/messages/" + me.Id(),
         "DELETE": window.viewData.Team.Url + "/messages/" + me.Id()
     }));
+
+    this.TimePast = ko.computed(function () {
+        var dateMoment = moment(me.Date());
+        return dateMoment.fromNow();
+    });
+    this.AbbrevContent = ko.computed(function () {
+        return me.Content().substr(0, 125);
+    });
 };
 
 // Master view model, containing attributes of the team (id, name, etc) as well as 

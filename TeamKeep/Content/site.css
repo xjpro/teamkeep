@@ -106,6 +106,40 @@ i {
     padding-bottom: 10px;
     border-bottom: dotted #aaa 1px;
 }
+
+.newsfeed {
+    list-style: none;
+    padding: 0;
+    margin: 0px 5px;
+}
+.newsfeed li {
+    overflow: hidden;
+}
+.newsfeed i {
+    float: left;
+    vertical-align: top;
+}
+.newsfeed article {
+    display: inline-block;
+    width: 82%;
+    margin-left: 5px;
+}
+.newsfeed h6 {
+    margin: 0;
+    font-size: 12pt;
+}
+.newsfeed time {
+    display: block;
+    font-size: 9pt;
+}
+.newsfeed p {
+}
+.newsfeed p:after {
+    content: " . . .";
+    letter-spacing: 2px;
+    color: #999;
+}
+
 #newteam-modal form {
     margin-bottom: 0;
 }

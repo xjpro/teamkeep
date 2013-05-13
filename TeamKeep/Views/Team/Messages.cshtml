@@ -1,0 +1,76 @@
+﻿
+<ul class="newsfeed">
+    <!-- ko foreach: Messages -->
+    <li>
+        <i class="icon-envelope icon-2x"></i> 
+        <article>
+            <h6>
+                <a data-toggle="modal" data-target="#sent-message-modal" data-bind="text: Subject, click: function() { $root.SelectedMessage($data); }" ></a>
+            </h6>
+            <time data-bind="text: TimePast">A time would go here</time>
+            <p data-bind="text: AbbrevContent"></p>
+        </article>
+    </li>
+    <!-- /ko -->
+</ul>
+<div id="sent-message-modal" class="modal hide fade" data-bind="with: SelectedMessage">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Sent message</h3>
+    </div>
+    <div class="modal-body">
+        <div class="horizontal">
+            <label>Sent</label>
+            <span data-bind="text: DateTime"></span>
+        </div>
+        <div class="horizontal">
+            <label>To</label>
+            <span data-bind="text: To"></span>
+        </div>
+        
+        <h4 data-bind="text: Subject"></h4>
+        <div data-bind="html: Content"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Done</button>
+    </div>
+</div>
+<script>
+    var MessagesViewModel = function() {
+        var me = this;
+
+        this.Editable = teamViewModel.Editable;
+        this.Url = teamViewModel.Url;
+        this.Messages = teamViewModel.Messages;
+
+        me.Messages.sort(function (a, b) {
+            var aMoment = moment(a.DateTime());
+            var bMoment = moment(b.DateTime());
+            if (aMoment.isAfter(bMoment)) return -1;
+            if (aMoment.isBefore(bMoment)) return 1;
+            return 0;
+        });
+
+        this.SelectedMessage = ko.observable();
+
+        this.RemoveMessage = function (message) {
+            $.ajax({
+                type: "DELETE", url: me.Url() + "/messages",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    Message: {
+                        Id: message.Id()
+                    }
+                }),
+                complete: function (response) {
+                    me.Messages.remove(message);
+                }
+            });
+        };
+    };
+
+    $(function () {
+        window.messagesViewModel = new MessagesViewModel();
+        ko.applyBindings(window.messagesViewModel, document.getElementById("messages"));
+    });
+</script>
