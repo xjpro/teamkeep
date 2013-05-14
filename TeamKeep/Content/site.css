@@ -899,4 +899,7 @@ i {
         border-right-width: 0;
         border-radius: 0;
     }
+    #team-settings ul .btn-group {
+        float: right;
+    }
 }

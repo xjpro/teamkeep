@@ -3,215 +3,188 @@
     ViewBag.Title = "Free Sports Team Management Software";
     ViewBag.Description = "Manage your sports team online for free with Team Keep. Captains and coaches can organize their games, practices, and roster with our easy to learn interface and keep their team members up to date with a home page viewable from any device.";
 }
-<div class="row-fluid showcase">
-    <div class="span7 hidden-phone">
-        <p>
-            Managing a sports team has never been easier. Team Keep organizes your team's schedules and rosters so you can focus on enjoying your sport.
-            It's absolutely <em>free</em>, takes just seconds to setup, and is incredibly simple to use.
-        </p>
-        <p>
-            <a data-toggle="modal" data-target="#register-modal">Get started now</a>
-        </p>
-    </div>
-    <div id="login" class="span5">
-        <h4>Sign in</h4>
-        <div class="alert alert-error hide">
-            <span></span>
+<div id="index">
+    <div class="row-fluid showcase">
+        <div class="span7 hidden-phone">
+            <p>
+                Managing a sports team has never been easier. Team Keep organizes your team's schedules and rosters so you can focus on enjoying your sport.
+                It's absolutely <em>free</em>, takes just seconds to setup, and is incredibly simple to use.
+            </p>
+            <p>
+                <a data-toggle="modal" data-target="#register-modal">Get started now</a>
+            </p>
         </div>
+        <div id="login" class="span5">
+            <h4>Sign in</h4>
+            <div class="alert alert-error hide">
+                <span></span>
+            </div>
             
-        <form data-bind="submit: LoginUser">
-            <input id="input-email" type="email" placeholder="Email" data-bind="value: Email" />
-            <input id="input-password" type="password" placeholder="Password" data-bind="value: Password" />
+            <form data-bind="submit: LoginUser">
+                <input id="input-email" type="email" placeholder="Email" data-bind="value: Email" />
+                <input id="input-password" type="password" placeholder="Password" data-bind="value: Password" />
+                <div>
+                    <button class="btn btn-success">
+                        <i class="icon-refresh icon-spin"></i> Sign in <i class="icon-lock"></i>
+                    </button>
+                    <a class="btn btn-link" data-toggle="modal" data-target="#reset-modal">Forgot your password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="features-carousel" class="span7 carousel slide">
+            <ol class="carousel-indicators">
+                <li data-target="#features-carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#features-carousel" data-slide-to="1"></li>
+                <li data-target="#features-carousel" data-slide-to="2"></li>
+            </ol>
+            <!-- Carousel items -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="carousel-image">
+                        <img src="/img/promo1.png" alt="Team Keep interface"/>
+                    </div>
+                    <div class="carousel-caption">
+                        <h4>Intuitive Interface</h4>
+                        <p>
+                            No manual required! Edit on the fly by simply clicking fields you'd like to change &mdash; changes are uploaded and saved automatically. 
+                            Schedule and roster tables are easy to use and adapt to your needs. You can sort on any columns and turn off those you don't need.
+                        </p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="carousel-image">
+                        <img src="/img/promo2.png" alt="Team Keep team pages"/>
+                    </div>
+                    <div class="carousel-caption">
+                        <h4>Team Home Page</h4>
+                        <p>
+                            Publish an online site for your team. With built in privacy controls you control what is visible. Your team stays up to date with a central 
+                            location for announcements and updated schedule information. Everything you need to manage is now all in one place, automatically organized, 
+                            where players and fans can view it anytime.
+                        </p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="carousel-image">
+                        <img src="/img/promo4.png" alt="Team Keep availability"/>
+                    </div>
+                    <div class="carousel-caption">
+                        <h4>Availability</h4>
+                        <p>
+                            Never show up without required positions or the wrong number of players. 
+                            With free availability tracking, you stay current on who can make your upcoming events. 
+                            Send email requests to your team allowing them to confirm their availablility. 
+                        </p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="carousel-image">
+                        <img src="/img/promo3.png" alt="Team Keep responsive design"/>
+                    </div>
+                    <div class="carousel-caption">
+                        <h4>Responsive Design</h4>
+                        <p>
+                            Access your team site from your phone or tablet &mdash; the responsive interface automatically resizes to accomodate any screen size. 
+                            Make updates and keep up to date with your team from any device while on the go. Keep your team updated of last minute changes by messaging your entire
+                            roster in one step, right from your phone!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel nav -->
+            <a class="carousel-control left" href="#features-carousel" data-slide="prev">&lsaquo;</a>
+            <a class="carousel-control right" href="#features-carousel" data-slide="next">&rsaquo;</a>
+        </div>
+        <div id="features" class="span5">
+            <h3>Features</h3>
+            <table>
+                <tr>
+                    <td class="heading"><a title="Organize your team contact and player information including positions, emails, and more">Roster</a></td>
+                    <td class="spacer"></td>
+                    <td class="available"><i class="icon-check icon-2x"></i></td>
+                </tr>
+                <tr>
+                    <td class="heading"><a title="Keep track of your upcoming events, who you're playing, and how well you've done">Schedule</a></td>
+                    <td class="spacer"></td>
+                    <td class="available"><i class="icon-check icon-2x"></i></td>
+                </tr>
+                <tr>
+                    <td class="heading"><a title="Message your entire team in one step from any device and send out updates as they happen">Messages</a></td>
+                    <td class="spacer"></td>
+                    <td class="available"><i class="icon-check icon-2x"></i></td>
+                </tr>
+                <tr>
+                    <td class="heading"><a title="Manage player availability for your entire schedule and request confirmations via email">Availability</a></td>
+                    <td class="spacer"></td>
+                    <td class="available"><i class="icon-check icon-2x"></i></td>
+                </tr>
+                <tr>
+                    <td class="heading"><a title="Instantly publish a team home page where members and fans can check your up to date schedule">Home page</a></td>
+                    <td class="spacer"></td>
+                    <td class="available"><i class="icon-check icon-2x"></i></td>
+                </tr>
+                <tr>
+                    <td class="heading"><a title="With built in privacy controls, you control what the public sees">Privacy</a></td>
+                    <td class="spacer"></td>
+                    <td class="available"><i class="icon-check icon-2x"></i></td>
+                </tr>
+                <tr>
+                    <td class="heading"><a title="Customize your home page with your own banner">Custom banner</a></td>
+                    <td class="spacer"></td>
+                    <td class="available"><i class="icon-check icon-2x"></i></td>
+                </tr>
+                <tr>
+                    <td class="heading"><a title="Team Keep is absolutely free">Costs</a></td>
+                    <td class="spacer"></td>
+                    <td class="available"><strong>FREE</strong></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="text-center">
+                Get started with Team Keep
+            </h3>
+            <p class="text-center">
+                <button class="btn btn-info btn-large" data-toggle="modal" data-target="#register-modal">Sign up now</button>
+            </p>
+        </div>
+    </div>
+    <form id="reset-modal" class="modal hide fade" data-bind="submit: ResetPassword">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Password reset</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error hide">
+                <span></span>
+            </div>
             <div>
-                <button class="btn btn-success">
-                    <i class="icon-refresh icon-spin"></i> Sign in <i class="icon-lock"></i>
-                </button>
-                <a class="btn btn-link" data-toggle="modal" data-target="#reset-modal">Forgot your password?</a>
+                <label>Email:</label>
+                <input type="email" placeholder="" data-bind="value: Email"/>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-success">
+                <i class="icon-refresh icon-spin"></i> Send reset e-mail
+            </button>
+        </div>
+    </form>
 </div>
-
-<div class="row">
-    <div id="features-carousel" class="span7 carousel slide">
-        <ol class="carousel-indicators">
-            <li data-target="#features-carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#features-carousel" data-slide-to="1"></li>
-            <li data-target="#features-carousel" data-slide-to="2"></li>
-        </ol>
-        <!-- Carousel items -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <div class="carousel-image">
-                    <img src="/img/promo1.png" alt="Team Keep interface"/>
-                </div>
-                <div class="carousel-caption">
-                    <h4>Intuitive Interface</h4>
-                    <p>
-                        No manual required! Edit on the fly by simply clicking fields you'd like to change &mdash; changes are uploaded and saved automatically. 
-                        Schedule and roster tables are easy to use and adapt to your needs. You can sort on any columns and turn off those you don't need.
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <div class="carousel-image">
-                    <img src="/img/promo2.png" alt="Team Keep team pages"/>
-                </div>
-                <div class="carousel-caption">
-                    <h4>Team Home Page</h4>
-                    <p>
-                        Publish an online site for your team. With built in privacy controls you control what is visible. Your team stays up to date with a central 
-                        location for announcements and updated schedule information. Everything you need to manage is now all in one place, automatically organized, 
-                        where players and fans can view it anytime.
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <div class="carousel-image">
-                    <img src="/img/promo4.png" alt="Team Keep availability"/>
-                </div>
-                <div class="carousel-caption">
-                    <h4>Availability</h4>
-                    <p>
-                        Never show up without required positions or the wrong number of players. 
-                        With free availability tracking, you stay current on who can make your upcoming events. 
-                        Send email requests to your team allowing them to confirm their availablility. 
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <div class="carousel-image">
-                    <img src="/img/promo3.png" alt="Team Keep responsive design"/>
-                </div>
-                <div class="carousel-caption">
-                    <h4>Responsive Design</h4>
-                    <p>
-                        Access your team site from your phone or tablet &mdash; the responsive interface automatically resizes to accomodate any screen size. 
-                        Make updates and keep up to date with your team from any device while on the go. Keep your team updated of last minute changes by messaging your entire
-                        roster in one step, right from your phone!
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!-- Carousel nav -->
-        <a class="carousel-control left" href="#features-carousel" data-slide="prev">&lsaquo;</a>
-        <a class="carousel-control right" href="#features-carousel" data-slide="next">&rsaquo;</a>
-    </div>
-    <div id="features" class="span5">
-        <h3>Features</h3>
-        <table>
-            <tr>
-                <td class="heading"><a title="Organize your team contact and player information including positions, emails, and more">Roster</a></td>
-                <td class="spacer"></td>
-                <td class="available"><i class="icon-check icon-2x"></i></td>
-            </tr>
-            <tr>
-                <td class="heading"><a title="Keep track of your upcoming events, who you're playing, and how well you've done">Schedule</a></td>
-                <td class="spacer"></td>
-                <td class="available"><i class="icon-check icon-2x"></i></td>
-            </tr>
-            <tr>
-                <td class="heading"><a title="Message your entire team in one step from any device and send out updates as they happen">Messages</a></td>
-                <td class="spacer"></td>
-                <td class="available"><i class="icon-check icon-2x"></i></td>
-            </tr>
-            <tr>
-                <td class="heading"><a title="Manage player availability for your entire schedule and request confirmations via email">Availability</a></td>
-                <td class="spacer"></td>
-                <td class="available"><i class="icon-check icon-2x"></i></td>
-            </tr>
-            <tr>
-                <td class="heading"><a title="Instantly publish a team home page where members and fans can check your up to date schedule">Home page</a></td>
-                <td class="spacer"></td>
-                <td class="available"><i class="icon-check icon-2x"></i></td>
-            </tr>
-            <tr>
-                <td class="heading"><a title="With built in privacy controls, you control what the public sees">Privacy</a></td>
-                <td class="spacer"></td>
-                <td class="available"><i class="icon-check icon-2x"></i></td>
-            </tr>
-            <tr>
-                <td class="heading"><a title="Customize your home page with your own banner">Custom banner</a></td>
-                <td class="spacer"></td>
-                <td class="available"><i class="icon-check icon-2x"></i></td>
-            </tr>
-            <tr>
-                <td class="heading"><a title="Team Keep is absolutely free">Costs</a></td>
-                <td class="spacer"></td>
-                <td class="available"><strong>FREE</strong></td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row-fluid">
-    <div class="span12">
-        <h3 class="text-center">
-            Get started with Team Keep
-        </h3>
-        <p class="text-center">
-            <button class="btn btn-info btn-large" data-toggle="modal" data-target="#register-modal">Sign up now</button>
-        </p>
-    </div>
-</div>
-
-<form id="register-modal" class="modal hide fade" data-bind="submit: RegisterUser">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Create an account</h3>
-    </div>
-    <div class="modal-body">
-        <div class="alert alert-error hide">
-            <span></span>
-        </div>
-        <div>
-            <label>Email:</label>
-            <input type="email" placeholder="" data-bind="value: RegisterEmail"/>
-            <span class="help-block">Your email will never be sold or used for advertisements</span>
-        </div>
-        <div>
-            <label>Password:</label>
-            <input type="password" placeholder="" data-bind="value: RegisterPassword"/>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-success">
-            <i class="icon-refresh icon-spin"></i> Sign up now
-        </button>
-    </div>
-</form>
-<form id="reset-modal" class="modal hide fade" data-bind="submit: ResetPassword">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Password reset</h3>
-    </div>
-    <div class="modal-body">
-        <div class="alert alert-error hide">
-            <span></span>
-        </div>
-        <div>
-            <label>Email:</label>
-            <input type="email" placeholder="" data-bind="value: Email"/>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-success">
-            <i class="icon-refresh icon-spin"></i> Send reset e-mail
-        </button>
-    </div>
-</form>
 <script>
     $(function () {
         
-        var RegistrationViewModel = function(data) {
+        var LoginViewModel = function (data) {
             var me = this;
             ko.mapping.fromJS(data, {}, me);
 
             me.Email = ko.observable("");
             me.Password = ko.observable("");
-            me.RegisterEmail = ko.observable("");
-            me.RegisterPassword = ko.observable("");
             
             me.LoginUser = function () {
                 
@@ -245,34 +218,6 @@
                     }
                 });
             };
-            me.RegisterUser = function() {
-
-                if (me.RegisterEmail().length < 6) {
-                    $("#register-modal .alert span").html("Please enter a valid e-mail address").parent().show();
-                    return;
-                }
-
-                if (me.RegisterPassword().length < 3) {
-                    $("#register-modal .alert span").html("Please enter a password").parent().show();
-                    return;
-                }
-
-                $("#register-modal button").prop("disabled", true);
-                $("#register-modal .icon-spin").show();
-
-                $.ajax({
-                    type: "POST", url: "/users",
-                    data: { Email: me.RegisterEmail(), Password: me.RegisterPassword() },
-                    success: function (response) {
-                        TeamKeep.signIn(response.AuthToken, response.Redirect);
-                    },
-                    error: function (response) {
-                        $("#register-modal .alert span").html(JSON.parse(response.responseText)).parent().show();
-                        $("#register-modal button").prop("disabled", false);
-                        $("#register-modal .icon-spin").hide();
-                    }
-                });
-            };
             me.ResetPassword = function () {
                 
                 if (me.Email().length < 6) {
@@ -299,16 +244,10 @@
             };
         };
 
-        window.viewModel = ko.mapping.fromJS({}, ko.mapping.toViewModel(RegistrationViewModel));
-        ko.applyBindings(window.viewModel);
-        
-        if (new RegExp("register=true").test(location.search)) {
-            $("#register-button").click();
-        } else {
-            $("#input-email").focus();
-        }
+        window.loginViewModel = new LoginViewModel();
+        ko.applyBindings(window.loginViewModel, document.getElementById("index"));
 
+        $("#input-email").focus();
         $(document).tooltip({ items: "a[title]", track: true });
     });
-
 </script>

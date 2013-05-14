@@ -188,5 +188,13 @@
         $("#team-functions a").bind("click", function() {
             $("#team-nav .active").removeClass("active");
         });
+
+        // When in mobile view, automatically scroll down when nav buttons are clicked
+        $("#team-nav a, #team-functions a").bind("click", function () {
+            if ($(window).width() > 767) return;
+            $("html, body").animate({
+                scrollTop: $("#team-header").offset().top + $("#team-header").outerHeight()
+            }, 500);
+        });
     });
 </script>

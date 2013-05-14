@@ -1,0 +1,90 @@
+﻿<div id="front-header" class="row">
+    <div class="span6">
+        <img src="/img/logo.png" alt="Team Keep" />
+    </div>
+    <div class="span6">
+        <ul class="nav nav-pills pull-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="/features">Features</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="http://teamkeep.tumblr.com">Blog</a></li>
+            <li>
+                <button id="register-button" class="btn btn-info" data-toggle="modal" data-target="#register-modal">Create an account</button>    
+            </li>
+        </ul>
+    </div>
+    
+    <form id="register-modal" class="modal hide fade" data-bind="submit: RegisterUser">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Create an account</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error hide">
+                <span></span>
+            </div>
+            <div>
+                <label>Email:</label>
+                <input type="email" placeholder="" data-bind="value: RegisterEmail"/>
+                <span class="help-block">Your email will never be sold or used for advertisements</span>
+            </div>
+            <div>
+                <label>Password:</label>
+                <input type="password" placeholder="" data-bind="value: RegisterPassword"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-success">
+                <i class="icon-refresh icon-spin"></i> Sign up now
+            </button>
+        </div>
+    </form>
+
+</div>
+<script>
+    
+    var HeaderViewModel = function () {
+        var me = this;
+
+        this.RegisterEmail = ko.observable("");
+        this.RegisterPassword = ko.observable("");
+
+        this.RegisterUser = function () {
+
+            if (me.RegisterEmail().length < 6) {
+                $("#register-modal .alert span").html("Please enter a valid e-mail address").parent().show();
+                return;
+            }
+
+            if (me.RegisterPassword().length < 3) {
+                $("#register-modal .alert span").html("Please enter a password").parent().show();
+                return;
+            }
+
+            $("#register-modal button").prop("disabled", true);
+            $("#register-modal .icon-spin").show();
+
+            $.ajax({
+                type: "POST", url: "/users",
+                data: { Email: me.RegisterEmail(), Password: me.RegisterPassword() },
+                success: function (response) {
+                    TeamKeep.signIn(response.AuthToken, response.Redirect);
+                },
+                error: function (response) {
+                    $("#register-modal .alert span").html(JSON.parse(response.responseText)).parent().show();
+                    $("#register-modal button").prop("disabled", false);
+                    $("#register-modal .icon-spin").hide();
+                }
+            });
+        };
+    };
+
+    $(function () {
+        window.headerViewModel = new HeaderViewModel();
+        ko.applyBindings(window.headerViewModel, document.getElementById("front-header"));
+        if (new RegExp("register=true").test(location.search)) {
+            $("#register-button").click();
+        }
+    });
+</script>
