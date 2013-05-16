@@ -322,9 +322,29 @@ var MessageViewModel = function(data) {
 // Master view model, containing attributes of the team (id, name, etc) as well as 
 // all its child collections
 var TeamViewModel = function(data) {
+    var me = this;
+
     ko.mapping.fromJS(data, {
         "Seasons": ko.mapping.toViewModel(SeasonViewModel),
         "PlayerGroups": ko.mapping.toViewModel(PlayerGroupViewModel),
         "Messages": ko.mapping.toViewModel(MessageViewModel)
     }, this);
+
+    this.Events = ko.computed(function () {
+        var events = [];
+        _.each(me.Seasons(), function(season) {
+            _.each(season.Games(), function (event) {
+                events.push(event);
+            });
+        });
+        return events;
+    });
+
+    this.Locations = ko.computed(function () {
+        var locations = [];
+        _.each(me.Events(), function (event) {
+            locations.push(ko.toJS(event.Location));
+        });
+        return locations;
+    });
 };

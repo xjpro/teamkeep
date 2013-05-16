@@ -118,19 +118,19 @@
                     <div class="editor">
                         <!-- ko if: $parents[1].Editable() || Location.Description() -->
                         <label>Name</label>
-                        <input type="text" data-bind="value: Location.Description, editable: $parents[1].Editable, event: { change: Update }"/>
+                        <input type="text" class="js-desc" data-bind="value: Location.Description, editable: $parents[1].Editable, event: { change: Update }"/>
                         <!-- /ko -->
                         <!-- ko if: $parents[1].Editable() || Location.Street() -->
                         <label>Street</label>
-                        <input type="text" data-bind="value: Location.Street, editable: $parents[1].Editable, event: { change: Update }"/>
+                        <input type="text" class="js-street" data-bind="value: Location.Street, editable: $parents[1].Editable, event: { change: Update }"/>
                         <!-- /ko -->
                         <!-- ko if: $parents[1].Editable() || Location.City() -->
                         <label>City</label>
-                        <input type="text" data-bind="value: Location.City, editable: $parents[1].Editable, event: { change: Update }"/>
+                        <input type="text" class="js-city" data-bind="value: Location.City, editable: $parents[1].Editable, event: { change: Update }"/>
                         <!-- /ko -->
                         <!-- ko if: $parents[1].Editable() || Location.Postal() -->
                         <label>Zip</label>
-                        <input type="text" data-bind="value: Location.Postal, editable: $parents[1].Editable, event: { change: Update }"/>
+                        <input type="text" class="js-postal" data-bind="value: Location.Postal, editable: $parents[1].Editable, event: { change: Update }"/>
                         <!-- /ko -->
                         <div>
                             <button class="btn pull-right">Done</button>
@@ -599,6 +599,34 @@
         editor.find("button").one("click.editor", function() { // TODO can this trigger multple?
             editor.fadeOut("fast");
             $(window).unbind(".editor");
+        });
+
+        // http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
+        $("#schedule .location input.js-desc").typeahead({
+            source: function (query, process) {
+                var locations = _(ko.toJS(teamViewModel.Locations()));
+                process(locations.pluck("Description").compact().unique().value());
+            },
+            matcher: function (item) {
+                if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
+                    return true;
+                }
+            },
+            updater: function (item) {
+                var selected = _.find(ko.toJS(teamViewModel.Locations()), function(location) { 
+                    return location.Description == item; 
+                });
+                if (selected) {
+                    var parent = this.$element.parent();
+                    parent.find(".js-street").val(selected.Street).change();
+                    parent.find(".js-city").val(selected.City).change();
+                    parent.find(".js-postal").val(selected.Postal).change();
+                    parent.find("button").focus();
+                }
+                console.log(selected);
+                return item;
+            },
+            items: 3
         });
     });
 </script>

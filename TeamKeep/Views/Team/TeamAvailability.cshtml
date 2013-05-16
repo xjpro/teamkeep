@@ -161,12 +161,7 @@
 
         // Current page
         this.AllEvents = ko.computed(function() {
-            var games = [];
-            _.each(teamViewModel.Seasons(), function (season) {
-                _.each(season.Games(), function (game) {
-                    games.push(game);
-                });
-            });
+            var games = teamViewModel.Events();
             var filtered = _.filter(games, function (game) { return game.DateTimeMoment() != null; });
             return _.sortBy(filtered, function (event) { return event.DateTimeMoment().unix(); });
         });
