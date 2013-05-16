@@ -1,4 +1,4 @@
-﻿<div id="main" class="container">
+﻿<div id="compose" class="container">
     <div class="row">
         <div class="compose span7">
 
@@ -88,8 +88,8 @@
                 return window.ShowAlert("Please include content for your message");
             }
             
-            $("#main button").prop("disabled", true);
-            $("#main .icon-spin").show();
+            $("#compose button").prop("disabled", true);
+            $("#compose .icon-spin").show();
 
             $.ajax({
                 type: "POST",
@@ -104,20 +104,21 @@
 
                     window.ShowAlert("Message sent successfully", "alert-success");
                     
-                    $("#main input[type='checkbox']:checked").prop("checked", false);
-                    $("#main button").prop("disabled", false);
-                    $("#main .icon-spin").hide();
+                    $("#compose input[type='checkbox']:checked").prop("checked", false);
+                    $("#compose button").prop("disabled", false);
+                    $("#compose .icon-spin").hide();
 
                     me.SelectedPlayers([]);
                     me.MessageSubject("");
                     me.MessageContent("");
 
                     teamViewModel.Messages.unshift(new MessageViewModel(response));
+                    $("[href='#messages']").click();
                 },
                 error: function (response) {
                     window.ShowAlert(JSON.parse(response.responseText));
-                    $("#main button").prop("disabled", false);
-                    $("#main .icon-spin").hide();
+                    $("#compose button").prop("disabled", false);
+                    $("#compose .icon-spin").hide();
                 }
             });
         };
@@ -125,8 +126,8 @@
 
     $(function () {
         window.composeViewModel = new ComposeViewModel();
-        ko.applyBindings(window.composeViewModel, document.getElementById("main"));
+        ko.applyBindings(window.composeViewModel, document.getElementById("compose"));
         
-        $("#main .compose textarea").autosize({ append: "\n" });
+        $("#compose .compose textarea").autosize({ append: "\n" });
     });
 </script>

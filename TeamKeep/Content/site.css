@@ -13,7 +13,7 @@ body a {
     box-shadow: none;
     -webkit-box-shadow: none;
 }
-#sidebar a, #main a {
+#sidebar a, #compose a {
     text-decoration: none;
 }
 i {
@@ -75,6 +75,24 @@ i {
 }
 .help-block {
     font-style: italic;
+}
+
+.horizontal {
+    overflow: hidden;
+}
+.horizontal label {
+    float: left;
+    width: 50px;
+    font-weight: bold;
+}
+.horizontal span {
+    display: inline-block;
+    width: 85%;
+}
+.textarea {
+    margin-top: 10px;
+    border: solid #ddd 1px;
+    padding: 15px 10px;
 }
 
 #features a, #features a:hover {
@@ -179,7 +197,7 @@ i {
 #registration input {
     display: block;
 }
-#main .icon-spin, #register-modal .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
+#compose .icon-spin, #register-modal .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
 #login .icon-spin, #schedule .icon-spin, #roster .icon-spin, #reset .icon-spin, #reset-modal .icon-spin {
     display: none;
 }
@@ -704,21 +722,20 @@ i {
     font-family: 'Fjalla One', sans-serif;
 }
 
-#sent-message-modal h4 {
-    margin-top: 28px;
+#log-message h3 {
     border-bottom: solid #ddd 1px;
 }
+
+
 #team-announcement textarea,
-#team-message-modal textarea,
-#sent-message-modal textarea {
+#team-message-modal textarea {
     width: 100%;
     overflow: hidden;
     resize: vertical;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
-#team-announcement textarea[readonly='readonly'],
-#sent-message-modal textarea[readonly='readonly'] {
+#team-announcement textarea[readonly='readonly'] {
     border: 0;
     background: #fff;
     cursor: default;
@@ -830,14 +847,6 @@ i {
 #ab-data span {
     float: left;
     padding-left: 95px;
-}
-
-.horizontal label {
-    position: absolute;
-}
-.horizontal span {
-    display: inline-block;
-    padding-left: 75px;
 }
 
 /* css for timepicker */

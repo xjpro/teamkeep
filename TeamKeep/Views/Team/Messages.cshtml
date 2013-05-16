@@ -5,7 +5,7 @@
         <i class="icon-envelope icon-2x"></i> 
         <article>
             <h6>
-                <a data-toggle="modal" data-target="#sent-message-modal" data-bind="text: Subject, click: function() { $root.SelectedMessage($data); }" ></a>
+                <a data-toggle="tab" href="#log-message" data-bind="text: Subject, click: function () { teamViewModel.SelectedMessage($data); }" ></a>
             </h6>
             <time data-bind="text: TimePast"></time>
             <p data-bind="text: AbbrevContent"></p>
@@ -13,28 +13,6 @@
     </li>
     <!-- /ko -->
 </ul>
-<div id="sent-message-modal" class="modal hide fade" data-bind="with: SelectedMessage">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Sent message</h3>
-    </div>
-    <div class="modal-body">
-        <div class="horizontal">
-            <label>Sent</label>
-            <span data-bind="text: DateTime"></span>
-        </div>
-        <div class="horizontal">
-            <label>To</label>
-            <span data-bind="text: To"></span>
-        </div>
-        
-        <h4 data-bind="text: Subject"></h4>
-        <div data-bind="html: Content"></div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Done</button>
-    </div>
-</div>
 <script>
     var MessagesViewModel = function() {
         var me = this;
@@ -42,8 +20,6 @@
         this.Editable = teamViewModel.Editable;
         this.Url = teamViewModel.Url;
         this.Messages = teamViewModel.Messages;
-
-        this.SelectedMessage = ko.observable();
 
         me.Messages.sort(function (a, b) {
             var aMoment = moment(a.DateTime());

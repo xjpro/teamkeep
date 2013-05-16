@@ -1,0 +1,41 @@
+﻿<div class="container">
+    <div class="row">
+
+        <div class="span12" data-bind="with: SelectedMessage">
+            
+            <a class="btn btn-link" data-toggle="tab" href="#messages">
+                <i class="icon-chevron-left"></i> Return to messages
+            </a>
+
+            <h3 data-bind="text: Subject"></h3>
+
+            <div class="horizontal">
+                <label>Sent</label>
+                <span data-bind="text: DateTime"></span>
+            </div>
+
+            <div class="horizontal">
+                <label>To</label>
+                <span data-bind="text: To"></span>
+            </div>
+
+            <div class="textarea" data-bind="html: Content"></div>
+
+            
+        </div>
+        
+    </div>
+</div>
+<script>
+    var SentMessageViewModel = function () {
+        var me = this;
+
+        // From shared storage
+        this.SelectedMessage = teamViewModel.SelectedMessage;   
+    };
+
+    $(function () {
+        window.sentMessageViewModel = new SentMessageViewModel();
+        ko.applyBindings(window.sentMessageViewModel, document.getElementById("log-message"));
+    });
+</script>

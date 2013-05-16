@@ -141,7 +141,7 @@ namespace TeamKeep.Services
                     Date = DateTime.Now,
                     To = to,
                     Subject = message.Subject,
-                    Content = body.ToString()
+                    Content = new Regex(@"<hr/><p>This message sent on behalf of.*$").Replace(body.ToString(), string.Empty) // TODO seems sloppy
                 };
                 entities.MessageDatas.AddObject(messageData);
                 entities.SaveChanges();
