@@ -308,7 +308,7 @@
     <Content Include="Views\Public\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Team\TeamAvailability.cshtml" />
+    <Content Include="Views\Team\Availability.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\AvailabilityLanding.cshtml" />

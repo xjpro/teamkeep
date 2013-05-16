@@ -10,7 +10,7 @@ window.TeamKeep = {
 };
 
 $(function () {
-    if (window.viewData) {
+    if (window.viewData && window.viewData.Team) {
         window.teamViewModel = ko.mapping.fromJS(window.viewData.Team, ko.mapping.toViewModel(TeamViewModel));
     }
 });
@@ -22,38 +22,6 @@ ko.bindingHandlers['editable'] = {
             element.removeAttribute("readonly");
         else if ((!value) && (!element.hasAttribute("readonly")))
             element.setAttribute("readonly", "readonly");
-    }
-};
-
-ko.bindingHandlers.datetimepicker = {
-    init: function (element, valueAccessor, allBindingsAccessor) {
-        //initialize datepicker
-        $(element).datetimepicker({
-            dateFormat: "M d, yy,",
-            timeFormat: "h:mm TT",
-            stepMinute: 5
-        });
-
-        //handle the field changing
-        ko.utils.registerEventHandler(element, "change", function () {
-            var observable = valueAccessor();
-            observable($(element).datetimepicker("getDate"));
-        });
-
-        //handle disposal (if KO removes by the template binding)
-        ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-            $(element).datetimepicker("destroy");
-        });
-
-    },
-    //update the control when the view model changes
-    update: function (element, valueAccessor) {
-        var value = ko.utils.unwrapObservable(valueAccessor()),
-            current = $(element).datetimepicker("getDate");
-
-        if (value - current !== 0) {
-            $(element).datetimepicker("setDate", value);
-        }
     }
 };
 

@@ -253,15 +253,7 @@ i {
     margin-left: 20px;
 }
 
-.compose {
-    overflow: hidden;
-}
-.compose input, .compose textarea {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    width: 100%;
-}
-.compose textarea {
+#compose textarea {
     resize: vertical;
 }
 
@@ -644,6 +636,7 @@ i {
     line-height: 1em;
     font-size: 42pt;
     font-family: 'Fjalla One', sans-serif;
+    font-weight: normal;
     text-shadow: black 0.1em 0.1em 0.2em;
     filter: Shadow(Color=black, Direction=130, Strength=3); /* IE Proprietary Filter*/
 }

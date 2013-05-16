@@ -1,12 +1,16 @@
 ﻿<div id="compose" class="container">
     <div class="row">
-        <div class="compose span7">
+        <div class="span6">
 
-            <label>Subject</label>
-            <input type="text" data-bind="value: MessageSubject"/>
+            <h4>New message</h4>
+            
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-comment-alt"></i></span>
+                <input type="text" class="input-xlarge" data-bind="value: MessageSubject" placeholder="Message subject"/>
+            </div>
             
             <div>
-                <textarea rows="4" data-bind="value: MessageContent"></textarea>
+                <textarea rows="8" class="input-block-level" data-bind="value: MessageContent" placeholder="Message content"></textarea>
             </div>
             
             <div class="pull-right">
@@ -16,7 +20,7 @@
             </div>
         </div>
 
-        <div class="span5">
+        <div class="span5 offset1">
             <h4>Recipients:</h4>
             <!-- ko foreach: PlayerGroups -->
             <!-- ko if: PlayersWithEmail().length > 0 -->
@@ -128,6 +132,6 @@
         window.composeViewModel = new ComposeViewModel();
         ko.applyBindings(window.composeViewModel, document.getElementById("compose"));
         
-        $("#compose .compose textarea").autosize({ append: "\n" });
+        $("#compose textarea").autosize({ append: "\n" });
     });
 </script>

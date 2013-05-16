@@ -21,8 +21,14 @@
             </div>
             
             <form data-bind="submit: LoginUser">
-                <input id="input-email" type="email" placeholder="Email" data-bind="value: Email" />
-                <input id="input-password" type="password" placeholder="Password" data-bind="value: Password" />
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input id="input-email" type="email" placeholder="Email" data-bind="value: Email" />
+                </div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-key"></i></span>
+                    <input id="input-password" type="password" placeholder="Password" data-bind="value: Password" />
+                </div>
                 <div>
                     <button class="btn btn-success">
                         <i class="icon-refresh icon-spin"></i> Sign in <i class="icon-lock"></i>
