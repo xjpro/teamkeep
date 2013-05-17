@@ -1,5 +1,13 @@
 ﻿
+<!-- ko if: Messages().length == 0 -->
+<div class="text-center">
+    <p>
+        No messages have been recorded
+    </p>
+</div>
+<!-- /ko -->
 <ul class="newsfeed">
+    
     <!-- ko foreach: Messages -->
     <li>
         <i class="icon-envelope icon-2x"></i> 
