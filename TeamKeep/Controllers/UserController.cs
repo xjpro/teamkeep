@@ -16,7 +16,7 @@ namespace TeamKeep.Controllers
             if (string.IsNullOrEmpty(user.Email) || !EmailService.IsValidEmail(user.Email))
             {
                 Response.StatusCode = 400;
-                return Json("Please use a valid e-mail address");
+                return Json("Please use a valid email address");
             }
             user.Email = user.Email.Trim();
 
@@ -78,7 +78,7 @@ namespace TeamKeep.Controllers
             if (user == null)
             {
                 Response.StatusCode = 400;
-                return Json("Invalid e-mail");
+                return Json("Invalid email");
             }
 
             if (user.Reset != reset.ResetToken)
@@ -124,7 +124,7 @@ namespace TeamKeep.Controllers
             if (!EmailService.IsValidEmail(reset.Email))
             {
                 Response.StatusCode = 400;
-                return Json("Please enter your e-mail address");
+                return Json("Please enter your email address");
             }
 
             var user = _userService.GetUser(reset);
@@ -132,7 +132,7 @@ namespace TeamKeep.Controllers
             if (user == null)
             {
                 Response.StatusCode = 404;
-                return Json("That e-mail is not registered");
+                return Json("That email is not registered");
             }
 
             reset.ResetToken = AuthToken.GenerateKey(user.Email);
@@ -147,7 +147,7 @@ namespace TeamKeep.Controllers
             {
                 // TODO log this
                 Response.StatusCode = 500;
-                return Json("Error sending reset e-mail");
+                return Json("Error sending reset email");
             }
 
             return Json("");

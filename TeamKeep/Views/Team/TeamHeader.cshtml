@@ -43,7 +43,7 @@
             <div class="modal-footer">
                 <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
                 <button class="btn btn-success">
-                    <i class="icon-refresh icon-spin" style="display: none"></i> Change banner image
+                    <i class="icon-spinner icon-spin" style="display: none"></i> Change banner image
                 </button>
             </div>
         </form>
@@ -133,7 +133,7 @@
                 return window.ShowAlert("Please select a valid image file");
             }
 
-            $("#team-banner-modal .icon-refresh").show();
+            $("#team-banner-modal .icon-spin").show();
             $("#team-banner-modal button").prop("disabled", true);
 
             var file = document.getElementById("banner-file").files[0];
@@ -153,7 +153,7 @@
                 },
                 error: function (response) {
                     window.ShowAlert(JSON.parse(response.responseText));
-                    $("#team-banner-modal .icon-refresh").hide();
+                    $("#team-banner-modal .icon-spin").hide();
                     $("#team-banner-modal button").prop("disabled", false);
                 }
             });

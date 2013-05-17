@@ -93,7 +93,7 @@
 
         this.SaveAnnouncement = function () {
             $("#team-announcement").find("textarea, button").prop("disabled", true);
-            $("#team-announcement .icon-refresh").show();
+            $("#team-announcement .icon-spin").show();
             $.ajax({
                 type: "PUT",
                 url: me.Url() + "/announcement",
@@ -103,7 +103,7 @@
                 success: function (response) {
                     me.Announcement(response.Announcement);
                     $("#team-announcement").find("textarea, button").prop("disabled", false);
-                    $("#team-announcement").find(".options, .icon-refresh").hide();
+                    $("#team-announcement").find(".options, .icon-spin").hide();
                 }
             });
         };

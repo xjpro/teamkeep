@@ -1,13 +1,16 @@
 ﻿@{
     Layout = "~/Views/Shared/PublicMaster.cshtml";
     ViewBag.Title = "Free Sports Team Management Software";
-    ViewBag.Description = "Manage your sports team online for free with Team Keep. Captains and coaches can organize their games, practices, and roster with our easy to learn interface and keep their team members up to date with a home page viewable from any device.";
+    ViewBag.Description = "Manage your sports team online for free with Teamkeep. Captains and coaches can organize their games, practices, and roster with our easy to learn interface and keep their team members up to date with a home page viewable from any device.";
 }
 <div id="index">
     <div class="row-fluid showcase">
         <div class="span7 hidden-phone">
             <p>
-                Managing a sports team has never been easier. Team Keep organizes your team's schedules and rosters so you can focus on enjoying your sport.
+                Got a sports team to manage? 
+            </p>
+            <p>
+                Teamkeep organizes your team's schedules and rosters so you can focus on enjoying your sport.
                 It's absolutely <em>free</em>, takes just seconds to setup, and is incredibly simple to use.
             </p>
             <p>
@@ -31,7 +34,7 @@
                 </div>
                 <div>
                     <button class="btn btn-success">
-                        <i class="icon-refresh icon-spin"></i> Sign in <i class="icon-lock"></i>
+                        <i class="icon-spinner icon-spin"></i> Sign in <i class="icon-lock"></i>
                     </button>
                     <a class="btn btn-link" data-toggle="modal" data-target="#reset-modal">Forgot your password?</a>
                 </div>
@@ -50,7 +53,7 @@
             <div class="carousel-inner">
                 <div class="item active">
                     <div class="carousel-image">
-                        <img src="/img/promo1.png" alt="Team Keep interface"/>
+                        <img src="/img/promo1.png" alt="Teamkeep interface"/>
                     </div>
                     <div class="carousel-caption">
                         <h4>Intuitive Interface</h4>
@@ -62,7 +65,7 @@
                 </div>
                 <div class="item">
                     <div class="carousel-image">
-                        <img src="/img/promo2.png" alt="Team Keep team pages"/>
+                        <img src="/img/promo2.png" alt="Teamkeep team pages"/>
                     </div>
                     <div class="carousel-caption">
                         <h4>Team Home Page</h4>
@@ -75,7 +78,7 @@
                 </div>
                 <div class="item">
                     <div class="carousel-image">
-                        <img src="/img/promo4.png" alt="Team Keep availability"/>
+                        <img src="/img/promo4.png" alt="Teamkeep availability"/>
                     </div>
                     <div class="carousel-caption">
                         <h4>Availability</h4>
@@ -88,7 +91,7 @@
                 </div>
                 <div class="item">
                     <div class="carousel-image">
-                        <img src="/img/promo3.png" alt="Team Keep responsive design"/>
+                        <img src="/img/promo3.png" alt="Teamkeep responsive design"/>
                     </div>
                     <div class="carousel-caption">
                         <h4>Responsive Design</h4>
@@ -133,7 +136,7 @@
                     <td class="available"><i class="icon-check icon-2x"></i></td>
                 </tr>
                 <tr>
-                    <td class="heading"><a title="With built in privacy controls, you control what the public sees">Privacy</a></td>
+                    <td class="heading"><a title="With built in privacy controls, you control what the public has access to">Privacy</a></td>
                     <td class="spacer"></td>
                     <td class="available"><i class="icon-check icon-2x"></i></td>
                 </tr>
@@ -143,7 +146,7 @@
                     <td class="available"><i class="icon-check icon-2x"></i></td>
                 </tr>
                 <tr>
-                    <td class="heading"><a title="Team Keep is absolutely free">Costs</a></td>
+                    <td class="heading"><a title="There are no costs, Teamkeep is absolutely free">Costs</a></td>
                     <td class="spacer"></td>
                     <td class="available"><strong>FREE</strong></td>
                 </tr>
@@ -153,7 +156,7 @@
     <div class="row-fluid">
         <div class="span12">
             <h3 class="text-center">
-                Get started with Team Keep
+                Get started with Teamkeep
             </h3>
             <p class="text-center">
                 <button class="btn btn-info btn-large" data-toggle="modal" data-target="#register-modal">Sign up now</button>
@@ -177,7 +180,7 @@
         <div class="modal-footer">
             <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
             <button class="btn btn-success">
-                <i class="icon-refresh icon-spin"></i> Send reset e-mail
+                <i class="icon-spinner icon-spin"></i> Send reset email
             </button>
         </div>
     </form>
@@ -195,7 +198,7 @@
             me.LoginUser = function () {
                 
                 if (me.Email().length < 6) {
-                    $("#login .alert span").html("Please enter your e-mail address").parent().show();
+                    $("#login .alert span").html("Please enter your email address").parent().show();
                     return;
                 }
                 if (me.Password().length < 3) {
@@ -227,7 +230,7 @@
             me.ResetPassword = function () {
                 
                 if (me.Email().length < 6) {
-                    $("#reset-modal .alert span").html("Please enter your e-mail address").parent().show();
+                    $("#reset-modal .alert span").html("Please enter your email address").parent().show();
                     return;
                 }
 

@@ -1,6 +1,8 @@
 ﻿<div id="front-header" class="row">
     <div class="span6">
-        <img src="/img/logo.png" alt="Team Keep" />
+        <a href="/">
+            <img src="/img/logo.png" alt="Teamkeep" />
+        </a>
     </div>
     <div class="span6">
         <ul class="nav nav-pills pull-right">
@@ -42,7 +44,7 @@
         <div class="modal-footer">
             <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
             <button class="btn btn-success">
-                <i class="icon-refresh icon-spin"></i> Sign up now
+                <i class="icon-spinner icon-spin"></i> Sign up now
             </button>
         </div>
     </form>
@@ -59,7 +61,7 @@
         this.RegisterUser = function () {
 
             if (me.RegisterEmail().length < 6) {
-                $("#register-modal .alert span").html("Please enter a valid e-mail address").parent().show();
+                $("#register-modal .alert span").html("Please enter a valid email address").parent().show();
                 return;
             }
 

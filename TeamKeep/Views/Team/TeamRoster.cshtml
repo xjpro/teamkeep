@@ -189,7 +189,7 @@
             {
                 CssClass: "sort-email email",
                 Name: ko.observable("Email"),
-                ToolTip: "E-mail address",
+                ToolTip: "Email address",
                 Visible: ko.observable(me.Editable() && teamViewModel.Settings.EmailColumn() &&
                     (typeof localStorage["column.email.visible"] !== "undefined" ? (localStorage["column.email.visible"] == "true") : true)),
                 Toggleable: ko.observable(teamViewModel.Settings.EmailColumn()),
