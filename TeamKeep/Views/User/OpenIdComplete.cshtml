@@ -1,0 +1,12 @@
+﻿@model TeamKeep.Models.Login 
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Redirecting...| Teamkeep</title>
+        <script src="/Scripts/teamkeep.js"></script>
+        <script>
+            TeamKeep.signIn(@Html.Raw(Json.Encode(Model.AuthToken)), "@Model.Redirect");
+        </script>
+    </head>
+    <body></body>
+</html>

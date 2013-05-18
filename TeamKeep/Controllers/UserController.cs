@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Web.Mvc;
+using DotNetOpenAuth.OpenId;
+using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
+using DotNetOpenAuth.OpenId.RelyingParty;
 using TeamKeep.Models.ViewModels;
 using TeamKeep.Models;
 using TeamKeep.Services;
+using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
+using System.Web;
 
 namespace TeamKeep.Controllers
 {
@@ -71,6 +76,55 @@ namespace TeamKeep.Controllers
             return Json(login);
         }
 
+        [HttpGet]
+        public ActionResult LoginOpenId(string provider)
+        {
+            using (var openAuth = new OpenIdRelyingParty())
+            {
+                var response = openAuth.GetResponse();
+                if (response != null)
+                {
+                    if (response.Status == AuthenticationStatus.Authenticated)
+                    {
+                        string openid = response.ClaimedIdentifier;
+                        string email = null;
+
+                        var fetch = response.GetExtension<FetchResponse>();
+                        if (fetch != null)
+                        {
+                            email = fetch.GetAttributeValue(WellKnownAttributes.Contact.Email);
+                        }
+
+                        var user = _userService.GetUser(openid, email);
+                        var authToken = _userService.GetAuthToken(user.Id);
+
+                        return View("OpenIdComplete", new Login { AuthToken = authToken, Redirect = "/home" });
+                    }
+                    else
+                    {
+                        // Not sure...
+                    }
+                }
+                else
+                {
+                    string providerUrl;
+
+                    if (provider.Equals("google")) providerUrl = "https://www.google.com/accounts/o8/id";
+                    else if (provider.Equals("facebook")) providerUrl = "https://www.google.com/accounts/o8/id";
+                    else throw new HttpException((int) 400, "Invalid open id provider");
+
+                    var request = openAuth.CreateRequest(providerUrl);
+                    request.AddExtension(new ClaimsRequest
+                    {
+                        Email = DemandLevel.Require
+                    });
+                    request.RedirectToProvider();
+                }
+            }
+
+            return View();
+        }
+
         [HttpPut]
         public JsonResult PasswordChange(PasswordReset reset)
         {
@@ -102,7 +156,7 @@ namespace TeamKeep.Controllers
         }
 
         [HttpGet]
-        public ActionResult Home()
+        public ActionResult Home(string token)
         {
             var activeUser = this.GetActiveUser(this.Request);
             if (activeUser == null)

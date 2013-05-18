@@ -164,22 +164,6 @@ namespace TeamKeep.Models.DataModels
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<UserData> UserDatas
-        {
-            get
-            {
-                if ((_UserDatas == null))
-                {
-                    _UserDatas = base.CreateObjectSet<UserData>("UserDatas");
-                }
-                return _UserDatas;
-            }
-        }
-        private ObjectSet<UserData> _UserDatas;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<AvailabilityData> AvailabilityDatas
         {
             get
@@ -256,6 +240,22 @@ namespace TeamKeep.Models.DataModels
             }
         }
         private ObjectSet<MessageData> _MessageDatas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UserData> UserDatas
+        {
+            get
+            {
+                if ((_UserDatas == null))
+                {
+                    _UserDatas = base.CreateObjectSet<UserData>("UserDatas");
+                }
+                return _UserDatas;
+            }
+        }
+        private ObjectSet<UserData> _UserDatas;
 
         #endregion
 
@@ -310,14 +310,6 @@ namespace TeamKeep.Models.DataModels
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the UserDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToUserDatas(UserData userData)
-        {
-            base.AddObject("UserDatas", userData);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the AvailabilityDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAvailabilityDatas(AvailabilityData availabilityData)
@@ -355,6 +347,14 @@ namespace TeamKeep.Models.DataModels
         public void AddToMessageDatas(MessageData messageData)
         {
             base.AddObject("MessageDatas", messageData);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UserDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUserDatas(UserData userData)
+        {
+            base.AddObject("UserDatas", userData);
         }
 
         #endregion
@@ -2451,14 +2451,10 @@ namespace TeamKeep.Models.DataModels
         /// Create a new UserData object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="username">Initial value of the Username property.</param>
-        /// <param name="email">Initial value of the Email property.</param>
-        public static UserData CreateUserData(global::System.Int32 id, global::System.String username, global::System.String email)
+        public static UserData CreateUserData(global::System.Int32 id)
         {
             UserData userData = new UserData();
             userData.Id = id;
-            userData.Username = username;
-            userData.Email = email;
             return userData;
         }
 
@@ -2496,7 +2492,7 @@ namespace TeamKeep.Models.DataModels
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Username
         {
@@ -2508,7 +2504,7 @@ namespace TeamKeep.Models.DataModels
             {
                 OnUsernameChanging(value);
                 ReportPropertyChanging("Username");
-                _Username = StructuralObject.SetValidValue(value, false, "Username");
+                _Username = StructuralObject.SetValidValue(value, true, "Username");
                 ReportPropertyChanged("Username");
                 OnUsernameChanged();
             }
@@ -2520,7 +2516,7 @@ namespace TeamKeep.Models.DataModels
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Email
         {
@@ -2532,7 +2528,7 @@ namespace TeamKeep.Models.DataModels
             {
                 OnEmailChanging(value);
                 ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, false, "Email");
+                _Email = StructuralObject.SetValidValue(value, true, "Email");
                 ReportPropertyChanged("Email");
                 OnEmailChanged();
             }
@@ -2636,6 +2632,30 @@ namespace TeamKeep.Models.DataModels
         private global::System.String _Reset;
         partial void OnResetChanging(global::System.String value);
         partial void OnResetChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String OpenId
+        {
+            get
+            {
+                return _OpenId;
+            }
+            set
+            {
+                OnOpenIdChanging(value);
+                ReportPropertyChanging("OpenId");
+                _OpenId = StructuralObject.SetValidValue(value, true, "OpenId");
+                ReportPropertyChanged("OpenId");
+                OnOpenIdChanged();
+            }
+        }
+        private global::System.String _OpenId;
+        partial void OnOpenIdChanging(global::System.String value);
+        partial void OnOpenIdChanged();
 
         #endregion
 

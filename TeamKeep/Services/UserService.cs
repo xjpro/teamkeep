@@ -25,6 +25,51 @@ namespace TeamKeep.Services
             }
         }
 
+        public User GetUser(string openId, string email)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                if (!string.IsNullOrEmpty(email))
+                {
+                    var userData = entities.UserDatas.SingleOrDefault(x => x.Email == email);
+                    if (userData == null) // Create user
+                    {
+                        userData = new UserData
+                        {
+                            Email = email,
+                            Username = ConvertEmailToUsername(email)
+                        };
+                        entities.UserDatas.AddObject(userData);
+                        entities.SaveChanges();
+                    }
+
+                    if (userData.OpenId == null) // Save open id
+                    {
+                        userData.OpenId = openId;
+                        userData.Password = new PasswordHash(openId).ToArray();
+                        entities.SaveChanges();
+                    }
+
+                    return new User(userData);
+                }
+                else
+                {
+                    var userData = entities.UserDatas.SingleOrDefault(x => x.OpenId == openId);
+                    if (userData == null) // Create user
+                    {
+                        userData = new UserData
+                        {
+                            OpenId = openId,
+                            Password = new PasswordHash(openId).ToArray()
+                        };
+                        entities.UserDatas.AddObject(userData);
+                        entities.SaveChanges();
+                    }
+                    return new User(userData);
+                }
+            }
+        }
+
         public User GetUser(PasswordReset passwordReset)
         {
             using (var entities = Database.GetEntities())
@@ -108,7 +153,7 @@ namespace TeamKeep.Services
 
                 entities.UserDatas.AddObject(new UserData
                 {
-                    Username = ConvertEmailToUser(user.Email),
+                    Username = ConvertEmailToUsername(user.Email),
                     Email = user.Email,
                     Password = passwordHash.ToArray()
                 });
@@ -119,7 +164,7 @@ namespace TeamKeep.Services
             }
         }
 
-        private string ConvertEmailToUser(string email)
+        private string ConvertEmailToUsername(string email)
         {
             return new Regex("[^A-Za-z0-9]").Replace(email, "");
         }

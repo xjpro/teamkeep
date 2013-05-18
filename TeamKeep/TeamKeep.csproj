@@ -46,6 +46,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\Common.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetOpenAuth, Version=4.2.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\DotNetOpenAuth.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -226,6 +230,7 @@
     <Content Include="Emails\availability.htm" />
     <Content Include="Emails\welcome.htm" />
     <Content Include="Libraries\Common.Logging.dll" />
+    <Content Include="Libraries\DotNetOpenAuth.dll" />
     <Content Include="Libraries\log4net.dll" />
     <Content Include="Libraries\Quartz.dll" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -339,6 +344,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Team\LogMessage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\OpenIdComplete.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

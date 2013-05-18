@@ -148,12 +148,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="75" />
-          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="75" />
+          <Property Name="Username" Type="nvarchar" MaxLength="75" />
+          <Property Name="Email" Type="nvarchar" MaxLength="75" />
           <Property Name="ActiveTeamId" Type="int" />
           <Property Name="Password" Type="varbinary" MaxLength="100" />
           <Property Name="LastSeen" Type="datetime" />
           <Property Name="Reset" Type="nvarchar" MaxLength="100" />
+          <Property Name="OpenId" Type="nvarchar" MaxLength="100" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -166,12 +167,12 @@
           <EntitySet Name="SeasonDatas" EntityType="DatabaseModel.SeasonData" />
           <EntitySet Name="TeamOwnerDatas" EntityType="DatabaseModel.TeamOwnerData" />
           <EntitySet Name="TeamPrivacyDatas" EntityType="DatabaseModel.TeamPrivacyData" />
-          <EntitySet Name="UserDatas" EntityType="DatabaseModel.UserData" />
           <EntitySet Name="AvailabilityDatas" EntityType="DatabaseModel.AvailabilityData" />
           <EntitySet Name="TeamSettingsDatas" EntityType="DatabaseModel.TeamSettingsData" />
           <EntitySet Name="TeamDatas" EntityType="DatabaseModel.TeamData" />
           <EntitySet Name="PlayerGroupDatas" EntityType="DatabaseModel.PlayerGroupData" />
           <EntitySet Name="MessageDatas" EntityType="DatabaseModel.MessageData" />
+          <EntitySet Name="UserDatas" EntityType="DatabaseModel.UserData" />
         </EntityContainer>
         <EntityType Name="GameData">
           <Key>
@@ -240,18 +241,6 @@
           <Property Name="HomePage" Type="Boolean" Nullable="false" />
           <Property Name="Roster" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserData">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="75" Unicode="true" FixedLength="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="75" Unicode="true" FixedLength="false" />
-          <Property Name="ActiveTeamId" Type="Int32" />
-          <Property Name="Password" Type="Binary" MaxLength="100" FixedLength="false" />
-          <Property Name="LastSeen" Type="DateTime" Precision="3" />
-          <Property Name="Reset" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-        </EntityType>
         <EntityType Name="AvailabilityData">
           <Key>
             <PropertyRef Name="Id" />
@@ -308,6 +297,19 @@
           <Property Type="Int32" Name="TeamId" Nullable="false" />
           <Property Type="String" Name="Subject" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="To" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Username" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ActiveTeamId" />
+          <Property Type="Binary" Name="Password" MaxLength="100" FixedLength="false" />
+          <Property Type="DateTime" Name="LastSeen" Precision="3" />
+          <Property Type="String" Name="Reset" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OpenId" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -388,19 +390,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserDatas">
-            <EntityTypeMapping TypeName="DatabaseModel.UserData">
-              <MappingFragment StoreEntitySet="UserData">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ActiveTeamId" ColumnName="ActiveTeamId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="LastSeen" ColumnName="LastSeen" />
-                <ScalarProperty Name="Reset" ColumnName="Reset" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AvailabilityDatas">
             <EntityTypeMapping TypeName="DatabaseModel.AvailabilityData">
               <MappingFragment StoreEntitySet="AvailabilityData">
@@ -459,6 +448,20 @@
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.UserData">
+              <MappingFragment StoreEntitySet="UserData">
+                <ScalarProperty Name="OpenId" ColumnName="OpenId" />
+                <ScalarProperty Name="Reset" ColumnName="Reset" />
+                <ScalarProperty Name="LastSeen" ColumnName="LastSeen" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ActiveTeamId" ColumnName="ActiveTeamId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
