@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ClientErrorHandler.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\LeagueController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Models\AuthToken.cs" />
     <Compile Include="Models\Availability.cs" />
     <Compile Include="Models\AvailabilityRequest.cs" />
+    <Compile Include="Models\FacebookLogin.cs" />
     <Compile Include="Models\DataModels\Entities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -346,7 +348,10 @@
     <Content Include="Views\Team\LogMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\OpenIdComplete.cshtml" />
+    <Content Include="Views\Login\OpenIdComplete.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Public\FacebookLogin.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

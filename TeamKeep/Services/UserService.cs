@@ -25,6 +25,29 @@ namespace TeamKeep.Services
             }
         }
 
+        public User GetUser(FacebookLogin login)
+        {
+            var key = AuthToken.GenerateKey(login.FacebookId, false);
+
+            using (var entities = Database.GetEntities())
+            {
+                var userData = entities.UserDatas.SingleOrDefault(x => x.OpenId == key);
+
+                if (userData == null) // Create user
+                {
+                    userData = new UserData
+                    {
+                        OpenId = key,
+                        Password = new PasswordHash(key).ToArray()
+                    };
+                    entities.UserDatas.AddObject(userData);
+                    entities.SaveChanges();
+                }
+
+                return new User(userData);
+            }
+        }
+
         public User GetUser(string openId, string email)
         {
             using (var entities = Database.GetEntities())

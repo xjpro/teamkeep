@@ -50,9 +50,9 @@ namespace TeamKeep.Models
             };
         }
 
-        public static string GenerateKey(string uniqueString)
+        public static string GenerateKey(string uniqueString, bool useDatetime = true)
         {
-            var timestamp = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
+            var timestamp = (useDatetime) ? (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds : 0;
             var hash = Hash(timestamp + uniqueString);
             return new Regex("[^A-Za-z0-9]").Replace(hash, "$"); // Make web safe
         }

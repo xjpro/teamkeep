@@ -1,0 +1,47 @@
+﻿<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '462322733853297', // App ID
+            channelUrl: '//teamkeep.com/channel.html', // Channel File
+            status: true, // check login status
+            cookie: false, // enable cookies to allow the server to access the session
+            xfbml: true  // parse XFBML
+        });
+    };
+
+    // Load the SDK asynchronously
+    (function (d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    $(function () {
+
+        $("#fb-login").click(function () {
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+
+                    var uid = response.authResponse.userID;
+                    var accessToken = response.authResponse.accessToken;
+
+                    $.post("/login/facebook", { FacebookId: uid }, function (response) {
+                        TeamKeep.signIn(response.AuthToken, response.Redirect);
+                    });
+                }
+                else {
+                    FB.login(function (response) {
+                        setTimeout(function () { $("#fb-login").click(); }, 0);
+                    });
+                }
+            });
+        });
+    });
+</script>
+<div class="input-prepend">
+    <span class="add-on"><i class="icon-facebook-sign"></i></span>
+    <button id="fb-login" class="btn">Facebook</button>
+</div>

@@ -21,11 +21,14 @@ namespace TeamKeep.App_Start
 
             // User
             routes.MapRoute("UserCreate", "users", new { controller = "User", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
-            routes.MapRoute("UserLogin", "login", new { controller = "User", action = "Login" }, new { httpMethod = new HttpMethodConstraint("POST") });
-            routes.MapRoute("UserLoginOpenId", "login/openid/{provider}", new { controller = "User", action = "LoginOpenId" }, new { httpMethod = new HttpMethodConstraint("GET") });
             routes.MapRoute("UserPasswordChange", "users/password", new { controller = "User", action = "PasswordChange" }, new { httpMethod = new HttpMethodConstraint("PUT") });
             routes.MapRoute("UserPasswordReset", "users/password", new { controller = "User", action = "PasswordReset" }, new { httpMethod = new HttpMethodConstraint("POST") });
             routes.MapRoute("UserHome", "home", new { controller = "User", action = "Home" }, new { httpMethod = new HttpMethodConstraint("GET") });
+
+            // Login
+            routes.MapRoute("Login", "login", new { controller = "Login", action = "Default" }, new { httpMethod = new HttpMethodConstraint("POST") });
+            routes.MapRoute("LoginFacebook", "login/facebook", new { controller = "Login", action = "Facebook" }, new { httpMethod = new HttpMethodConstraint("POST") });
+            routes.MapRoute("LoginOpenId", "login/openid/{provider}", new { controller = "Login", action = "OpenId" }, new { httpMethod = new HttpMethodConstraint("GET") });
 
             // Team
             routes.MapRoute("TeamCreate", "teams", new { controller = "Team", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
