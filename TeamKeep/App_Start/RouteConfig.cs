@@ -21,13 +21,17 @@ namespace TeamKeep.App_Start
 
             // User
             routes.MapRoute("UserCreate", "users", new { controller = "User", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
+            routes.MapRoute("UserActive", "users/active", new { controller = "User", action = "Active" }, new { httpMethod = new HttpMethodConstraint("GET") });
+            routes.MapRoute("UserUpdateEmail", "users/{id}/email", new { controller = "User", action = "UpdateEmail" }, new { httpMethod = new HttpMethodConstraint("PUT") });
             routes.MapRoute("UserPasswordChange", "users/password", new { controller = "User", action = "PasswordChange" }, new { httpMethod = new HttpMethodConstraint("PUT") });
             routes.MapRoute("UserPasswordReset", "users/password", new { controller = "User", action = "PasswordReset" }, new { httpMethod = new HttpMethodConstraint("POST") });
+            routes.MapRoute("UserVerify", "users/verify", new { controller = "User", action = "Verify" }, new { httpMethod = new HttpMethodConstraint("GET") });
+            routes.MapRoute("UserVerifyResend", "users/verify/resend", new { controller = "User", action = "VerifyResend" }, new { httpMethod = new HttpMethodConstraint("POST") });
             routes.MapRoute("UserHome", "home", new { controller = "User", action = "Home" }, new { httpMethod = new HttpMethodConstraint("GET") });
 
             // Login
             routes.MapRoute("Login", "login", new { controller = "Login", action = "Default" }, new { httpMethod = new HttpMethodConstraint("POST") });
-            routes.MapRoute("LoginFacebook", "login/facebook", new { controller = "Login", action = "Facebook" }, new { httpMethod = new HttpMethodConstraint("POST") });
+            routes.MapRoute("LoginFacebook", "login/facebook", new { controller = "Login", action = "Default" }, new { httpMethod = new HttpMethodConstraint("POST") });
             routes.MapRoute("LoginOpenId", "login/openid/{provider}", new { controller = "Login", action = "OpenId" }, new { httpMethod = new HttpMethodConstraint("GET") });
 
             // Team

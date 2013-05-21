@@ -2656,6 +2656,30 @@ namespace TeamKeep.Models.DataModels
         private global::System.String _OpenId;
         partial void OnOpenIdChanging(global::System.String value);
         partial void OnOpenIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Verify
+        {
+            get
+            {
+                return _Verify;
+            }
+            set
+            {
+                OnVerifyChanging(value);
+                ReportPropertyChanging("Verify");
+                _Verify = StructuralObject.SetValidValue(value, true, "Verify");
+                ReportPropertyChanged("Verify");
+                OnVerifyChanged();
+            }
+        }
+        private global::System.String _Verify;
+        partial void OnVerifyChanging(global::System.String value);
+        partial void OnVerifyChanged();
 
         #endregion
 

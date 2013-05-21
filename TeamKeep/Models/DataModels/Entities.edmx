@@ -155,6 +155,7 @@
           <Property Name="LastSeen" Type="datetime" />
           <Property Name="Reset" Type="nvarchar" MaxLength="100" />
           <Property Name="OpenId" Type="nvarchar" MaxLength="100" />
+          <Property Name="Verify" Type="nvarchar" MaxLength="100" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -310,6 +311,7 @@
           <Property Type="DateTime" Name="LastSeen" Precision="3" />
           <Property Type="String" Name="Reset" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="OpenId" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Verify" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -455,6 +457,7 @@
           <EntitySetMapping Name="UserDatas">
             <EntityTypeMapping TypeName="DatabaseModel.UserData">
               <MappingFragment StoreEntitySet="UserData">
+                <ScalarProperty Name="Verify" ColumnName="Verify" />
                 <ScalarProperty Name="OpenId" ColumnName="OpenId" />
                 <ScalarProperty Name="Reset" ColumnName="Reset" />
                 <ScalarProperty Name="LastSeen" ColumnName="LastSeen" />

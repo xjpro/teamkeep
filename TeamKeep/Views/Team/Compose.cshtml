@@ -83,13 +83,13 @@
 
             var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
             if (recipients.length == 0) {
-                return window.ShowAlert("Message must have at least one recipient");
+                return window.alertsViewModel.ShowAlert("Message must have at least one recipient");
             }
             if (me.MessageSubject().length == 0) {
-                return window.ShowAlert("Please include a message subject");
+                return window.alertsViewModel.ShowAlert("Please include a message subject");
             }
             if (me.MessageContent().length == 0) {
-                return window.ShowAlert("Please include content for your message");
+                return window.alertsViewModel.ShowAlert("Please include content for your message");
             }
             
             $("#compose button").prop("disabled", true);
@@ -106,7 +106,7 @@
                 }),
                 success: function (response) {
 
-                    window.ShowAlert("Message sent successfully", "alert-success");
+                    window.alertsViewModel.ShowAlert("Message sent successfully", "alert-success");
                     
                     $("#compose input[type='checkbox']:checked").prop("checked", false);
                     $("#compose button").prop("disabled", false);
@@ -117,10 +117,10 @@
                     me.MessageContent("");
 
                     teamViewModel.Messages.unshift(new MessageViewModel(response));
-                    $("[href='#messages']").click();
+                    $("[href='#messages']").click(); // TODO $("#messages").tab("show")??
                 },
                 error: function (response) {
-                    window.ShowAlert(JSON.parse(response.responseText));
+                    window.alertsViewModel.ShowAlert(JSON.parse(response.responseText));
                     $("#compose button").prop("disabled", false);
                     $("#compose .icon-spin").hide();
                 }

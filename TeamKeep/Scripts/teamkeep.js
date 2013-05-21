@@ -10,8 +10,13 @@ window.TeamKeep = {
 };
 
 $(function () {
-    if (window.viewData && window.viewData.Team) {
-        window.teamViewModel = ko.mapping.fromJS(window.viewData.Team, ko.mapping.toViewModel(TeamViewModel));
+    if (window.viewData) {
+        if (window.viewData.User) {
+            window.userViewModel = ko.mapping.fromJS(window.viewData.User, ko.mapping.toViewModel(UserViewModel));
+        }
+        if (window.viewData.Team) {
+            window.teamViewModel = ko.mapping.fromJS(window.viewData.Team, ko.mapping.toViewModel(TeamViewModel));
+        }
     }
 });
 

@@ -19,34 +19,7 @@
         
         @RenderBody()   
         @Html.Partial("Footer")
-        
-        <div id="message-modal" class="modal hide fade">
-            <div class="alert alert-error">
-                <span>Error</span>
-            </div>
-        </div>
-        <script>
-            window.alertTimeout = null;
-            window.ShowAlert = function(message, cssClass) {
-                if (window.alertTimeout != null) {
-                    clearTimeout(window.alertTimeout);
-                }
-
-                $("#message-modal .alert").removeClass("alert-error alert-success alert-info");
-                if (typeof cssClass !== "undefined") {
-                    $("#message-modal .alert").addClass(cssClass);
-                } else {
-                    $("#message-modal .alert").addClass("alert-error");
-                }
-
-                $("#message-modal .alert span").html(message);
-                $("#message-modal").modal({ backdrop: false }).modal("show");
-                window.alertTimeout = setTimeout(function() {
-                    $("#message-modal").modal("hide");
-                    window.alertTimeout = null;
-                }, 3000);
-            };
-        </script>
+        @Html.Partial("Alerts")
         
     </body>
 </html>

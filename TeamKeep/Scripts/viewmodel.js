@@ -350,3 +350,17 @@ var TeamViewModel = function(data) {
         return locations;
     });
 };
+
+var UserViewModel = function(data) {
+    var me = this;
+    ko.mapping.fromJS(data, {}, this);
+
+    this.Url = ko.computed(function() {
+        return "/users/" + me.Id();
+    });
+    this.Verified.subscribe(function (value) {
+        if (!value) {
+            window.alertsViewModel.ShowMessage();
+        }
+    });
+};

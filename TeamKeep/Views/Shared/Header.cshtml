@@ -75,7 +75,7 @@
         this.CreateTeam = function () {
             
             if (me.NewTeamName().length === 0) {
-                return window.ShowAlert("Team must have a name");
+                return window.alertsViewModel.ShowAlert("Team must have a name");
             }
 
             $("#newteam-modal button").prop("disabled", true);

@@ -186,7 +186,6 @@
     <Compile Include="Models\AuthToken.cs" />
     <Compile Include="Models\Availability.cs" />
     <Compile Include="Models\AvailabilityRequest.cs" />
-    <Compile Include="Models\FacebookLogin.cs" />
     <Compile Include="Models\DataModels\Entities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -352,6 +351,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\FacebookLogin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Alerts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\VerifyThanks.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

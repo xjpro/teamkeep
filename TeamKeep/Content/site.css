@@ -135,7 +135,7 @@ i {
 .newsfeed {
     list-style: none;
     padding: 0;
-    margin: 0px 5px;
+    margin: 0 5px;
 }
 .newsfeed li {
     overflow: hidden;
@@ -157,8 +157,6 @@ i {
     display: block;
     font-size: 9pt;
 }
-.newsfeed p {
-}
 .newsfeed p:after {
     content: " . . .";
     letter-spacing: 2px;
@@ -169,11 +167,26 @@ i {
     margin-bottom: 0;
 }
 
-#message-modal .alert {
+#alert-modal .alert {
     margin: 0;
 }
-#message-modal.fade.in {
+#alert-modal.fade.in {
     top: 4%;
+}
+
+.errorbar {
+    position: fixed;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    bottom: 0;
+    border-top: solid #ccc 1px;
+    border-width: 1px 0 0 0;
+    background-color: #EEF0CB;
+}
+.errorbar .navbar-inner {
+    border: none;
+    background: none;
 }
 
 #email-modal .event {
@@ -718,7 +731,7 @@ i {
 }
 
 #team-announcement textarea,
-#team-message-modal textarea {
+#team-alert-modal textarea {
     width: 100%;
     overflow: hidden;
     resize: vertical;
@@ -853,6 +866,12 @@ i {
 
 /* mobile styling */
 @media (max-width: 767px) {
+    .errorbar {
+        padding-top: 10px;
+    }
+    .errorbar .close {
+        padding-left: 5px;
+    }
     .showcase {
         border: none;
         background: none;

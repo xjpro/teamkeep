@@ -37,13 +37,20 @@ namespace TeamKeep.Services
             if(AutomaticallySend) SendQueuedMessages();
         }
 
-        public void EmailWelcome(string email)
+        public void EmailWelcome(string email, string verifyCode = null)
         {
             var body = new StringBuilder();
             body.Append("<h2>Welcome to Teamkeep!</h2>");
             body.Append("<p>We are excited to see that you are trying out Teamkeep as your team management system. ");
             body.Append("We hope you'll find it most useful. If you have any questions or comments please do not ");
             body.Append("hesitate to share your thoughts with us. Just reply to this email.</p>");
+
+            if (!string.IsNullOrEmpty(verifyCode))
+            {
+                body.Append("<h3>Please verify your email</h3>");
+                body.Append("<p>Click or visit the link below to verify your email address:</p>");
+                body.Append(string.Format("<p><a href='{0}'>{0}</a></p>", "https://teamkeep.com/users/verify?code=" + verifyCode));
+            }
 
             body.Append("<h3>Your login details:</h3>");
             body.Append("<table>");
@@ -55,6 +62,17 @@ namespace TeamKeep.Services
             body.Append("<p>Thanks again for choosing Teamkeep!</p>");
 
             Enqueue(email, "Welcome to Teamkeep", body.ToString(), "info@teamkeep.com", null);
+            if (AutomaticallySend) SendQueuedMessages();
+        }
+
+        public void EmailVerification(string email, string verifyCode)
+        {
+            var body = new StringBuilder();
+            body.Append("<h2>Email verification</h2>");
+            body.Append("<p>Click or visit the link below to verify your email address:</p>");
+            body.Append(string.Format("<p><a href='{0}'>{0}</a></p>", "https://teamkeep.com/users/verify?code=" + verifyCode));
+
+            Enqueue(email, "Teamkeep Email Verification", body.ToString(), "no-reply@teamkeep.com", null);
             if (AutomaticallySend) SendQueuedMessages();
         }
 

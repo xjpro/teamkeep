@@ -7,10 +7,10 @@
             <i class="icon-pencil"></i> Edit banner
         </div>
         <div id="team-functions" class="btn-group">
-            <!-- ko if: EnableMessageButton -->
-            <a class="btn btn-info" data-toggle="tab" href="#compose" onclick="javascript:location.hash='compose';">Message team</a>
+            <!-- ko if: MessageButtonEnabled -->
+            <a class="btn btn-info" data-toggle="tab" data-bind="attr: { href: MessageButtonHref }, click: MessageButtonClick">Message team</a>
             <!-- /ko -->
-            <!-- ko ifnot: EnableMessageButton -->
+            <!-- ko ifnot: MessageButtonEnabled -->
             <button class="btn btn-info disabled" title="Will become available once you've added a team member email to your roster">Message team</button>
             <!-- /ko -->
             <a class="btn btn-info" data-toggle="tab" href="#settings" onclick="javascript:location.hash='settings';"><i class="icon-cog"></i></a>
@@ -33,9 +33,8 @@
                 </p>
                 <p>
                     <input id="banner-file" type="file" style="display: none"/>
-                    <div class="input-append input-prepend">
-                        <span class="add-on"><i class="icon-upload-alt"></i></span>
-                        <input type="text" id="banner-file-name" class="input-block-level" />
+                    <div class="input-append">
+                        <input type="text" id="banner-file-name" class="input-large" />
                         <button class="btn btn-info" type="button" onclick="$('#banner-file').click();">Browse</button>
                     </div>
                 </p>
@@ -43,7 +42,37 @@
             <div class="modal-footer">
                 <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
                 <button class="btn btn-success">
-                    <i class="icon-spinner icon-spin" style="display: none"></i> Change banner image
+                    <i class="icon-spinner icon-spin" style="display: none"></i> Upload banner
+                </button>
+            </div>
+        </form>
+        
+        <form id="user-email-modal" class="modal hide fade" data-bind="submit: SaveEmail">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>One last thing</h3>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-error hide">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <span></span>
+                </div>
+                <p>
+                    You didn't provide an email address when you registered. In order to send messages on your behalf 
+                    we need an email address for recipients to reply to.
+                </p>
+                <p>
+                    <label>Email address</label>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-user"></i></span>
+                        <input type="text" id="user-email" />
+                    </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-success">
+                    <i class="icon-spinner icon-spin" style="display: none"></i> Set email
                 </button>
             </div>
         </form>
@@ -62,7 +91,7 @@
                 <a data-toggle="tab" href="#availability" onclick="javascript:location.hash='availability';">Availability</a>
                 <!-- /ko -->
                 <!-- ko ifnot: AvailabilityVisible -->
-                <a class="disabled" title="Will become available once you've added a dated event to your schedule and at least one member to your roster">Availability</a>
+                <a class="disabled" title="Will become available once you've added a dated event to your schedule and one member to your roster">Availability</a>
                 <!-- /ko -->
             </li>
             <li><a data-toggle="tab" href="#messages" onclick="javascript:location.hash='messages';">Messages</a></li>
@@ -115,7 +144,7 @@
             return (me.BannerImage() != null) ? "url('/TeamBanners/" + me.BannerImage() + "')" : "url('/img/defaultbanner.jpg')";
         });
 
-        this.EnableMessageButton = ko.computed(function () {
+        this.MessageButtonEnabled = ko.computed(function () {
             var somePlayersHaveEmail = false;
             _.each(me.PlayerGroups(), function (group) {
                 if (group.PlayersWithEmail().length > 0) {
@@ -126,11 +155,25 @@
             });
             return somePlayersHaveEmail;
         });
+        this.MessageButtonHref = ko.computed(function() {
+            return (userViewModel.Email() && userViewModel.Verified()) ? "#compose" : "";
+        });
+        this.MessageButtonClick = function () {
+            if (!window.userViewModel.Email()) {
+                $("#user-email-modal").modal("show");
+                return false;
+            }
+            else if (!window.userViewModel.Verified()) {
+                window.alertsViewModel.ShowMessage();
+                return false;
+            }
+            return true;
+        };
 
         this.SaveBanner = function () {
 
             if ($("#banner-file").val().length === 0) {
-                return window.ShowAlert("Please select a valid image file");
+                return window.alertsViewModel.ShowAlert("Please select a valid image file");
             }
 
             $("#team-banner-modal .icon-spin").show();
@@ -152,12 +195,36 @@
                     window.location.reload();
                 },
                 error: function (response) {
-                    window.ShowAlert(JSON.parse(response.responseText));
+                    window.alertsViewModel.ShowAlert(JSON.parse(response.responseText));
                     $("#team-banner-modal .icon-spin").hide();
                     $("#team-banner-modal button").prop("disabled", false);
                 }
             });
             return true;
+        };
+        this.SaveEmail = function () {
+            
+            if ($("#user-email").val().length === 0) {
+                return window.alertsViewModel.ShowAlert("Please enter a valid email address");
+            }
+
+            $("#user-email-modal .icon-spin").show();
+            $("#user-email-modal button").prop("disabled", true);
+
+            $.ajax({
+                type: "PUT", url: userViewModel.Url() + "/email",
+                data: {
+                    email: $("#user-email").val()
+                },
+                success: function (user) {
+                    window.userViewModel.Email(user.Email);
+                    window.userViewModel.Verified(user.Verified);
+
+                    $("#user-email-modal .icon-spin").hide();
+                    $("#user-email-modal button").prop("disabled", false);
+                    $("#user-email-modal").modal("hide");
+                }
+            });
         };
     };
 
@@ -175,13 +242,13 @@
         
         // Initial nav
         if (location.hash.length > 0) {
-            $("#team-header a[href='" + location.hash + "']").click();
+            setTimeout(function() { $("a[href='" + location.hash + "']").click(); }, 0);
         }
         else {
             $("#team-nav li a:first").click();
         }
 
-        $("body").on("click", "[data-toggle='tab']", function() {
+        $("body").on("click", "[data-toggle='tab'][href!='']", function() {
             $("#team-nav .active").removeClass("active");
 
             // When in mobile view, automatically scroll down when nav buttons are clicked

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Web.Mvc;
-using DotNetOpenAuth.OpenId;
+﻿using System.Web.Mvc;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using DotNetOpenAuth.OpenId.RelyingParty;
-using TeamKeep.Models.ViewModels;
 using TeamKeep.Models;
-using TeamKeep.Services;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using System.Web;
 
@@ -22,20 +18,6 @@ namespace TeamKeep.Controllers
                 Response.StatusCode = 400;
                 return Json("Invalid username or password");
             }
-
-            // Create and save a token for the user, for use in future requests
-            var authToken = _userService.GetAuthToken(user.Id);
-
-            login.AuthToken = authToken;
-            login.Redirect = "/home";
-
-            return Json(login);
-        }
-
-        [HttpPost]
-        public JsonResult Facebook(FacebookLogin login)
-        {
-            var user = _userService.GetUser(login);
 
             // Create and save a token for the user, for use in future requests
             var authToken = _userService.GetAuthToken(user.Id);
@@ -65,7 +47,9 @@ namespace TeamKeep.Controllers
                             email = fetch.GetAttributeValue(WellKnownAttributes.Contact.Email);
                         }
 
-                        var user = _userService.GetUser(openid, email);
+                        var login = new Login { UniqueId = openid, Email = email };
+
+                        var user = _userService.GetUser(login);
                         var authToken = _userService.GetAuthToken(user.Id);
 
                         return View("OpenIdComplete", new Login { AuthToken = authToken, Redirect = "/home" });
@@ -81,7 +65,7 @@ namespace TeamKeep.Controllers
 
                     if (provider.Equals("google")) providerUrl = "https://www.google.com/accounts/o8/id";
                     else if (provider.Equals("")) providerUrl = "";
-                    else throw new HttpException((int) 400, "Invalid open id provider");
+                    else throw new HttpException(400, "Invalid open id provider");
 
                     var request = openAuth.CreateRequest(providerUrl);
                     request.AddExtension(new ClaimsRequest
