@@ -180,7 +180,10 @@ namespace TeamKeep.Controllers
                 throw new HttpException((int) HttpStatusCode.Unauthorized, "No user is logged in");
             }
 
+            if (user.Verified) return Json(false);
+            
             _emailService.EmailVerification(user.Email, user.VerifyCode);
+            
             return Json(true);
         }
     }

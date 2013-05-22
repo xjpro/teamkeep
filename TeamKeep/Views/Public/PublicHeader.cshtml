@@ -48,7 +48,7 @@
         <div class="modal-footer">
             <div class="pull-left hidden-phone">
                 <span>Or use: </span>
-                <button class="btn fb-login" tabindex="2"><i class="icon-facebook-sign"></i> Facebook</button>
+                <button type="button" class="btn fb-login" tabindex="2"><i class="icon-facebook-sign"></i> Facebook</button>
                 <a class="btn" href="/login/openid/google" tabindex="2"><i class="icon-google-plus-sign"></i> Google</a>
             </div>
 
@@ -70,6 +70,9 @@
         this.RegisterPassword = ko.observable("");
 
         this.RegisterUser = function () {
+
+            me.RegisterUsername(me.RegisterUsername().trim());
+            me.RegisterEmail(me.RegisterEmail().trim());
 
             if (me.RegisterUsername().length < 3) {
                 $("#register-modal .alert span").html("Username must be at least three characters in length").parent().show();

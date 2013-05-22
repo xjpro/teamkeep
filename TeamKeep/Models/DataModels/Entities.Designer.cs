@@ -2638,30 +2638,6 @@ namespace TeamKeep.Models.DataModels
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String OpenId
-        {
-            get
-            {
-                return _OpenId;
-            }
-            set
-            {
-                OnOpenIdChanging(value);
-                ReportPropertyChanging("OpenId");
-                _OpenId = StructuralObject.SetValidValue(value, true, "OpenId");
-                ReportPropertyChanged("OpenId");
-                OnOpenIdChanged();
-            }
-        }
-        private global::System.String _OpenId;
-        partial void OnOpenIdChanging(global::System.String value);
-        partial void OnOpenIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String Verify
         {
             get
@@ -2680,6 +2656,30 @@ namespace TeamKeep.Models.DataModels
         private global::System.String _Verify;
         partial void OnVerifyChanging(global::System.String value);
         partial void OnVerifyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LoginId
+        {
+            get
+            {
+                return _LoginId;
+            }
+            set
+            {
+                OnLoginIdChanging(value);
+                ReportPropertyChanging("LoginId");
+                _LoginId = StructuralObject.SetValidValue(value, true, "LoginId");
+                ReportPropertyChanged("LoginId");
+                OnLoginIdChanged();
+            }
+        }
+        private global::System.String _LoginId;
+        partial void OnLoginIdChanging(global::System.String value);
+        partial void OnLoginIdChanged();
 
         #endregion
 

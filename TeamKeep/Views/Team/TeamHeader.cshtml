@@ -156,7 +156,7 @@
             return somePlayersHaveEmail;
         });
         this.MessageButtonHref = ko.computed(function() {
-            return (userViewModel.Email() && userViewModel.Verified()) ? "#compose" : "";
+            return (window.userViewModel && userViewModel.Email() && userViewModel.Verified()) ? "#compose" : "";
         });
         this.MessageButtonClick = function () {
             if (!window.userViewModel.Email()) {

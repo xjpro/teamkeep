@@ -37,13 +37,13 @@ namespace TeamKeep.Services
         {
             using (var entities = Database.GetEntities())
             {
-                var userData = entities.UserDatas.SingleOrDefault(x => x.OpenId == login.UniqueId);
+                var userData = entities.UserDatas.SingleOrDefault(x => x.LoginId == login.UniqueId);
                 if (userData != null)
                 {
                     return new User(userData);
                 }
 
-                var response = AddUser(new UserData { Username = null, Email = login.Email, OpenId = login.UniqueId }, new PasswordHash(login.UniqueId), login.Email != null);
+                var response = AddUser(new UserData { Username = null, Email = login.Email, LoginId = login.UniqueId }, new PasswordHash(login.UniqueId), login.Email != null);
                 if (!response.Error) return GetUser(login);
                 return null;
             }
@@ -163,7 +163,7 @@ namespace TeamKeep.Services
 
                 var userData = new UserData
                 {
-                    OpenId = user.OpenId,
+                    LoginId = user.LoginId,
                     Username = user.Username,
                     Email = user.Email,
                     Password = passwordHash.ToArray()

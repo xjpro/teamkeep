@@ -14,8 +14,8 @@
                 Looks like you haven't verified your email yet:
             </p>
             <ul>
-                <li><a> Resend verification email</a></li>
-                <li><a> Okay, I've verified</a></li>
+                <li><a>Resend verification email</a></li>
+                <li><a>Okay, I've verified</a></li>
             </ul> 
         </div>
     </div>
@@ -24,8 +24,13 @@
             $("#message-modal").bottomModal("hide");
         });
         $("#message-modal li:eq(0) a").click(function () {
-            $.post("/users/verify/resend", function () {
-                $("#message-modal li:eq(0)").html("Verification email resent, please check your spam folder");
+            $.post("/users/verify/resend", function (response) {
+                if (response === false) {
+                    $("#alert-modal").fadeAlert("show", "Looks like you already verified your email, thanks!", "alert-success");
+                    $("#message-modal").bottomModal("hide");
+                } else {
+                    $("#message-modal li:eq(0)").html("Verification email resent, please check your spam folder");
+                }
             });
         });
         $("#message-modal li:eq(1) a").click(function () {
