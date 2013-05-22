@@ -2,6 +2,7 @@
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TeamKeep.Models.DataModels;
 using TeamKeep.Models.ViewModels;
 using TeamKeep.Models;
 using TeamKeep.Services;
@@ -15,23 +16,28 @@ namespace TeamKeep.Controllers
         [HttpPost]
         public JsonResult Create(User user)
         {
-            if (string.IsNullOrEmpty(user.Email) || !EmailService.IsValidEmail(user.Email))
+            if (string.IsNullOrEmpty(user.Username) || user.Username.Trim().Length < 3)
+            {
+                Response.StatusCode = 400;
+                return Json("Username must be a minimum of three characters");
+            }
+            user.Username = user.Username.Trim();
+
+            if (string.IsNullOrEmpty(user.Email) || !EmailService.IsValidEmail(user.Email.Trim()))
             {
                 Response.StatusCode = 400;
                 return Json("Please use a valid email address");
             }
             user.Email = user.Email.Trim();
 
-            if (string.IsNullOrEmpty(user.Password) || user.Password.Length < 4)
+            if (string.IsNullOrEmpty(user.Password) || user.Password.Length < 2)
             {
                 Response.StatusCode = 400;
-                return Json("Passwords must be a minimum of four characters");
+                return Json("Passwords must be a minimum of two characters");
             }
+            var passwordHash = new PasswordHash(user.Password); // Encrypt the incoming password
 
-            // Encrypt the incoming password
-            var passwordHash = new PasswordHash(user.Password);
-
-            var serviceResponse = _userService.AddUser(user.Email, null, passwordHash);
+            var serviceResponse = _userService.AddUser(new UserData { Username = user.Username, Email = user.Email }, passwordHash);
             if (serviceResponse.Error)
             {
                 Response.StatusCode = 400;
@@ -39,7 +45,7 @@ namespace TeamKeep.Controllers
             }
 
             // Perform first time login
-            var login = new Login { Email = user.Email, Password = user.Password};
+            var login = new Login { Username = user.Username, Password = user.Password};
             user = _userService.GetUser(login);
 
             // Generate a new auth token
@@ -49,7 +55,7 @@ namespace TeamKeep.Controllers
             login.AuthToken = authToken;
             login.Redirect = "/home";
     
-            _emailService.EmailWelcome(user.Email, user.VerifyCode);
+            _emailService.EmailWelcome(user.Email, user.Username, user.VerifyCode);
 
             return Json(login, JsonRequestBehavior.AllowGet);
         }
@@ -99,7 +105,7 @@ namespace TeamKeep.Controllers
             if (user == null)
             {
                 Response.StatusCode = 400;
-                return Json("Invalid email");
+                return Json("Invalid username");
             }
 
             if (user.Reset != reset.ResetToken)
@@ -108,10 +114,10 @@ namespace TeamKeep.Controllers
                 return Json("Invalid reset token");
             }
 
-            if (string.IsNullOrEmpty(reset.Password) || reset.Password.Length < 4)
+            if (string.IsNullOrEmpty(reset.Password) || reset.Password.Length < 2)
             {
                 Response.StatusCode = 400;
-                return Json("Passwords must be a minimum of four characters");
+                return Json("Passwords must be a minimum of two characters");
             }
 
             var passwordHash = new PasswordHash(reset.Password);
@@ -123,33 +129,32 @@ namespace TeamKeep.Controllers
         }
 
         [HttpPost]
-        public JsonResult PasswordReset(PasswordReset reset)
+        public JsonResult PasswordResetRequest(PasswordReset reset)
         {
-            if (!EmailService.IsValidEmail(reset.Email))
+            if (reset.Username.Trim().Length < 3)
             {
                 Response.StatusCode = 400;
-                return Json("Please enter your email address");
+                return Json("Please enter your username");
             }
+            reset.Username = reset.Username.Trim();
 
             var user = _userService.GetUser(reset);
 
             if (user == null)
             {
                 Response.StatusCode = 404;
-                return Json("That email is not registered");
+                return Json("That username is not registered");
             }
 
-            reset.ResetToken = AuthToken.GenerateKey(user.Email);
-            _userService.SetResetHash(user.Id, reset.ResetToken);
+            var resetToken = AuthToken.GenerateKey(user.Email);
+            _userService.SetResetHash(user.Id, resetToken);
 
-            // Make this async or something? it seems to fail sending back or something...
             try
             {
-                _emailService.EmailPassword(reset);
+                _emailService.EmailPasswordReset(user.Email, user.Username, resetToken);
             }
             catch (Exception)
             {
-                // TODO log this
                 Response.StatusCode = 500;
                 return Json("Error sending reset email");
             }

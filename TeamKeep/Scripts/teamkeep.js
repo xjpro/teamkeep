@@ -17,6 +17,14 @@ $(function () {
         if (window.viewData.Team) {
             window.teamViewModel = ko.mapping.fromJS(window.viewData.Team, ko.mapping.toViewModel(TeamViewModel));
         }
+        
+        $("#alert-modal").fadeAlert();
+        $("#message-modal").bottomModal();
+        
+        // Notifications
+        if (window.userViewModel && window.userViewModel.Email() && !window.userViewModel.Verified()) {
+            $("#message-modal").bottomModal("show");
+        }
     }
 });
 

@@ -24,7 +24,7 @@ namespace TeamKeep.App_Start
             routes.MapRoute("UserActive", "users/active", new { controller = "User", action = "Active" }, new { httpMethod = new HttpMethodConstraint("GET") });
             routes.MapRoute("UserUpdateEmail", "users/{id}/email", new { controller = "User", action = "UpdateEmail" }, new { httpMethod = new HttpMethodConstraint("PUT") });
             routes.MapRoute("UserPasswordChange", "users/password", new { controller = "User", action = "PasswordChange" }, new { httpMethod = new HttpMethodConstraint("PUT") });
-            routes.MapRoute("UserPasswordReset", "users/password", new { controller = "User", action = "PasswordReset" }, new { httpMethod = new HttpMethodConstraint("POST") });
+            routes.MapRoute("UserPasswordResetRequest", "users/password", new { controller = "User", action = "PasswordResetRequest" }, new { httpMethod = new HttpMethodConstraint("POST") });
             routes.MapRoute("UserVerify", "users/verify", new { controller = "User", action = "Verify" }, new { httpMethod = new HttpMethodConstraint("GET") });
             routes.MapRoute("UserVerifyResend", "users/verify/resend", new { controller = "User", action = "VerifyResend" }, new { httpMethod = new HttpMethodConstraint("POST") });
             routes.MapRoute("UserHome", "home", new { controller = "User", action = "Home" }, new { httpMethod = new HttpMethodConstraint("GET") });

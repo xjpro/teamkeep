@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/Master.cshtml";
+    ViewBag.Title = "Thanks for verifying your email";
+}
+<div class="container main">
+    <div class="row">
+        <div class="span12">
+            <h1>Thank you</h1>
+            <p>
+                Your email has been verified.
+            </p>
+            <p>
+                We'll redirect you to a <a href="/">more useful page</a> in 5 seconds....
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    setTimeout(function() {
+        document.location = "/";
+    }, 5000)
+</script>

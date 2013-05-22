@@ -211,12 +211,10 @@ i {
     width: 44%;
 }
 
-#front-header button {
+#front-header .nav button {
     margin-left: 10px;
 }
-#registration input {
-    display: block;
-}
+
 #compose .icon-spin, #register-modal .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
 #login .icon-spin, #schedule .icon-spin, #roster .icon-spin, #reset .icon-spin, #reset-modal .icon-spin {
     display: none;
@@ -883,6 +881,7 @@ i {
     #features-carousel .carousel-image img {
         margin-bottom: 0;
     }
+
     #team-banner, #team-nav {
         border-left-width: 0;
         border-right-width: 0;

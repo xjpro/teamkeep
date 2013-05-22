@@ -64,7 +64,7 @@
                 <p>
                     <label>Email address</label>
                     <div class="input-prepend">
-                        <span class="add-on"><i class="icon-user"></i></span>
+                        <span class="add-on"><i class="icon-envelope"></i></span>
                         <input type="text" id="user-email" />
                     </div>
                 </p>
@@ -173,7 +173,7 @@
         this.SaveBanner = function () {
 
             if ($("#banner-file").val().length === 0) {
-                return window.alertsViewModel.ShowAlert("Please select a valid image file");
+                return $("#alert-modal").fadeAlert("show", "Please select a valid image file");
             }
 
             $("#team-banner-modal .icon-spin").show();
@@ -195,7 +195,7 @@
                     window.location.reload();
                 },
                 error: function (response) {
-                    window.alertsViewModel.ShowAlert(JSON.parse(response.responseText));
+                    $("#alert-modal").fadeAlert("show", JSON.parse(response.responseText));
                     $("#team-banner-modal .icon-spin").hide();
                     $("#team-banner-modal button").prop("disabled", false);
                 }
@@ -205,7 +205,7 @@
         this.SaveEmail = function () {
             
             if ($("#user-email").val().length === 0) {
-                return window.alertsViewModel.ShowAlert("Please enter a valid email address");
+                return $("#alert-modal").fadeAlert("show", "Please enter a valid email address");
             }
 
             $("#user-email-modal .icon-spin").show();
@@ -217,6 +217,7 @@
                     email: $("#user-email").val()
                 },
                 success: function (user) {
+                    console.log(user);
                     window.userViewModel.Email(user.Email);
                     window.userViewModel.Verified(user.Verified);
 

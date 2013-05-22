@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Text.RegularExpressions;
 using TeamKeep.Models;
 using TeamKeep.Models.DataModels;
 using TeamKeep.Models.ServiceResponses;
@@ -12,41 +11,17 @@ namespace TeamKeep.Services
         {
             using (var entities = Database.GetEntities())
             {
-                // Have both unique id AND email (Google OpenID)
-                if (!string.IsNullOrEmpty(login.UniqueId) && !string.IsNullOrEmpty(login.Email))
+                // OpenID or Facebook login
+                if (!string.IsNullOrEmpty(login.UniqueId)) 
                 {
-                    // In this case, try to lookup the email first for an existing account
-                    UserData userData = entities.UserDatas.SingleOrDefault(x => x.Email == login.Email);
-
-                    if (userData == null) // Create user with key and email
-                    {
-                        var response = AddUser(login.Email, login.UniqueId, new PasswordHash(login.UniqueId), true);
-                        return (!response.Error) ? GetUser(login) : null;
-                    }
-                    return new User(userData);
+                    return GetOpenIdUser(login);
                 }
 
-                // Have just a unique id (Facebook Connect or OpenId w/ no email given)
-                if (!string.IsNullOrEmpty(login.UniqueId))
+                // Password login
+                if (!string.IsNullOrEmpty(login.Username)) 
                 {
-                    // In this case, try to lookup the unique id
-                    UserData userData = entities.UserDatas.SingleOrDefault(x => x.OpenId == login.UniqueId);
-
-                    if (userData == null) // Create user based only on key
-                    {
-                        var response = AddUser(null, login.UniqueId, new PasswordHash(login.UniqueId));
-                        return (!response.Error) ? GetUser(login) : null;
-                    }
-                    return new User(userData);
-                }
-
-                // Have just an email (Teamkeep login)
-                if (!string.IsNullOrEmpty(login.Email))
-                {
-                    // In this case, look up by the email only
-                    UserData userData = entities.UserDatas.SingleOrDefault(x => x.Email == login.Email);
-
-                    // User exists? If it does not exist, login will fail
+                    var userData = entities.UserDatas.SingleOrDefault(x => x.Username == login.Username);
+                    
                     if (userData == null || userData.Password == null) return null;
 
                     // Password matches?
@@ -58,11 +33,27 @@ namespace TeamKeep.Services
             }
         }
 
+        private User GetOpenIdUser(Login login)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var userData = entities.UserDatas.SingleOrDefault(x => x.OpenId == login.UniqueId);
+                if (userData != null)
+                {
+                    return new User(userData);
+                }
+
+                var response = AddUser(new UserData { Username = null, Email = login.Email, OpenId = login.UniqueId }, new PasswordHash(login.UniqueId), login.Email != null);
+                if (!response.Error) return GetUser(login);
+                return null;
+            }
+        }
+
         public User GetUser(PasswordReset passwordReset)
         {
             using (var entities = Database.GetEntities())
             {
-                var userData = entities.UserDatas.SingleOrDefault(x => x.Email == passwordReset.Email);
+                var userData = entities.UserDatas.SingleOrDefault(x => x.Username == passwordReset.Username);
                 return (userData != null) ? new User(userData) : null;
             }
         }
@@ -121,6 +112,7 @@ namespace TeamKeep.Services
                 var userData = entities.UserDatas.Single(x => x.Id == userId);
                 userData.Password = password.ToArray();
                 userData.Reset = null;
+                userData.Verify = null;
                 entities.SaveChanges();
                 return new User(userData);
             }
@@ -156,41 +148,35 @@ namespace TeamKeep.Services
             }
         }
 
-        public ServiceResponse AddUser(string email, string uniqueId, PasswordHash passwordHash, bool verified = false)
+        public ServiceResponse AddUser(UserData user, PasswordHash passwordHash, bool verified = false)
         {
             using (var entities = Database.GetEntities())
             {
-                if(!string.IsNullOrEmpty(email))
+                if(!string.IsNullOrEmpty(user.Username))
                 {
-                    var existingEmail = entities.UserDatas.SingleOrDefault(x => x.Email == email);
-                    if (existingEmail != null) // Email in use
+                    var existingUsername = entities.UserDatas.SingleOrDefault(x => x.Username == user.Username);
+                    if (existingUsername != null) // Username in use
                     {
-                        return new ServiceResponse { Error = true, Message = "Email is already in use" };
+                        return new ServiceResponse { Error = true, Message = "Username is already in use" };
                     }
                 }
 
                 var userData = new UserData
                 {
-                    OpenId = uniqueId,
-                    Username = ConvertEmailToUsername(email),
-                    Email = email,
+                    OpenId = user.OpenId,
+                    Username = user.Username,
+                    Email = user.Email,
                     Password = passwordHash.ToArray()
                 };
                 if (!verified)
                 {
-                    userData.Verify = AuthToken.GenerateKey(email); // Now unverified
+                    userData.Verify = AuthToken.GenerateKey(user.Email); // Now unverified
                 }
                 entities.UserDatas.AddObject(userData);
                 entities.SaveChanges();
 
                 return new ServiceResponse();
             }
-        }
-
-        private string ConvertEmailToUsername(string email)
-        {
-            if (string.IsNullOrEmpty(email)) return null;
-            return new Regex("[^A-Za-z0-9]").Replace(email, "");
         }
     }
 }

@@ -20,28 +20,22 @@
     }(document));
 
     $(function () {
-
-        $("#fb-login").click(function () {
+        $(document).on("click", ".fb-login", function () {
             FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
 
                     var uid = response.authResponse.userID;
-                    var accessToken = response.authResponse.accessToken;
-
-                    $.post("/login/facebook", { FacebookId: uid }, function (response) {
-                        TeamKeep.signIn(response.AuthToken, response.Redirect);
+                    
+                    $.post("/login/facebook", { UniqueId: "facebook/" + uid }, function (signInResponse) {
+                        TeamKeep.signIn(signInResponse.AuthToken, signInResponse.Redirect);
                     });
                 }
                 else {
-                    FB.login(function (response) {
-                        setTimeout(function () { $("#fb-login").click(); }, 0);
+                    FB.login(function () {
+                        setTimeout(function () { $(".fb-login:first").click(); }, 0);
                     });
                 }
             });
         });
     });
 </script>
-<div class="input-prepend">
-    <span class="add-on"><i class="icon-facebook-sign"></i></span>
-    <button id="fb-login" class="btn">Facebook</button>
-</div>

@@ -64,7 +64,7 @@ namespace TeamKeep.Controllers
                     string providerUrl;
 
                     if (provider.Equals("google")) providerUrl = "https://www.google.com/accounts/o8/id";
-                    else if (provider.Equals("")) providerUrl = "";
+                    //else if (provider.Equals("abc")) providerUrl = "";
                     else throw new HttpException(400, "Invalid open id provider");
 
                     var request = openAuth.CreateRequest(providerUrl);

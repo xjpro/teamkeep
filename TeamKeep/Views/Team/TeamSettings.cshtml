@@ -144,7 +144,7 @@
         this.SaveSettings = function () {
 
             if (me.NewName().length == 0) {
-                window.alertsViewModel.ShowAlert("Team must have a name");
+                $("#alert-modal").fadeAlert("show", "Team must have a name");
                 me.NewName(me.Name());
             }
 

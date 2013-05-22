@@ -22,28 +22,38 @@
             <h3>Create an account</h3>
         </div>
         <div class="modal-body">
+            
             <div class="alert alert-error hide">
                 <span></span>
             </div>
             <div>
-                <label>Email:</label>
                 <div class="input-prepend">
                     <span class="add-on"><i class="icon-user"></i></span>
-                    <input type="email" placeholder="" data-bind="value: RegisterEmail"/>
+                    <input type="text" tabindex="1" placeholder="Username" data-bind="value: RegisterUsername"/>
                 </div>
-                <span class="help-block">Your email will never be sold or used for advertisements</span>
             </div>
             <div>
-                <label>Password:</label>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-envelope"></i></span>
+                    <input type="email" tabindex="1" placeholder="Email" data-bind="value: RegisterEmail"/>
+                </div>
+            </div>
+            <div>
                 <div class="input-prepend">
                     <span class="add-on"><i class="icon-key"></i></span>
-                    <input type="password" placeholder="" data-bind="value: RegisterPassword"/>
+                    <input type="password" tabindex="1" placeholder="Password" data-bind="value: RegisterPassword"/>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-success">
+            <div class="pull-left hidden-phone">
+                <span>Or use: </span>
+                <button class="btn fb-login" tabindex="2"><i class="icon-facebook-sign"></i> Facebook</button>
+                <a class="btn" href="/login/openid/google" tabindex="2"><i class="icon-google-plus-sign"></i> Google</a>
+            </div>
+
+            <button class="btn" type="button" tabindex="3" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-success" tabindex="1">
                 <i class="icon-spinner icon-spin"></i> Sign up now
             </button>
         </div>
@@ -55,18 +65,24 @@
     var HeaderViewModel = function () {
         var me = this;
 
+        this.RegisterUsername = ko.observable("");
         this.RegisterEmail = ko.observable("");
         this.RegisterPassword = ko.observable("");
 
         this.RegisterUser = function () {
 
+            if (me.RegisterUsername().length < 3) {
+                $("#register-modal .alert span").html("Username must be at least three characters in length").parent().show();
+                return;
+            }
+            
             if (me.RegisterEmail().length < 6) {
                 $("#register-modal .alert span").html("Please enter a valid email address").parent().show();
                 return;
             }
 
-            if (me.RegisterPassword().length < 3) {
-                $("#register-modal .alert span").html("Please enter a password").parent().show();
+            if (me.RegisterPassword().length < 2) {
+                $("#register-modal .alert span").html("Password must be at least two characters in length").parent().show();
                 return;
             }
 
@@ -75,7 +91,7 @@
 
             $.ajax({
                 type: "POST", url: "/users",
-                data: { Email: me.RegisterEmail(), Password: me.RegisterPassword() },
+                data: { Username: me.RegisterUsername(), Email: me.RegisterEmail(), Password: me.RegisterPassword() },
                 success: function (response) {
                     TeamKeep.signIn(response.AuthToken, response.Redirect);
                 },

@@ -83,13 +83,13 @@
 
             var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
             if (recipients.length == 0) {
-                return window.alertsViewModel.ShowAlert("Message must have at least one recipient");
+                return $("#alert-modal").fadeAlert("show", "Message must have at least one recipient");
             }
             if (me.MessageSubject().length == 0) {
-                return window.alertsViewModel.ShowAlert("Please include a message subject");
+                return $("#alert-modal").fadeAlert("show", "Please include a message subject");
             }
             if (me.MessageContent().length == 0) {
-                return window.alertsViewModel.ShowAlert("Please include content for your message");
+                return $("#alert-modal").fadeAlert("show", "Please include content for your message");
             }
             
             $("#compose button").prop("disabled", true);
@@ -106,7 +106,7 @@
                 }),
                 success: function (response) {
 
-                    window.alertsViewModel.ShowAlert("Message sent successfully", "alert-success");
+                    $("#alert-modal").fadeAlert("show", "Message sent successfully", "alert-success");
                     
                     $("#compose input[type='checkbox']:checked").prop("checked", false);
                     $("#compose button").prop("disabled", false);
@@ -120,7 +120,7 @@
                     $("[href='#messages']").click(); // TODO $("#messages").tab("show")??
                 },
                 error: function (response) {
-                    window.alertsViewModel.ShowAlert(JSON.parse(response.responseText));
+                    $("#alert-modal").fadeAlert("show", JSON.parse(response.responseText));
                     $("#compose button").prop("disabled", false);
                     $("#compose .icon-spin").hide();
                 }

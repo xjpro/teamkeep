@@ -270,7 +270,7 @@
                     PlayerIds: _.pluck(ko.mapping.toJS(me.SelectedPlayers()), 'Id')
                 }),
                 success: function (response) {
-                    window.alertsViewModel.ShowAlert("Confirmation emails sent successfully", "alert-success");
+                    $("#alert-modal").fadeAlert("show", "Confirmation emails sent successfully", "alert-success");
                     $("#email-modal").modal("hide");
                     $("#email-modal button").prop("disabled", false);
                     $("#email-modal .icon-spin").hide();
@@ -292,7 +292,7 @@
                     $("#email-modal input[type='checkbox']:checked").click();
                 },
                 error: function (response) {
-                    window.alertsViewModel.ShowAlert(JSON.parse(response.responseText));
+                    $("#alert-modal").fadeAlert("show", JSON.parse(response.responseText));
                     $("#email-modal button").prop("disabled", false);
                     $("#email-modal .icon-spin").hide();
                 }

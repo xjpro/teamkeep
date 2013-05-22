@@ -3,7 +3,7 @@
     ViewBag.Title = "Free Sports Team Management Software";
     ViewBag.Description = "Manage your sports team online for free with Teamkeep. Captains and coaches can organize their games, practices, and roster with our easy to learn interface and keep their team members up to date with a home page viewable from any device.";
 }
-<div id="index">
+<div id="js-index">
     <div class="row-fluid showcase">
         <div class="span7 hidden-phone">
             <p>
@@ -28,7 +28,7 @@
                 <form data-bind="submit: LoginUser">
                     <div class="input-prepend">
                         <span class="add-on"><i class="icon-user"></i></span>
-                        <input id="input-email" type="email" placeholder="Email" data-bind="value: Email" />
+                        <input id="input-username" type="text" placeholder="Username" data-bind="value: Username" />
                     </div>
                     <div class="input-prepend">
                         <span class="add-on"><i class="icon-key"></i></span>
@@ -46,11 +46,8 @@
 
                 <h4>Or sign in with</h4>
                 <div>
-                    @*Html.Partial("FacebookLogin")*@
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-google-plus-sign"></i></span>
-                        <a class="btn" href="/login/openid/google">Google</a>
-                    </div>
+                    <button class="btn fb-login"><i class="icon-facebook-sign"></i> Facebook</button>
+                    <a class="btn" href="/login/openid/google"><i class="icon-google-plus-sign"></i> Google</a>
                 </div>
             </div>           
         </div>
@@ -187,10 +184,9 @@
                 <span></span>
             </div>
             <div>
-                <label>Email:</label>
                 <div class="input-prepend">
                     <span class="add-on"><i class="icon-user"></i></span>
-                    <input type="email" placeholder="" data-bind="value: Email"/>
+                    <input type="text" placeholder="Username" data-bind="value: Username"/>
                 </div>
             </div>
         </div>
@@ -209,13 +205,13 @@
             var me = this;
             ko.mapping.fromJS(data, {}, me);
 
-            me.Email = ko.observable("");
+            me.Username = ko.observable("");
             me.Password = ko.observable("");
             
             me.LoginUser = function () {
                 
-                if (me.Email().length < 6) {
-                    $("#login .alert span").html("Please enter your email address").parent().show();
+                if (me.Username().length < 3) {
+                    $("#login .alert span").html("Please enter your username").parent().show();
                     return;
                 }
                 if (me.Password().length < 3) {
@@ -228,7 +224,7 @@
 
                 $.ajax({
                     type: "POST", url: "/login",
-                    data: JSON.stringify({ Email: me.Email(), Password: me.Password() }),
+                    data: JSON.stringify({ Username: me.Username(), Password: me.Password() }),
                     contentType: "application/json",
                     success: function (response) {
                         TeamKeep.signIn(response.AuthToken, response.Redirect);
@@ -246,8 +242,8 @@
             };
             me.ResetPassword = function () {
                 
-                if (me.Email().length < 6) {
-                    $("#reset-modal .alert span").html("Please enter your email address").parent().show();
+                if (me.Username().length < 3) {
+                    $("#reset-modal .alert span").html("Please enter your username").parent().show();
                     return;
                 }
 
@@ -256,7 +252,7 @@
                 $.ajax({
                     type: "POST", url: "/users/password",
                     data: {
-                        Email: me.Email()
+                        Username: me.Username()
                     },
                     success: function () {
                         document.location = "/resetsent";
@@ -271,9 +267,9 @@
         };
 
         window.loginViewModel = new LoginViewModel();
-        ko.applyBindings(window.loginViewModel, document.getElementById("index"));
+        ko.applyBindings(window.loginViewModel, document.getElementById("js-index"));
 
-        $("#input-email").focus();
+        $("#input-username").focus();
         $(document).tooltip({ items: "a[title]", track: true });
     });
 </script>

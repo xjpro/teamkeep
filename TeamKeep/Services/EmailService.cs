@@ -25,19 +25,19 @@ namespace TeamKeep.Services
         
         private readonly Queue<MailMessage> UnsentMessages = new Queue<MailMessage>();
 
-        public void EmailPassword(PasswordReset passwordReset)
+        public void EmailPasswordReset(string email, string username, string resetToken)
         {
             var body = new StringBuilder();
             body.Append("<p>A password reset was requested for your Teamkeep login. If you did not make this request you may simply ignore this message. ");
             body.Append("Otherwise, please use to the following link to reset your password: </p>");
-            body.Append(string.Format("<p><a href='{0}?email={1}&token={2}'>Reset your password</a></p>", "https://teamkeep.com/reset", passwordReset.Email, passwordReset.ResetToken));
+            body.Append(string.Format("<p><a href='{0}?username={1}&token={2}'>Reset your password</a></p>", "https://teamkeep.com/reset", username, resetToken));
             body.Append("<p>Thank you for using Teamkeep.</p>");
 
-            Enqueue(passwordReset.Email, "Password Reset for Teamkeep", body.ToString(), "teamkeep-noreply@teamkeep.com", null);
+            Enqueue(email, "Password Reset for Teamkeep", body.ToString(), "teamkeep-noreply@teamkeep.com", null);
             if(AutomaticallySend) SendQueuedMessages();
         }
 
-        public void EmailWelcome(string email, string verifyCode = null)
+        public void EmailWelcome(string email, string username, string verifyCode = null)
         {
             var body = new StringBuilder();
             body.Append("<h2>Welcome to Teamkeep!</h2>");
@@ -55,7 +55,7 @@ namespace TeamKeep.Services
             body.Append("<h3>Your login details:</h3>");
             body.Append("<table>");
             body.Append(string.Format("<tr><td style='width: 100px'>Login at:</td><td><a href='{0}'>{0}</a></tr>", "https://teamkeep.com"));
-            body.Append(string.Format("<tr><td>Email:</td><td>{0}</a></tr>", email));
+            body.Append(string.Format("<tr><td>Username:</td><td>{0}</a></tr>", username));
             body.Append("<tr><td>Password:</td><td>(entered when you signed up)</a></tr>");
             body.Append("</table>");
 
@@ -110,8 +110,8 @@ namespace TeamKeep.Services
             body.Append(string.Format("<a style='float: left; display: block; width: 70px; border: solid #666 1px; padding: 8px 5px; margin-right: 7px; text-align: center;' href='{0}'>Maybe</a>", replyEmail + "&reply=3"));
             body.Append("</p>");
 
-            // And now for the TeamKeep parts
-            body.Append(string.Format("<hr/><p>This message sent on behalf of {0} by TeamKeep.com</p>", abRequest.TeamName));
+            // And now for the Teamkeep parts
+            body.Append(string.Format("<hr/><p>This message sent on behalf of {0} by Teamkeep.com</p>", abRequest.TeamName));
 
             Enqueue(abRequest.Email, "[" + abRequest.TeamName + "] vs. " + (abRequest.Event.OpponentName ?? "TBD") + " @ " + abRequest.Event.When, 
                 body.ToString(), "teamkeep-noreply@teamkeep.com", null);
@@ -131,8 +131,8 @@ namespace TeamKeep.Services
                 body.Append(string.Format("<p>{0}</p>", formattedParagraph));
             }
 
-            // And now for the TeamKeep parts
-            body.Append(string.Format("<hr/><p>This message sent on behalf of {0} by TeamKeep.com</p>", message.TeamName));
+            // And now for the Teamkeep parts
+            body.Append(string.Format("<hr/><p>This message sent on behalf of {0} by Teamkeep.com</p>", message.TeamName));
 
             using (var entities = Database.GetEntities())
             {

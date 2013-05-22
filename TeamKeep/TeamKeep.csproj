@@ -237,6 +237,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Scripts\jquery.autosize-min.js" />
+    <Content Include="Scripts\jquery.bottom-modal.js" />
     <Content Include="Scripts\teamkeep.js" />
     <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
     <Content Include="Scripts\knockout.mapping.js" />
