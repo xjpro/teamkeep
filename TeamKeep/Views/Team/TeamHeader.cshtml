@@ -164,7 +164,7 @@
                 return false;
             }
             else if (!window.userViewModel.Verified()) {
-                window.alertsViewModel.ShowMessage();
+                $("#message-modal").bottomModal("show");
                 return false;
             }
             return true;
@@ -217,9 +217,10 @@
                     email: $("#user-email").val()
                 },
                 success: function (user) {
-                    console.log(user);
+
                     window.userViewModel.Email(user.Email);
                     window.userViewModel.Verified(user.Verified);
+                    $("#message-modal").bottomModal("show");
 
                     $("#user-email-modal .icon-spin").hide();
                     $("#user-email-modal button").prop("disabled", false);

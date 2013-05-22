@@ -358,9 +358,4 @@ var UserViewModel = function(data) {
     this.Url = ko.computed(function() {
         return "/users/" + me.Id();
     });
-    this.Verified.subscribe(function (value) {
-        if (!value) {
-            window.alertsViewModel.ShowMessage();
-        }
-    });
 };
