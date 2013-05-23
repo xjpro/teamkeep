@@ -4,6 +4,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using TeamKeep.Models.DataModels;
 using TeamKeep.Models.ViewModels;
 using TeamKeep.Models;
 using System;
@@ -80,7 +81,61 @@ namespace TeamKeep.Controllers
         public JsonResult Create(Team team)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            team = _teamService.AddTeam(team, activeUser);
+            if (activeUser == null)
+            {
+                throw new HttpException((int) HttpStatusCode.Unauthorized, "Invalid user");
+            }
+
+            var type = team.Type;
+            var prepopulate = team.Prepopulate;
+            var makePublic = team.MakePublic;
+
+            if (prepopulate) 
+            {
+                // User asked us to prepoplate the team with a sample schedule and roster
+                team = new OrchestrationService().CreateSampleTeam(team.Name, activeUser);
+            }
+            else
+            {
+                // Normal, empty team
+                team = _teamService.AddTeam(team, activeUser);
+            }
+
+            // Set settings
+            var settings = new TeamSettingsViewModel
+            {
+                TeamId = team.Id,
+                Name = team.Name,
+                Privacy = new TeamPrivacyData {HomePage = makePublic, Roster = true},
+                Settings = new TeamSettingsData { EmailColumn = true } // Defined below
+            };
+
+            switch (type)
+            {
+                case "online":
+                    settings.Settings.ArenaColumn = false;
+                    settings.Settings.LastNameColumn = false;
+                    settings.Settings.PositionColumn = false;
+                    settings.Settings.PhoneColumn = false;
+                    settings.Settings.ResultsView = 1;
+                    break;
+                case "club":
+                    settings.Settings.ArenaColumn = false;
+                    settings.Settings.LastNameColumn = true;
+                    settings.Settings.PositionColumn = false;
+                    settings.Settings.PhoneColumn = true;
+                    settings.Settings.ResultsView = 3;
+                    break;
+                default: // & "sports"
+                    settings.Settings.ArenaColumn = true;
+                    settings.Settings.LastNameColumn = true;
+                    settings.Settings.PositionColumn = true;
+                    settings.Settings.PhoneColumn = true;
+                    settings.Settings.ResultsView = 0;
+                    break;
+            }
+            _teamService.UpdateSettings(settings);
+
             return Json(team);
         }
 

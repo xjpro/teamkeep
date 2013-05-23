@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using TeamKeep.Models.ViewModels;
-using TeamKeep.Services;
 
 namespace TeamKeep.Controllers
 {

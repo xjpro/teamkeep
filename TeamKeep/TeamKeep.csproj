@@ -216,6 +216,7 @@
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\PlayerService.cs" />
+    <Compile Include="Services\OrchestrationService.cs" />
     <Compile Include="Services\TeamService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>

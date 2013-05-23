@@ -65,7 +65,6 @@ namespace TeamKeep.Controllers
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 
-
         [HttpPost]
         public JsonResult CreateSeason(int teamId, Season season)
         {
@@ -75,6 +74,7 @@ namespace TeamKeep.Controllers
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to add seasons to this team");
             }
 
+            season.TeamId = teamId;
             season = _gameService.AddSeason(season);
             return Json(season);
         }

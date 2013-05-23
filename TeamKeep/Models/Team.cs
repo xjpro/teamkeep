@@ -22,6 +22,11 @@ namespace TeamKeep.Models
 
         public string Url { get { return "/teams/" + Id + "/" + new Regex("[^A-Za-z0-9]").Replace(Name, ""); } }
 
+        public bool CanEdit(int userId)
+        {
+            return Owners != null && Owners.Exists(x => x.Id == userId);
+        }
+
         public string Announcement { get; set; }
         public string BannerImage { get; set; }
         [ScriptIgnore]
@@ -33,9 +38,12 @@ namespace TeamKeep.Models
         public TeamPrivacyData Privacy { get; set; }
         public bool Editable { get; set; }
 
-        public bool CanEdit(int userId)
-        {
-            return Owners != null && Owners.Exists(x => x.Id == userId);
-        }
+        // Starting options
+        [ScriptIgnore]
+        public string Type { get; set; }
+        [ScriptIgnore]
+        public bool MakePublic { get; set; }
+        [ScriptIgnore]
+        public bool Prepopulate { get; set; }
     }
 }

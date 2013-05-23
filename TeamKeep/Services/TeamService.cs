@@ -206,7 +206,11 @@ namespace TeamKeep.Services
             using (var entities = Database.GetEntities())
             {
                 var teamData = entities.TeamDatas.Single(x => x.Id == teamSettings.TeamId);
-                teamData.Name = teamSettings.Name;
+
+                if (!string.IsNullOrEmpty(teamSettings.Name))
+                {
+                    teamData.Name = teamSettings.Name;    
+                }
 
                 // Update settings
                 if (teamSettings.Settings != null)
@@ -267,7 +271,8 @@ namespace TeamKeep.Services
                 // Delete roster
                 foreach (var playerGroup in entities.PlayerGroupDatas.Where(x => x.TeamId == teamId).ToList())
                 {
-                    foreach(var player in entities.PlayerDatas.Where(x => x.GroupId == playerGroup.Id))
+                    var group = playerGroup;
+                    foreach(var player in entities.PlayerDatas.Where(x => x.GroupId == group.Id))
                     {
                         entities.DeleteObject(player);
                     }

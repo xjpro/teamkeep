@@ -139,6 +139,7 @@ namespace TeamKeep.Services
                     GroupId = player.GroupId,
                     LastName = player.LastName,
                     FirstName = player.FirstName,
+                    Position = player.Position,
                     Email = player.Email,
                     Phone = player.Phone
                 };
