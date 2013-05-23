@@ -17,7 +17,6 @@ namespace TeamKeep.App_Start
             routes.MapRoute("PublicAbout", "about", new { controller = "Public", action = "About" });
             routes.MapRoute("PublicFeatures", "features", new { controller = "Public", action = "Features" });
             routes.MapRoute("PublicNotFound", "404", new { controller = "Public", action = "NotFound" });
-            routes.MapRoute("PublicTest", "test", new { controller = "Public", action = "Test" });
 
             // User
             routes.MapRoute("UserCreate", "users", new { controller = "User", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
