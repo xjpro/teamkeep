@@ -399,6 +399,9 @@ i {
 .table-container table td.icon span {
     width: 40px;
 }
+.table-container table td.icon::selection {
+    background: #fff;
+}
 .table-container table th.date,
 .table-container table td.date input {
     width: 170px;
