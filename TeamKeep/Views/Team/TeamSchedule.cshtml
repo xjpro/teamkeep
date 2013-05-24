@@ -261,16 +261,16 @@
             switch (resultsView) {
                 case 0: // points scored / allowed
                     me.Columns()[2].Name("PS");
-                    me.Columns()[2].ToolTip = "Point scored";
+                    me.Columns()[2].ToolTip = "Points scored";
                     me.Columns()[2].Visible(localStorage["column.scoredPoints.visible"] == "true");
                     me.Columns()[2].Toggleable(true);
-                    me.Columns()[2].ToggleName("Point scored");
+                    me.Columns()[2].ToggleName("Points scored");
 
                     me.Columns()[3].Name("PA");
-                    me.Columns()[3].ToolTip = "Point allowed";
+                    me.Columns()[3].ToolTip = "Points allowed";
                     me.Columns()[3].Visible(localStorage["column.allowedPoints.visible"] == "true");
                     me.Columns()[3].Toggleable(true);
-                    me.Columns()[3].ToggleName("Point allowed");
+                    me.Columns()[3].ToggleName("Points allowed");
 
                     me.Columns()[4].Visible(false);
                     me.Columns()[4].Toggleable(false);

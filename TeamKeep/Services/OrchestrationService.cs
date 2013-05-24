@@ -28,7 +28,8 @@ namespace TeamKeep.Services
                     HomeTeamId = sampleTeam.Id,
                     OpponentName = "The A Team",
                     ScoredPoints = 5,
-                    AllowedPoints = 2
+                    AllowedPoints = 2,
+                    TiePoints = 0
                 }, 
                 new Game
                 {
@@ -37,7 +38,8 @@ namespace TeamKeep.Services
                     HomeTeamId = sampleTeam.Id,
                     OpponentName = "Electric Dream Machine",
                     ScoredPoints = 6,
-                    AllowedPoints = 3
+                    AllowedPoints = 3,
+                    TiePoints = 0
                 }, 
                 new Game
                 {
