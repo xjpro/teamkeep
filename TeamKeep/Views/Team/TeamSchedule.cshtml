@@ -403,6 +403,7 @@
                 success: function (response) {
                     var newGame = new GameViewModel(response);
                     parentSeason.Games.push(newGame);
+                    $(document).trigger("teamkeep.newevent");
 
                     $(".season-select button").prop("disabled", false);
                     $(".season-select .icon-spin").hide();

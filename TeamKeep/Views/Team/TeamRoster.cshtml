@@ -286,6 +286,7 @@
                 success: function (response) {
                     var newPlayer = new PlayerViewModel(response);
                     parentGroup.Players.push(newPlayer);
+                    $(document).trigger("teamkeep.newplayer");
 
                     $(".group-select button").prop("disabled", false);
                     $(".group-select .icon-spin").hide();

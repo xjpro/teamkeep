@@ -235,6 +235,8 @@
     <Content Include="Libraries\DotNetOpenAuth.dll" />
     <Content Include="Libraries\log4net.dll" />
     <Content Include="Libraries\Quartz.dll" />
+    <Content Include="Scripts\app\controllers\TutorialController.js" />
+    <Content Include="Scripts\app\teamkeep.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Scripts\jquery.autosize-min.js" />
@@ -245,6 +247,7 @@
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Content\site.css" />
+    <Content Include="Scripts\ui-bootstrap-0.3.0.min.js" />
     <Content Include="Scripts\viewmodel.js" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
@@ -359,6 +362,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\VerifyThanks.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\app\directives\" />
+    <Folder Include="Scripts\app\views\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

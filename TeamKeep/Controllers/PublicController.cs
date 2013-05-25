@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Net;
+using System.Web.Mvc;
 using TeamKeep.Models.ViewModels;
 
 namespace TeamKeep.Controllers
@@ -65,9 +66,15 @@ namespace TeamKeep.Controllers
         [HttpGet]
         public ActionResult NotFound()
         {
-            Response.StatusCode = 404;
+            Response.StatusCode = (int) HttpStatusCode.NotFound;
             var user = this.GetActiveUser(this.Request);
             return View(new BaseViewModel { User = user });
+        }
+
+        [HttpGet]
+        public JsonResult Health()
+        {
+            return Json(_teamService.GetNumberOfTeams(), JsonRequestBehavior.AllowGet);
         }
     }
 }

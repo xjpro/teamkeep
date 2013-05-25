@@ -160,6 +160,7 @@ namespace TeamKeep.Services
                         return new ServiceResponse { Error = true, Message = "Username is already in use" };
                     }
                 }
+                // TODO check for open id in use
 
                 var userData = new UserData
                 {

@@ -906,6 +906,20 @@ i {
     padding-left: 95px;
 }
 
+.tutorial-step {
+    position: absolute;
+    z-index: 1501;
+    width: 350px;
+    /*top: 10%;
+    left: 50%;
+    margin-left: -175px;*/
+    padding: 10px;
+    border: solid #666 1px;
+    border-radius: 3px;
+    box-shadow: 5px 5px 10px #666;
+    background: #fff;
+}
+
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
 .ui-timepicker-div dl { text-align: left; }

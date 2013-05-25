@@ -149,6 +149,14 @@ namespace TeamKeep.Services
             }
         }
 
+        public int GetNumberOfTeams()
+        {
+            using (var entities = Database.GetEntities())
+            {
+                return entities.TeamDatas.Count();
+            }
+        }
+
         public Team AddTeam(Team team, User creator)
         {
             using (var entities = Database.GetEntities())
