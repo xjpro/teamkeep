@@ -7,62 +7,75 @@
             decline: true,
             next: true,
             target: "#team-banner h1",
-            pane: "schedule"
         },
         {
-            content: "<p>Click +Game to add an event to your team schedule. You can add the event to an existing season or start a new one.</p>" +
-                "<p>Add your first event to continue &mdash;</p>",
-            target: "#schedule .table-controls button",
-            pane: "schedule",
-            side: "topleft",
-            nextTrigger: "teamkeep.newevent"
-        },
-        {
-            content: "<p>Excellent! The new event was added to your schedule and the changes were uploaded automatically.</p><p>As you enter in an event's date, location, " +
-                "and other information we will automatically save any changes you make.</p>",
-            next: true,
-            target: "#ui-datepicker-div",
-            pane: "schedule"
-        },
-        {
-            heading: "Your team roster",
-            content: "<p>The roster section stores information about players on your team.</p>",
+            heading: "Team roster",
+            content: "<p>The roster section stores information about the players on your team.</p>",
             next: true,
             target: "#team-banner h1",
             pane: "roster"
         },
         {
-            content: "<p>Click +Player to add a new player to your roster. You can organize players into different groupings such as 'Active' for your main players and 'Subs' for substitues.</p>" +
+            content: "<p>Click +Player to add a new player to your roster. " +
+                "Players are organized into groups such as 'Active' for your main players and 'Subs' for substitutes. You can name these groups as you see fit.</p>" +
                 "<p>Add your first player to continue &mdash;</p>",
             target: "#roster .table-controls button",
+            glowTarget: "#roster .table-controls button",
             pane: "roster",
             side: "topleft",
             nextTrigger: "teamkeep.newplayer"
         },
         {
-            content: "<p>Nicely done! Just like on the schedule any information you enter here will be automatically saved.</p>",
+            content: "<p>Excellent! A new player was added to your roster and the changes were uploaded automatically.</p>" +
+                "<p>As you enter in player names and contact information we will continue to save any changes.</p>" +
+                "<p>Fill out as much of your roster as you'd like then click Next to continue the tour &mdash;</p>",
             next: true,
-            target: "#roster table tr:last td:eq(1)",
-            pane: "roster",
-            side: "topright"
+            target: "#team-banner h1",
+            pane: "roster"
         },
-        { 
-            content: "<p>The edit button <i class='icon-edit highlight'></i> opens a context menu for a particular player. You can reorganize your roster and remove players entirely in here.</p>",
+        {
+            content: "<p>The edit button <i class='icon-edit highlight'></i> opens a context menu with additional options for a particular player.</p>",
             next: true,
-            target: "#roster table tr:last td:first",
+            target: "#roster tbody tr:eq(1) td:first",
+            glowTarget: "#roster tbody i.icon-edit",
             pane: "roster",
             side: "topright"
         },
         {
+            heading: "Team schedule",
+            content: "<p>The schedule section stores past and future events for your team.</p>",
+            next: true,
+            target: "#team-banner h1",
+            pane: "schedule"
+        },
+        {
+            content: "<p>Click +Game to add an event to your schedule. " +
+                "Events are orgnized into seasons. You can add the event to an existing season or start a new one.</p>" +
+                "<p>Add your first event to continue &mdash;</p>",
+            target: "#schedule .table-controls button",
+            glowTarget: "#schedule .table-controls button",
+            pane: "schedule",
+            side: "topleft",
+            nextTrigger: "teamkeep.newevent"
+        },
+        {
+            content: "<p>Nicely done! The new event was added to your schedule and the changes were uploaded automatically.</p>" +
+                "<p>Fill out as much of your schedule as you'd like then click Next to continue the tour &mdash;</p>",
+            next: true,
+            target: "#team-banner h1",
+            pane: "schedule"
+        },
+        {
             heading: "Availability",
-            content: "<p>In the availability section you can mark past and future attendance for your upcoming events.</p>",
+            content: "<p>In the availability section you can mark past and future attendance for events on your schedule.</p>",
             next: true,
             target: "#team-banner h1",
             pane: "availability"
         },
         {
-            content: "<p>Click on these boxes to cycle through different attendance options.</p><p>If your event is in the future you can have Teamkeep send your players " +
-                "an email requesting their attendance. Their replies will be shown here.</p>",
+            content: "<p>Click on these boxes to cycle through different attendance options.</p><p>Have Teamkeep send your players " +
+                "an email requesting their attendance by clicking the blue envelope <i class='icon-envelope highlight'></i> (only visible for future events). " +
+                "Their replies will be shown here.</p>",
             next: true,
             target: "#availability tbody tr:eq(1) td.icon:first",
             pane: "availability",
@@ -70,11 +83,27 @@
         },
         {
             heading: "Team messaging",
-            content: "<p>Finally, this button here will allow you to send messages to your team. You can send a message to the entire roster or just selected members.</p>" +
-                "<p>This can be pretty handy if you're away from your computer and need to email the entire team from your phone.</p>",
+            content: "<p>You can send messages to your team by clicking the 'Message team' button.",
             next: true,
             target: "#team-functions .btn:first",
+            glowTarget: "#team-functions .btn:first",
             pane: "schedule",
+            side: "left"
+        },
+        {
+            content: "<p>Messages can be sent to the entire team or just selected members. Choose who will recieve the message by checking their name here.</p>",
+            next: true,
+            target: "#compose .player-group:first",
+            pane: "compose",
+            side: "left"
+        },
+        {
+            heading: "Settings",
+            content: "<p>Finally, if you would like to customize your Teamkeep interface, all of the available options are available by clicking the settings button.</p>",
+            next: true,
+            target: "#team-functions",
+            glowTarget: "#team-functions .btn:last",
+            pane: "settings",
             side: "left"
         },
         {
@@ -99,7 +128,7 @@
         var stepElement = $(".tutorial-step:eq(" + stepIndex + ")");
         
         // Set pane
-        if (currentPane != step.pane) {
+        if (step.pane && currentPane != step.pane) {
             var paneLink = $("[href='#" + step.pane + "']");
             if (paneLink.length === 0) {
                 return $scope.next();
@@ -117,7 +146,7 @@
 
         if (step.side === "left") {
             top -= stepElement.height() / 2;
-            left -= stepElement.width() + 15;
+            left -= stepElement.outerWidth() + 15;
         }
         else if (step.side === "top") {
             //top -= element.height() + $target.height();
@@ -137,6 +166,29 @@
         }
         step.position = { top: top + "px", left: left + "px" };
         // End position
+
+        // Highlight a target
+        if (step.glowTarget) {
+
+            var i = 0;
+            var maxIterations = 3;
+            var startGlow = function () {
+                $(step.glowTarget).animate({
+                    opacity: "0.25"
+                }, function () {
+                    $(step.glowTarget).animate({
+                        opacity: "1"
+                    }, function () {
+                        if (i++ < maxIterations) {
+                            startGlow();
+                        }
+                    });
+                    
+                });
+            };
+            startGlow();
+        }
+        // End highlight
         
         if (step.nextTrigger) {
             $(document).one(step.nextTrigger, function () {

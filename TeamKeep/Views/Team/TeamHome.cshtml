@@ -64,6 +64,7 @@
 
 <div class="container hidden-phone" ng-controller="TutorialController">
     <div class="tutorial-step" ng-repeat="step in steps" ng-show="step.active" ng-style="step.position">
+        <button type="button" class="close" title="Close tutorial" ng-click="$parent.close()">&times;</button>
         <h4>{{step.heading}}</h4>
         <div ng-bind-html-unsafe="step.content"></div>
         <div class="pull-right">
