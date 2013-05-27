@@ -79,6 +79,24 @@ namespace TeamKeep.Services
             }
         }
 
+        public UserSettingsData GetUserSettings(int userId)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var settingsData = entities.UserSettingsDatas.SingleOrDefault(x => x.UserId == userId);
+
+                if (settingsData == null && entities.UserDatas.SingleOrDefault(x => x.Id == userId) != null)
+                {
+                    // Create it
+                    settingsData = new UserSettingsData { UserId = userId, ShowTutorial = true };
+                    entities.UserSettingsDatas.AddObject(settingsData);
+                    entities.SaveChanges();
+                }
+
+                return settingsData;
+            }
+        }
+
         public bool VerifyEmail(string verifyCode)
         {
             using (var entities = Database.GetEntities())
@@ -130,6 +148,18 @@ namespace TeamKeep.Services
             }
         }
 
+        public UserSettingsData UpdateSettings(int userId, UserSettingsData settings)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var userSettingsData = entities.UserSettingsDatas.Single(x => x.UserId == userId);
+                userSettingsData.ShowTutorial = settings.ShowTutorial;
+                entities.SaveChanges();
+
+                return userSettingsData;
+            }
+        }
+
         public void SetActiveTeamId(int userId, int teamId)
         {
             using (var entities = Database.GetEntities())
@@ -152,15 +182,23 @@ namespace TeamKeep.Services
         {
             using (var entities = Database.GetEntities())
             {
-                if(!string.IsNullOrEmpty(user.Username))
+                if (!string.IsNullOrEmpty(user.Username))
                 {
-                    var existingUsername = entities.UserDatas.SingleOrDefault(x => x.Username == user.Username);
-                    if (existingUsername != null) // Username in use
+                    var existing = entities.UserDatas.SingleOrDefault(x => x.Username == user.Username);
+                    if (existing != null) // Username in use
                     {
                         return new ServiceResponse { Error = true, Message = "Username is already in use" };
                     }
                 }
-                // TODO check for open id in use
+
+                if (!string.IsNullOrEmpty(user.LoginId))
+                {
+                    var existing = entities.UserDatas.SingleOrDefault(x => x.LoginId == user.LoginId);
+                    if (existing != null) // Open ID in use
+                    {
+                        return new ServiceResponse { Error = true, Message = "Login ID is already in use" };
+                    }
+                }
 
                 var userData = new UserData
                 {

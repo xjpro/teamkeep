@@ -17,6 +17,7 @@
         <EntityTypeShape EntityType="DatabaseModel.PlayerGroupData" Width="1.5" PointX="0.75" PointY="3.875" />
         <EntityTypeShape EntityType="DatabaseModel.MessageData" Width="1.5" PointX="0.75" PointY="5.875" />
         <EntityTypeShape EntityType="DatabaseModel.UserData" Width="1.5" PointX="8.875" PointY="4.625" />
+        <EntityTypeShape EntityType="DatabaseModel.UserSettingsData" Width="1.5" PointX="8.875" PointY="7.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

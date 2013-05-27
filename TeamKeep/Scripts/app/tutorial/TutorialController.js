@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("TutorialController", function ($scope) {
+﻿angular.module("teamkeep").controller("TutorialController", function ($scope, User) {
     
     $scope.steps = [
         {
@@ -73,7 +73,7 @@
             pane: "availability"
         },
         {
-            content: "<p>Click on these boxes to cycle through different attendance options.</p><p>Have Teamkeep send your players " +
+            content: "<p>Click the boxes under an event date to cycle through different attendance options.</p><p>Have Teamkeep send your players " +
                 "an email requesting their attendance by clicking the blue envelope <i class='icon-envelope highlight'></i> (only visible for future events). " +
                 "Their replies will be shown here.</p>",
             next: true,
@@ -91,7 +91,7 @@
             side: "left"
         },
         {
-            content: "<p>Messages can be sent to the entire team or just selected members. Choose who will recieve the message by checking their name here.</p>",
+            content: "<p>Need to message select members only? Choose who will recieve your message by checking their name here.</p>",
             next: true,
             target: "#compose .player-group:first",
             pane: "compose",
@@ -149,7 +149,6 @@
             left -= stepElement.outerWidth() + 15;
         }
         else if (step.side === "top") {
-            //top -= element.height() + $target.height();
         }
         else if (step.side === "topleft") {
             top -= stepElement.height() + $target.height() + 5;
@@ -160,7 +159,6 @@
             left += $target.width();
         }
         else {
-            console.log(stepElement.height());
             top -= stepElement.height() / 2;
             left += $target.width() + 10;
         }
@@ -199,7 +197,11 @@
 
     $scope.close = function () {
         $scope.steps[stepIndex].active = false;
+        User.Settings.ShowTutorial = false;
+        User.saveSettings();
     };
 
-    //setTimeout(function () { $scope.$apply($scope.next); }, 800);
+    if (User && User.Settings.ShowTutorial) {
+        setTimeout(function () { $scope.$apply($scope.next); }, 800);
+    }
 });

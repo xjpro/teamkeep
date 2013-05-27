@@ -36,6 +36,8 @@ namespace TeamKeep.Controllers
                     _userService.SetActiveTeamId(activeUser.Id, teamId);
                 }
 
+                activeUser.Settings = _userService.GetUserSettings(activeUser.Id);
+
                 viewModel.User = activeUser;
                 team.Editable = team.CanEdit(activeUser.Id);
             }

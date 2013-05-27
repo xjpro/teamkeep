@@ -256,6 +256,22 @@ namespace TeamKeep.Models.DataModels
             }
         }
         private ObjectSet<UserData> _UserDatas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UserSettingsData> UserSettingsDatas
+        {
+            get
+            {
+                if ((_UserSettingsDatas == null))
+                {
+                    _UserSettingsDatas = base.CreateObjectSet<UserSettingsData>("UserSettingsDatas");
+                }
+                return _UserSettingsDatas;
+            }
+        }
+        private ObjectSet<UserSettingsData> _UserSettingsDatas;
 
         #endregion
 
@@ -355,6 +371,14 @@ namespace TeamKeep.Models.DataModels
         public void AddToUserDatas(UserData userData)
         {
             base.AddObject("UserDatas", userData);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UserSettingsDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUserSettingsDatas(UserSettingsData userSettingsData)
+        {
+            base.AddObject("UserSettingsDatas", userSettingsData);
         }
 
         #endregion
@@ -2680,6 +2704,114 @@ namespace TeamKeep.Models.DataModels
         private global::System.String _LoginId;
         partial void OnLoginIdChanging(global::System.String value);
         partial void OnLoginIdChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DatabaseModel", Name="UserSettingsData")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UserSettingsData : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UserSettingsData object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="showTutorial">Initial value of the ShowTutorial property.</param>
+        public static UserSettingsData CreateUserSettingsData(global::System.Int32 id, global::System.Int32 userId, global::System.Boolean showTutorial)
+        {
+            UserSettingsData userSettingsData = new UserSettingsData();
+            userSettingsData.Id = id;
+            userSettingsData.UserId = userId;
+            userSettingsData.ShowTutorial = showTutorial;
+            return userSettingsData;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ShowTutorial
+        {
+            get
+            {
+                return _ShowTutorial;
+            }
+            set
+            {
+                OnShowTutorialChanging(value);
+                ReportPropertyChanging("ShowTutorial");
+                _ShowTutorial = StructuralObject.SetValidValue(value, "ShowTutorial");
+                ReportPropertyChanged("ShowTutorial");
+                OnShowTutorialChanged();
+            }
+        }
+        private global::System.Boolean _ShowTutorial;
+        partial void OnShowTutorialChanging(global::System.Boolean value);
+        partial void OnShowTutorialChanged();
 
         #endregion
 

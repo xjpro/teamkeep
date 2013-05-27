@@ -27,6 +27,7 @@ namespace TeamKeep.Models
         public string Email { get; set; }
         public int? ActiveTeamId { get; set; }
         public DateTime? LastSeen { get; set; }
+        public UserSettingsData Settings { get; set; }
 
         [ScriptIgnore]
         public string VerifyCode { get; set; }

@@ -235,7 +235,8 @@
     <Content Include="Libraries\DotNetOpenAuth.dll" />
     <Content Include="Libraries\log4net.dll" />
     <Content Include="Libraries\Quartz.dll" />
-    <Content Include="Scripts\app\controllers\TutorialController.js" />
+    <Content Include="Scripts\app\tutorial\TutorialController.js" />
+    <Content Include="Scripts\app\shared\User.js" />
     <Content Include="Scripts\app\teamkeep.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\font-awesome.min.css" />

@@ -99,6 +99,20 @@ namespace TeamKeep.Controllers
         }
 
         [HttpPut]
+        public JsonResult UpdateSettings(int id, UserSettingsData settings)
+        {
+            var activeUser = this.GetActiveUser(this.Request);
+            if (id != activeUser.Id)
+            {
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this user");
+            }
+
+            settings = _userService.UpdateSettings(id, settings);
+
+            return Json(settings);
+        }
+
+        [HttpPut]
         public JsonResult PasswordChange(PasswordReset reset)
         {
             var user = _userService.GetUser(reset);
