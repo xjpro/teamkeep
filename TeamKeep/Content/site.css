@@ -908,11 +908,8 @@ i {
 
 .tutorial-step {
     position: absolute;
-    z-index: 1501;
+    z-index: 1000;
     width: 350px;
-    /*top: 10%;
-    left: 50%;
-    margin-left: -175px;*/
     padding: 10px;
     border: solid #666 1px;
     border-radius: 3px;

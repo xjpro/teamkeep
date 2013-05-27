@@ -10,14 +10,15 @@
         },
         {
             heading: "Team roster",
-            content: "<p>The roster section stores information about the players on your team.</p>",
+            content: "<p>Let's start with the roster section. This is where you'll list the players on your team and their contact information.</p>",
             next: true,
             target: "#team-banner h1",
             pane: "roster"
         },
         {
-            content: "<p>Click +Player to add a new player to your roster. " +
-                "Players are organized into groups such as 'Active' for your main players and 'Subs' for substitutes. You can name these groups as you see fit.</p>" +
+            content: "<p>Click +Player to add a new player to your roster.</p>" +
+                "<p>Players can be organized into different groups. A common approach would be to put your everyday players into an 'Active' group and " +
+                "substitutes into a group labeled 'Subs'.</p>" +
                 "<p>Add your first player to continue &mdash;</p>",
             target: "#roster .table-controls button",
             glowTarget: "#roster .table-controls button",
@@ -43,14 +44,14 @@
         },
         {
             heading: "Team schedule",
-            content: "<p>The schedule section stores past and future events for your team.</p>",
+            content: "<p>Next up is the schedule section. This is where you'll list your team's events.</p>",
             next: true,
             target: "#team-banner h1",
             pane: "schedule"
         },
         {
             content: "<p>Click +Game to add an event to your schedule. " +
-                "Events are orgnized into seasons. You can add the event to an existing season or start a new one.</p>" +
+                "Events are organized into seasons. You can add the event to an existing season or start a new one.</p>" +
                 "<p>Add your first event to continue &mdash;</p>",
             target: "#schedule .table-controls button",
             glowTarget: "#schedule .table-controls button",
@@ -62,20 +63,21 @@
             content: "<p>Nicely done! The new event was added to your schedule and the changes were uploaded automatically.</p>" +
                 "<p>Fill out as much of your schedule as you'd like then click Next to continue the tour &mdash;</p>",
             next: true,
-            target: "#team-banner h1",
-            pane: "schedule"
+            target: "#team-functions",
+            pane: "schedule",
+            side: "left"
         },
         {
             heading: "Availability",
-            content: "<p>In the availability section you can mark past and future attendance for events on your schedule.</p>",
+            content: "<p>In the availability section you can mark attendance for events on your schedule. At a glance you can see " +
+                "how many players will be attending a particular game, who most often shows up, and know if an important position needs a substitute.</p>",
             next: true,
             target: "#team-banner h1",
             pane: "availability"
         },
         {
-            content: "<p>Click the boxes under an event date to cycle through different attendance options.</p><p>Have Teamkeep send your players " +
-                "an email requesting their attendance by clicking the blue envelope <i class='icon-envelope highlight'></i> (only visible for future events). " +
-                "Their replies will be shown here.</p>",
+            content: "<p>Click the boxes under an event date to cycle through attendance options manually or have Teamkeep send players " +
+                "an email requesting their attendance by clicking the blue envelope <i class='icon-envelope highlight'></i> underneath a particular event (for future events only).</p>",
             next: true,
             target: "#availability tbody tr:eq(1) td.icon:first",
             pane: "availability",
@@ -83,7 +85,7 @@
         },
         {
             heading: "Team messaging",
-            content: "<p>You can send messages to your team by clicking the 'Message team' button.",
+            content: "<p>You can send messages to your team by clicking the 'Message team' button.</p>",
             next: true,
             target: "#team-functions .btn:first",
             glowTarget: "#team-functions .btn:first",
@@ -91,7 +93,7 @@
             side: "left"
         },
         {
-            content: "<p>Need to message select members only? Choose who will recieve your message by checking their name here.</p>",
+            content: "<p>Need to message select members only? Choose who will recieve a message by checking the box next to their name.</p>",
             next: true,
             target: "#compose .player-group:first",
             pane: "compose",
