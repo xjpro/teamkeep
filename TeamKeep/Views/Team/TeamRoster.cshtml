@@ -405,4 +405,13 @@
         ko.applyBindings(window.teamRosterViewModel, document.getElementById("roster"));
         window.teamRosterViewModel.Sort();
     });
+
+    // Tabbing off the end of the table creates a new entry 
+    $("#roster tbody").on("keydown", "tr:last > td:last input", function (evt) {
+        evt.stopImmediatePropagation();
+        if (evt.keyCode === 9 && !evt.shiftKey) {
+            evt.preventDefault();
+            teamRosterViewModel.AddPlayer(-1);
+        }
+    });
 </script>

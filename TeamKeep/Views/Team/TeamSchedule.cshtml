@@ -552,6 +552,33 @@
         window.teamScheduleViewModel = new TeamScheduleViewModel();
         ko.applyBindings(window.teamScheduleViewModel, document.getElementById("schedule"));
         window.teamScheduleViewModel.Sort();
+
+        // http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
+        $("#schedule .location input.js-desc").typeahead({
+            source: function (query, process) {
+                var locations = _(ko.toJS(teamViewModel.Locations()));
+                process(locations.pluck("Description").compact().unique().value());
+            },
+            matcher: function (item) {
+                if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
+                    return true;
+                }
+            },
+            updater: function (item) {
+                var selected = _.find(ko.toJS(teamViewModel.Locations()), function (location) {
+                    return location.Description == item;
+                });
+                if (selected) {
+                    var parent = this.$element.parent();
+                    parent.find(".js-street").val(selected.Street).change();
+                    parent.find(".js-city").val(selected.City).change();
+                    parent.find(".js-postal").val(selected.Postal).change();
+                    parent.find("button").focus();
+                }
+                return item;
+            },
+            items: 3
+        });
     });
 
     $("#schedule table").on("click, focus", "input.mod", function () {
@@ -559,10 +586,13 @@
     });
 
     // Location editor
-    $("#schedule table").on("click focus", "td.location > input.mod", function (evt) {
+    $("#schedule tbody").on("click focus", "td.location > input.mod", function (evt) {
         evt.stopPropagation();
 
-        if (!$(evt.target).attr("locid") && $(".editor:visible").length > 0) return;
+        if (evt.type === "focusin" && $(evt.target).attr("locid") && $(".editor:visible").length > 0) {
+            $(this).closest("tr").find("td.max input").focus();
+            return;
+        }
 
         var clicked = $(this);
         var editor = clicked.parent().find(".editor");
@@ -582,7 +612,7 @@
             });
         }
 
-        editor.show().find("input:first").focus();
+        editor.show().children("input:first").focus();
 
         $(window).bind("mouseup.editor keyup.editor", function (docEvt) {
             docEvt.stopPropagation();
@@ -601,32 +631,14 @@
             editor.fadeOut("fast");
             $(window).unbind(".editor");
         });
+    });
 
-        // http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
-        $("#schedule .location input.js-desc").typeahead({
-            source: function (query, process) {
-                var locations = _(ko.toJS(teamViewModel.Locations()));
-                process(locations.pluck("Description").compact().unique().value());
-            },
-            matcher: function (item) {
-                if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
-                    return true;
-                }
-            },
-            updater: function (item) {
-                var selected = _.find(ko.toJS(teamViewModel.Locations()), function(location) { 
-                    return location.Description == item; 
-                });
-                if (selected) {
-                    var parent = this.$element.parent();
-                    parent.find(".js-street").val(selected.Street).change();
-                    parent.find(".js-city").val(selected.City).change();
-                    parent.find(".js-postal").val(selected.Postal).change();
-                    parent.find("button").focus();
-                }
-                return item;
-            },
-            items: 3
-        });
+    // Tabbing off the end of the table creates a new entry 
+    $("#schedule tbody").on("keydown", "tr:last > td:last input", function (evt) {
+        evt.stopImmediatePropagation();
+        if (evt.keyCode === 9 && !evt.shiftKey) {
+            evt.preventDefault();
+            teamScheduleViewModel.AddGame(-1);
+        }
     });
 </script>

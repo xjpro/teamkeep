@@ -1,5 +1,8 @@
 ﻿User-agent: *
-Disallow: /login
-Disallow: /users
+Disallow: /login/
+Disallow: /users/
+Disallow: /rsvp
 Disallow: /reset
 Disallow: /resetsent
+Disallow: /404
+Disallow: /health
