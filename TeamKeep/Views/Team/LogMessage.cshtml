@@ -3,7 +3,7 @@
 
         <div class="span12" data-bind="with: SelectedMessage">
             
-            <a class="btn btn-link" data-toggle="tab" href="#messages">
+            <a class="btn btn-link" data-bind="click: $root.BackClick">
                 <i class="icon-arrow-left"></i> Return to messages
             </a>
 
@@ -27,6 +27,9 @@
 <script>
     var SentMessageViewModel = function () {
         this.SelectedMessage = teamViewModel.SelectedMessage;   
+        this.BackClick = function () {
+            $("[href='#messages']").click();
+        };
     };
 
     $(function () {
