@@ -208,7 +208,11 @@ i {
 }
 .player-group ul > label {
     float: left;
-    width: 44%;
+    width: 43%;
+    overflow: hidden;
+}
+.player-group label > small {
+    display: block;
 }
 
 #front-header .nav button {
@@ -1010,5 +1014,8 @@ i {
     }
     #team-settings ul .btn-group {
         float: right;
+    }
+    .player-group ul > label {
+        width: 90%;
     }
 }
