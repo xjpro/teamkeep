@@ -56,14 +56,17 @@ namespace TeamKeep.Services
             }
 
             // Add a sample player grouping and roster
-            var playerGroup = new PlayerGroup {TeamId = sampleTeam.Id, Name = "Active Players", Order = 0};
-            playerGroup = _playerService.AddPlayerGroup(playerGroup);
+            var activeGroup = new PlayerGroup {TeamId = sampleTeam.Id, Name = "Active Players", Order = 0};
+            activeGroup = _playerService.AddPlayerGroup(activeGroup);
+
+            var subsGroup = new PlayerGroup { TeamId = sampleTeam.Id, Name = "Subs", Order = 1 };
+            subsGroup = _playerService.AddPlayerGroup(subsGroup);
 
             var players = new List<Player>
             {
                 new Player
                     {
-                        GroupId = playerGroup.Id,
+                        GroupId = activeGroup.Id,
                         LastName = "Teamkeeper",
                         FirstName = "Alice",
                         Email = "info@teamkeep.com",
@@ -72,7 +75,7 @@ namespace TeamKeep.Services
                     },
                 new Player
                     {
-                        GroupId = playerGroup.Id,
+                        GroupId = activeGroup.Id,
                         LastName = "Miller",
                         FirstName = "Thomas",
                         Email = "tom@teamkeep.com",
@@ -81,12 +84,21 @@ namespace TeamKeep.Services
                     },
                 new Player
                     {
-                        GroupId = playerGroup.Id,
+                        GroupId = activeGroup.Id,
                         LastName = "Williams",
                         FirstName = "Zoe",
                         Email = "zoe@teamkeep.com",
                         Phone = "282-555-5463",
                         Position = "Third base"
+                    },
+                new Player
+                    {
+                        GroupId = subsGroup.Id,
+                        LastName = "Jackson",
+                        FirstName = "Sam",
+                        Email = "samuel@teamkeep.com",
+                        Phone = "763-555-3669",
+                        Position = "First base"
                     }
             };
 

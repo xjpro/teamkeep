@@ -16,7 +16,7 @@
                 <a data-toggle="tab" href="#log-message" data-bind="text: Subject, click: function () { teamViewModel.SelectedMessage($data); }" ></a>
             </h6>
             <time data-bind="text: TimePast"></time>
-            <p data-bind="text: AbbrevContent"></p>
+            <p data-bind="html: AbbrevContent"></p>
         </article>
     </li>
     <!-- /ko -->

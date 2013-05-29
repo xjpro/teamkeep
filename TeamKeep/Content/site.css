@@ -162,11 +162,6 @@ i {
     display: block;
     font-size: 9pt;
 }
-.newsfeed p:after {
-    content: " . . .";
-    letter-spacing: 2px;
-    color: #999;
-}
 
 #newteam-modal form {
     margin-bottom: 0;
