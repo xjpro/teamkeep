@@ -235,6 +235,9 @@
     <Content Include="Libraries\DotNetOpenAuth.dll" />
     <Content Include="Libraries\log4net.dll" />
     <Content Include="Libraries\Quartz.dll" />
+    <Content Include="Scripts\app\login\LoginController.js" />
+    <Content Include="Scripts\app\login\RegisterController.js" />
+    <Content Include="Scripts\app\shared\spinner.js" />
     <Content Include="Scripts\app\tutorial\TutorialController.js" />
     <Content Include="Scripts\app\shared\User.js" />
     <Content Include="Scripts\app\teamkeep.js" />
@@ -367,6 +370,9 @@
   <ItemGroup>
     <Folder Include="Scripts\app\directives\" />
     <Folder Include="Scripts\app\views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Team\AvailabilityRequest.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

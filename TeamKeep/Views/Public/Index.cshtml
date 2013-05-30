@@ -3,7 +3,7 @@
     ViewBag.Title = "Free Sports Team Management Software";
     ViewBag.Description = "Manage your sports team online for free with Teamkeep. Captains and coaches can organize their games, practices, and roster with our easy to learn interface and keep their team members up to date with a home page viewable from any device.";
 }
-<div id="js-index" class="container">
+<div class="container" ng-controller="LoginController">
     <div class="row-fluid showcase">
         <div class="span7 hidden-phone">
             <p>
@@ -17,26 +17,27 @@
                 <a data-toggle="modal" data-target="#register-modal">Get started now</a>
             </p>
         </div>
-        <div id="login" class="span5">
+        <div class="span5">
 
             <h4 class="hidden-phone">Login</h4>
             <div>
-                <div class="alert alert-error hide">
-                    <span></span>
-                </div>
-            
-                <form data-bind="submit: LoginUser">
+                <form ng-submit="loginUser()">
+                    
+                    <div class="alert alert-error" ng-show="loginError">
+                        <span>{{loginError}}</span>
+                    </div>
+
                     <div class="input-prepend">
                         <span class="add-on"><i class="icon-user"></i></span>
-                        <input id="input-username" type="text" placeholder="Username" data-bind="value: Username" />
+                        <input type="text" placeholder="Username" ng-model="username" />
                     </div>
                     <div class="input-prepend">
                         <span class="add-on"><i class="icon-key"></i></span>
-                        <input id="input-password" type="password" placeholder="Password" data-bind="value: Password" />
+                        <input type="password" placeholder="Password" ng-model="password" />
                     </div>
                     <div>
-                        <button class="btn btn-success">
-                            <i class="icon-spinner icon-spin"></i> Sign in <i class="icon-lock"></i>
+                        <button type="submit" class="btn btn-success" spinner="loginEvaluating">
+                            Sign in <i class="icon-lock"></i>
                         </button>
                         <a class="btn btn-link" data-toggle="modal" data-target="#reset-modal">Forgot your password?</a>   
                     </div>
@@ -52,6 +53,28 @@
             </div>           
         </div>
     </div>
+    
+    <form id="reset-modal" class="modal hide fade" ng-submit="resetPassword()">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Password reset</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error" ng-show="resetError">
+                <span>{{resetError}}</span>
+            </div>
+            <div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input type="text" placeholder="Username" ng-model="username"/>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button type="submit" class="btn btn-success" spinner="resetEvaluating">Send reset email</button>
+        </div>
+    </form>
 
     <div class="row hidden-phone">
         <div id="features-carousel" class="span7 carousel slide">
@@ -174,104 +197,10 @@
             </p>
         </div>
     </div>
-    <form id="reset-modal" class="modal hide fade" data-bind="submit: ResetPassword">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Password reset</h3>
-        </div>
-        <div class="modal-body">
-            <div class="alert alert-error hide">
-                <span></span>
-            </div>
-            <div>
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span>
-                    <input type="text" placeholder="Username" data-bind="value: Username"/>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-success">
-                <i class="icon-spinner icon-spin"></i> Send reset email
-            </button>
-        </div>
-    </form>
 </div>
 <script>
     $(function () {
-        
-        var LoginViewModel = function (data) {
-            var me = this;
-            ko.mapping.fromJS(data, {}, me);
-
-            me.Username = ko.observable("");
-            me.Password = ko.observable("");
-            
-            me.LoginUser = function () {
-                
-                me.Username(me.Username().trim());
-
-                if (me.Username().length < 3) {
-                    $("#login .alert span").html("Please enter your username").parent().show();
-                    return;
-                }
-                if (me.Password().length < 3) {
-                    $("#login .alert span").html("Please enter your password").parent().show();
-                    return;
-                }
-                
-                $("#login button").prop("disabled", true);
-                $("#login .icon-spin").show();
-
-                $.ajax({
-                    type: "POST", url: "/login",
-                    data: JSON.stringify({ Username: me.Username(), Password: me.Password() }),
-                    contentType: "application/json",
-                    success: function (response) {
-                        TeamKeep.signIn(response.AuthToken, response.Redirect);
-                    },
-                    error: function (response) {
-                        try {
-                            $("#login .alert span").html(JSON.parse(response.responseText)).parent().show();
-                        } catch (e) {
-                            $("#login .alert span").html("Login failed").parent().show();
-                        }
-                        $("#login button").prop("disabled", false);
-                        $("#login .icon-spin").hide();
-                    }
-                });
-            };
-            me.ResetPassword = function () {
-                
-                if (me.Username().length < 3) {
-                    $("#reset-modal .alert span").html("Please enter your username").parent().show();
-                    return;
-                }
-
-                $("#reset-modal .icon-spin").show();
-                $("#reset-modal button").prop("disabled", true);
-                $.ajax({
-                    type: "POST", url: "/users/password",
-                    data: {
-                        Username: me.Username()
-                    },
-                    success: function () {
-                        document.location = "/resetsent";
-                    },
-                    error: function (response) {
-                        $("#reset-modal .alert span").html(JSON.parse(response.responseText)).parent().show();
-                        $("#reset-modal .icon-spin").hide();
-                        $("#reset-modal button").prop("disabled", false);
-                    }
-                });
-            };
-        };
-
-        window.loginViewModel = new LoginViewModel();
-        ko.applyBindings(window.loginViewModel, document.getElementById("js-index"));
-
-        $("#input-username").focus();
+        $("input[placeholder='Username']").focus();
         $(document).tooltip({ items: "a[title]", track: true });
     });
 </script>

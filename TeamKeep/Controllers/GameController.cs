@@ -130,7 +130,7 @@ namespace TeamKeep.Controllers
             if (playerIds == null || playerIds.Count == 0)
             {
                 Response.StatusCode = 400;
-                return Json("You must specify at least one player to send confirmation to");
+                return Json("Specify at least one recipient for confirmation");
             }
 
             var serviceResponse = _gameService.SendConfirmationEmails(gameId, playerIds);

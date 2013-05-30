@@ -52,14 +52,13 @@
                 <th class="angled icon">    
                     <span>
                         <!-- ko ifnot: IsPast -->
-                        <span data-toggle="modal" data-target="#email-modal" data-bind="click: function () { $root.SelectedEvent($data); }">
+                        <span data-toggle="tab" href="#ab-request" data-bind="click: function () { teamViewModel.SelectedEvent($data); }" >
                             <span data-bind="text: DateTimeAbbrev"></span>
                             <button class="btn btn-link">
                                 <i class="icon-envelope" title="Email availability request"></i>
                             </button>
                         </span>
                         <!-- /ko -->
-
                         <!-- ko if: IsPast -->
                         <span class="past" data-bind="text: DateTimeAbbrev"></span>
                         <!-- /ko -->
@@ -99,58 +98,6 @@
         </tbody>
     </table>
 </div>
-<form id="email-modal" class="modal hide fade" data-bind="submit: SendConfirmations">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Send confirmation email</h3>
-    </div>
-    <div class="modal-body">
-        
-        <!-- ko with: SelectedEvent -->
-        <h4 data-bind="text: 'vs. ' + (OpponentName() || '[To Be Determined]')"></h4>
-        <ul class="unstyled event">
-            <li><label>When:</label><span data-bind="text: When"></span></li>
-            <li><label>Where:</label><span data-bind="text: Where"></span></li>
-        </ul>
-        <!-- /ko -->
-        
-        <h4>Send reminders to:</h4>
-        <!-- ko foreach: PlayerGroups -->
-        <!-- ko if: PlayersWithEmail().length > 0 -->
-        <ul class="unstyled">
-            <li class="player-group">
-                <label class="checkbox heading">
-                    <input type="checkbox" data-bind="click: function() { return $root.TogglePlayerGroupSelected($element); }"/> <h5 data-bind="text: Name"></h5>
-                </label>
-                <ul data-bind="foreach: PlayersWithEmail">
-
-                    <!-- ko if: AvailabilityEmailSent($root.SelectedEvent()) == null -->
-                    <label class="checkbox">
-                        <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerSelected($element, $data); }"/> 
-                        <span data-bind="text: FullName"></span>
-                        <small data-bind="text: Email"></small>
-                    </label>   
-                    <!-- /ko -->
-                    <!-- ko if: AvailabilityEmailSent($root.SelectedEvent()) != null -->
-                    <label class="disabled" title="Availability request previously sent">
-                        <i class="icon-envelope"></i>
-                        <span data-bind="text: FullName, attr: { 'data-original-title': 'Email sent on ' + AvailabilityEmailSent($root.SelectedEvent()) }"></span>
-                    </label>  
-                    <!-- /ko -->
-                </ul>
-            </li>
-        </ul>
-        <!-- /ko -->
-        <!-- /ko -->
-    </div>
-    <div class="modal-footer">
-        <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-success">
-            <i class="icon-spinner icon-spin" style="display: none"></i> Send emails
-        </button>
-    </div>
-</form>
-
 <script>
     var AvailabilityViewModel = function () {
         var me = this;
@@ -236,69 +183,6 @@
         };
         this.RotateAvailability = function (player, game) {
             player.NextAvailability(game);
-        };
-        
-        // Confirmation Emails
-        this.SelectedEvent = ko.observable();
-        this.SelectedPlayers = ko.observableArray([]);
-        this.TogglePlayerGroupSelected = function (domElement) {
-            var checked = $(domElement).is(":checked");
-            var childCheckboxes = $(domElement).parentsUntil(".player-group").parent().children("ul").find("input[type='checkbox']");
-            if (checked) {
-                childCheckboxes.filter(":not(:checked)").click();
-            } else {
-                childCheckboxes.filter(":checked").click();
-            }
-            return true;
-        };
-        this.TogglePlayerSelected = function (domElement, player) {
-            var selected = $(domElement).is(":checked");
-            if (selected) {
-                me.SelectedPlayers.push(player);
-            } else {
-                me.SelectedPlayers.remove(player);
-            }
-            return true;
-        };
-        this.SendConfirmations = function () {
-
-            $("#email-modal button").prop("disabled", true);
-            $("#email-modal .icon-spin").show();
-
-            $.ajax({
-                type: "POST",
-                url: "/games/" + me.SelectedEvent().Id() + "/confirmations", contentType: "application/json",
-                data: JSON.stringify({
-                    PlayerIds: _.pluck(ko.mapping.toJS(me.SelectedPlayers()), 'Id')
-                }),
-                success: function (response) {
-                    $("#alert-modal").fadeAlert("show", "Confirmation emails sent successfully", "alert-success");
-                    $("#email-modal").modal("hide");
-                    $("#email-modal button").prop("disabled", false);
-                    $("#email-modal .icon-spin").hide();
-
-                    _.each(response.UpdatedAvailabilities, function (ab) {
-                        var player = null;
-                        _.each(me.PlayerGroups(), function (group) {
-                            player = group.FindPlayer(ab.PlayerId);
-                            if (player != null) return false; // can stop
-                        });
-
-                        if (player != null) {
-                            var koAb = ko.mapping.fromJS(ab);
-                            player.Availability.remove(function (curr) { return curr.Id() == koAb.Id(); }); // if it exists, we'll replace it
-                            player.Availability.push(koAb);
-                        }
-                    });
-
-                    $("#email-modal input[type='checkbox']:checked").click();
-                },
-                error: function (response) {
-                    $("#alert-modal").fadeAlert("show", JSON.parse(response.responseText));
-                    $("#email-modal button").prop("disabled", false);
-                    $("#email-modal .icon-spin").hide();
-                }
-            });
         };
 
         // init

@@ -37,6 +37,10 @@ i {
     margin-top: 30px;
 }
 
+h3.heading {
+    border-bottom: solid #666 1px;
+}
+
 .showcase, .nonshowcase {
     overflow: hidden;
     padding-top: 20px;
@@ -90,7 +94,7 @@ i {
 }
 .horizontal label {
     float: left;
-    width: 50px;
+    width: 75px;
     font-weight: bold;
 }
 .horizontal span {
@@ -175,6 +179,7 @@ i {
 }
 
 .errorbar {
+    z-index: 250;
     position: fixed;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -189,16 +194,6 @@ i {
     background: none;
 }
 
-#email-modal .event {
-    margin-bottom: 20px;
-}
-#email-modal .event label {
-    display: inline-block;
-    width: 80px;
-}
-#email-modal label.disabled {
-    color: #ccc;
-}
 .player-group ul {
     overflow: hidden;
     margin: 0;
@@ -214,13 +209,17 @@ i {
 .player-group label > small {
     display: block;
 }
+.player-group .disabled {
+    color: #999;
+}
 
 #front-header .nav button {
     margin-left: 10px;
 }
 
-#compose .icon-spin, #register-modal .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
-#login .icon-spin, #schedule .icon-spin, #roster .icon-spin, #reset .icon-spin, #reset-modal .icon-spin {
+#compose .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
+#login .icon-spin, #schedule .icon-spin, #roster .icon-spin, #reset .icon-spin,
+#ab-request .icon-spin {
     display: none;
 }
 
@@ -277,6 +276,9 @@ i {
 
 #compose textarea {
     resize: vertical;
+}
+#compose .span7, #ab-request .span7 {
+    overflow: hidden;
 }
 
 .insert-form {
@@ -452,6 +454,10 @@ i {
 
 .table-container table input {
     padding: 5px;
+}
+body input:disabled, 
+body input[readonly='readonly'] {
+    cursor: default;
 }
 .table-container table td.location > input[readonly='readonly'] {
     cursor: pointer;
@@ -729,10 +735,6 @@ i {
 	border-width: 11px;
 	left: 50%;
 	margin-left: -11px;
-}
-
-#log-message h3 {
-    border-bottom: solid #ddd 1px;
 }
 
 #team-announcement textarea,

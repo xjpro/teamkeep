@@ -332,6 +332,7 @@ var TeamViewModel = function(data) {
         "Messages": ko.mapping.toViewModel(MessageViewModel)
     }, this);
 
+    this.SelectedEvent = ko.observable();
     this.SelectedMessage = ko.observable();
 
     this.Events = ko.computed(function () {
