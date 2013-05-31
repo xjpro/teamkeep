@@ -2,7 +2,8 @@
 
     var User = (window.viewData && window.viewData.User) ? window.viewData.User : {
         Id: 0,
-        Settings: {}
+        Settings: {},
+        Verified: true
     };
 
     User.uri = "/users/" + User.Id;

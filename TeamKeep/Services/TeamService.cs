@@ -157,8 +157,11 @@ namespace TeamKeep.Services
                 IQueryable<int> publicTeamIds = entities.TeamPrivacyDatas.Where(x => x.HomePage).Select(x => x.TeamId);
                 foreach (var teamId in publicTeamIds)
                 {
-                    publicTeamUrls.Add(string.Format("https://teamkeep.com{0}", 
-                        Team.FormatUrl(teamId, entities.TeamDatas.Single(x => x.Id == teamId).Name)));
+                    var team = entities.TeamDatas.SingleOrDefault(x => x.Id == teamId);
+                    if(team != null) 
+                    {
+                        publicTeamUrls.Add(string.Format("https://teamkeep.com{0}", Team.FormatUrl(team.Id, team.Name)));
+                    }
                 }
                 return publicTeamUrls;
             }

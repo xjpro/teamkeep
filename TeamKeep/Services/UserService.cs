@@ -43,7 +43,7 @@ namespace TeamKeep.Services
                     return new User(userData);
                 }
 
-                var response = AddUser(new UserData { Username = null, Email = login.Email, LoginId = login.UniqueId }, new PasswordHash(login.UniqueId), login.Email != null);
+                var response = AddUser(new UserData { Username = null, Email = login.Email, LoginId = login.UniqueId }, new PasswordHash(login.UniqueId));
                 if (!response.Error) return GetUser(login);
                 return null;
             }
@@ -178,7 +178,7 @@ namespace TeamKeep.Services
             }
         }
 
-        public ServiceResponse AddUser(UserData user, PasswordHash passwordHash, bool verified = false)
+        public ServiceResponse AddUser(UserData user, PasswordHash passwordHash)
         {
             using (var entities = Database.GetEntities())
             {
@@ -207,7 +207,7 @@ namespace TeamKeep.Services
                     Email = user.Email,
                     Password = passwordHash.ToArray()
                 };
-                if (!verified)
+                if (user.Email != null)
                 {
                     userData.Verify = AuthToken.GenerateKey(user.Email); // Now unverified
                 }
