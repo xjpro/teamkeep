@@ -125,7 +125,7 @@ namespace TeamKeep.Controllers
             if (user.Reset != reset.ResetToken)
             {
                 Response.StatusCode = 400;
-                return Json("Invalid reset token");
+                return Json("Reset token is invalid, expired, or previously used");
             }
 
             if (string.IsNullOrEmpty(reset.Password) || reset.Password.Length < 2)
