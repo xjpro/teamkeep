@@ -149,11 +149,18 @@ namespace TeamKeep.Services
             }
         }
 
-        public int GetNumberOfTeams()
+        public List<string> GetPublicTeamUrls()
         {
             using (var entities = Database.GetEntities())
             {
-                return entities.TeamDatas.Count();
+                var publicTeamUrls = new List<string>();
+                IQueryable<int> publicTeamIds = entities.TeamPrivacyDatas.Where(x => x.HomePage).Select(x => x.TeamId);
+                foreach (var teamId in publicTeamIds)
+                {
+                    publicTeamUrls.Add(string.Format("https://teamkeep.com{0}", 
+                        Team.FormatUrl(teamId, entities.TeamDatas.Single(x => x.Id == teamId).Name)));
+                }
+                return publicTeamUrls;
             }
         }
 

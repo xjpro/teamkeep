@@ -19,12 +19,6 @@ $(function () {
         }
         
         $("#alert-modal").fadeAlert();
-        $("#message-modal").bottomModal();
-        
-        // Notifications
-        if (window.userViewModel && window.userViewModel.Email() && !window.userViewModel.Verified()) {
-            $("#message-modal").bottomModal("show");
-        }
     }
 });
 

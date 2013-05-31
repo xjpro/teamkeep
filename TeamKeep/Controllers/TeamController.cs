@@ -63,7 +63,7 @@ namespace TeamKeep.Controllers
 
                 if (!team.Privacy.Roster)
                 {
-                    team.PlayerGroups = null;
+                    team.PlayerGroups = new List<PlayerGroup>();
                 }
             }
 

@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace TeamKeep.App_Start
 {
@@ -34,7 +33,9 @@ namespace TeamKeep.App_Start
                 "~/Scripts/app/shared/User.js",
                 "~/Scripts/app/login/LoginController.js",
                 "~/Scripts/app/login/RegisterController.js",
-                "~/Scripts/app/tutorial/TutorialController.js"));
+                "~/Scripts/app/tutorial/TutorialController.js",
+                "~/Scripts/app/team/AlertsController.js",
+                "~/Scripts/app/team/HeaderController.js"));
         }
     }
 }

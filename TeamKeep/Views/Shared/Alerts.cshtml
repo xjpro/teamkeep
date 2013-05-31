@@ -1,49 +1,5 @@
-﻿
-<div id="alert-modal" class="modal hide fade">
+﻿<div id="alert-modal" class="modal hide fade">
     <div class="alert alert-error">
         <span>Error</span>
     </div>
-</div>
-<div id="message-modal" class="errorbar hide">
-    <div>
-        <div class="container">
-            <span class="close"><i class="icon-remove"></i></span>
-
-            <h4 class="hidden-phone">Hey there!</h4>
-            <p>
-                Looks like you haven't verified your email yet:
-            </p>
-            <ul>
-                <li><a>Resend verification email</a></li>
-                <li><a>Okay, I've verified</a></li>
-            </ul> 
-        </div>
-    </div>
-    <script>
-        $("#message-modal .close").click(function () {
-            $("#message-modal").bottomModal("hide");
-        });
-        $("#message-modal li:eq(0) a").click(function () {
-            $.post("/users/verify/resend", function (response) {
-                if (response === false) {
-                    $("#alert-modal").fadeAlert("show", "Looks like you already verified your email, thanks!", "alert-success");
-                    $("#message-modal").bottomModal("hide");
-                } else {
-                    $("#message-modal li:eq(0)").html("Verification email resent, please check your spam folder");
-                }
-            });
-        });
-        $("#message-modal li:eq(1) a").click(function () {
-            $.get("/users/active", function (user) {
-                window.userViewModel.Verified(user.Verified);
-                if (user.Verified === true) {
-                    $("#alert-modal").fadeAlert("show", "Thanks! Your email was verified successfully", "alert-success");
-                    $("#message-modal").bottomModal("hide");
-                }
-                else {
-                    $("#alert-modal").fadeAlert("show", "Sorry, your email has not yet been verified", "alert-error");
-                }
-            });
-        });
-    </script>
 </div>

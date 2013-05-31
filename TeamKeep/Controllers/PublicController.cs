@@ -8,6 +8,7 @@ namespace TeamKeep.Controllers
     {
         [HttpGet]
         [RedirectHttps]
+        //[RedirectNonWww]
         public ActionResult Index()
         {
             var user = this.GetActiveUser(this.Request);
@@ -72,9 +73,9 @@ namespace TeamKeep.Controllers
         }
 
         [HttpGet]
-        public JsonResult Health()
+        public ActionResult Sitemap()
         {
-            return Json(_teamService.GetNumberOfTeams(), JsonRequestBehavior.AllowGet);
+            return View(_teamService.GetPublicTeamUrls());
         }
     }
 }

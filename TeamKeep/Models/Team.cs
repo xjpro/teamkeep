@@ -20,7 +20,11 @@ namespace TeamKeep.Models
             Postal = teamData.Postal;
         }
 
-        public string Url { get { return "/teams/" + Id + "/" + new Regex("[^A-Za-z0-9]").Replace(Name, ""); } }
+        public string Url { get { return FormatUrl(Id, Name); } }
+        public static string FormatUrl(int id, string name)
+        {
+            return "/teams/" + id + "/" + new Regex("[^A-Za-z0-9]").Replace(name, "");
+        }
 
         public bool CanEdit(int userId)
         {

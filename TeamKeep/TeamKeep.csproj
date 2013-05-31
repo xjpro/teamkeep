@@ -172,6 +172,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\ClientErrorHandler.cs" />
+    <Compile Include="Controllers\RedirectNonWwwAttribute.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\LeagueController.cs" />
@@ -241,6 +242,8 @@
     <Content Include="Scripts\app\login\LoginController.js" />
     <Content Include="Scripts\app\login\RegisterController.js" />
     <Content Include="Scripts\app\shared\spinner.js" />
+    <Content Include="Scripts\app\team\AlertsController.js" />
+    <Content Include="Scripts\app\team\HeaderController.js" />
     <Content Include="Scripts\app\tutorial\TutorialController.js" />
     <Content Include="Scripts\app\shared\User.js" />
     <Content Include="Scripts\app\teamkeep.js" />
@@ -376,6 +379,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Team\AvailabilityRequest.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Public\Sitemap.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

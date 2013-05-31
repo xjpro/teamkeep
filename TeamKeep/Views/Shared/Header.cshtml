@@ -148,6 +148,8 @@
         };
     };
 
-    window.headerViewModel = ko.mapping.fromJS(viewData, ko.mapping.toViewModel(HeaderViewModel));
-    ko.applyBindings(window.headerViewModel, document.getElementById("header"));
+    $(function() {
+        window.headerViewModel = ko.mapping.fromJS(viewData, ko.mapping.toViewModel(HeaderViewModel));
+        ko.applyBindings(window.headerViewModel, document.getElementById("header"));
+    });
 </script>

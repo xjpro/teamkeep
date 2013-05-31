@@ -130,10 +130,9 @@
     $(function() {
         window.teamHomeViewModel = new TeamHomeViewModel();
         ko.applyBindings(window.teamHomeViewModel, document.getElementById("team-info"));
+        
+        //$("#team-announcement textarea").autosize();
+        $(document).tooltip({ items: "*[title]", track: true });
+        $("#team-info").hide();
     });
-
-    $("#team-announcement textarea").autosize();
-    
-    $(document).tooltip({ items: "*[title]", track: true });
-    $("#team-info").hide();
 </script>

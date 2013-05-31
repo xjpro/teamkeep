@@ -21,5 +21,25 @@
         @Html.Partial("Footer")
         @Html.Partial("Alerts")
         
+        <div class="errorbar" ng-controller="AlertsController" ng-show="verificationVisible()">
+            
+            <div class="container">
+                
+                <span class="close" ng-click="closeVerification = true">
+                    <i class="icon-remove"></i>
+                </span>
+
+                <h4 class="hidden-phone">Hey there!</h4>
+                <p>
+                    Looks like you haven't verified your email yet:
+                </p>
+                <ul>
+                    <li ng-show="!resent"><a ng-click="resendVerification()">Resend verification email</a></li>
+                    <li><a ng-click="checkVerification()">Okay, I've verified</a></li>
+                </ul> 
+            </div>
+
+        </div>
+
     </body>
 </html>

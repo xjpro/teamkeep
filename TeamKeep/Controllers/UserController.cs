@@ -93,7 +93,7 @@ namespace TeamKeep.Controllers
             }
 
             var user = _userService.UpdateUserEmail(activeUser.Id, email);
-            _emailService.EmailVerification(user.Email, user.VerifyCode);
+            //_emailService.EmailVerification(user.Email, user.VerifyCode);
 
             return Json(user);
         }

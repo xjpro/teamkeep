@@ -27,9 +27,30 @@
            username:  username.trim()
         });
     };
+
+    User.saveEmail = function () {
+        return $http.put(User.uri + "/email", {
+            id: User.Id,
+            email: User.Email
+        }).success(function (responseUser) {
+            User.Email = responseUser.Email;
+            User.Verified = responseUser.Verified;
+        });
+    };
+
+    User.sendVerification = function() {
+        return $http.post("/users/verify/resend");
+    };
     
+    User.getVerification = function () {
+        return $http.get("/users/active")
+            .success(function(isVerified) {
+                User.Verified = isVerified;
+            });
+    };
+
     User.saveSettings = function () {
-        $http.put(User.uri + "/settings", {
+        return $http.put(User.uri + "/settings", {
             id: User.Id,
             settings: User.Settings
         }).success(function (settings) {
