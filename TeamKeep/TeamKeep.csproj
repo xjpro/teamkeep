@@ -43,38 +43,44 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth, Version=4.2.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DotNetOpenAuth.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp">
+    <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Quartz, Version=2.1.2.400, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\Quartz.dll</HintPath>
     </Reference>
-    <Reference Include="System">
+    <Reference Include="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data">
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
+    <Reference Include="System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.Entity">
+    <Reference Include="System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
@@ -84,37 +90,39 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Runtime.Serialization">
+    <Reference Include="System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Security">
+    <Reference Include="System.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.DynamicData">
+    <Reference Include="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Entity">
+    <Reference Include="System.Web.Abstractions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.ApplicationServices">
+    <Reference Include="System.Web.ApplicationServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations">
+    <Reference Include="System.Web.DynamicData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web">
+    <Reference Include="System.Web.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Abstractions">
+    <Reference Include="System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Extensions">
+    <Reference Include="System.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>bin\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Routing">
+    <Reference Include="System.Web.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -123,22 +131,9 @@
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Configuration">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.Services">
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -164,11 +159,18 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq">
+    <Reference Include="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>Libraries\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\ClientErrorHandler.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\GameController.cs" />
@@ -227,31 +229,32 @@
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap-responsive.min.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap.css" />
     <Content Include="Emails\availability.htm" />
     <Content Include="Emails\welcome.htm" />
     <Content Include="Libraries\Common.Logging.dll" />
     <Content Include="Libraries\DotNetOpenAuth.dll" />
     <Content Include="Libraries\log4net.dll" />
     <Content Include="Libraries\Quartz.dll" />
+    <Content Include="Libraries\WebGrease.dll" />
     <Content Include="Scripts\app\login\LoginController.js" />
     <Content Include="Scripts\app\login\RegisterController.js" />
     <Content Include="Scripts\app\shared\spinner.js" />
     <Content Include="Scripts\app\tutorial\TutorialController.js" />
     <Content Include="Scripts\app\shared\User.js" />
     <Content Include="Scripts\app\teamkeep.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Scripts\jquery.autosize-min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Scripts\jquery.autosize.js" />
     <Content Include="Scripts\jquery.bottom-modal.js" />
     <Content Include="Scripts\teamkeep.js" />
     <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
     <Content Include="Scripts\knockout.mapping.js" />
-    <Content Include="Scripts\lodash.min.js" />
-    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\lodash.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Content\site.css" />
-    <Content Include="Scripts\ui-bootstrap-0.3.0.min.js" />
+    <Content Include="Scripts\ui-bootstrap-0.3.0.js" />
     <Content Include="Scripts\viewmodel.js" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />

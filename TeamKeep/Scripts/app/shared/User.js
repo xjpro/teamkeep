@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").factory("User", function($http) {
+﻿angular.module("teamkeep").factory("User", ["$http", function($http) {
 
     var User = (window.viewData && window.viewData.User) ? window.viewData.User : {
         Id: 0,
@@ -38,4 +38,4 @@
     };
 
     return User;
-});
+}]);

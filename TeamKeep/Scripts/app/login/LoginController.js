@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("LoginController", function($scope, User) {
+﻿angular.module("teamkeep").controller("LoginController", ["$scope", "User", function ($scope, User) {
 
     $scope.loginEvaluating = false;
     $scope.loginError = "";
@@ -47,4 +47,4 @@
                 $scope.resetEvaluating = false;
             });
     };
-});
+}]);

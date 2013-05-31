@@ -5,6 +5,7 @@ using System.Web.Routing;
 using TeamKeep.App_Start;
 using log4net;
 using System.Web;
+using System.Web.Optimization;
 
 namespace TeamKeep
 {
@@ -16,6 +17,7 @@ namespace TeamKeep
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }

@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("TutorialController", function ($scope, User) {
+﻿angular.module("teamkeep").controller("TutorialController", ["$scope", "User", function ($scope, User) {
     
     $scope.steps = [
         {
@@ -206,4 +206,4 @@
     if (User && User.Settings.ShowTutorial) {
         setTimeout(function () { $scope.$apply($scope.next); }, 800);
     }
-});
+}]);

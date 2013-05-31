@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("RegisterController", function ($scope, User) {
+﻿angular.module("teamkeep").controller("RegisterController", ["$scope", "User", function ($scope, User) {
 
     $scope.evaluating = false;
     $scope.error = "";
@@ -34,4 +34,4 @@
                 $scope.evaluating = false;
             });
     };
-});
+}]);
