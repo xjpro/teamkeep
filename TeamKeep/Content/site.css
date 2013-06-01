@@ -203,7 +203,7 @@ h3.heading {
     min-height: 160px;
 }
 #availability {
-    min-height: 225px;
+    min-height: 245px;
 }
 
 #compose .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
@@ -756,8 +756,7 @@ body input[readonly='readonly'] {
     z-index: 1000;
     display: none;
     position:absolute;
-    padding: 0;
-    padding-left: 15px;
+    padding: 10px 15px;
     border: solid #aaa 1px;
     border-radius: 4px;
     background: #fff;
@@ -1014,5 +1013,17 @@ body input[readonly='readonly'] {
     }
     .player-group ul > label {
         width: 90%;
+    }
+}
+
+@media (max-width: 979px) {
+    .table-container table th.position, .table-container table td.position input {
+        width: 80px;
+    }
+    .table-container table th.phone, .table-container table td.phone input {
+        width: 120px;
+    }
+    .table-container table th.email, .table-container table td.email input {
+        width: 200px;
     }
 }

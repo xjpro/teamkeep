@@ -65,6 +65,12 @@ namespace TeamKeep.Controllers
         }
 
         [HttpGet]
+        public ActionResult FeaturesHomepage()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult NotFound()
         {
             Response.StatusCode = (int) HttpStatusCode.NotFound;
