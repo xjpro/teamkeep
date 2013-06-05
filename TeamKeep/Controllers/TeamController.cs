@@ -142,6 +142,29 @@ namespace TeamKeep.Controllers
         }
 
         [HttpPut]
+        public JsonResult Update(int id, TeamUpdate update)
+        {
+            var activeUser = this.GetActiveUser(this.Request);
+            Team team = _teamService.GetTeam(id);
+            if (!team.CanEdit(activeUser.Id))
+            {
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team");
+            }
+
+            // Update events in delta update
+            foreach (var teamEvent in update.Events)
+            {
+                if (teamEvent.HomeTeamId != team.Id)
+                {
+                    throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot submit event updates for non-matching team id");
+                }
+                _gameService.UpdateGate(teamEvent);
+            }
+
+            return Json(team);
+        }
+
+        [HttpPut]
         public JsonResult UpdateAnnouncement(int id, string announcement)
         {
             var activeUser = this.GetActiveUser(this.Request);

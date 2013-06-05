@@ -27,15 +27,8 @@ namespace TeamKeep.App_Start
                 "~/Scripts/lodash.js",
                 "~/Scripts/moment.js",
                 "~/Scripts/viewmodel.js",
-                "~/Scripts/teamkeep.js",
-                "~/Scripts/app/teamkeep.js",
-                "~/Scripts/app/shared/spinner.js",
-                "~/Scripts/app/shared/User.js",
-                "~/Scripts/app/login/LoginController.js",
-                "~/Scripts/app/login/RegisterController.js",
-                "~/Scripts/app/tutorial/TutorialController.js",
-                "~/Scripts/app/team/AlertsController.js",
-                "~/Scripts/app/team/HeaderController.js"));
+                "~/Scripts/teamkeep.js")
+                .IncludeDirectory("~/Scripts/app/", "*.js", true));
         }
     }
 }

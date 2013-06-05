@@ -196,6 +196,7 @@
     </Compile>
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\ServiceResponses\EmailConfirmationsServiceResponse.cs" />
+    <Compile Include="Models\TeamUpdate.cs" />
     <Compile Include="Models\ViewModels\AvailabilityLandingViewModel.cs" />
     <Compile Include="Models\ViewModels\TeamSettingsViewModel.cs" />
     <Compile Include="Services\AutomatedEmailsJob.cs" />
@@ -241,8 +242,12 @@
     <Content Include="Libraries\WebGrease.dll" />
     <Content Include="Scripts\app\login\LoginController.js" />
     <Content Include="Scripts\app\login\RegisterController.js" />
+    <Content Include="Scripts\app\shared\radioButton.js" />
+    <Content Include="Scripts\app\shared\Team.js" />
     <Content Include="Scripts\app\shared\spinner.js" />
     <Content Include="Scripts\app\team\AlertsController.js" />
+    <Content Include="Scripts\app\team\ScheduleController.js" />
+    <Content Include="Scripts\app\team\SettingsController.js" />
     <Content Include="Scripts\app\team\HeaderController.js" />
     <Content Include="Scripts\app\tutorial\TutorialController.js" />
     <Content Include="Scripts\app\shared\User.js" />
@@ -385,6 +390,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\FeaturesHomepage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Team\Schedule.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

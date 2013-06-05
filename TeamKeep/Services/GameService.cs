@@ -92,39 +92,49 @@ namespace TeamKeep.Services
             }
         }
 
-        public Game UpdateGate(Game game)
+        public Game UpdateGate(Game teamEvent)
         {
             using (var entities = Database.GetEntities())
             {
-                var gameData = entities.GameDatas.Single(x => x.Id == game.Id);
-                gameData.SeasonId = game.SeasonId;
-                gameData.ScoredPoints = game.ScoredPoints;
-                gameData.AllowedPoints = game.AllowedPoints;
-                gameData.TiePoints = game.TiePoints;
-                gameData.OpponentName = game.OpponentName;
+                var gameData = entities.GameDatas.Single(x => x.Id == teamEvent.Id);
 
-                if (string.IsNullOrWhiteSpace(game.DateTime))
+                if (gameData.SeasonId != teamEvent.SeasonId)
+                {
+                    var newSeasonId = entities.SeasonDatas.Single(x => x.Id == teamEvent.SeasonId).TeamId;
+                    if (newSeasonId != teamEvent.HomeTeamId)
+                    {
+                        throw new Exception("Cannot move events between teams");
+                    }
+                }
+
+                gameData.SeasonId = teamEvent.SeasonId;
+                gameData.ScoredPoints = teamEvent.ScoredPoints;
+                gameData.AllowedPoints = teamEvent.AllowedPoints;
+                gameData.TiePoints = teamEvent.TiePoints;
+                gameData.OpponentName = teamEvent.OpponentName;
+
+                if (string.IsNullOrWhiteSpace(teamEvent.DateTime))
                 {
                     gameData.Date = null;
                 }
                 else
                 {
                     DateTime parsedDateTime;
-                    if (DateTime.TryParse(game.DateTime, out parsedDateTime))
+                    if (DateTime.TryParse(teamEvent.DateTime, out parsedDateTime))
                     {
                         gameData.Date = parsedDateTime;
                     }
                 }
 
-                if (game.Location != null)
+                if (teamEvent.Location != null)
                 {
-                    var gameLocationData = entities.GameLocationDatas.Single(x => x.GameId == game.Id);
-                    gameLocationData.Description = game.Location.Description;
-                    gameLocationData.Link = game.Location.Link;
-                    gameLocationData.Street = game.Location.Street;
-                    gameLocationData.City = game.Location.City;
-                    gameLocationData.Postal = game.Location.Postal;
-                    gameLocationData.InternalLocation = game.Location.InternalLocation;
+                    var gameLocationData = entities.GameLocationDatas.Single(x => x.GameId == teamEvent.Id);
+                    gameLocationData.Description = teamEvent.Location.Description;
+                    gameLocationData.Link = teamEvent.Location.Link;
+                    gameLocationData.Street = teamEvent.Location.Street;
+                    gameLocationData.City = teamEvent.Location.City;
+                    gameLocationData.Postal = teamEvent.Location.Postal;
+                    gameLocationData.InternalLocation = teamEvent.Location.InternalLocation;
                 }
 
                 entities.SaveChanges();

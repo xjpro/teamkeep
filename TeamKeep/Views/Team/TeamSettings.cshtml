@@ -1,5 +1,4 @@
-﻿
-<div id="team-settings" class="container">
+﻿<div id="team-settings" class="container" ng-controller="SettingsController">
     
     <div class="row">
         <div class="span12">
@@ -18,17 +17,11 @@
             <ul>
                 <li>
                     <label title="Set to private to hide your team site from the public">Home page</label>
-                    <span class="info btn-group" data-toggle="buttons-radio">
-                        <button class="btn btn-small" data-bind="css: { active: Privacy.HomePage() == true }, click: function() { Privacy.HomePage(true); }">Public</button>
-                        <button class="btn btn-small" data-bind="css: { active: Privacy.HomePage() == false }, click: function() { Privacy.HomePage(false); }">Private</button>
-                    </span>          
+                    <radio-button model="privacy.HomePage"/>
                 </li>
                 <li>
                     <label title="Set to private to hide your roster from the public">Roster tab</label>
-                    <span class="info btn-group" data-toggle="buttons-radio">
-                        <button class="btn btn-small" data-bind="css: { active: Privacy.Roster() == true }, click: function() { Privacy.Roster(true); }">Public</button>
-                        <button class="btn btn-small" data-bind="css: { active: Privacy.Roster() == false }, click: function() { Privacy.Roster(false); }">Private</button>
-                    </span>          
+                    <radio-button model="privacy.Roster"/>
                 </li>
             </ul>
         </div>    
