@@ -1,15 +1,13 @@
-﻿@model TeamKeep.Models.ViewModels.TeamViewModel
-
-<div class="table-container stacks" ng-controller="ScheduleController">
+﻿<div class="table-container stacks" ng-controller="ScheduleController">
     <div class="table-controls">
         <div class="column-select pull-left">
             <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                     Columns <span class="caret"></span>
                 </a>
-                <ul class="dropdown-menu" data-bind="foreach: Columns">
+                <ul class="dropdown-menu">
                     <li ng-repeat="column in columns" ng-show="column.toggleable">
-                        <a ng-class="{active: column.visible}" ng-click="column.visible = !column.visible">
+                        <a ng-class="{active: column.visible}" stop-event="click" ng-click="column.visible = !column.visible">
                             {{column.toggleName || column.name}}
                         </a>
                     </li>
@@ -17,26 +15,27 @@
             </div>
         </div>
         <div class="season-select pull-right" ng-if="editable">
-            <i class="icon-refresh icon-spin" style="display: none"></i> 
+            <i class="icon-refresh icon-spin" ng-show="updating"></i> 
             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                <i class="icon-plus-sign-alt"></i> Game
+                <i class="icon-plus-sign-alt"></i> Event
             </button>
             <ul class="dropdown-menu">
                 <li><label class="heading">Add to &mdash;</label></li>
                 <li class="divider"></li>
                 <li ng-repeat="season in seasons">
-                    <a tabindex="-1" data-bind="click: function() { $root.AddGame(Id()); }">{{season.Name}}</a>
+                    <a tabindex="-1" ng-click="addEvent(season)">{{season.Name}}</a>
                 </li>
-                <li><a tabindex="-1" data-bind="click: function() { AddGame(); }">New season</a></li>
+                <li><a tabindex="-1" ng-click="addEvent()">New season</a></li>
             </ul>
         </div>
         <div style="clear: both;"></div>
     </div>
-    <table>
+    <table last-tab-event="addEvent(-1)">
         <thead>
             <tr>
-                <th ng-class="column.cssClass" ng-show="column.visible" ng-repeat="column in columns">
-                    <a title="{{column.toolTip}}" sorttype="{{column.sortType}}">{{column.name}}</a>
+                <th class="{{column.cssClass}}" ng-repeat="column in columns" ng-show="column.visible"
+                    ng-class="{'sort-up': sortType == column.sortType && reverse == false, 'sort-down': sortType == column.sortType && reverse == true}">
+                    <a title="{{column.toolTip}}" ng-click="sortBy('{{column.sortType}}')">{{column.name}}</a>
                 </th>
             </tr>
         </thead>
@@ -47,14 +46,14 @@
                 </td>
             </tr>
         </tbody>
-        <tbody ng-repeat="season in seasons">
+        <tbody ng-repeat="season in seasons | orderBy:'Order'">
             <tr>
                 <td class="fullheading" colspan="8">
-                    <input class="mod" type="text" data-bind="value: Name, editable: $parent.Editable, event: { focus: Selected, change: Update } "/>
+                    <input class="mod" type="text" ng-model="season.Name" data-bind="editable: $parent.Editable, event: { focus: Selected, change: Update } "/>
                     <div class="options pull-right" ng-if="editable">
-                        <i class="icon-circle-arrow-up" title="Move season up" ng-show="season.Order != 0" data-bind="click: function() { IncrementOrder(-1); }"></i>
-                        <i class="icon-circle-arrow-down" title="Move season down" ng-show="season.Order != seasons.length-1" data-bind="click: function() { IncrementOrder(1); }"></i>
-                        <i class="icon-trash" title="Delete season" data-toggle="modal" data-target="#season-delete-modal" data-bind="click: Selected"></i>
+                        <i class="icon-circle-arrow-up" title="Move season up" ng-show="season.Order != 0" ng-click="changeSeasonOrder(season, season.Order - 1)"></i>
+                        <i class="icon-circle-arrow-down" title="Move season down" ng-show="season.Order != seasons.length-1" ng-click="changeSeasonOrder(season, season.Order + 1)"></i>
+                        <i class="icon-trash" title="Delete season" data-toggle="modal" data-target="#season-delete-modal" ng-click="selectSeason(season)"></i>
                     </div>
                 </td>
             </tr>
@@ -63,7 +62,7 @@
                 <td class="fullinfo" colspan="7">There are no games in this season</td>
             </tr>
 
-            <tr ng-repeat="game in season.Games">
+            <tr ng-repeat="game in season.Games | orderBy:predicate:reverse">
                 <td class="button" ng-show="columns[0].visible">
                     <a id="dropLabel" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabel">
@@ -71,21 +70,21 @@
                             <a tabindex="-1">Move to</a>
                             <ul class="dropdown-menu">
                                 <li ng-repeat="moveSeason in seasons" ng-hide="moveSeason == season">
-                                    <a tabindex="-1" data-bind="click: function() { $parent.MoveGame($data, $element); }">{{moveSeason.Name}}</a>
+                                    <a tabindex="-1" ng-click="move(game, moveSeason)">{{moveSeason.Name}}</a>
                                 </li>
-                                <li class="divider" ng-if="season.length > 1"></li>
+                                <li class="divider" ng-if="seasons.length > 1"></li>
                                 <li>
-                                    <a tabindex="-1" data-bind="click: function() {  MoveGameToNewSeason($element); }">New season</a>
+                                    <a tabindex="-1" ng-click="move(game)">New season</a>
                                 </li>
                             </ul>
                         </li>
                         <!--li><a tabindex="-1" data-bind="">Mark as cancelled</a></!--li-->
-                        <li><a tabindex="-1" data-bind="click: RemoveGame">Remove</a></li>
+                        <li><a tabindex="-1" ng-click="removeEvent(game)">Remove</a></li>
                     </ul>
                 </td>
                 <td class="date" ng-switch on="isMobile" ng-show="columns[1].visible">
-                    <input class="mod" type="datetime-local" ng-switch-when="true" ng-model="game.DateTime" data-bind="value: DateTime, editable: $parents[1].Editable, event: { change: Update }"/>
-                    <input class="mod" type="text" ng-switch-default ng-model="game.DateTime" data-bind="value: DateTime, editable: $parents[1].Editable, event: { focus: EnableDateInput }"/>
+                    <input class="mod" type="datetime-local" ng-switch-when="true" ng-model="game.DateTime" />
+                    <input class="mod" type="text" ng-switch-default ng-model="game.DateTime" datetime-picker />
                 </td>
                 <td class="hometeam-points digit" ng-show="columns[2].visible">
                     <input class="mod" type="text" ng-model="game.ScoredPoints" />
@@ -100,11 +99,11 @@
                     <input class="mod" type="text" ng-model="game.OpponentName" />
                 </td>
                 <td class="location" ng-show="columns[6].visible">
-                    <input class="mod" type="text" locid="{{game.Location.Id}}" data-bind="value: LocationDisplay, enable: $parents[1].Editable() || LocationEditorEligible(), attr: { locid: Location.Id }" readonly="readonly" />
+                    <input class="mod" type="text" locid="{{game.Location.Id}}" value="{{locationDisplay(game.Location)}}" readonly="readonly" />
                     <div class="editor">
                         <div ng-if="editable || game.Location.Description">
                             <label>Name</label>
-                            <input type="text" class="js-desc" data-bind="value: Location.Description, editable: $parents[1].Editable, event: { change: Update }"/>
+                            <input type="text" class="js-desc" ng-model="game.Location.Description" />
                         </div>
                         <div ng-if="editable || game.Location.Street">
                             <label>Street</label>
@@ -129,23 +128,21 @@
             </tr>            
         </tbody>
     </table>
+    <div id="season-delete-modal" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Are you sure?</h3>
+        </div>
+        <div class="modal-body">
+            <p>Deleting this season will also remove all the games it contains.</p>
+            <p>This cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-primary" data-dismiss="modal" ng-click="removeSeason(selectedSeason)">Yes, please delete</button>
+        </div>
+    </div>
 </div>
-
-<div id="season-delete-modal" class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Are you sure?</h3>
-    </div>
-    <div class="modal-body">
-        <p>Deleting this season will also remove all the games it contains.</p>
-        <p>This cannot be undone.</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.RemoveSelectedSeason">Yes, please delete</button>
-    </div>
-</div>
-
 <script>
     $(function() {
         // Location editor
@@ -194,15 +191,6 @@
                 editor.fadeOut("fast");
                 $(window).unbind(".editor");
             });
-        });
-
-        // Tabbing off the end of the table creates a new entry 
-        $("#schedule tbody").on("keydown", "tr:last > td:last input", function(evt) {
-            evt.stopImmediatePropagation();
-            if (evt.keyCode === 9 && !evt.shiftKey) {
-                evt.preventDefault();
-                teamScheduleViewModel.AddGame(-1);
-            }
         });
     });
 </script>

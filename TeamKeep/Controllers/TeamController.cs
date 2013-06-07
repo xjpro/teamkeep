@@ -151,14 +151,58 @@ namespace TeamKeep.Controllers
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team");
             }
 
-            // Update events in delta update
-            foreach (var teamEvent in update.Events)
+            // Update seasons in delta update
+            if (update.Seasons != null)
             {
-                if (teamEvent.HomeTeamId != team.Id)
+                foreach (var season in update.Seasons)
                 {
-                    throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot submit event updates for non-matching team id");
+                    if (season.TeamId != team.Id)
+                    {
+                        throw new HttpException((int) HttpStatusCode.BadRequest,
+                                                "Cannot submit updates for non-matching team id");
+                    }
+                    _gameService.UpdateSeason(season);
                 }
-                _gameService.UpdateGate(teamEvent);
+            }
+
+            // Update events in delta update
+            if (update.Events != null)
+            {
+                foreach (var teamEvent in update.Events)
+                {
+                    if (teamEvent.HomeTeamId != team.Id)
+                    {
+                        throw new HttpException((int) HttpStatusCode.BadRequest,
+                                                "Cannot submit updates for non-matching team id");
+                    }
+                    _gameService.UpdateGate(teamEvent);
+                }
+            }
+
+            // Update player groups in delta update
+            if (update.PlayerGroups != null)
+            {
+                foreach (var playerGroup in update.PlayerGroups)
+                {
+                    if (playerGroup.TeamId != team.Id)
+                    {
+                        throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot submit updates for non-matching team id");
+                    }
+                    _playerService.UpdatePlayerGroup(playerGroup);
+                }
+            }
+
+            // Update players in delta update
+            if (update.Players != null)
+            {
+                foreach (var player in update.Players)
+                {
+                    if (_playerService.GetPlayerGroup(player.GroupId).TeamId != team.Id)
+                    {
+                        throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot submit updates for non-matching team id");
+                    }
+                    _playerService.UpdatePlayer(player);
+                }
             }
 
             return Json(team);

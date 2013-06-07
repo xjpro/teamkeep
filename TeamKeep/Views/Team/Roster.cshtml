@@ -1,0 +1,119 @@
+﻿<div class="table-container stacks" ng-controller="RosterController">
+    <div class="table-controls">
+        <div class="column-select pull-left">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Columns <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="column in columns" ng-show="column.toggleable">
+                        <a ng-class="{active: column.visible}" stop-event="click" ng-click="column.visible = !column.visible">
+                            {{column.toggleName || column.name}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="group-select pull-right" ng-show="editable">
+            <i class="icon-refresh icon-spin" ng-show="updating"></i>
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-plus-sign-alt"></i> Member
+            </button>
+            <ul class="dropdown-menu">
+                <li><label class="heading">Add to &mdash;</label></li>
+                <li class="divider"></li>
+                <li ng-repeat="group in groups">
+                    <a tabindex="-1" ng-click="addPlayer(group)">{{group.Name}}</a>
+                </li>
+                <li><a tabindex="-1" ng-click="addPlayer()">New grouping</a></li>
+            </ul>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th class="{{column.cssClass}}" ng-repeat="column in columns" ng-show="column.visible"
+                    ng-class="{'sort-up': sortType == column.sortType && reverse == false, 'sort-down': sortType == column.sortType && reverse == true}">
+                    <a title="{{column.toolTip}}" ng-click="sortBy('{{column.sortType}}')">{{column.name}}</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-hide="groups.length > 0">
+            <tr>
+                <td class="fullinfo" colspan="6">
+                    No members have been added to this roster
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-repeat="group in groups | orderBy:'Order'">
+            <tr>
+                <td class="fullheading" colspan="6">
+                    <input class="mod" type="text" ng-model="group.Name" />
+                    <div class="options pull-right" ng-show="editable">
+                        <i class="icon-circle-arrow-up" title="Move group up" ng-show="group.Order != 0" ng-click="changeGroupOrder(group, group.Order - 1)"></i>
+                        <i class="icon-circle-arrow-down" title="Move group down" ng-show="group.Order != groups.length-1" ng-click="changeGroupOrder(group, group.Order + 1)"></i>
+                        <i class="icon-trash" title="Delete group" data-toggle="modal" data-target="#group-delete-modal" ng-click="selectGroup(group)"></i>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr ng-show="group.Players.length == 0">
+                <td class="fullinfo" colspan="6">There are no members in this grouping</td>
+            </tr>
+
+            <tr ng-repeat="player in group.Players | orderBy:predicate:reverse">
+                <td class="button" ng-show="columns[0].visible">
+                    <a id="dropLabelRoster" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabelRoster">
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1">Move to</a>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="moveGroup in groups" ng-hide="moveGroup == group">
+                                    <a tabindex="-1" ng-click="move(player, moveGroup)">{{moveGroup.Name}}</a>
+                                </li>
+                                <li class="divider" ng-if="groups.length > 1"></li>
+                                <li>
+                                    <a tabindex="-1" ng-click="move(player)">New grouping</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a tabindex="-1" ng-click="removePlayer(player)">Remove</a></li>
+                    </ul>
+                </td>
+                <td  class="lastname" ng-show="columns[1].visible">
+                    <input type="text" class="mod" ng-model="player.LastName" />
+                </td>
+                <td class="max">
+                    <input type="text" class="mod" ng-model="player.FirstName" />
+                </td>
+                <td  class="position" ng-show="columns[3].visible">
+                    <input type="text" class="mod" ng-model="player.Position" />
+                </td>
+                <td class="phone" ng-show="columns[4].visible">
+                    <input type="tel" class="mod" ng-model="player.Phone" />
+                </td>
+                <td class="email" ng-show="columns[5].visible">
+                    <input type="email" class="mod" ng-model="player.Email" />
+                </td>
+            </tr>
+            <!-- /ko -->
+            <!-- /ko -->
+        </tbody>
+    </table>
+    <div id="group-delete-modal" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Are you sure?</h3>
+        </div>
+        <div class="modal-body">
+            <p>Deleting this group will also remove all the players it contains.</p>
+            <p>This cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-primary" data-dismiss="modal" ng-click="removeGroup(selectedGroup)">Yes, please delete</button>
+        </div>
+    </div>
+</div>

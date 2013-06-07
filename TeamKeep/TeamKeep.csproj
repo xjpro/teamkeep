@@ -246,6 +246,7 @@
     <Content Include="Scripts\app\shared\Team.js" />
     <Content Include="Scripts\app\shared\spinner.js" />
     <Content Include="Scripts\app\team\AlertsController.js" />
+    <Content Include="Scripts\app\team\RosterController.js" />
     <Content Include="Scripts\app\team\ScheduleController.js" />
     <Content Include="Scripts\app\team\SettingsController.js" />
     <Content Include="Scripts\app\team\HeaderController.js" />
@@ -393,6 +394,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Team\Schedule.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Team\Roster.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

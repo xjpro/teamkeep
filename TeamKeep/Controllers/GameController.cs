@@ -115,7 +115,7 @@ namespace TeamKeep.Controllers
 
             _gameService.RemoveSeason(season.Id);
 
-            return Json(null);
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
