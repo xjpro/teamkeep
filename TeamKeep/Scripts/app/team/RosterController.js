@@ -68,7 +68,7 @@
     };
     $scope.reverse = false;
     $scope.predicate = function (item) {
-        return item[$scope.sortType] || "";
+        return item[$scope.sortType] || "zzz";
     };
 
     // Column settings

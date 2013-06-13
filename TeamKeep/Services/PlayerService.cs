@@ -221,7 +221,13 @@ namespace TeamKeep.Services
                 var abData = entities.AvailabilityDatas.SingleOrDefault(x => x.PlayerId == playerId && x.EventId == availability.EventId);
                 if (abData == null)
                 {
-                    entities.AvailabilityDatas.AddObject(availability);
+                    entities.AvailabilityDatas.AddObject(new AvailabilityData
+                    {
+                        PlayerId = availability.PlayerId,
+                        EventId = availability.EventId,
+                        AdminStatus = availability.AdminStatus,
+                        RepliedStatus = availability.RepliedStatus
+                    });
                     entities.SaveChanges();
                     return availability;
                 }

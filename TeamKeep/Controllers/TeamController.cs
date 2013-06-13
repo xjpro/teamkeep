@@ -158,8 +158,7 @@ namespace TeamKeep.Controllers
                 {
                     if (season.TeamId != team.Id)
                     {
-                        throw new HttpException((int) HttpStatusCode.BadRequest,
-                                                "Cannot submit updates for non-matching team id");
+                        throw new HttpException((int) HttpStatusCode.BadRequest, "Cannot submit updates for non-matching team id");
                     }
                     _gameService.UpdateSeason(season);
                 }
@@ -172,8 +171,7 @@ namespace TeamKeep.Controllers
                 {
                     if (teamEvent.HomeTeamId != team.Id)
                     {
-                        throw new HttpException((int) HttpStatusCode.BadRequest,
-                                                "Cannot submit updates for non-matching team id");
+                        throw new HttpException((int) HttpStatusCode.BadRequest, "Cannot submit updates for non-matching team id");
                     }
                     _gameService.UpdateGate(teamEvent);
                 }
@@ -202,6 +200,12 @@ namespace TeamKeep.Controllers
                         throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot submit updates for non-matching team id");
                     }
                     _playerService.UpdatePlayer(player);
+
+                    // And their availabilities
+                    foreach(var ab in player.Availability)
+                    {
+                        _playerService.UpdatePlayerAvailability(player.Id, ab);
+                    }
                 }
             }
 

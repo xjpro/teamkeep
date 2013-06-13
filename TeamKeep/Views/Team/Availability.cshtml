@@ -1,4 +1,4 @@
-﻿<div class="table-container">
+﻿<div class="table-container" ng-controller="AvailabilityController">
     <div class="table-controls">
         <div class="pull-left">
             <div class="btn-group">
@@ -29,171 +29,60 @@
         </div>
         <div style="clear: both;"></div>
         
-        <button id="availability-prev" class="btn btn-link" data-bind="click: EventsPrev">
-            <i class="icon-chevron-left" ></i>
+        <button id="availability-prev" class="btn btn-link" ng-disabled="eventsIndex <= 0" ng-click="eventsIndex = eventsIndex - eventsShown">
+            <i class="icon-chevron-left" ng-show="showPrevious()"></i>
         </button>
-        <button id="availability-next" class="btn btn-link" data-bind="click: EventsNext">
-            <i class="icon-chevron-right" ></i>
+        <button id="availability-next" class="btn btn-link" ng-disabled="allEvents().length - eventsIndex <= eventsShown" ng-click="eventsIndex = eventsIndex + eventsShown">
+            <i class="icon-chevron-right" ng-show="showNext()"></i>
         </button>
     </div>
     <table>
         <thead>
             <tr>
                 <th class="max">&nbsp;</th>
-                <!-- ko if: Settings.PositionColumn() -->
-                <th class="position">&nbsp;</th>
-                <!-- /ko -->
-                <!-- ko if: Events().length == 0 -->
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <!-- /ko -->
+                <th class="position" ng-show="showPosition">&nbsp;</th>
 
-                <!-- ko foreach: Events -->
-                <th class="angled icon">    
-                    <span>
-                        <!-- ko ifnot: IsPast -->
-                        <span data-toggle="tab" href="#ab-request" data-bind="click: function () { teamViewModel.SelectedEvent($data); }" >
-                            <span data-bind="text: DateTimeAbbrev"></span>
+                <th ng-if="events().length == 0">&nbsp;</th>
+                <th ng-if="events().length == 0">&nbsp;</th>
+
+                <th class="angled icon" ng-repeat="event in events() | orderBy:eventPredicate">    
+                    <span ng-switch on="isPast(event)">
+                        <span data-toggle="tab" href="#ab-request" ng-switch-when="false" ng-click="selectEvent(event)">
+                            <span>{{event.DateTime | dateTimeAbbrev}}</span>
                             <button class="btn btn-link">
                                 <i class="icon-envelope" title="Email availability request"></i>
                             </button>
                         </span>
-                        <!-- /ko -->
-                        <!-- ko if: IsPast -->
-                        <span class="past" data-bind="text: DateTimeAbbrev"></span>
-                        <!-- /ko -->
+                        <span class="past" ng-switch-when="true">{{event.DateTime | dateTimeAbbrev}}</span>
                     </span>
                 </th>
-                <!-- /ko -->
             </tr>
         </thead>
-        <tbody>
-            <!-- ko foreach: PlayerGroups -->
-            <!-- ko if: Players().length > 0 -->
+        <tbody ng-repeat="group in groups | orderBy:'Order'">
+
             <tr>
-                <td class="fullheading" colspan="2" data-bind="text: Name"></td>
+                <td class="fullheading" colspan="2">{{group.Name}}</td>
             </tr>
                 
-            <!-- ko foreach: { data: Players, as: 'player' } -->
-            <tr>
+            <tr ng-repeat="player in group.Players | orderBy:'LastName'">
                 <td class="max">
-                    <input class="mod" type="text" data-bind="editable: false, value: FullName" />
+                    <input class="mod" type="text" value="{{player | fullName}}" readonly="readonly"/>
                 </td>
-                <!-- ko if: $root.Settings.PositionColumn() -->
-                <td class="position">
-                    <input class="mod" type="text" data-bind="editable: false, value: Position" />
+                <td class="position" ng-show="showPosition">
+                    <input class="mod" type="text" value="{{player.Position}}" readonly="readonly"/>
                 </td>
-                <!-- /ko -->
-                <!-- ko foreach: { data: $root.Events, as: 'game' } -->
-                <td class="icon" data-bind="css: $root.AvailabilityCss(player, game), click: function() { $root.RotateAvailability(player, game); }">
+                <td class="icon" ng-repeat="event in events()" ng-class="{{availabilityCss(player, game)}}" ng-click="rotateAvailability(player, event)">
                     <span class="mod">
-                        <i data-bind="css: $root.AvailabilityIcon(player, game)"></i>
+                        <i class="{{availabilityIcon(player, event)}}"></i>
                     </span>
                 </td>
-                <!-- /ko -->
             </tr>
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- /ko -->
+
         </tbody>
     </table>
 </div>
 <script>
-    var AvailabilityViewModel = function () {
-        var me = this;
-        this.PlayerGroups = teamViewModel.PlayerGroups;
-        this.Seasons = teamViewModel.Seasons;
-        this.Settings = teamViewModel.Settings;
-
-        this.EventsIndex = ko.observable(0);
-        this.EventsShown = ko.observable(10);
-
-        // Current page
-        this.AllEvents = ko.computed(function() {
-            var games = teamViewModel.Events();
-            var filtered = _.filter(games, function (game) { return game.DateTimeMoment() != null; });
-            return _.sortBy(filtered, function (event) { return event.DateTimeMoment().unix(); });
-        });
-        this.EventsIndexFirstPresent = ko.computed(function () {
-            var index = 0;
-            _.each(me.AllEvents(), function (event, i) {
-                if (!event.IsPast()) { index = i; return false; }
-                return true;
-            });
-            return index;
-        });
-        this.Events = ko.computed(function() {
-
-            var events = me.AllEvents();
-            
-            // create a current page (10 events)
-            var begin = Math.max(0, me.EventsIndex());
-            if (begin > events.length - me.EventsShown()) begin = Math.max(0, events.length - me.EventsShown());
-            var end = Math.min(events.length, begin + me.EventsShown());
-
-            var pageOfEvents = [];
-            for (var i = begin; i < end; i++) {
-                pageOfEvents.push(events[i]);
-            }
-            return pageOfEvents;
-        });
-        
-        // Paging
-        var togglePagingButtons = function () {
-            if (me.AllEvents().length <= me.EventsShown()) {
-                $("#availability-prev, #availability-next").hide();
-            } else {
-                $("#availability-prev, #availability-next").show();
-                
-                if (me.EventsIndex() <= 0) {
-                    $("#availability-prev").prop("disabled", true);
-                } else {
-                    $("#availability-prev").prop("disabled", false);
-                }
-
-                if (me.AllEvents().length - me.EventsIndex() <= me.EventsShown()) {
-                    $("#availability-next").prop("disabled", true);
-                } else {
-                    $("#availability-next").prop("disabled", false);
-                }
-            }
-        };
-        this.EventsIndex.subscribe(function () {
-            togglePagingButtons();
-        });
-        this.EventsShown.subscribe(function () {
-            togglePagingButtons();
-        });
-        this.AllEvents.subscribe(function () {
-            togglePagingButtons();
-        });
-        this.EventsPrev = function () {
-            me.EventsIndex(me.EventsIndex() - me.EventsShown());
-        };
-        this.EventsNext = function () {
-            me.EventsIndex(me.EventsIndex() + me.EventsShown());
-        };
-
-        // Availability styling
-        this.AvailabilityCss = function(player, game) {
-            return player.AvailabilityCss(game);
-        };
-        this.AvailabilityIcon = function(player, game) {
-            return player.AvailabilityIcon(game);
-        };
-        this.RotateAvailability = function (player, game) {
-            player.NextAvailability(game);
-        };
-
-        // init
-        togglePagingButtons();
-        me.EventsIndex(me.EventsIndexFirstPresent());
-    };
-    
     $(function() {
-        window.availabilityViewModel = new AvailabilityViewModel();
-        ko.applyBindings(window.availabilityViewModel, document.getElementById("availability"));
-
         // Setup the handy-dandy help button
         var toggleHelp = function () {
 
@@ -280,7 +169,7 @@
                 }, 100);
             }
         };
-        $(window).resize(size);
-        $(window).trigger("resize");
+        //$(window).resize(size);
+        //$(window).trigger("resize");
     });
 </script>

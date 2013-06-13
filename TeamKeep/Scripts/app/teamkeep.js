@@ -1,4 +1,15 @@
 ﻿var teamkeep = angular.module("teamkeep", [])
+    .filter("dateTimeAbbrev", function() {
+        return function (input) {
+            return (input) ? moment(input).format("MMM D, h:mma") : "";
+        };
+    })
+    .filter("fullName", function() {
+        return function (player) {
+            if (player.FirstName && player.LastName) return player.FirstName + " " + player.LastName;
+            return player.FirstName || player.LastName || "[Unnamed member]";
+        };
+    })
     .directive("datetimePicker", function () {
         return {
             restrict: 'A',

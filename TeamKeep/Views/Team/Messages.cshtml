@@ -1,60 +1,23 @@
-﻿
-<!-- ko if: Messages().length == 0 -->
-<div class="text-center">
-    <p>
-        No messages have been recorded
-    </p>
+﻿<div ng-controller="MessagesController">
+    <div class="text-center" ng-if="messages.length == 0">
+        <p>
+            No messages have been recorded
+        </p>
+    </div>
+    <ul class="newsfeed" ng-if="messages.length > 0">
+        <li ng-repeat="message in messages | orderBy:predicate:true">
+            <i class="icon-envelope icon-2x"></i> 
+            <article>
+                <h6>
+                    <a data-toggle="tab" href="#log-message" ng-click="selectMessage(message)">{{message.Subject}}</a>
+                </h6>
+                <time>
+                    {{timePast(message)}}
+                </time>
+                <p>
+                    {{abbreviatedContent(message)}}
+                </p>
+            </article>
+        </li>
+    </ul>
 </div>
-<!-- /ko -->
-<ul class="newsfeed">
-    
-    <!-- ko foreach: Messages -->
-    <li>
-        <i class="icon-envelope icon-2x"></i> 
-        <article>
-            <h6>
-                <a data-toggle="tab" href="#log-message" data-bind="text: Subject, click: function () { teamViewModel.SelectedMessage($data); }" ></a>
-            </h6>
-            <time data-bind="text: TimePast"></time>
-            <p data-bind="html: AbbrevContent"></p>
-        </article>
-    </li>
-    <!-- /ko -->
-</ul>
-<script>
-    var MessagesViewModel = function() {
-        var me = this;
-
-        this.Editable = teamViewModel.Editable;
-        this.Url = teamViewModel.Url;
-        this.Messages = teamViewModel.Messages;
-
-        me.Messages.sort(function (a, b) {
-            var aMoment = moment(a.DateTime());
-            var bMoment = moment(b.DateTime());
-            if (aMoment.isAfter(bMoment)) return -1;
-            if (aMoment.isBefore(bMoment)) return 1;
-            return 0;
-        });
-
-        this.RemoveMessage = function (message) {
-            $.ajax({
-                type: "DELETE", url: me.Url() + "/messages",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    Message: {
-                        Id: message.Id()
-                    }
-                }),
-                complete: function () {
-                    me.Messages.remove(message);
-                }
-            });
-        };
-    };
-
-    $(function () {
-        window.messagesViewModel = new MessagesViewModel();
-        ko.applyBindings(window.messagesViewModel, document.getElementById("messages"));
-    });
-</script>

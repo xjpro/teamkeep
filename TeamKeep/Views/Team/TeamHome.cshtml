@@ -32,12 +32,12 @@
     <div id="team-data">
         <div class="tab-content">
             <div id="schedule" class="tab-pane active">
-                @Html.Partial("TeamSchedule")
+                @Html.Partial("Schedule")
             </div>
             @if (Model.Team.Editable || Model.Team.Privacy.Roster)
             {
                 <div id="roster" class="tab-pane">
-                    @Html.Partial("TeamRoster")
+                    @Html.Partial("Roster")
                 </div>
             }
             @if (Model.Team.Editable)

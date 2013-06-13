@@ -246,6 +246,10 @@
     <Content Include="Scripts\app\shared\Team.js" />
     <Content Include="Scripts\app\shared\spinner.js" />
     <Content Include="Scripts\app\team\AlertsController.js" />
+    <Content Include="Scripts\app\team\AvailabilityController.js" />
+    <Content Include="Scripts\app\team\AvailabilityRequestController.js" />
+    <Content Include="Scripts\app\team\ComposeController.js" />
+    <Content Include="Scripts\app\team\MessagesController.js" />
     <Content Include="Scripts\app\team\RosterController.js" />
     <Content Include="Scripts\app\team\ScheduleController.js" />
     <Content Include="Scripts\app\team\SettingsController.js" />

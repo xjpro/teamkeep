@@ -92,12 +92,12 @@
             return item[$scope.sortType] || 0;
         }
         else if ($scope.sortType == "Location") {
-            return $scope.locationDisplay(item.Location);
+            return $scope.locationDisplay(item.Location) || "zzz";
         }
         else if ($scope.sortType == "SubLocation") {
-            return (item.Location) ? item.Location.InternalLocation : "";
+            return (item.Location) ? item.Location.InternalLocation || "zzz" : "zzz";
         }
-        return item[$scope.sortType] || "";
+        return item[$scope.sortType] || "zzz";
     };
 
     // Column settings

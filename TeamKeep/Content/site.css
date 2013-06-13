@@ -183,10 +183,13 @@ h3.heading {
 .player-group > label {
     border-bottom: solid #999 1px;
 }
-.player-group ul > label {
+.player-group ul > li {
     float: left;
     width: 43%;
     overflow: hidden;
+}
+.player-group h5, .player-group label {
+    font-size: 10pt;
 }
 .player-group label > small {
     display: block;
@@ -206,9 +209,8 @@ h3.heading {
     min-height: 245px;
 }
 
-#compose .icon-spin, #newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
-#login .icon-spin, #schedule .icon-spin, #roster .icon-spin, #reset .icon-spin,
-#ab-request .icon-spin {
+#newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
+#login .icon-spin, #roster .icon-spin, #reset .icon-spin {
     display: none;
 }
 
@@ -357,7 +359,6 @@ body input[readonly='readonly'] {
 .table-container table th {
     padding: 6px 0;
     background-repeat: no-repeat;
-    background-position: bottom center;
 }
 .table-container table td, .table-container table th {
     border: solid #bbb 1px;
@@ -368,7 +369,7 @@ body input[readonly='readonly'] {
     text-align: left;
 }
 
-.table-container tr:last-child td { border-bottom-width: 0; }
+.table-container tbody:last-child tr:last-child td { border-bottom-width: 0; }
 .table-container tr th:last-child, 
 .table-container tr td:last-child { border-right-width: 0; }
 
@@ -546,6 +547,15 @@ body input[readonly='readonly'] {
     position: absolute;
     bottom: 0;
     right: -16px;
+}
+
+.sort-up {
+    background-image: url('/img/sort-up.png');
+    background-position: top center;
+}
+.sort-down {
+    background-image: url('/img/sort-down.png');
+    background-position: bottom center;
 }
 
 .swatch {

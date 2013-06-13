@@ -7,6 +7,8 @@
 
     Team.uri = "/teams/" + Team.Id + "/" + Team.Name;
     Team.updating = false;
+    Team.selectedEvent = null;
+    Team.selectedMessage = null;
 
     Team.saveSettings = function () {
         return $http.put(Team.uri + "/settings", {
@@ -97,8 +99,9 @@
             .success(function (player) {
                 var parent = _.find(Team.PlayerGroups, function (candidate) { return candidate.Id == parentId; });
                 parent.Players.push(player);
-                $rootScope.$watch(function () { return player; }, function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
-
+                $rootScope.$watch(function () { return player.LastName + player.FirstName + player.Position + player.Phone + player.Email + _.flatten(player.Availability, "AdminStatus"); },
+                    function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
+                
                 Team.updating = false;
             });
     };
@@ -167,7 +170,8 @@
     angular.forEach(Team.PlayerGroups, function (group) {
         $rootScope.$watch(function () { return group.Name + group.Order; }, function (value, oldValue) { queueChange("groups", group, value, oldValue); }, true);
         angular.forEach(group.Players, function (player) {
-            $rootScope.$watch(function () { return player; }, function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
+            $rootScope.$watch(function () { return player.LastName + player.FirstName + player.Position + player.Phone + player.Email + _.flatten(player.Availability, "AdminStatus"); },
+                function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
         });
     });
 

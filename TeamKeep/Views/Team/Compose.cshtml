@@ -1,138 +1,55 @@
-﻿<div class="container">
+﻿<div class="container" ng-controller="ComposeController">
     <div class="row">
+        
         <div class="span7">
-
-            <h3 class="heading">New message</h3>
+            <form ng-submit="sendMessage()">
+                <h3 class="heading">New message</h3>
             
-            <div class="input-prepend">
-                <span class="add-on"><i class="icon-comment-alt"></i></span>
-                <input type="text" class="input-xlarge" data-bind="value: MessageSubject" placeholder="Message subject"/>
-            </div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-comment-alt"></i></span>
+                    <input type="text" class="input-xlarge" ng-model="subject" placeholder="Message subject"/>
+                </div>
             
-            <div>
-                <textarea rows="8" class="input-block-level" data-bind="value: MessageContent" placeholder="Message content"></textarea>
-            </div>
+                <div>
+                    <textarea rows="8" class="input-block-level" ng-model="content" placeholder="Message content"></textarea>
+                </div>
             
-            <div class="pull-right">
-                <button type="button" class="btn btn-success" data-bind="click: SendMessage">
-                    <i class="icon-spinner icon-spin"></i> Send message
-                </button>
-            </div>
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-success" spinner="sending">Send message</button>
+                </div>
+            </form>
         </div>
 
         <div class="span5">
             <h3 class="heading">Recipients</h3>
-            <!-- ko foreach: PlayerGroups -->
-            <!-- ko if: PlayersWithEmail().length > 0 -->
-            <ul class="unstyled">
+            <ul class="unstyled" ng-repeat="group in groups" ng-show="group.Players.length > 0">
                 <li class="player-group">
                     <label class="checkbox heading">
-                        <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerGroupSelected($element); }"/> 
-                        <h5 data-bind="text: Name"></h5>
+                        <input type="checkbox" ng-click="toggleGroupSelected(group)"/> 
+                        <h5>{{group.Name}}</h5>
                     </label>
-                    <ul data-bind="foreach: PlayersWithEmail">
-                        <label class="checkbox">
-                            <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerSelected($element, $data); }"/> 
-                            <span data-bind="text: FullName"></span>
-                            <small data-bind="text: Email"></small>
-                        </label>   
+                    <ul>
+                        <li ng-repeat="member in group.Players" ng-switch="!availabilityEmailSent(member) && member.Email != null">
+                            <label class="checkbox" ng-switch-when="true">
+                                <input type="checkbox" ng-model="member.selected"/> 
+                                <span>{{member | fullName}}</span>
+                                <small>{{member.Email}}</small>
+                            </label>   
+                            <label class="disabled" title="{{(member.Email != null) ? 'Request already sent' : 'Email address required'}}" ng-switch-when="false">
+                                <i class="icon-envelope"></i>
+                                <span>{{member | fullName}}</span>
+                                <small>{{member.Email}}</small>
+                            </label>  
+                        </li>
                     </ul>
                 </li>
             </ul>
-            <!-- /ko -->
-            <!-- /ko -->
         </div>
         
     </div>
 </div>
 <script>
-    var ComposeViewModel = function () {
-        var me = this;
-
-        // From shared storage
-        this.Id = teamViewModel.Id;
-        this.Url = teamViewModel.Url;
-        this.Name = teamViewModel.Name;
-        this.PlayerGroups = teamViewModel.PlayerGroups;
-
-        this.MessageSubject = ko.observable("");
-        this.MessageContent = ko.observable("");
-        
-        // Player selecting
-        this.SelectedPlayers = ko.observableArray([]);
-        this.TogglePlayerGroupSelected = function (domElement) {
-            var checked = $(domElement).is(":checked");
-            var childCheckboxes = $(domElement).parentsUntil(".player-group").parent().children("ul").find("input[type='checkbox']");
-            if (checked) {
-                childCheckboxes.filter(":not(:checked)").click();
-            } else {
-                childCheckboxes.filter(":checked").click();
-            }
-            return true;
-        };
-        this.TogglePlayerSelected = function (domElement, player) {
-            var selected = $(domElement).is(":checked");
-            if (selected) {
-                me.SelectedPlayers.push(player);
-            } else {
-                me.SelectedPlayers.remove(player);
-            }
-            return true;
-        };
-
-        this.SendMessage = function () {
-
-            var recipients = _.pluck(ko.mapping.toJS(me.SelectedPlayers()), "Id");
-            if (recipients.length == 0) {
-                return $("#alert-modal").fadeAlert("show", "Message must have at least one recipient");
-            }
-            if (me.MessageSubject().length == 0) {
-                return $("#alert-modal").fadeAlert("show", "Please include a message subject");
-            }
-            if (me.MessageContent().length == 0) {
-                return $("#alert-modal").fadeAlert("show", "Please include content for your message");
-            }
-            
-            $("#compose button").prop("disabled", true);
-            $("#compose .icon-spin").show();
-
-            $.ajax({
-                type: "POST",
-                url: me.Url() + "/messages",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    RecipientPlayerIds: recipients,
-                    Subject: me.MessageSubject(),
-                    Content: me.MessageContent()
-                }),
-                success: function (response) {
-
-                    $("#alert-modal").fadeAlert("show", "Message sent successfully", "alert-success");
-                    
-                    $("#compose input[type='checkbox']:checked").prop("checked", false);
-                    $("#compose button").prop("disabled", false);
-                    $("#compose .icon-spin").hide();
-
-                    me.SelectedPlayers([]);
-                    me.MessageSubject("");
-                    me.MessageContent("");
-
-                    teamViewModel.Messages.unshift(new MessageViewModel(response));
-                    $("[href='#messages']").click(); // TODO $("#messages").tab("show")??
-                },
-                error: function (response) {
-                    $("#alert-modal").fadeAlert("show", JSON.parse(response.responseText));
-                    $("#compose button").prop("disabled", false);
-                    $("#compose .icon-spin").hide();
-                }
-            });
-        };
-    };
-
     $(function () {
-        window.composeViewModel = new ComposeViewModel();
-        ko.applyBindings(window.composeViewModel, document.getElementById("compose"));
-        
         $("#compose textarea").autosize({ append: "\n" });
     });
 </script>

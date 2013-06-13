@@ -1,4 +1,4 @@
-﻿<div class="container">
+﻿<div class="container" ng-controller="AvailabilityRequestController">
     
     <div class="row">
         <div class="span12">
@@ -8,146 +8,50 @@
         </div>
     </div>
 
-    <div class="row">
+    <form class="row" ng-submit="sendRequests()">
         <div class="span7">
             
-            <!-- ko with: SelectedEvent -->
-            <h3 class="heading" data-bind="text: $root.Name() + ' vs. ' + (OpponentName() || '[To Be Determined]')"></h3>
-            
+            <h3 class="heading">{{eventHeading()}}</h3>
             <div class="horizontal">
                 <label>When</label>
-                <span data-bind="text: When() || '[To Be Determined]'"></span>
+                <span>{{eventWhen()}}</span>
             </div>
-            
             <div class="horizontal">
-                <label>Where</label>
-                <span data-bind="text: Where() || '[To Be Determined]'"></span>
+                <label style="height: 100px;">Where</label>
+                <p ng-bind-html-unsafe="eventWhere()"></p>
             </div>
-            
-            <!-- /ko -->
-            
             <div class="pull-right">
-                <button type="button" class="btn btn-success" data-bind="click: SendConfirmations">
-                    <i class="icon-spinner icon-spin"></i> Request availability
+                <button type="submit" class="btn btn-success" spinner="requesting">
+                    Request availability
                 </button>
             </div>
         </div>
 
         <div class="span5">
             <h3 class="heading">Recipients</h3>
-            <!-- ko foreach: PlayerGroups -->
-            <!-- ko if: PlayersWithEmail().length > 0 -->
-            <ul class="unstyled">
+            <ul class="unstyled" ng-repeat="group in groups" ng-show="group.Players.length > 0">
                 <li class="player-group">
                     <label class="checkbox heading">
-                        <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerGroupSelected($element); }"/> 
-                        <h5 data-bind="text: Name"></h5>
+                        <input type="checkbox" ng-click="toggleGroupSelected(group)"/> 
+                        <h5>{{group.Name}}</h5>
                     </label>
-                    <ul data-bind="foreach: PlayersWithEmail">
-                        <!-- ko if: AvailabilityEmailSent($root.SelectedEvent()) == null -->
-                        <label class="checkbox">
-                            <input type="checkbox" data-bind="click: function () { return $root.TogglePlayerSelected($element, $data); }"/> 
-                            <span data-bind="text: FullName"></span>
-                            <small data-bind="text: Email"></small>
-                        </label>   
-                        <!-- /ko -->
-                        <!-- ko if: AvailabilityEmailSent($root.SelectedEvent()) != null -->
-                        <label class="disabled" title="Request already sent">
-                            <i class="icon-envelope"></i>
-                            <span data-bind="text: FullName, attr: { 'data-original-title': 'Email sent on ' + AvailabilityEmailSent($root.SelectedEvent()) }"></span>
-                            <small data-bind="text: Email"></small>
-                        </label>  
-                        <!-- /ko -->
+                    <ul>
+                        <li ng-repeat="member in group.Players" ng-switch="!availabilityEmailSent(member) && member.Email != null">
+                            <label class="checkbox" ng-switch-when="true">
+                                <input type="checkbox" ng-model="member.selected"/> 
+                                <span>{{member | fullName}}</span>
+                                <small>{{member.Email}}</small>
+                            </label>   
+                            <label class="disabled" title="{{(member.Email != null) ? 'Request already sent' : 'Email address required'}}" ng-switch-when="false">
+                                <i class="icon-envelope"></i>
+                                <span>{{member | fullName}}</span>
+                                <small>{{member.Email}}</small>
+                            </label>  
+                        </li>
                     </ul>
                 </li>
             </ul>
-            <!-- /ko -->
-            <!-- /ko -->
         </div>
        
-    </div>
+    </form>
 </div>
-<script>
-    var AvailabilityRequestViewModel = function () {
-        var me = this;
-
-        // From shared storage
-        this.Id = teamViewModel.Id;
-        this.Url = teamViewModel.Url;
-        this.Name = teamViewModel.Name;
-        this.PlayerGroups = teamViewModel.PlayerGroups;
-        this.SelectedEvent = teamViewModel.SelectedEvent;
-        
-        this.BackClick = function () {
-            $("[href='#availability']:first").click();
-        };
-
-        // Player selecting
-        this.SelectedPlayers = ko.observableArray([]);
-        this.TogglePlayerGroupSelected = function (domElement) {
-            var checked = $(domElement).is(":checked");
-            var childCheckboxes = $(domElement).parentsUntil(".player-group").parent().children("ul").find("input[type='checkbox']");
-            if (checked) {
-                childCheckboxes.filter(":not(:checked)").click();
-            } else {
-                childCheckboxes.filter(":checked").click();
-            }
-            return true;
-        };
-        this.TogglePlayerSelected = function (domElement, player) {
-            var selected = $(domElement).is(":checked");
-            if (selected) {
-                me.SelectedPlayers.push(player);
-            } else {
-                me.SelectedPlayers.remove(player);
-            }
-            return true;
-        };
-
-        this.SendConfirmations = function () {
-
-            $("#ab-request button").prop("disabled", true);
-            $("#ab-request .icon-spin").show();
-
-            $.ajax({
-                type: "POST",
-                url: "/games/" + me.SelectedEvent().Id() + "/confirmations", contentType: "application/json",
-                data: JSON.stringify({
-                    PlayerIds: _.pluck(ko.mapping.toJS(me.SelectedPlayers()), 'Id')
-                }),
-                success: function (response) {
-                    $("#alert-modal").fadeAlert("show", "Confirmation emails sent successfully", "alert-success");
-                    $("#ab-request button").prop("disabled", false);
-                    $("#ab-request .icon-spin").hide();
-
-                    _.each(response.UpdatedAvailabilities, function (ab) {
-                        var player = null;
-                        _.each(me.PlayerGroups(), function (group) {
-                            player = group.FindPlayer(ab.PlayerId);
-                            if (player != null) return false; // can stop
-                        });
-
-                        if (player != null) {
-                            var koAb = ko.mapping.fromJS(ab);
-                            player.Availability.remove(function (curr) { return curr.Id() == koAb.Id(); }); // if it exists, we'll replace it
-                            player.Availability.push(koAb);
-                        }
-                    });
-
-                    $("#ab-request input[type='checkbox']").prop("checked", false);
-                    me.SelectedPlayers([]);
-                },
-                error: function (response) {
-                    $("#alert-modal").fadeAlert("show", JSON.parse(response.responseText));
-                    $("#ab-request button").prop("disabled", false);
-                    $("#ab-request .icon-spin").hide();
-                }
-            });
-        };
-    };
-
-    $(function () {
-        window.abRequestViewModel = new AvailabilityRequestViewModel();
-        ko.applyBindings(window.abRequestViewModel, document.getElementById("ab-request"));
-    });
-</script>
