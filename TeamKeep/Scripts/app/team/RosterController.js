@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("RosterController", ["$scope", "Team", function ($scope, Team) {
+﻿angular.module("teamkeep").controller("RosterController", ["$scope", "$filter", "Team", function ($scope, $filter, Team) {
 
     $scope.editable = Team.Editable;
     $scope.updating = Team.updating;
@@ -57,6 +57,7 @@
     };
 
     // Sorting
+    $scope.preventSorting = false;
     $scope.sortType = "LastName";
     $scope.sortBy = function(newPredicate) {
         if (newPredicate == $scope.sortType) {
@@ -70,16 +71,15 @@
     $scope.predicate = function (item) {
         return item[$scope.sortType] || "zzz";
     };
-
-    // Column settings
-    $scope.$watch("columns", function() {
-        angular.forEach($scope.columns, function(column) {
-            if (column.toggleable) {
-                localStorage["Column." + column.sortType] = column.visible;
+    $scope.$watch("[preventSorting, sortType, reverse]", function () {
+        if (!$scope.preventSorting) {
+            for (var i = 0; i < $scope.groups.length; i++) {
+                $scope.groups[i].Players = $filter("orderBy")($scope.groups[i].Players, $scope.predicate, $scope.reverse);
             }
-        });
+        }
     }, true);
-    
+
+    // Column settings   
     $scope.columns = [
         {
             cssClass: "button",
@@ -129,5 +129,47 @@
             sortType: "Email"
         }
     ];
+    
+    $scope.hasToggleableColumn = function () {
+        return _.find($scope.columns, function (column) { return column.toggleable; });
+    };
+    
+    $scope.$watch("columns", function () {
+        angular.forEach($scope.columns, function (column) {
+            if (column.toggleable) {
+                localStorage["Column." + column.sortType] = column.visible;
+            }
+        });
+    }, true);
 
+    $scope.$watch(function () { return Team.Settings.LastNameColumn; }, function (value) {
+        $scope.columns[1].visible = value;
+        if (value) {
+            $scope.columns[2].tooltip = "Team member first name";
+            $scope.columns[2].name = "First name";
+            $("body").append("<style>@@media (max-width: 767px) { #roster td:nth-of-type(3):before { content: 'First name'; } }</style>");
+        }
+        else {
+            $scope.columns[2].tooltip = "Team member name";
+            $scope.columns[2].name = "Name";
+            $("body").append("<style>@@media (max-width: 767px) { #roster td:nth-of-type(3):before { content: 'Name'; } }</style>");
+        }
+
+    }, true);
+
+    $scope.$watch(function () { return Team.Settings.PositionColumn; }, function (value) {
+        $scope.columns[3].visible = value;
+        $scope.columns[3].toggleable = value;
+    }, true);
+
+    $scope.$watch(function () { return Team.Settings.PhoneColumn; }, function (value) {
+        $scope.columns[4].visible = value;
+        $scope.columns[4].toggleable = value;
+    }, true);
+    
+    $scope.$watch(function () { return Team.Settings.EmailColumn; }, function (value) {
+        $scope.columns[5].visible = value;
+        $scope.columns[5].toggleable = value;
+    }, true);
+    
 }]);

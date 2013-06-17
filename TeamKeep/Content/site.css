@@ -209,8 +209,7 @@ h3.heading {
     min-height: 245px;
 }
 
-#newteam-modal .icon-spin, #team-delete-modal .icon-spin, 
-#login .icon-spin, #roster .icon-spin, #reset .icon-spin {
+#newteam-modal .icon-spin, #login .icon-spin, #roster .icon-spin, #reset .icon-spin {
     display: none;
 }
 

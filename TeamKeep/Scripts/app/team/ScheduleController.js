@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("ScheduleController", ["$scope", "Team", function ($scope, Team) {
+﻿angular.module("teamkeep").controller("ScheduleController", ["$scope", "$filter", "Team", function ($scope, $filter, Team) {
 
     $scope.isMobile = TeamKeep.isMobile;
     $scope.editable = Team.Editable;
@@ -69,6 +69,7 @@
     };
 
     // Sorting
+    $scope.preventSorting = false;
     $scope.sortType = "DateTime";
     $scope.sortBy = function(newPredicate) {
         if (newPredicate == $scope.sortType) {
@@ -99,16 +100,15 @@
         }
         return item[$scope.sortType] || "zzz";
     };
+    $scope.$watch("[preventSorting, sortType, reverse]", function () {
+        if (!$scope.preventSorting) {
+            for (var i = 0; i < $scope.seasons.length; i++) {
+                $scope.seasons[i].Games = $filter("orderBy")($scope.seasons[i].Games, $scope.predicate, $scope.reverse);
+            }
+        }
+    }, true);
 
     // Column settings
-    $scope.$watch("columns", function() {
-        angular.forEach($scope.columns, function(column) {
-            if (column.toggleable) {
-                localStorage["Column." + column.sortType] = column.visible;
-            }
-        });
-    }, true);
-    
     $scope.columns = [
         {
             cssClass: "button",
@@ -178,5 +178,90 @@
             sortType: "SubLocation"
         }
     ];
+    
+    $scope.$watch("columns", function () {
+        angular.forEach($scope.columns, function (column) {
+            if (column.toggleable) {
+                localStorage["Column." + column.sortType] = column.visible;
+            }
+        });
+    }, true);
+
+    $scope.$watch(function() { return Team.Settings.ResultsView; }, function (value) {
+        switch (value) {
+            case 0: // points scored / allowed
+                $scope.columns[2].name = "PS";
+                $scope.columns[2].toolTip = "Points scored";
+                $scope.columns[2].visible = localStorage["Column.ScoredPoints"] == "true";
+                $scope.columns[2].toggleable = true;
+                $scope.columns[2].toggleName = "Points scored";
+
+                $scope.columns[3].name = "PA";
+                $scope.columns[3].toolTip = "Points allowed";
+                $scope.columns[3].visible = localStorage["Column.AllowedPoints"] == "true";
+                $scope.columns[3].toggleable = true;
+                $scope.columns[3].toggleName = "Points allowed";
+
+                $scope.columns[4].visible = false;
+                $scope.columns[4].toggleable = false;
+
+                $("body").append("<style>@@media (max-width: 767px) { " +
+                    "#schedule td:nth-of-type(3):before { content: 'Scored'; } " +
+                    "#schedule td:nth-of-type(4):before { content: 'Allowed'; } }</style>");
+                break;
+            case 1: // Best of
+                $scope.columns[2].name = "W";
+                $scope.columns[2].toolTip = "Games won";
+                $scope.columns[2].visible = localStorage["Column.ScoredPoints"] == "true";
+                $scope.columns[2].toggleable = true;
+                $scope.columns[2].toggleName = "Wins";
+
+                $scope.columns[3].name = "L";
+                $scope.columns[3].toolTip = "Games lost";
+                $scope.columns[3].visible = localStorage["Column.AllowedPoints"] == "true";
+                $scope.columns[3].toggleable = true;
+                $scope.columns[3].toggleName = "Losses";
+
+                $scope.columns[4].name = "T";
+                $scope.columns[4].toolTip = "Games tied";
+                $scope.columns[4].visible = localStorage["Column.TiePoints"] == "true";
+                $scope.columns[4].toggleable = true;
+                $scope.columns[4].toggleName = "Ties";
+
+                $("body").append("<style>@@media (max-width: 767px) { " +
+                    "#schedule td:nth-of-type(3):before { content: 'Win'; } " +
+                    "#schedule td:nth-of-type(4):before { content: 'Loss'; } }</style>");
+                break;
+            case 2: // Win/lose (binary result)
+                $scope.columns[2].name = "W/L";
+                $scope.columns[2].toolTip = "Final result (win/loss)";
+                $scope.columns[2].visible = localStorage["Column.ScoredPoints"] == "true";
+                $scope.columns[2].toggleable = true;
+                $scope.columns[2].toggleName = "Result (W/L)";
+
+                $scope.columns[3].visible = false;
+                $scope.columns[3].toggleable = false;
+
+                $scope.columns[4].visible = false;
+                $scope.columns[4].toggleable = false;
+                $("body").append("<style>@@media (max-width: 767px) { #schedule td:nth-of-type(3):before { content: 'Result'; } }</style>");
+                break;
+            case 3: // no results
+                $scope.columns[2].visible = false;
+                $scope.columns[2].toggleable = false;
+
+                $scope.columns[3].visible = false;
+                $scope.columns[3].toggleable = false;
+
+                $scope.columns[4].visible = false;
+                $scope.columns[4].toggleable = false;
+                break;
+        }
+    }, true);
+
+    $scope.$watch(function() { return Team.Settings.ArenaColumn; }, function(value) {
+        $scope.columns[7].visible = value;
+        $scope.columns[7].toggleable = value;
+    }, true);
 
 }]);

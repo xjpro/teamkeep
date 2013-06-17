@@ -202,9 +202,12 @@ namespace TeamKeep.Controllers
                     _playerService.UpdatePlayer(player);
 
                     // And their availabilities
-                    foreach(var ab in player.Availability)
+                    if (player.Availability != null)
                     {
-                        _playerService.UpdatePlayerAvailability(player.Id, ab);
+                        foreach (var ab in player.Availability)
+                        {
+                            _playerService.UpdatePlayerAvailability(player.Id, ab);
+                        }
                     }
                 }
             }

@@ -10,6 +10,30 @@
             return player.FirstName || player.LastName || "[Unnamed member]";
         };
     })
+    .directive("completeUpdate", function() {
+        return {
+            restrict: "A",
+            require: "ngModel",
+            link: function(scope, element, attrs, ngModelController) {
+                if (attrs.type === "radio" || attrs.type === "checkbox") return;
+
+                var updateModel = function () {
+                    scope.$apply(function () {
+                        ngModelController.$setViewValue(element.val());
+                    });
+                };
+
+                element.unbind("input keydown change")
+                    .bind("blur", updateModel);
+                
+                if (element[0].nodeName != "textarea") {
+                    element.bind("keydown", function(evt) {
+                        if (evt.which === 13) updateModel();
+                    });
+                }
+            }
+        };
+    })
     .directive("datetimePicker", function () {
         return {
             restrict: 'A',
@@ -29,11 +53,28 @@
             }
         };
     })
+    .directive("whenFocused", function($timeout) {
+        return {
+            restrict: "A",
+            link: function (scope, element, attrs) {
+                element.on("focus", "input", function() {
+                    scope[attrs.whenFocused] = true;
+                });
+                element.on("blur", "input", function () {
+                    $timeout(function() {
+                        if (element.find("input:focus").length === 0) {
+                            scope[attrs.whenFocused] = false;
+                        }
+                    }, 0);    
+                });
+            }
+        };
+    })
     .directive("stopEvent", function() {
         return {
             restrict: 'A',
-            link: function(scope, element, attr) {
-                element.bind(attr.stopEvent, function(e) {
+            link: function(scope, element, attrs) {
+                element.bind(attrs.stopEvent, function(e) {
                     e.stopPropagation();
                 });
             }

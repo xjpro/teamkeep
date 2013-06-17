@@ -1,7 +1,7 @@
 ﻿<div id="team-header">
     
     <div id="team-banner" class="container" data-bind="style: { backgroundImage: BannerBackgroundImage }" ng-controller="HeaderController">
-        <a data-bind="attr: { href: Url }"><h1 data-bind="text: Name"></h1></a>
+        <a data-bind="attr: { href: Url }"><h1>{{teamName}}</h1></a>
         <!-- ko if: Editable -->
         <div class="hover-edit" data-toggle="modal" data-target="#team-banner-modal">
             <i class="icon-pencil"></i> Edit banner
@@ -129,7 +129,6 @@
         this.PlayerGroups = teamViewModel.PlayerGroups;
         this.Id = teamViewModel.Id;
         this.Url = teamViewModel.Url;
-        this.Name = teamViewModel.Name;
         this.BannerImage = teamViewModel.BannerImage;
 
         this.BannerBackgroundImage = ko.computed(function () {

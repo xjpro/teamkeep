@@ -30,7 +30,7 @@
         </div>
         <div style="clear: both;"></div>
     </div>
-    <table last-tab-event="addEvent(-1)">
+    <table last-tab-event="addEvent(-1)" when-focused="preventSorting">
         <thead>
             <tr>
                 <th class="{{column.cssClass}}" ng-repeat="column in columns" ng-show="column.visible"
@@ -49,7 +49,7 @@
         <tbody ng-repeat="season in seasons | orderBy:'Order'">
             <tr>
                 <td class="fullheading" colspan="8">
-                    <input class="mod" type="text" ng-model="season.Name" data-bind="editable: $parent.Editable, event: { focus: Selected, change: Update } "/>
+                    <input class="mod" type="text" ng-model="season.Name" complete-update />
                     <div class="options pull-right" ng-if="editable">
                         <i class="icon-circle-arrow-up" title="Move season up" ng-show="season.Order != 0" ng-click="changeSeasonOrder(season, season.Order - 1)"></i>
                         <i class="icon-circle-arrow-down" title="Move season down" ng-show="season.Order != seasons.length-1" ng-click="changeSeasonOrder(season, season.Order + 1)"></i>
@@ -62,7 +62,7 @@
                 <td class="fullinfo" colspan="7">There are no games in this season</td>
             </tr>
 
-            <tr ng-repeat="game in season.Games | orderBy:predicate:reverse">
+            <tr ng-repeat="game in season.Games">
                 <td class="button" ng-show="columns[0].visible">
                     <a id="dropLabel" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabel">
@@ -87,35 +87,35 @@
                     <input class="mod" type="text" ng-switch-default ng-model="game.DateTime" datetime-picker />
                 </td>
                 <td class="hometeam-points digit" ng-show="columns[2].visible">
-                    <input class="mod" type="text" ng-model="game.ScoredPoints" />
+                    <input class="mod" type="text" ng-model="game.ScoredPoints" complete-update />
                 </td>
                 <td class="awayteam-points digit" ng-show="columns[3].visible">
-                    <input class="mod" type="text" ng-model="game.AllowedPoints" />
+                    <input class="mod" type="text" ng-model="game.AllowedPoints" complete-update />
                 </td>
                 <td class="tiepoints digit" ng-show="columns[4].visible">
-                    <input class="mod" type="text" ng-model="game.TiePoints" />
+                    <input class="mod" type="text" ng-model="game.TiePoints" complete-update />
                 </td>
                 <td class="max">
-                    <input class="mod" type="text" ng-model="game.OpponentName" />
+                    <input class="mod" type="text" ng-model="game.OpponentName" complete-update />
                 </td>
                 <td class="location" ng-show="columns[6].visible">
                     <input class="mod" type="text" locid="{{game.Location.Id}}" value="{{locationDisplay(game.Location)}}" readonly="readonly" />
                     <div class="editor">
                         <div ng-if="editable || game.Location.Description">
                             <label>Name</label>
-                            <input type="text" class="js-desc" ng-model="game.Location.Description" />
+                            <input type="text" class="js-desc" ng-model="game.Location.Description" complete-update />
                         </div>
                         <div ng-if="editable || game.Location.Street">
                             <label>Street</label>
-                            <input type="text" class="js-street" ng-model="game.Location.Street" />
+                            <input type="text" class="js-street" ng-model="game.Location.Street" complete-update />
                         </div>
                         <div ng-if="editable || game.Location.City">
                             <label>City</label>
-                            <input type="text" class="js-city" ng-model="game.Location.City" />
+                            <input type="text" class="js-city" ng-model="game.Location.City" complete-update />
                         </div>
                         <div ng-if="editable || game.Location.Postal">
                             <label>Zip</label>
-                            <input type="text" class="js-postal" ng-model="game.Location.Postal" />
+                            <input type="text" class="js-postal" ng-model="game.Location.Postal" complete-update />
                         </div>
                         <div>
                             <button class="btn pull-right">Done</button>
@@ -123,7 +123,7 @@
                     </div>
                 </td>
                 <td class="sublocation" ng-show="columns[7].visible">
-                    <input class="mod" type="text" ng-model="game.Location.InternalLocation" />
+                    <input class="mod" type="text" ng-model="game.Location.InternalLocation" complete-update />
                 </td>
             </tr>            
         </tbody>

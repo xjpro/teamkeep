@@ -1,5 +1,6 @@
-﻿angular.module("teamkeep").controller("HeaderController", ["$scope", "$rootScope", "User", function ($scope, $rootScope, User) {
+﻿angular.module("teamkeep").controller("HeaderController", ["$scope", "$rootScope", "User", "Team", function ($scope, $rootScope, User, Team) {
 
+    $scope.teamName = Team.Name;
     $scope.error = "";
     $scope.saveEmail = function () {
 

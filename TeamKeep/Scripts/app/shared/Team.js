@@ -2,7 +2,8 @@
 
     var Team = (window.viewData && window.viewData.Team) ? window.viewData.Team : {
         Id: 0,
-        Settings: {}
+        Settings: {},
+        Privacy: {}
     };
 
     Team.uri = "/teams/" + Team.Id + "/" + Team.Name;
@@ -16,10 +17,6 @@
             name: Team.Name,
             privacy: Team.Privacy,
             settings: Team.Settings
-        }).success(function (allSettings) {
-            // The below *should* be unnecessary I think
-            //Team.Privacy = allSettings.Privacy;
-            //Team.Settings = allSettings.Settings;
         });
     };
 
@@ -157,16 +154,18 @@
         changes[type][item.Id] = item;
 
         $timeout.cancel(timeout);
-        timeout = $timeout(uploadChanges, 1000);
+        timeout = $timeout(uploadChanges, 0); // Set this to above 0 to delay changes
     };
 
     // Setup watches
+    // Seasons
     angular.forEach(Team.Seasons, function (season) {
         $rootScope.$watch(function () { return season.Name + season.Order; }, function (value, oldValue) { queueChange("seasons", season, value, oldValue); }, true);
         angular.forEach(season.Games, function (event) {
             $rootScope.$watch(function () { return event; }, function (value, oldValue) { queueChange("events", event, value, oldValue); }, true);
         });
     });
+    // PlayerGroups
     angular.forEach(Team.PlayerGroups, function (group) {
         $rootScope.$watch(function () { return group.Name + group.Order; }, function (value, oldValue) { queueChange("groups", group, value, oldValue); }, true);
         angular.forEach(group.Players, function (player) {
@@ -174,6 +173,11 @@
                 function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
         });
     });
+    // Privacy or Settings
+    $rootScope.$watch(function () { return Team.Name + _.map(viewData.Team.Privacy) + _.map(viewData.Team.Settings); }, function (value, oldValue) {
+        if (angular.equals(value, oldValue)) return;
+        Team.saveSettings();
+    }, true);
 
     return Team;
 }]);
