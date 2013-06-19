@@ -23,14 +23,17 @@
                     });
                 };
 
-                element.unbind("input keydown change")
-                    .bind("blur", updateModel);
+                element.unbind("input keydown change");
 
-                if (element[0].nodeName != "textarea") {
-                    element.bind("keydown", function(evt) {
-                        if (evt.which === 13) updateModel();
-                    });
-                }
+                if (!attrs.readonly) {
+                    element.bind("change", updateModel);
+
+                    if (element[0].nodeName != "textarea") {
+                        element.bind("keydown", function(evt) {
+                            if (evt.which === 13) updateModel();
+                        });
+                    }
+                }  
             }
         };
     })
