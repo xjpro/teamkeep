@@ -37,15 +37,24 @@
 
     $scope.addEvent = function (toSeason) {
         if (toSeason === -1) {
-            Team.addEvent(_.last(Team.Seasons).Id);
+            Team.addEvent(_.max(Team.Seasons, 'Order').Id)
+                .success(function() {
+                    _.defer(function() { $("#schedule tr:last input:first").focus(); });
+                });
         }
         else if (!toSeason) {
             Team.addSeason("Untitled Season")
                 .success(function () {
-                    Team.addEvent(_.last(Team.Seasons).Id);
+                    Team.addEvent(_.last(Team.Seasons).Id)
+                        .success(function () {
+                            _.defer(function () { $("#schedule tr:last input:first").focus(); });
+                        });
                 });
         } else {
-            Team.addEvent(toSeason.Id);
+            Team.addEvent(toSeason.Id)
+                .success(function () {
+                    _.defer(function () { $("#schedule tbody[season-id='" + toSeason.Id + "'] tr:last input:first").focus(); });
+                });
         }
     };
     $scope.removeEvent = function(event) {
@@ -109,6 +118,14 @@
     }, true);
 
     // Column settings
+
+    if (typeof localStorage["Column.DateTime"] === "undefined") localStorage["Column.DateTime"] = true;
+    if (typeof localStorage["Column.ScoredPoints"] === "undefined") localStorage["Column.ScoredPoints"] = true;
+    if (typeof localStorage["Column.AllowedPoints"] === "undefined") localStorage["Column.AllowedPoints"] = true;
+    if (typeof localStorage["Column.TiePoints"] === "undefined") localStorage["Column.TiePoints"] = true;
+    if (typeof localStorage["Column.Location"] === "undefined") localStorage["Column.Location"] = true;
+    if (typeof localStorage["Column.SubLocation"] === "undefined") localStorage["Column.SubLocation"] = true;
+
     $scope.columns = [
         {
             cssClass: "button",
@@ -259,7 +276,8 @@
         }
     }, true);
 
-    $scope.$watch(function() { return Team.Settings.ArenaColumn; }, function(value) {
+    $scope.$watch(function () { return Team.Settings.ArenaColumn; }, function (value, oldValue) {
+        if (angular.equals(value, oldValue)) return;
         $scope.columns[7].visible = value;
         $scope.columns[7].toggleable = value;
     }, true);

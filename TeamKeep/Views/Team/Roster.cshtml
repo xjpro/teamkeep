@@ -31,7 +31,7 @@
         </div>
         <div style="clear: both;"></div>
     </div>
-    <table when-focused="preventSorting">
+    <table last-tab-event="addPlayer(-1)" when-focused="preventSorting">
         <thead>
             <tr>
                 <th class="{{column.cssClass}}" ng-repeat="column in columns" ng-show="column.visible"
@@ -47,10 +47,10 @@
                 </td>
             </tr>
         </tbody>
-        <tbody ng-repeat="group in groups | orderBy:'Order'">
+        <tbody ng-repeat="group in groups | orderBy:'Order'" group-id="{{group.Id}}">
             <tr>
                 <td class="fullheading" colspan="6">
-                    <input class="mod" type="text" ng-model="group.Name" complete-update />
+                    <input class="mod" type="text" ng-model="group.Name" complete-update ng-readonly="!editable" />
                     <div class="options pull-right" ng-show="editable">
                         <i class="icon-circle-arrow-up" title="Move group up" ng-show="group.Order != 0" ng-click="changeGroupOrder(group, group.Order - 1)"></i>
                         <i class="icon-circle-arrow-down" title="Move group down" ng-show="group.Order != groups.length-1" ng-click="changeGroupOrder(group, group.Order + 1)"></i>
@@ -83,23 +83,21 @@
                     </ul>
                 </td>
                 <td  class="lastname" ng-show="columns[1].visible">
-                    <input type="text" class="mod" ng-model="player.LastName" complete-update />
+                    <input type="text" class="mod" ng-model="player.LastName" complete-update ng-readonly="!editable" />
                 </td>
                 <td class="max">
-                    <input type="text" class="mod" ng-model="player.FirstName" complete-update />
+                    <input type="text" class="mod" ng-model="player.FirstName" complete-update ng-readonly="!editable" />
                 </td>
                 <td  class="position" ng-show="columns[3].visible">
-                    <input type="text" class="mod" ng-model="player.Position" complete-update />
+                    <input type="text" class="mod" ng-model="player.Position" complete-update ng-readonly="!editable" />
                 </td>
                 <td class="phone" ng-show="columns[4].visible">
-                    <input type="tel" class="mod" ng-model="player.Phone" complete-update />
+                    <input type="tel" class="mod" ng-model="player.Phone" complete-update ng-readonly="!editable" />
                 </td>
                 <td class="email" ng-show="columns[5].visible">
-                    <input type="email" class="mod" ng-model="player.Email" complete-update />
+                    <input type="email" class="mod" ng-model="player.Email" complete-update ng-readonly="!editable" />
                 </td>
             </tr>
-            <!-- /ko -->
-            <!-- /ko -->
         </tbody>
     </table>
     <div id="group-delete-modal" class="modal hide fade">

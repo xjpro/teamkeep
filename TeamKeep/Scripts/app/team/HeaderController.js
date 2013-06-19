@@ -1,7 +1,10 @@
 ﻿angular.module("teamkeep").controller("HeaderController", ["$scope", "$rootScope", "User", "Team", function ($scope, $rootScope, User, Team) {
 
+    $scope.editable = Team.Editable;
     $scope.teamName = Team.Name;
+    $scope.teamUrl = Team.uri;
     $scope.error = "";
+
     $scope.saveEmail = function () {
 
         $scope.error = "";
@@ -39,6 +42,16 @@
 
         $rootScope.$broadcast("messageButton.click");
         return User.Verified;
+    };
+
+    $scope.messageButtonEnabled = function () {
+        return Team.playersWithEmail().length > 0;
+    };
+
+    $scope.availabilityVisible = function () {
+        var players = _.flatten(Team.PlayerGroups, 'Players');
+        var eventsWithDate = _.filter(_.flatten(Team.Seasons, 'Games'), function (event) { return moment(event.DateTime) != null; });
+        return players.length > 0 && eventsWithDate.length > 0;
     };
 
 }]);

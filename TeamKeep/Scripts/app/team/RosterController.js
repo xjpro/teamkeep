@@ -23,15 +23,24 @@
 
     $scope.addPlayer = function (toGroup) {
         if (toGroup === -1) {
-            Team.addPlayer(_.last(Team.PlayerGroups).Id);
+            Team.addPlayer(_.max(Team.PlayerGroups, 'Order').Id)
+                .success(function () {
+                    _.defer(function () { $("#roster tr:last input:first").focus(); });
+                });
         }
         else if (!toGroup) {
             Team.addGroup("Players")
                 .success(function () {
-                    Team.addPlayer(_.last(Team.PlayerGroups).Id);
+                    Team.addPlayer(_.last(Team.PlayerGroups).Id)
+                        .success(function () {
+                            _.defer(function () { $("#roster tr:last input:first").focus(); });
+                        });
                 });
         } else {
-            Team.addPlayer(toGroup.Id);
+            Team.addPlayer(toGroup.Id)
+                .success(function () {
+                    _.defer(function () { $("#roster tbody[group-id='" + toGroup.Id + "'] tr:last input:first").focus(); });
+                });
         }
     };
     
@@ -80,6 +89,11 @@
     }, true);
 
     // Column settings   
+
+    if (typeof localStorage["Column.Position"] === "undefined") localStorage["Column.Position"] = true;
+    if (typeof localStorage["Column.Phone"] === "undefined") localStorage["Column.Phone"] = true;
+    if (typeof localStorage["Column.Email"] === "undefined") localStorage["Column.Email"] = true;
+
     $scope.columns = [
         {
             cssClass: "button",
@@ -157,17 +171,20 @@
 
     }, true);
 
-    $scope.$watch(function () { return Team.Settings.PositionColumn; }, function (value) {
+    $scope.$watch(function () { return Team.Settings.PositionColumn; }, function (value, oldValue) {
+        if (angular.equals(value, oldValue)) return;
         $scope.columns[3].visible = value;
         $scope.columns[3].toggleable = value;
     }, true);
 
-    $scope.$watch(function () { return Team.Settings.PhoneColumn; }, function (value) {
+    $scope.$watch(function () { return Team.Settings.PhoneColumn; }, function (value, oldValue) {
+        if (angular.equals(value, oldValue)) return;
         $scope.columns[4].visible = value;
         $scope.columns[4].toggleable = value;
     }, true);
     
-    $scope.$watch(function () { return Team.Settings.EmailColumn; }, function (value) {
+    $scope.$watch(function () { return Team.Settings.EmailColumn; }, function (value, oldValue) {
+        if (angular.equals(value, oldValue)) return;
         $scope.columns[5].visible = value;
         $scope.columns[5].toggleable = value;
     }, true);

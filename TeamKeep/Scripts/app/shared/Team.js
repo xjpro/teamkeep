@@ -2,6 +2,7 @@
 
     var Team = (window.viewData && window.viewData.Team) ? window.viewData.Team : {
         Id: 0,
+        Editable: false,
         Settings: {},
         Privacy: {}
     };
@@ -10,6 +11,11 @@
     Team.updating = false;
     Team.selectedEvent = null;
     Team.selectedMessage = null;
+
+    Team.playersWithEmail = function () {
+        var players = _.flatten(Team.PlayerGroups, "Players");
+        return _.filter(players, function (player) { return player.Email != null; });
+    };
 
     Team.saveSettings = function () {
         return $http.put(Team.uri + "/settings", {

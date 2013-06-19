@@ -1,21 +1,17 @@
-﻿<div id="team-header">
-    
-    <div id="team-banner" class="container" data-bind="style: { backgroundImage: BannerBackgroundImage }" ng-controller="HeaderController">
-        <a data-bind="attr: { href: Url }"><h1>{{teamName}}</h1></a>
-        <!-- ko if: Editable -->
-        <div class="hover-edit" data-toggle="modal" data-target="#team-banner-modal">
-            <i class="icon-pencil"></i> Edit banner
+﻿<div id="team-header" ng-controller="HeaderController">
+    <div id="team-banner" class="container" data-bind="style: { backgroundImage: BannerBackgroundImage }">
+        <a href="{{teamUrl}}"><h1>{{teamName}}</h1></a>
+
+        <div ng-if="editable">
+            <div class="hover-edit" data-toggle="modal" data-target="#team-banner-modal">
+                <i class="icon-pencil"></i> Edit banner
+            </div>
+            <div id="team-functions" class="btn-group" ng-switch="messageButtonEnabled()">
+                <a ng-switch-when="true" class="btn btn-info" data-toggle="tab" ng-click="messageButton()">Message team</a>
+                <button ng-switch-when="false" class="btn btn-info disabled" title="Will become available once you've added a team member email to your roster">Message team</button>
+                <a class="btn btn-info" data-toggle="tab" href="#settings" onclick="javascript:location.hash='settings';"><i class="icon-cog"></i></a>
+            </div>
         </div>
-        <div id="team-functions" class="btn-group">
-            <!-- ko if: MessageButtonEnabled -->
-            <a class="btn btn-info" data-toggle="tab" data-bind="attr: { href: MessageButtonHref }" ng-click="messageButton()">Message team</a>
-            <!-- /ko -->
-            <!-- ko ifnot: MessageButtonEnabled -->
-            <button class="btn btn-info disabled" title="Will become available once you've added a team member email to your roster">Message team</button>
-            <!-- /ko -->
-            <a class="btn btn-info" data-toggle="tab" href="#settings" onclick="javascript:location.hash='settings';"><i class="icon-cog"></i></a>
-        </div>
-        <!-- /ko -->
 
         <form id="team-banner-modal" class="modal hide fade" data-bind="submit: SaveBanner">
             <div class="modal-header">
@@ -82,13 +78,9 @@
         }
         @if (Model.Team.Editable)
         {
-            <li>
-                <!-- ko if: AvailabilityVisible -->
-                <a data-toggle="tab" href="#availability" onclick="javascript:location.hash='availability';">Availability</a>
-                <!-- /ko -->
-                <!-- ko ifnot: AvailabilityVisible -->
-                <a class="disabled" title="Will become available once you've added a dated event to your schedule and one member to your roster">Availability</a>
-                <!-- /ko -->
+            <li ng-switch="availabilityVisible()">
+                <a ng-switch-when="true" data-toggle="tab" href="#availability" onclick="javascript:location.hash='availability';" >Availability</a>
+                <a ng-switch-when="false" class="disabled" title="Will become available once you've added a dated event to your schedule and one member to your roster">Availability</a>
             </li>
             <li><a data-toggle="tab" href="#messages" onclick="javascript:location.hash='messages';">Messages</a></li>
         }
@@ -96,58 +88,16 @@
 
 </div>
 <script>
-    
-    var TeamLinksViewModel = function () {
-        var me = this;
-
-        this.AllEvents = ko.computed(function () {
-            var games = teamViewModel.Events();
-            return _.filter(games, function (game) { return game.DateTimeMoment() != null; });
-        });
-        this.AllPlayers = ko.computed(function () {
-            var players = [];
-            _.each(teamViewModel.PlayerGroups(), function (group) {
-                _.each(group.Players(), function (player) {
-                    players.push(player);
-                });
-            });
-            return players;
-        });
-
-        // Tab toggle
-        this.AvailabilityVisible = ko.computed(function () {
-            return me.AllPlayers().length > 0 && me.AllEvents().length > 0;
-        });
-    };
-
     var TeamHeaderViewModel = function () {
         var me = this;
 
         // From shared storage
-        this.Editable = teamViewModel.Editable;
-        this.Privacy = teamViewModel.Privacy;
-        this.PlayerGroups = teamViewModel.PlayerGroups;
         this.Id = teamViewModel.Id;
         this.Url = teamViewModel.Url;
         this.BannerImage = teamViewModel.BannerImage;
 
         this.BannerBackgroundImage = ko.computed(function () {
             return (me.BannerImage() != null) ? "url('/TeamBanners/" + me.BannerImage() + "')" : "url('/img/defaultbanner.jpg')";
-        });
-
-        this.MessageButtonEnabled = ko.computed(function () {
-            var somePlayersHaveEmail = false;
-            _.each(me.PlayerGroups(), function (group) {
-                if (group.PlayersWithEmail().length > 0) {
-                    somePlayersHaveEmail = true;
-                    return false;
-                }
-                return true;
-            });
-            return somePlayersHaveEmail;
-        });
-        this.MessageButtonHref = ko.computed(function() {
-            return (window.userViewModel && userViewModel.Email() && userViewModel.Verified()) ? "#compose" : "";
         });
         
         this.SaveBanner = function () {
@@ -186,9 +136,6 @@
 
     $(function () {
         
-        window.teamLinksViewModel = new TeamLinksViewModel();
-        ko.applyBindings(window.teamLinksViewModel, document.getElementById("team-nav"));
-
         window.teamHeaderViewModel = new TeamHeaderViewModel();
         ko.applyBindings(window.teamHeaderViewModel, document.getElementById("team-banner"));
 
@@ -202,7 +149,7 @@
         
         // Initial nav
         if (location.hash.length > 0) {
-            setTimeout(function() { $("a[href='" + location.hash + "']").click(); }, 0);
+            _.defer(function() { $("a[href='" + location.hash + "']").click(); });
         }
         else {
             $("#team-nav li a:first").click();

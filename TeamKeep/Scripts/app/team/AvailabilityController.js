@@ -7,8 +7,8 @@
 
     $scope.allEvents = function () {
         var events = _.flatten(Team.Seasons, "Games");
-        var filtered = _.filter(events, function (event) { return event.DateTime != null; });
-        return _.sortBy(filtered, function (event) { return moment(event.DateTime).unix(); });
+        var filtered = _.filter(events, function (event) { return event.DateTime; });
+        return _.sortBy(filtered, function(event) { return new Date(event.DateTime); });
     };
     $scope.events = function () {
         var events = $scope.allEvents();
