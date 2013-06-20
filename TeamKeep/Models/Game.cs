@@ -13,6 +13,7 @@ namespace TeamKeep.Models
         public Game(GameData data)
         {
             Id = data.Id;
+            Type = data.Type;
             Date = data.Date;
             SeasonId = data.SeasonId;
             HomeTeamId = data.HomeTeamId;

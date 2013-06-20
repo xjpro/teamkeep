@@ -98,8 +98,9 @@ namespace TeamKeep.Services
                     season.Games = entities.GameDatas.Where(x => x.SeasonId == season.Id).Select(gameData => new Game
                     { 
                         Id = gameData.Id,
-                        Date = gameData.Date,
                         SeasonId = gameData.SeasonId,
+                        Type = gameData.Type,
+                        Date = gameData.Date,
                         HomeTeamId = gameData.HomeTeamId,
                         AwayTeamId = gameData.AwayTeamId,
                         ScoredPoints = gameData.ScoredPoints,

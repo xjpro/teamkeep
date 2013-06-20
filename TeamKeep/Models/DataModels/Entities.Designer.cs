@@ -610,13 +610,15 @@ namespace TeamKeep.Models.DataModels
         /// <param name="homeTeamId">Initial value of the HomeTeamId property.</param>
         /// <param name="awayTeamId">Initial value of the AwayTeamId property.</param>
         /// <param name="seasonId">Initial value of the SeasonId property.</param>
-        public static GameData CreateGameData(global::System.Int32 id, global::System.Int32 homeTeamId, global::System.Int32 awayTeamId, global::System.Int32 seasonId)
+        /// <param name="type">Initial value of the Type property.</param>
+        public static GameData CreateGameData(global::System.Int32 id, global::System.Int32 homeTeamId, global::System.Int32 awayTeamId, global::System.Int32 seasonId, global::System.Byte type)
         {
             GameData gameData = new GameData();
             gameData.Id = id;
             gameData.HomeTeamId = homeTeamId;
             gameData.AwayTeamId = awayTeamId;
             gameData.SeasonId = seasonId;
+            gameData.Type = type;
             return gameData;
         }
 
@@ -842,6 +844,30 @@ namespace TeamKeep.Models.DataModels
         private Nullable<global::System.Int16> _TiePoints;
         partial void OnTiePointsChanging(Nullable<global::System.Int16> value);
         partial void OnTiePointsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte Type
+        {
+            get
+            {
+                return _Type;
+            }
+            set
+            {
+                OnTypeChanging(value);
+                ReportPropertyChanging("Type");
+                _Type = StructuralObject.SetValidValue(value, "Type");
+                ReportPropertyChanged("Type");
+                OnTypeChanged();
+            }
+        }
+        private global::System.Byte _Type;
+        partial void OnTypeChanging(global::System.Byte value);
+        partial void OnTypeChanged();
 
         #endregion
 

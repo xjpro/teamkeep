@@ -45,6 +45,7 @@
           <Property Name="ScoredPoints" Type="smallint" />
           <Property Name="AllowedPoints" Type="smallint" />
           <Property Name="TiePoints" Type="smallint" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="GameLocationData">
           <Key>
@@ -198,6 +199,7 @@
           <Property Name="ScoredPoints" Type="Int16" />
           <Property Name="AllowedPoints" Type="Int16" />
           <Property Name="TiePoints" Type="Int16" />
+          <Property Type="Byte" Name="Type" Nullable="false" />
         </EntityType>
         <EntityType Name="GameLocationData">
           <Key>
@@ -340,6 +342,7 @@
           <EntitySetMapping Name="GameDatas">
             <EntityTypeMapping TypeName="DatabaseModel.GameData">
               <MappingFragment StoreEntitySet="GameData">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HomeTeamId" ColumnName="HomeTeamId" />
                 <ScalarProperty Name="AwayTeamId" ColumnName="AwayTeamId" />

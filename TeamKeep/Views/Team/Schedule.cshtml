@@ -41,14 +41,14 @@
         </thead>
         <tbody ng-hide="seasons.length > 0">
             <tr>
-                <td class="fullinfo" colspan="8">
+                <td class="fullinfo" colspan="{{columns.length}}">
                     No games have been posted for this team
                 </td>
             </tr>
         </tbody>
         <tbody ng-repeat="season in seasons | orderBy:'Order'" season-id="{{season.Id}}">
             <tr>
-                <td class="fullheading" colspan="8">
+                <td class="fullheading" colspan="{{columns.length}}">
                     <input class="mod" type="text" ng-model="season.Name" complete-update ng-readonly="!editable" />
                     <div class="options pull-right" ng-if="editable">
                         <i class="icon-circle-arrow-up" title="Move season up" ng-show="season.Order != 0" ng-click="changeSeasonOrder(season, season.Order - 1)"></i>
@@ -59,7 +59,7 @@
             </tr>
 
             <tr ng-hide="season.Games.length > 0">
-                <td class="fullinfo" colspan="7">There are no games in this season</td>
+                <td class="fullinfo" colspan="{{columns.length}}">There are no games in this season</td>
             </tr>
 
             <tr ng-repeat="game in season.Games">
@@ -95,12 +95,15 @@
                 <td class="tiepoints digit" ng-show="columns[4].visible">
                     <input class="mod" type="text" ng-model="game.TiePoints" complete-update ng-readonly="!editable" />
                 </td>
+                <td class="icon">
+                    <i title="{{eventTypeTooltip(game.Type)}}" ng-class="eventTypeIcon(game.Type)" ng-click="rotateType(game)"></i>
+                </td>
                 <td class="max">
                     <input class="mod" type="text" ng-model="game.OpponentName" complete-update ng-readonly="!editable" />
                 </td>
                 <td class="location" ng-show="columns[6].visible">
                     <input class="mod" type="text" locid="{{game.Location.Id}}" value="{{locationDisplay(game.Location)}}" readonly="readonly" />
-                    <div class="editor">
+                    <div class="editor" ng-if="editable || showLocationEditor(game.Location)">
                         <div ng-if="editable || game.Location.Description">
                             <label>Name</label>
                             <input type="text" class="js-desc" ng-model="game.Location.Description" complete-update ng-readonly="!editable" />

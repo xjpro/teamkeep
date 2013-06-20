@@ -23,6 +23,7 @@ body a {
     box-shadow: none;
     -webkit-box-shadow: none;
 }
+
 #sidebar a, #compose a {
     text-decoration: none;
 }
@@ -393,7 +394,7 @@ body input[readonly='readonly'] {
 }
 .table-container table th.icon,
 .table-container table td.icon span {
-    width: 40px;
+    width: 30px;
 }
 .table-container table td.icon::selection {
     background: #fff;
@@ -576,6 +577,17 @@ body input[readonly='readonly'] {
     background: #eee;
 }
 
+#schedule .icon {
+    border-right: 0;
+    color: #666;
+}
+#schedule .icon-vs {
+    display: inline-block;
+    width: 18px;
+    height: 15px;
+    background: url('/img/icon-vs.gif') no-repeat center center;
+}
+
 /* Mobile table 
     http://css-tricks.com/responsive-data-tables/
 */
@@ -633,9 +645,10 @@ body input[readonly='readonly'] {
     #schedule td:nth-of-type(3):before { content: "Scored"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(4):before { content: "Allowed"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(5):before { content: "Tie"; border-right: dotted #ccc 1px; }
-    #schedule td:nth-of-type(6):before { content: "Opponent"; border-right: dotted #ccc 1px; }
-    #schedule td:nth-of-type(7):before { content: "Location"; border-right: dotted #ccc 1px; }
-    #schedule td:nth-of-type(8):before { content: "Arena"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(6):before { content: ""; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(7):before { content: "Title"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(8):before { content: "Location"; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(9):before { content: "Arena"; border-right: dotted #ccc 1px; }
 
     #roster td:nth-of-type(1) { padding-left: 0; }
     #roster td:nth-of-type(2):before { content: "Last name"; border-right: dotted #ccc 1px; }
@@ -647,6 +660,15 @@ body input[readonly='readonly'] {
     #messages td:nth-of-type(1) { padding-left: 0; }
     #messages td:nth-of-type(2):before { content: "Date"; border-right: dotted #ccc 1px; }
     #messages td:nth-of-type(3):before { content: "Subject"; border-right: dotted #ccc 1px; }
+
+    /* magic for event type icon*/
+    #schedule td:nth-of-type(6) {
+        display: inline;
+        position: absolute;
+        padding: 0;
+        margin: 2px 0 0 118px;
+    }
+    #schedule td:nth-of-type(7) input { margin-left: 47px; }
 }
 
 #team-banner {

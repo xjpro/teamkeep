@@ -5,6 +5,26 @@
     $scope.updating = Team.updating;
     $scope.seasons = Team.Seasons;
     
+    $scope.eventTypeIcon = function (eventType) {
+        switch (eventType) {
+            case 0: return "icon-vs"; // vs.
+            case 1: return "icon-calendar-empty"; // practice
+            case 2: return "icon-bullhorn"; // meeting
+            case 3: return "icon-group"; // celebration/party
+            default: return "icon-circle-blank"; // blank
+        }
+    };
+
+    $scope.eventTypeTooltip = function (eventType) {
+        switch (eventType) {
+            case 0: return "vs"; // vs.
+            case 1: return "Practice"; // practice
+            case 2: return "Meeting"; // meeting
+            case 3: return "Celebration"; // meeting
+            default: return "Other"; // blank
+        }
+    };
+
     $scope.locationDisplay = function(location) {
         if (location != null) {
             if (location.Description) return location.Description;
@@ -16,6 +36,15 @@
             return address.join('').trim();
         }
         return "";
+    };
+
+    $scope.showLocationEditor = function (location) {
+        var inputCount = 0;
+        if (location.Description) inputCount++;
+        if (location.Street) inputCount++;
+        if (location.City) inputCount++;
+        if (location.Postal) inputCount++;
+        return inputCount > 1;
     };
 
     $scope.selectSeason = function(season) {
@@ -77,6 +106,12 @@
         }
     };
 
+    $scope.rotateType = function (event) {
+        if (++event.Type > 4) {
+            event.Type = 0;
+        } 
+    };
+
     // Sorting
     $scope.preventSorting = false;
     $scope.sortType = "DateTime";
@@ -131,8 +166,7 @@
             cssClass: "button",
             name: "",
             visible: Team.Editable,
-            toggleable: false,
-            sortType: null
+            toggleable: false
         },
         {
             cssClass: "sort-date date", 
@@ -171,9 +205,15 @@
             sortType: "TiePoints"
         },
         {
+            cssClass: "icon",
+            name: "",
+            visible: true,
+            toggleable: false
+        },
+        {
             cssClass: "sort-opponent max",
-            name: "Opponent",
-            toolTip: "Name of opposing team",
+            name: "Title",
+            toolTip: "A short description or title of the event",
             visible: true,
             toggleable: false,
             sortType: "OpponentName"

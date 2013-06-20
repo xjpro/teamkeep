@@ -108,6 +108,7 @@ namespace TeamKeep.Services
                 }
 
                 gameData.SeasonId = teamEvent.SeasonId;
+                gameData.Type = teamEvent.Type;
                 gameData.ScoredPoints = teamEvent.ScoredPoints;
                 gameData.AllowedPoints = teamEvent.AllowedPoints;
                 gameData.TiePoints = teamEvent.TiePoints;
