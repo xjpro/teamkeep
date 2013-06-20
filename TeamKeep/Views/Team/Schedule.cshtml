@@ -82,9 +82,9 @@
                         <li><a tabindex="-1" ng-click="removeEvent(game)">Remove</a></li>
                     </ul>
                 </td>
-                <td class="date" ng-switch="isMobile" ng-show="columns[1].visible">
-                    <input class="mod" type="datetime-local" ng-switch-when="true" ng-model="game.DateTime" ng-readonly="!editable" />
-                    <input class="mod" type="text" ng-switch-default ng-model="game.DateTime" datetime-picker ng-readonly="!editable" />
+                <td class="date" ng-show="columns[1].visible">
+                    <input ng-if="isMobile" class="mod" type="datetime-local" ng-model="game.DateTime" ng-readonly="!editable" />
+                    <input ng-if="!isMobile" class="mod" type="text" ng-model="game.DateTime" datetime-picker ng-readonly="!editable" />
                 </td>
                 <td class="hometeam-points digit" ng-show="columns[2].visible">
                     <input class="mod" type="text" ng-model="game.ScoredPoints" complete-update ng-readonly="!editable" />
@@ -96,12 +96,22 @@
                     <input class="mod" type="text" ng-model="game.TiePoints" complete-update ng-readonly="!editable" />
                 </td>
                 <td class="icon">
-                    <i title="{{eventTypeTooltip(game.Type)}}" ng-class="eventTypeIcon(game.Type)" ng-click="rotateType(game)"></i>
+                    <i ng-if="!editable" title="{{eventTypeTooltip(game.Type)}}" ng-class="eventTypeIcon(game.Type)"></i>
+                    <button ng-if="editable" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                        <i ng-class="eventTypeIcon(game.Type)"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" ng-click="game.Type = 0"><i class="icon-vs"></i> Game</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 1"><i class="icon-bullhorn"></i> Practice</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 2"><i class="icon-calendar-empty"></i> Meeting</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 3"><i class="icon-group"></i> Celebration</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 99"><i class="icon-blank"></i> None</a></li>
+                    </ul>
                 </td>
                 <td class="max">
                     <input class="mod" type="text" ng-model="game.OpponentName" complete-update ng-readonly="!editable" />
                 </td>
-                <td class="location" ng-show="columns[6].visible">
+                <td class="location" ng-show="columns[7].visible">
                     <input class="mod" type="text" locid="{{game.Location.Id}}" value="{{locationDisplay(game.Location)}}" readonly="readonly" />
                     <div class="editor" ng-if="editable || showLocationEditor(game.Location)">
                         <div ng-if="editable || game.Location.Description">
@@ -125,7 +135,7 @@
                         </div>
                     </div>
                 </td>
-                <td class="sublocation" ng-show="columns[7].visible">
+                <td class="sublocation" ng-show="columns[8].visible">
                     <input class="mod" type="text" ng-model="game.Location.InternalLocation" complete-update ng-readonly="!editable" />
                 </td>
             </tr>            
@@ -148,7 +158,8 @@
 </div>
 <script>
     $(function() {
-        // Location editor
+        // Location editor 
+        // TODO make this a directive
         $("#schedule tbody").on("click focus", "td.location > input.mod", function(evt) {
             evt.stopPropagation();
 

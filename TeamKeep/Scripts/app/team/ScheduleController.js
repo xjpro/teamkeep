@@ -8,20 +8,20 @@
     $scope.eventTypeIcon = function (eventType) {
         switch (eventType) {
             case 0: return "icon-vs"; // vs.
-            case 1: return "icon-calendar-empty"; // practice
-            case 2: return "icon-bullhorn"; // meeting
+            case 1: return "icon-bullhorn"; // practice
+            case 2: return "icon-calendar-empty"; // meeting
             case 3: return "icon-group"; // celebration/party
-            default: return "icon-circle-blank"; // blank
+            default: return "icon-blank"; // blank
         }
     };
 
     $scope.eventTypeTooltip = function (eventType) {
         switch (eventType) {
-            case 0: return "vs"; // vs.
+            case 0: return "Game"; // vs.
             case 1: return "Practice"; // practice
             case 2: return "Meeting"; // meeting
             case 3: return "Celebration"; // meeting
-            default: return "Other"; // blank
+            default: return "None"; // blank
         }
     };
 
@@ -107,6 +107,7 @@
     };
 
     $scope.rotateType = function (event) {
+        if (!$scope.editable) return;
         if (++event.Type > 4) {
             event.Type = 0;
         } 

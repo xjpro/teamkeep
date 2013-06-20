@@ -302,8 +302,7 @@ body input[readonly='readonly'] {
     border: solid #bbb 1px;
     border-radius: 2px;
 }
-.table-container a,
-.table-container td.icon {
+.table-container a {
     cursor: pointer;
 }
 .table-container .table-controls {
@@ -394,7 +393,7 @@ body input[readonly='readonly'] {
 }
 .table-container table th.icon,
 .table-container table td.icon span {
-    width: 30px;
+    width: 40px;
 }
 .table-container table td.icon::selection {
     background: #fff;
@@ -579,13 +578,25 @@ body input[readonly='readonly'] {
 
 #schedule .icon {
     border-right: 0;
+}
+#schedule .icon .btn {
+    text-decoration: none;
     color: #666;
+    padding: 4px 6px;
+}
+#schedule .icon .dropdown-menu i {
+    margin-right: 10px;
 }
 #schedule .icon-vs {
     display: inline-block;
     width: 18px;
     height: 15px;
     background: url('/img/icon-vs.gif') no-repeat center center;
+}
+#schedule .icon-blank {
+    display: inline-block;
+    width: 1em;
+    content: ' ';
 }
 
 /* Mobile table 

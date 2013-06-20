@@ -40,19 +40,24 @@
     .directive("datetimePicker", function() {
         return {
             restrict: 'A',
-            link: function(scope, element, attrs) {
-                element.datetimepicker({
-                    dateFormat: "M d, yy,",
-                    timeFormat: "h:mm TT",
-                    stepMinute: 5,
-                    onClose: function(value) {
-                        if (attrs.ngModel) {
-                            scope.$apply(function() {
-                                eval("scope.$parent." + attrs.ngModel + " = value");
-                            });
+            scope: {
+                ngReadonly: "="
+            },
+            link: function (scope, element, attrs) {
+                if (!scope.ngReadonly) {
+                    element.datetimepicker({
+                        dateFormat: "M d, yy,",
+                        timeFormat: "h:mm TT",
+                        stepMinute: 5,
+                        onClose: function (value) {
+                            if (attrs.ngModel) {
+                                scope.$apply(function () {
+                                    eval("scope.$parent." + attrs.ngModel + " = value");
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         };
     })

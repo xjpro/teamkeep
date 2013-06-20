@@ -384,7 +384,6 @@
     <Content Include="Views\User\VerifyThanks.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scripts\app\directives\" />
     <Folder Include="Scripts\app\views\" />
   </ItemGroup>
   <ItemGroup>
