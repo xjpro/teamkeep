@@ -9,8 +9,6 @@
 
     Team.uri = "/teams/" + Team.Id + "/" + Team.Name;
     Team.updating = false;
-    Team.selectedEvent = null;
-    Team.selectedMessage = null;
 
     Team.playersWithEmail = function () {
         var players = _.flatten(Team.PlayerGroups, "Players");
@@ -175,7 +173,7 @@
     angular.forEach(Team.PlayerGroups, function (group) {
         $rootScope.$watch(function () { return group.Name + group.Order; }, function (value, oldValue) { queueChange("groups", group, value, oldValue); }, true);
         angular.forEach(group.Players, function (player) {
-            $rootScope.$watch(function () { return player.LastName + player.FirstName + player.Position + player.Phone + player.Email + _.flatten(player.Availability, "AdminStatus"); },
+            $rootScope.$watch(function () { return player.GroupId + player.LastName + player.FirstName + player.Position + player.Phone + player.Email + _.flatten(player.Availability, "AdminStatus"); },
                 function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
         });
     });

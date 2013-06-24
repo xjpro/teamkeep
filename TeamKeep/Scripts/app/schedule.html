@@ -1,4 +1,4 @@
-﻿<div class="table-container stacks" ng-controller="ScheduleController">
+﻿<div id="schedule" class="table-container stacks">
     <div class="table-controls">
         <div class="column-select pull-left">
             <div class="btn-group">
@@ -160,10 +160,10 @@
     </div>
 </div>
 <script>
-    $(function() {
+    $(function () {
         // Location editor 
         // TODO make this a directive
-        $("#schedule tbody").on("click focus", "td.location > input.mod", function(evt) {
+        $("#schedule tbody").on("click focus", "td.location > input.mod", function (evt) {
             evt.stopPropagation();
 
             if (evt.type === "focusin" && $(evt.target).attr("locid") && $(".editor:visible").length > 0) {
@@ -191,7 +191,7 @@
 
             editor.show().find("input:first").focus();
 
-            $(window).bind("mouseup.editor keyup.editor", function(docEvt) {
+            $(window).bind("mouseup.editor keyup.editor", function (docEvt) {
                 docEvt.stopPropagation();
                 var target = $(docEvt.target);
                 if (target.hasClass("editor") || target.attr("locid") === clicked.attr("locid")) return;
@@ -200,41 +200,14 @@
                     $(window).unbind(".editor");
                 }
             });
-            $(window).bind("resize.editor", function() {
+            $(window).bind("resize.editor", function () {
                 editor.fadeOut("fast");
                 $(window).unbind(".editor");
             });
-            editor.find("button").one("click.editor", function() { // TODO can this trigger multple?
+            editor.find("button").one("click.editor", function () { // TODO can this trigger multple?
                 editor.fadeOut("fast");
                 $(window).unbind(".editor");
             });
         });
-
-        // http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
-        /*$("#schedule .location input.js-desc").typeahead({
-            source: function (query, process) {
-                var locations = _(ko.toJS(teamViewModel.Locations()));
-                process(locations.pluck("Description").compact().unique().value());
-            },
-            matcher: function (item) {
-                if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
-                    return true;
-                }
-            },
-            updater: function (item) {
-                var selected = _.find(ko.toJS(teamViewModel.Locations()), function (location) {
-                    return location.Description == item;
-                });
-                if (selected) {
-                    var parent = this.$element.parent();
-                    parent.find(".js-street").val(selected.Street).change();
-                    parent.find(".js-city").val(selected.City).change();
-                    parent.find(".js-postal").val(selected.Postal).change();
-                    parent.find("button").focus();
-                }
-                return item;
-            },
-            items: 3
-        });*/
     });
 </script>

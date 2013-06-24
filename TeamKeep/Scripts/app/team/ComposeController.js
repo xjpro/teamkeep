@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("ComposeController", ["$scope", "$http", "Team", function ($scope, $http, Team) {
+﻿angular.module("teamkeep").controller("ComposeController", ["$scope", "$http", "$location", "Team", function ($scope, $http, $location, Team) {
 
     $scope.groups = Team.PlayerGroups;
     $scope.sending = false;
@@ -52,6 +52,8 @@
             
             $("#alert-modal").fadeAlert("show", "Message sent successfully", "alert-success");
             $scope.sending = false;
+
+            $location.hash("#/messages");
         })
         .error(function(errorMessage) {
             $("#alert-modal").fadeAlert("show", JSON.parse(errorMessage), "alert-error"); // TODO should go in directive or view?

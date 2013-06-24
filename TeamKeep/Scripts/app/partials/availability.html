@@ -1,0 +1,175 @@
+﻿<div id="availability" class="table-container">
+    <div class="table-controls">
+        <div class="pull-left">
+            <div class="btn-group">
+                <!--button class="btn">Options</!--button>-->
+            </div>
+        </div>
+        <div class="pull-right">
+            <div class="btn-group">
+                <button class="btn">
+                    <i class="icon-question-sign"></i>
+                </button>
+            </div>
+            <div class="editor">
+                <h5>Icons (set by manager)</h5>
+                <p>
+                    <i class="icon-thumbs-up"></i> &mdash; Going<br/>
+                    <i class="icon-ban-circle"></i> &mdash; Not going<br/>
+                    <i class="icon-question-sign"></i> &mdash; Maybe
+                </p>
+
+                <h5>Email confirmation</h5>
+                <p>
+                    <span class="swatch going"></span> &mdash; Confirmed going<br/>
+                    <span class="swatch notgoing"></span> &mdash; Confirmed not going<br/>
+                    <span class="swatch maybe"></span> &mdash; Confirmed maybe
+                </p>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        
+        <button id="availability-prev" class="btn btn-link" ng-disabled="eventsIndex <= 0" ng-click="eventsIndex = eventsIndex - eventsShown">
+            <i class="icon-chevron-left" ng-show="showPrevious()"></i>
+        </button>
+        <button id="availability-next" class="btn btn-link" ng-disabled="allEvents().length - eventsIndex <= eventsShown" ng-click="eventsIndex = eventsIndex + eventsShown">
+            <i class="icon-chevron-right" ng-show="showNext()"></i>
+        </button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th class="max">&nbsp;</th>
+                <th class="position" ng-show="showPosition">&nbsp;</th>
+
+                <th ng-if="events().length == 0">&nbsp;</th>
+                <th ng-if="events().length == 0">&nbsp;</th>
+
+                <th class="angled icon" ng-repeat="event in events() | orderBy:eventPredicate">    
+                    <span ng-switch on="isPast(event)">
+                        <a href="#/availability/{{event.Id}}/request" ng-switch-when="false">
+                            <span>{{event.DateTime | dateTimeAbbrev}}</span>
+                            <button class="btn btn-link">
+                                <i class="icon-envelope" title="Email availability request"></i>
+                            </button>
+                        </a>
+                        <a class="past" ng-switch-when="true">{{event.DateTime | dateTimeAbbrev}}</a>
+                    </span>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="group in groups | orderBy:'Order'">
+
+            <tr>
+                <td class="fullheading" colspan="2">{{group.Name}}</td>
+            </tr>
+                
+            <tr ng-repeat="player in group.Players | orderBy:'LastName'">
+                <td class="max">
+                    <input class="mod" type="text" value="{{player | fullName}}" readonly="readonly"/>
+                </td>
+                <td class="position" ng-show="showPosition">
+                    <input class="mod" type="text" value="{{player.Position}}" readonly="readonly"/>
+                </td>
+                <td class="icon" ng-repeat="event in events()" ng-class="{{availabilityCss(player, game)}}" ng-click="rotateAvailability(player, event)">
+                    <span class="mod">
+                        <i class="{{availabilityIcon(player, event)}}"></i>
+                    </span>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<script>
+    $(function () {
+        // Setup the handy-dandy help button
+        var toggleHelp = function () {
+
+            var editor = $("#availability .table-controls .editor");
+
+            if (!editor.is(":visible")) {
+
+                var clicked = $("#availability .table-controls .pull-right button");
+                editor.css({
+                    position: "absolute",
+                    top: (clicked.position().top + 11) + "px",
+                    right: "48px",
+                    zIndex: '1550',
+                    width: 210 + "px"
+                }).show();
+
+                $(window).bind("mouseup.editor keyup.editor", function (docEvt) {
+                    docEvt.stopPropagation();
+                    var target = $(docEvt.target);
+                    if (!target.hasClass("editor") && !target.is(clicked)) {
+                        editor.fadeOut("fast");
+                        $(window).unbind(".editor");
+                    }
+                });
+
+            } else {
+                editor.hide();
+            }
+        };
+        $("#availability .table-controls .pull-right button").click(toggleHelp);
+
+        // Setup sizing
+        var resizeTimeout = null;
+        var size = function () {
+            if (resizeTimeout == null) {
+                resizeTimeout = setTimeout(function () {
+                    var windowWidth = $(window).width();
+
+                    if (windowWidth < 450) {
+                        if (window.availabilityViewModel.EventsShown() != 2) {
+                            window.availabilityViewModel.EventsShown(2);
+                            $("#availability-prev").css({
+                                right: "135px"
+                            });
+                            $("#availability .position").hide();
+                        }
+                    }
+                    else if (windowWidth < 775) {
+                        if (window.availabilityViewModel.EventsShown() != 5) {
+                            window.availabilityViewModel.EventsShown(5);
+                            $("#availability-prev").css({
+                                right: "255px"
+                            });
+                            $("#availability .position").hide();
+                        }
+                    }
+                    else if (windowWidth < 975) {
+                        if (window.availabilityViewModel.EventsShown() != 7) {
+                            window.availabilityViewModel.EventsShown(7);
+                            $("#availability-prev").css({
+                                right: "335px"
+                            });
+                            $("#availability .position").show();
+                        }
+                    }
+                    else if (windowWidth < 1175) {
+                        if (window.availabilityViewModel.EventsShown() != 10) {
+                            window.availabilityViewModel.EventsShown(10);
+                            $("#availability-prev").css({
+                                right: "457px"
+                            });
+                            $("#availability .position").show();
+                        }
+                    }
+                    else if (window.availabilityViewModel.EventsShown() != 15) {
+                        window.availabilityViewModel.EventsShown(15);
+                        $("#availability-prev").css({
+                            right: "655px"
+                        });
+                        $("#availability .position").show();
+                    }
+
+                    resizeTimeout = null;
+                }, 100);
+            }
+        };
+        //$(window).resize(size);
+        //$(window).trigger("resize");
+    });
+</script>

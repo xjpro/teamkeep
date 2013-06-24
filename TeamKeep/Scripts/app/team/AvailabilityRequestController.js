@@ -1,27 +1,24 @@
-﻿angular.module("teamkeep").controller("AvailabilityRequestController", ["$scope", "$http", "Team", function ($scope, $http, Team) {
+﻿angular.module("teamkeep").controller("AvailabilityRequestController", ["$scope", "$routeParams", "$http", "Team", function ($scope, $routeParams, $http, Team) {
 
     $scope.groups = Team.PlayerGroups;
-    $scope.event = Team.selectedEvent;
+    $scope.event = _(Team.Seasons).flatten("Games").find(function(event) { return event.Id == $routeParams.eventId; });
     $scope.requesting = false;
 
     $scope.eventHeading = function () {
-        if (!Team.selectedEvent) return "";
-        return Team.Name + ' vs. ' + (Team.selectedEvent.OpponentName || '[To Be Determined]');
+        return Team.Name + ' vs. ' + ($scope.event.OpponentName || '[To Be Determined]');
     };
     $scope.eventWhen = function () {
-        if (!Team.selectedEvent) return "";
-        if (!Team.selectedEvent.DateTime) return '[To Be Determined]';
-        return moment(Team.selectedEvent.DateTime).format("dddd MMMM Do, YYYY @ h:mma");
+        if (!$scope.event.DateTime) return '[To Be Determined]';
+        return moment($scope.event.DateTime).format("dddd MMMM Do, YYYY @ h:mma");
     };
     $scope.eventWhere = function () {
-        if (!Team.selectedEvent) return "";
-        if (!Team.selectedEvent.Location) return '[To Be Determined]';
+        if (!$scope.event.Location) return '[To Be Determined]';
 
         var where = [];
-        if (Team.selectedEvent.Location.Description) where.push(Team.selectedEvent.Location.Description + "<br/>");
-        if (Team.selectedEvent.Location.Street) where.push(Team.selectedEvent.Location.Street + "<br/>");
-        if (Team.selectedEvent.Location.City) where.push(Team.selectedEvent.Location.City + "<br/>");
-        if (Team.selectedEvent.Location.Postal) where.push(Team.selectedEvent.Location.Postal + "<br/>");
+        if ($scope.event.Location.Description) where.push($scope.event.Location.Description + "<br/>");
+        if ($scope.event.Location.Street) where.push($scope.event.Location.Street + "<br/>");
+        if ($scope.event.Location.City) where.push($scope.event.Location.City + "<br/>");
+        if ($scope.event.Location.Postal) where.push($scope.event.Location.Postal + "<br/>");
         return where.join('');
     };
 
@@ -44,8 +41,7 @@
     };
 
     $scope.availabilityEmailSent = function (member) {
-        if (!Team.selectedEvent) return false;
-        var ab = _.find(member.Availability, function (otherAb) { return otherAb.EventId == Team.selectedEvent.Id; });
+        var ab = _.find(member.Availability, function (otherAb) { return otherAb.EventId == $scope.event.Id; });
         return (ab != null && ab.EmailSent != null);
     };
 
@@ -53,7 +49,7 @@
 
         $scope.requesting = true;
 
-        $http.post("/games/" + Team.selectedEvent.Id + "/confirmations", {
+        $http.post("/games/" + $scope.event.Id + "/confirmations", {
             playerIds: _.pluck($scope.selectedMembers(), 'Id')
         })
         .success(function(response) {

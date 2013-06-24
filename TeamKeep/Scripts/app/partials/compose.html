@@ -1,30 +1,23 @@
-﻿<div class="container" ng-controller="AvailabilityRequestController">
-    
+﻿<div class="container">
     <div class="row">
-        <div class="span12">
-            <a class="btn btn-link" ng-click="back()">
-                <i class="icon-arrow-left"></i> Return to availability
-            </a>
-        </div>
-    </div>
-
-    <form class="row" ng-submit="sendRequests()">
+        
         <div class="span7">
+            <form ng-submit="sendMessage()">
+                <h3 class="heading">New message</h3>
             
-            <h3 class="heading">{{eventHeading()}}</h3>
-            <div class="horizontal">
-                <label>When</label>
-                <span>{{eventWhen()}}</span>
-            </div>
-            <div class="horizontal">
-                <label style="height: 100px;">Where</label>
-                <p ng-bind-html-unsafe="eventWhere()"></p>
-            </div>
-            <div class="pull-right">
-                <button type="submit" class="btn btn-success" spinner="requesting">
-                    Request availability
-                </button>
-            </div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-comment-alt"></i></span>
+                    <input type="text" class="input-xlarge" ng-model="subject" placeholder="Message subject"/>
+                </div>
+            
+                <div>
+                    <textarea rows="8" autosize class="input-block-level" ng-model="content" placeholder="Message content"></textarea>
+                </div>
+            
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-success" spinner="sending">Send message</button>
+                </div>
+            </form>
         </div>
 
         <div class="span5">
@@ -52,6 +45,6 @@
                 </li>
             </ul>
         </div>
-       
-    </form>
+        
+    </div>
 </div>

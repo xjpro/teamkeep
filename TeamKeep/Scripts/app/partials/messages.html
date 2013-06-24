@@ -1,0 +1,23 @@
+﻿<div id="messages">
+    <div class="text-center" ng-if="messages.length == 0">
+        <p>
+            No messages have been recorded
+        </p>
+    </div>
+    <ul class="newsfeed" ng-if="messages.length > 0">
+        <li ng-repeat="message in messages | orderBy:predicate:true">
+            <i class="icon-envelope icon-2x"></i> 
+            <article>
+                <h6>
+                    <a href="#/messages/{{message.Id}}">{{message.Subject}}</a>
+                </h6>
+                <time>
+                    {{timePast(message)}}
+                </time>
+                <p>
+                    {{abbreviatedContent(message)}}
+                </p>
+            </article>
+        </li>
+    </ul>
+</div>

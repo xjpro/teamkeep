@@ -242,6 +242,14 @@
     <Content Include="Libraries\WebGrease.dll" />
     <Content Include="Scripts\app\login\LoginController.js" />
     <Content Include="Scripts\app\login\RegisterController.js" />
+    <Content Include="Scripts\app\partials\availability-request.html" />
+    <Content Include="Scripts\app\partials\availability.html" />
+    <Content Include="Scripts\app\partials\compose.html" />
+    <Content Include="Scripts\app\partials\message.html" />
+    <Content Include="Scripts\app\partials\messages.html" />
+    <Content Include="Scripts\app\partials\roster.html" />
+    <Content Include="Scripts\app\partials\schedule.html" />
+    <Content Include="Scripts\app\partials\settings.html" />
     <Content Include="Scripts\app\shared\radioButton.js" />
     <Content Include="Scripts\app\shared\Team.js" />
     <Content Include="Scripts\app\shared\spinner.js" />
@@ -249,6 +257,7 @@
     <Content Include="Scripts\app\team\AvailabilityController.js" />
     <Content Include="Scripts\app\team\AvailabilityRequestController.js" />
     <Content Include="Scripts\app\team\ComposeController.js" />
+    <Content Include="Scripts\app\team\MessageController.js" />
     <Content Include="Scripts\app\team\MessagesController.js" />
     <Content Include="Scripts\app\team\RosterController.js" />
     <Content Include="Scripts\app\team\ScheduleController.js" />
@@ -267,7 +276,6 @@
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Content\site.css" />
-    <Content Include="Scripts\ui-bootstrap-0.3.0.js" />
     <Content Include="Scripts\viewmodel.js" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />

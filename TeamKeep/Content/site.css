@@ -203,10 +203,7 @@ h3.heading {
     margin-left: 10px;
 }
 
-#schedule, #roster {
-    min-height: 160px;
-}
-#availability {
+ng-view > div{
     min-height: 245px;
 }
 
@@ -501,7 +498,7 @@ body input[readonly='readonly'] {
     padding: 0;
     border-width: 1px 0;
 }
-.table-container th.angled > span > span {
+.table-container th.angled > span > a {
     position: absolute;
     white-space: nowrap;
     -moz-transform: rotate(45deg) translate(-122px, 70px);
@@ -517,13 +514,18 @@ body input[readonly='readonly'] {
     line-height: 0.5em;
     letter-spacing: 1px;
 }
-.table-container th.angled > span > span {
+.table-container th.angled > span > a,
+.table-container th.angled > span > a:link,
+.table-container th.angled > span > a:visited {
     cursor: pointer;
+    text-decoration: none;
+    border: none;
 }
-.table-container th.angled > span > span.past {
+.table-container th.angled > span > a.past {
     cursor: default;
+    color: #666;
 }
-.table-container th.angled > span > span:after {
+.table-container th.angled > span > a:after {
     content: '';
     position: absolute;
     top: -10px;
@@ -539,7 +541,7 @@ body input[readonly='readonly'] {
     -o-transform: skew(-45deg);
     -ms-transform: skew(-45deg);
 }
-.table-container th.angled:last-child > span > span:after {
+.table-container th.angled:last-child > span > a:after {
     border-top-width: 1px;
 }
 .table-container th.angled button {

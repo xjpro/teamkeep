@@ -25,6 +25,8 @@
         }
     };
 
+    $scope.locations = _(Team.Seasons).flatten("Games").flatten("Location");
+
     $scope.locationDisplay = function(location) {
         if (location != null) {
             if (location.Description) return location.Description;

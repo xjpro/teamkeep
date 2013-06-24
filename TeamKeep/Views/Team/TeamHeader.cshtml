@@ -7,7 +7,7 @@
                 <i class="icon-pencil"></i> Edit banner
             </div>
             <div id="team-functions" class="btn-group" ng-switch="messageButtonEnabled()">
-                <a ng-switch-when="true" class="btn btn-info" data-toggle="tab" ng-click="messageButton()">Message team</a>
+                <a ng-switch-when="true" class="btn btn-info" data-toggle="tab" href="#compose" ng-click="messageButton()">Message team</a>
                 <button ng-switch-when="false" class="btn btn-info disabled" title="Will become available once you've added a team member email to your roster">Message team</button>
                 <a class="btn btn-info" data-toggle="tab" href="#settings" onclick="javascript:location.hash='settings';"><i class="icon-cog"></i></a>
             </div>
@@ -71,18 +71,18 @@
 
     </div>
     <ul id="team-nav" class="container">
-        <li><a data-toggle="tab" href="#schedule" onclick="javascript:location.hash='schedule';">Schedule</a></li>
+        <li><a href="#/schedule">Schedule</a></li>
         @if (Model.Team.Editable || Model.Team.Privacy.Roster)
         {
-        <li><a data-toggle="tab" href="#roster" onclick="javascript:location.hash='roster';">Roster</a></li>
+        <li><a href="#/roster">Roster</a></li>
         }
         @if (Model.Team.Editable)
         {
             <li ng-switch="availabilityVisible()">
-                <a ng-switch-when="true" data-toggle="tab" href="#availability" onclick="javascript:location.hash='availability';" >Availability</a>
+                <a ng-switch-when="true" href="#/availability">Availability</a>
                 <a ng-switch-when="false" class="disabled" title="Will become available once you've added a dated event to your schedule and one member to your roster">Availability</a>
             </li>
-            <li><a data-toggle="tab" href="#messages" onclick="javascript:location.hash='messages';">Messages</a></li>
+            <li><a href="#/messages">Messages</a></li>
         }
     </ul>
 

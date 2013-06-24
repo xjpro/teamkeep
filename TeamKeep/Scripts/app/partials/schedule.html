@@ -1,8 +1,8 @@
-﻿<div class="table-container stacks" ng-controller="ScheduleController">
+﻿<div id="schedule" class="table-container stacks">
     <div class="table-controls">
         <div class="column-select pull-left">
             <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                <a class="btn dropdown-toggle" data-toggle="dropdown">
                     Columns <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -115,7 +115,7 @@
                     <input class="mod" type="text" ng-model="game.OpponentName" complete-update ng-readonly="!editable" />
                 </td>
                 <td class="location" ng-show="columns[7].visible">
-                    <input class="mod" type="text" locid="{{game.Location.Id}}" value="{{locationDisplay(game.Location)}}" readonly="readonly" />
+                    <input location-editor class="mod" type="text" locid="{{game.Location.Id}}" value="{{locationDisplay(game.Location)}}" readonly="readonly" />
                     <div class="editor" ng-if="editable || showLocationEditor(game.Location)">
                         <div ng-if="editable || game.Location.Description">
                             <label>Name</label>
@@ -159,82 +159,3 @@
         </div>
     </div>
 </div>
-<script>
-    $(function() {
-        // Location editor 
-        // TODO make this a directive
-        $("#schedule tbody").on("click focus", "td.location > input.mod", function(evt) {
-            evt.stopPropagation();
-
-            if (evt.type === "focusin" && $(evt.target).attr("locid") && $(".editor:visible").length > 0) {
-                $(this).closest("tr").find("td.max input").focus();
-                return;
-            }
-
-            var clicked = $(this);
-            var editor = clicked.parent().find(".editor");
-            if ($(window).width() > 690) {
-                editor.css({
-                    position: "absolute",
-                    top: clicked.position().top - editor.outerHeight(),
-                    left: clicked.position().left - editor.outerWidth() / 2,
-                    marginLeft: "0"
-                });
-            } else {
-                editor.css({
-                    position: "fixed",
-                    top: "10px",
-                    left: "50%",
-                    marginLeft: "-" + editor.outerWidth() / 2 + "px"
-                });
-            }
-
-            editor.show().find("input:first").focus();
-
-            $(window).bind("mouseup.editor keyup.editor", function(docEvt) {
-                docEvt.stopPropagation();
-                var target = $(docEvt.target);
-                if (target.hasClass("editor") || target.attr("locid") === clicked.attr("locid")) return;
-                if (docEvt.which === 27 || editor.find(":focus").length === 0) {
-                    editor.fadeOut("fast");
-                    $(window).unbind(".editor");
-                }
-            });
-            $(window).bind("resize.editor", function() {
-                editor.fadeOut("fast");
-                $(window).unbind(".editor");
-            });
-            editor.find("button").one("click.editor", function() { // TODO can this trigger multple?
-                editor.fadeOut("fast");
-                $(window).unbind(".editor");
-            });
-        });
-
-        // http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
-        /*$("#schedule .location input.js-desc").typeahead({
-            source: function (query, process) {
-                var locations = _(ko.toJS(teamViewModel.Locations()));
-                process(locations.pluck("Description").compact().unique().value());
-            },
-            matcher: function (item) {
-                if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
-                    return true;
-                }
-            },
-            updater: function (item) {
-                var selected = _.find(ko.toJS(teamViewModel.Locations()), function (location) {
-                    return location.Description == item;
-                });
-                if (selected) {
-                    var parent = this.$element.parent();
-                    parent.find(".js-street").val(selected.Street).change();
-                    parent.find(".js-city").val(selected.City).change();
-                    parent.find(".js-postal").val(selected.Postal).change();
-                    parent.find("button").focus();
-                }
-                return item;
-            },
-            items: 3
-        });*/
-    });
-</script>

@@ -31,18 +31,9 @@
 <div class="container nophonepad">
     <div id="team-data">
         <div class="tab-content">
-            <div id="schedule" class="tab-pane active">
-                @Html.Partial("Schedule")
-            </div>
-            @if (Model.Team.Editable || Model.Team.Privacy.Roster)
-            {
-                <div id="roster" class="tab-pane">
-                    @Html.Partial("Roster")
-                </div>
-            }
             @if (Model.Team.Editable)
             {
-                <div id="availability" class="tab-pane">
+                /*<div id="availability" class="tab-pane">
                     @Html.Partial("Availability")
                 </div>
                 <div id="messages" class="tab-pane">
@@ -60,8 +51,10 @@
                 </div>
                 <div id="log-message" class="tab-pane">
                     @Html.Partial("LogMessage")
-                </div>
+                </div>*/
             }
+
+            <ng-view />
         </div>
     </div>
 </div>

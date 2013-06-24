@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("HeaderController", ["$scope", "$rootScope", "User", "Team", function ($scope, $rootScope, User, Team) {
+﻿angular.module("teamkeep").controller("HeaderController", ["$scope", "$rootScope", "$location", "User", "Team", function ($scope, $rootScope, $location, User, Team) {
 
     $scope.editable = Team.Editable;
     $scope.teamName = Team.Name;
@@ -41,6 +41,7 @@
         }
 
         $rootScope.$broadcast("messageButton.click");
+        $location.hash("#/messages");
         return User.Verified;
     };
 
