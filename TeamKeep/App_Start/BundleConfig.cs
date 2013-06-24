@@ -27,7 +27,8 @@ namespace TeamKeep.App_Start
                 "~/Scripts/lodash.js",
                 "~/Scripts/moment.js",
                 "~/Scripts/viewmodel.js",
-                "~/Scripts/teamkeep.js")
+                "~/Scripts/teamkeep.js",
+                "~/Scripts/teamkeep-directives.js")
                 .IncludeDirectory("~/Scripts/app/", "*.js", true));
         }
     }

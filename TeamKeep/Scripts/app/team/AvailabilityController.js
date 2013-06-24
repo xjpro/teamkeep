@@ -2,9 +2,6 @@
 
     $scope.groups = Team.PlayerGroups;
 
-    $scope.eventsShown = 10;
-    $scope.eventsIndex = 0;
-
     $scope.allEvents = function () {
         var events = _.flatten(Team.Seasons, "Games");
         var filtered = _.filter(events, function (event) { return event.DateTime; });
@@ -24,6 +21,12 @@
         }
         return pageOfEvents;
     };
+    $scope.isPast = function (event) {
+        return moment(event.DateTime).isBefore(moment());
+    };
+
+    $scope.eventsShown = 10;
+    $scope.eventsIndex = _.findIndex($scope.allEvents(), function (event) { return !$scope.isPast(event); });
 
     $scope.showNext = function () {
         return $scope.allEvents().length > $scope.eventsShown;
@@ -32,10 +35,7 @@
         return $scope.allEvents().length > $scope.eventsShown;
     };
     $scope.showPosition = Team.Settings.PositionColumn;
-
-    $scope.isPast = function (event) {
-        return moment(event.DateTime).isBefore(moment());
-    };
+    
     $scope.eventPredicate = function (event) {
         return (event.DateTime) ? new Date(event.DateTime) : new Date(0);
     };

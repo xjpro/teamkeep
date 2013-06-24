@@ -53,7 +53,7 @@
             $("#alert-modal").fadeAlert("show", "Message sent successfully", "alert-success");
             $scope.sending = false;
 
-            $location.hash("#/messages");
+            $location.path("/messages");
         })
         .error(function(errorMessage) {
             $("#alert-modal").fadeAlert("show", JSON.parse(errorMessage), "alert-error"); // TODO should go in directive or view?

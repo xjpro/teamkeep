@@ -41,7 +41,7 @@
         }
 
         $rootScope.$broadcast("messageButton.click");
-        $location.hash("#/messages");
+        $location.path("/messages");
         return User.Verified;
     };
 

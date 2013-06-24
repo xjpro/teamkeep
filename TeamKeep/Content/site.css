@@ -516,7 +516,8 @@ body input[readonly='readonly'] {
 }
 .table-container th.angled > span > a,
 .table-container th.angled > span > a:link,
-.table-container th.angled > span > a:visited {
+.table-container th.angled > span > a:visited,
+.table-container th.angled > span > a i:hover {
     cursor: pointer;
     text-decoration: none;
     border: none;
@@ -525,6 +526,10 @@ body input[readonly='readonly'] {
     cursor: default;
     color: #666;
 }
+.table-container th.angled > span > a.past:after {
+    background: #eee;
+}
+
 .table-container th.angled > span > a:after {
     content: '';
     position: absolute;
@@ -573,9 +578,6 @@ body input[readonly='readonly'] {
 }
 .maybe {
     background: #FFFFD6;
-}
-.table-container th.angled > span > span.past:after {
-    background: #eee;
 }
 
 #schedule .icon {

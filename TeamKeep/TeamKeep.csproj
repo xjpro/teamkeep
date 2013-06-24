@@ -253,6 +253,7 @@
     <Content Include="Scripts\app\shared\radioButton.js" />
     <Content Include="Scripts\app\shared\Team.js" />
     <Content Include="Scripts\app\shared\spinner.js" />
+    <Content Include="Scripts\app\teamkeep-directives.js" />
     <Content Include="Scripts\app\team\AlertsController.js" />
     <Content Include="Scripts\app\team\AvailabilityController.js" />
     <Content Include="Scripts\app\team\AvailabilityRequestController.js" />

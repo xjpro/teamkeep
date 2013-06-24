@@ -36,7 +36,7 @@
             <i class="icon-chevron-right" ng-show="showNext()"></i>
         </button>
     </div>
-    <table>
+    <table availability-autosize events-shown="eventsShown">
         <thead>
             <tr>
                 <th class="max">&nbsp;</th>
@@ -113,63 +113,5 @@
             }
         };
         $("#availability .table-controls .pull-right button").click(toggleHelp);
-
-        // Setup sizing
-        var resizeTimeout = null;
-        var size = function () {
-            if (resizeTimeout == null) {
-                resizeTimeout = setTimeout(function () {
-                    var windowWidth = $(window).width();
-
-                    if (windowWidth < 450) {
-                        if (window.availabilityViewModel.EventsShown() != 2) {
-                            window.availabilityViewModel.EventsShown(2);
-                            $("#availability-prev").css({
-                                right: "135px"
-                            });
-                            $("#availability .position").hide();
-                        }
-                    }
-                    else if (windowWidth < 775) {
-                        if (window.availabilityViewModel.EventsShown() != 5) {
-                            window.availabilityViewModel.EventsShown(5);
-                            $("#availability-prev").css({
-                                right: "255px"
-                            });
-                            $("#availability .position").hide();
-                        }
-                    }
-                    else if (windowWidth < 975) {
-                        if (window.availabilityViewModel.EventsShown() != 7) {
-                            window.availabilityViewModel.EventsShown(7);
-                            $("#availability-prev").css({
-                                right: "335px"
-                            });
-                            $("#availability .position").show();
-                        }
-                    }
-                    else if (windowWidth < 1175) {
-                        if (window.availabilityViewModel.EventsShown() != 10) {
-                            window.availabilityViewModel.EventsShown(10);
-                            $("#availability-prev").css({
-                                right: "457px"
-                            });
-                            $("#availability .position").show();
-                        }
-                    }
-                    else if (window.availabilityViewModel.EventsShown() != 15) {
-                        window.availabilityViewModel.EventsShown(15);
-                        $("#availability-prev").css({
-                            right: "655px"
-                        });
-                        $("#availability .position").show();
-                    }
-
-                    resizeTimeout = null;
-                }, 100);
-            }
-        };
-        //$(window).resize(size);
-        //$(window).trigger("resize");
     });
 </script>
