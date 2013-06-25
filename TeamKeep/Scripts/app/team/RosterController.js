@@ -1,7 +1,7 @@
 ﻿angular.module("teamkeep").controller("RosterController", ["$scope", "$filter", "Team", function ($scope, $filter, Team) {
 
     $scope.editable = Team.Editable;
-    $scope.updating = Team.updating;
+    $scope.updating = function () { return Team.updating; };
     $scope.groups = Team.PlayerGroups;
     
     $scope.selectGroup = function(group) {
@@ -113,7 +113,7 @@
         {
             cssClass: "sort-firstname max",
             name: Team.Settings.LastNameColumn ? "First name" : "Name",
-            toolTip: "Team member first name",
+            toolTip: Team.Settings.LastNameColumn ? "Team member first name" : "Team member name",
             visible: true,
             toggleable: false,
             sortType: "FirstName"
@@ -144,9 +144,7 @@
         }
     ];
     
-    $scope.hasToggleableColumn = function () {
-        return _.find($scope.columns, function (column) { return column.toggleable; });
-    };
+    $scope.hasToggleableColumn = _.find($scope.columns, function (column) { return column.toggleable; });
     
     $scope.$watch("columns", function () {
         angular.forEach($scope.columns, function (column) {
@@ -156,37 +154,7 @@
         });
     }, true);
 
-    $scope.$watch(function () { return Team.Settings.LastNameColumn; }, function (value) {
-        $scope.columns[1].visible = value;
-        if (value) {
-            $scope.columns[2].tooltip = "Team member first name";
-            $scope.columns[2].name = "First name";
-            $("body").append("<style>@@media (max-width: 767px) { #roster td:nth-of-type(3):before { content: 'First name'; } }</style>");
-        }
-        else {
-            $scope.columns[2].tooltip = "Team member name";
-            $scope.columns[2].name = "Name";
-            $("body").append("<style>@@media (max-width: 767px) { #roster td:nth-of-type(3):before { content: 'Name'; } }</style>");
-        }
+    // Hack to make fancy mobile css tables label correctly
+    $("body").append("<style>@media (max-width: 767px) { #roster td:nth-of-type(3):before { content: '" + $scope.columns[2].name + "'; } }</style>");
 
-    }, true);
-
-    $scope.$watch(function () { return Team.Settings.PositionColumn; }, function (value, oldValue) {
-        if (angular.equals(value, oldValue)) return;
-        $scope.columns[3].visible = value;
-        $scope.columns[3].toggleable = value;
-    }, true);
-
-    $scope.$watch(function () { return Team.Settings.PhoneColumn; }, function (value, oldValue) {
-        if (angular.equals(value, oldValue)) return;
-        $scope.columns[4].visible = value;
-        $scope.columns[4].toggleable = value;
-    }, true);
-    
-    $scope.$watch(function () { return Team.Settings.EmailColumn; }, function (value, oldValue) {
-        if (angular.equals(value, oldValue)) return;
-        $scope.columns[5].visible = value;
-        $scope.columns[5].toggleable = value;
-    }, true);
-    
 }]);

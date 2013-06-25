@@ -2,7 +2,7 @@
 
     $scope.isMobile = TeamKeep.isMobile;
     $scope.editable = Team.Editable;
-    $scope.updating = Team.updating;
+    $scope.updating = function () { return Team.updating; };
     $scope.seasons = Team.Seasons;
     
     $scope.eventTypeIcon = function (eventType) {
@@ -247,8 +247,9 @@
         });
     }, true);
 
-    $scope.$watch(function() { return Team.Settings.ResultsView; }, function (value) {
-        switch (value) {
+    // Assign results view values
+    (function () {
+        switch (Team.Settings.ResultsView) {
             case 0: // points scored / allowed
                 $scope.columns[2].name = "PS";
                 $scope.columns[2].toolTip = "Points scored";
@@ -317,12 +318,6 @@
                 $scope.columns[4].toggleable = false;
                 break;
         }
-    }, true);
-
-    $scope.$watch(function () { return Team.Settings.ArenaColumn; }, function (value, oldValue) {
-        if (angular.equals(value, oldValue)) return;
-        $scope.columns[7].visible = value;
-        $scope.columns[7].toggleable = value;
-    }, true);
+    })();
 
 }]);

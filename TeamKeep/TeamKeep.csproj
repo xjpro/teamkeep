@@ -313,13 +313,7 @@
     <Content Include="Views\Shared\Includes.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Team\TeamSchedule.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Team\TeamHome.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Team\TeamRoster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Footer.cshtml" />
@@ -348,25 +342,13 @@
     <Content Include="Views\Public\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Team\Availability.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Public\AvailabilityLanding.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="log4.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Team\Messages.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Public\Features.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Team\TeamSettings.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Team\Compose.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Team\TeamHeader.cshtml" />
@@ -376,9 +358,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\PublicHeader.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Team\LogMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Login\OpenIdComplete.cshtml" />
@@ -396,19 +375,10 @@
     <Folder Include="Scripts\app\views\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Team\AvailabilityRequest.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Public\Sitemap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\FeaturesHomepage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Team\Schedule.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Team\Roster.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

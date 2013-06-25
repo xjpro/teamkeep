@@ -1,6 +1,6 @@
 ﻿<div id="roster" class="table-container stacks">
     <div class="table-controls">
-        <div class="column-select pull-left" ng-if="editable && hasToggleableColumn()">
+        <div class="column-select pull-left" ng-if="editable && hasToggleableColumn">
             <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown">
                     Columns <span class="caret"></span>
@@ -16,7 +16,7 @@
         </div>
         
         <div class="group-select pull-right" ng-show="editable">
-            <i class="icon-refresh icon-spin" ng-show="updating"></i>
+            <i class="icon-refresh icon-spin" ng-show="updating()"></i>
             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-plus-sign-alt"></i> Member
             </button>

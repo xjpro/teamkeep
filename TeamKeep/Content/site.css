@@ -207,7 +207,7 @@ ng-view > div{
     min-height: 245px;
 }
 
-#newteam-modal .icon-spin, #login .icon-spin, #roster .icon-spin, #reset .icon-spin {
+#newteam-modal .icon-spin, #login .icon-spin, #reset .icon-spin {
     display: none;
 }
 
@@ -516,11 +516,11 @@ body input[readonly='readonly'] {
 }
 .table-container th.angled > span > a,
 .table-container th.angled > span > a:link,
-.table-container th.angled > span > a:visited,
-.table-container th.angled > span > a i:hover {
+.table-container th.angled > span > a:visited {
     cursor: pointer;
     text-decoration: none;
     border: none;
+    color: #666;
 }
 .table-container th.angled > span > a.past {
     cursor: default;
@@ -929,6 +929,10 @@ body input[readonly='readonly'] {
 #availability-next { 
     right: 0;
 }
+#availability tbody td.icon span {
+    cursor: pointer;
+}
+
 #ab-data {
     list-style: none;
     padding: 10px;
