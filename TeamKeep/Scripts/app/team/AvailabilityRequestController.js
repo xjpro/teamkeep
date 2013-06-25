@@ -4,14 +4,9 @@
     $scope.event = _(Team.Seasons).flatten("Games").find(function(event) { return event.Id == $routeParams.eventId; });
     $scope.requesting = false;
 
-    $scope.eventHeading = function () {
-        return Team.Name + ' vs. ' + ($scope.event.OpponentName || '[To Be Determined]');
-    };
-    $scope.eventWhen = function () {
-        if (!$scope.event.DateTime) return '[To Be Determined]';
-        return moment($scope.event.DateTime).format("dddd MMMM Do, YYYY @ h:mma");
-    };
-    $scope.eventWhere = function () {
+    $scope.eventHeading = Team.Name + ' vs. ' + ($scope.event.OpponentName || '[To Be Determined]');
+    $scope.eventWhen = (!$scope.event.DateTime) ? '[To Be Determined]' : moment($scope.event.DateTime).format("dddd MMMM Do, YYYY @ h:mma");
+    $scope.eventWhere = (function () {
         if (!$scope.event.Location) return '[To Be Determined]';
 
         var where = [];
@@ -20,7 +15,7 @@
         if ($scope.event.Location.City) where.push($scope.event.Location.City + "<br/>");
         if ($scope.event.Location.Postal) where.push($scope.event.Location.Postal + "<br/>");
         return where.join('');
-    };
+    })();
 
     $scope.selectedMembers = function() {
         var members = _.flatten(Team.PlayerGroups, "Players");

@@ -4,61 +4,11 @@
     ViewBag.TeamHeader = true;
     Layout = "~/Views/Shared/Master.cshtml";
 }
-
-<div id="team-info">
-    <div class="container">
-        <!-- ko if: Editable() || (Announcement() != null && Announcement().trim().length > 0) -->
-        <div class="row-fluid">
-            <div id="team-announcement" class="span12 section">
-                <h2>Announcements</h2>
-                <!-- ko if: Editable -->
-                <textarea rows="4" data-bind="value: Announcement, event: { keydown: ShowAnnouncementOptions }"></textarea>
-                <!-- /ko -->
-                <!-- ko ifnot: Editable -->
-                <textarea rows="4" data-bind="value: Announcement, editable: false"></textarea>
-                <!-- /ko -->
-                <div class="options">
-                    <button class="btn btn-info pull-right" data-bind="click: SaveAnnouncement">
-                        <i class="icon-refresh icon-spin" style="display: none"></i> Save Changes
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /ko -->
-    </div>  
-</div>
-
 <div class="container nophonepad">
     <div id="team-data">
-        <div class="tab-content">
-            @if (Model.Team.Editable)
-            {
-                /*<div id="availability" class="tab-pane">
-                    @Html.Partial("Availability")
-                </div>
-                <div id="messages" class="tab-pane">
-                    @Html.Partial("Messages")
-                </div>
-                <!-- sub tabs -->
-                <div id="ab-request" class="tab-pane">
-                    @Html.Partial("AvailabilityRequest")
-                </div>
-                <div id="compose" class="tab-pane">
-                    @Html.Partial("Compose")
-                </div>
-                <div id="settings" class="tab-pane">
-                    @Html.Partial("TeamSettings")
-                </div>
-                <div id="log-message" class="tab-pane">
-                    @Html.Partial("LogMessage")
-                </div>*/
-            }
-
-            <ng-view />
-        </div>
+        <ng-view />
     </div>
 </div>
-
 <div class="container hidden-phone" ng-controller="TutorialController">
     <div class="tutorial-step" ng-repeat="step in steps" ng-show="step.active" ng-style="step.position">
         <button type="button" class="close" title="Close tutorial" ng-click="$parent.close()">&times;</button>
@@ -71,61 +21,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    var TeamHomeViewModel = function() {
-        var me = this;
-        
-        // From shared storage
-        this.Editable = teamViewModel.Editable;
-        this.PlayerGroups = teamViewModel.PlayerGroups;
-        this.Id = teamViewModel.Id;
-        this.Url = teamViewModel.Url;
-        this.Announcement = teamViewModel.Announcement;
-        this.Privacy = teamViewModel.Privacy;
-
-        this.EnableMessageButton = ko.computed(function() {
-            var somePlayersHaveEmail = false;
-            _.each(me.PlayerGroups(), function(group) {
-                if(group.PlayersWithEmail().length > 0) {
-                    somePlayersHaveEmail = true;
-                    return false;
-                }
-            });
-            return somePlayersHaveEmail;
-        });
-        this.ShowAnnouncementOptions = function (obj, event) {
-            if (event.keyCode != 9) {
-                $("#team-announcement .options").show();
-            }
-            return true;
-        };
-
-        this.SaveAnnouncement = function () {
-            $("#team-announcement").find("textarea, button").prop("disabled", true);
-            $("#team-announcement .icon-spin").show();
-            $.ajax({
-                type: "PUT",
-                url: me.Url() + "/announcement",
-                data: {
-                    Announcement: $("#team-announcement textarea").val()      
-                },
-                success: function (response) {
-                    me.Announcement(response.Announcement);
-                    $("#team-announcement").find("textarea, button").prop("disabled", false);
-                    $("#team-announcement").find(".options, .icon-spin").hide();
-                }
-            });
-        };
-        
-    };
-    
-    $(function() {
-        window.teamHomeViewModel = new TeamHomeViewModel();
-        ko.applyBindings(window.teamHomeViewModel, document.getElementById("team-info"));
-        
-        //$("#team-announcement textarea").autosize();
-        $(document).tooltip({ items: "*[title]", track: true });
-        $("#team-info").hide();
-    });
-</script>

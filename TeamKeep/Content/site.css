@@ -790,14 +790,6 @@ body input[readonly='readonly'] {
     display: none;
 }
 
-#team-data .nav-tabs a {
-    font-family: 'Fjalla One', sans-serif;
-    font-size: 16pt;
-}
-#team-data .nav-tabs .active a {
-    color: #444;
-}
-
 .editor {
     z-index: 1000;
     display: none;

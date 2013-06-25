@@ -11,14 +11,14 @@
     <form class="row" ng-submit="sendRequests()">
         <div class="span7">
             
-            <h3 class="heading">{{eventHeading()}}</h3>
+            <h3 class="heading">{{eventHeading}}</h3>
             <div class="horizontal">
                 <label>When</label>
-                <span>{{eventWhen()}}</span>
+                <span>{{eventWhen}}</span>
             </div>
             <div class="horizontal">
                 <label style="height: 100px;">Where</label>
-                <p ng-bind-html-unsafe="eventWhere()"></p>
+                <p ng-bind-html-unsafe="eventWhere"></p>
             </div>
             <div class="pull-right">
                 <button type="submit" class="btn btn-success" spinner="requesting">

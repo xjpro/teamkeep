@@ -92,10 +92,8 @@
         var me = this;
 
         // From shared storage
-        this.Id = teamViewModel.Id;
         this.Url = teamViewModel.Url;
         this.BannerImage = teamViewModel.BannerImage;
-
         this.BannerBackgroundImage = ko.computed(function () {
             return (me.BannerImage() != null) ? "url('/TeamBanners/" + me.BannerImage() + "')" : "url('/img/defaultbanner.jpg')";
         });
@@ -147,17 +145,8 @@
             function () { $("#team-banner .hover-edit").show(); },
             function () { $("#team-banner .hover-edit").hide(); });
         
-        // Initial nav
-        if (location.hash.length > 0) {
-            _.defer(function() { $("a[href='" + location.hash + "']").click(); });
-        }
-        else {
-            $("#team-nav li a:first").click();
-        }
 
         $("body").on("click", "[data-toggle='tab'][href!='']", function() {
-            $("#team-nav .active").removeClass("active");
-
             // When in mobile view, automatically scroll down when nav buttons are clicked
             if ($(window).width() <= 767) {
                 $("html, body").animate({
