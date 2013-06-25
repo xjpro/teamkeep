@@ -69,6 +69,24 @@ namespace TeamKeep.Services
             }
         }
 
+        public GameDutyData AddEventDuty(GameDutyData duty)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var dutyData = new GameDutyData
+                {
+                    GameId = duty.GameId,
+                    PlayerId = duty.PlayerId,
+                    Name = duty.Name
+                };
+                entities.GameDutyDatas.AddObject(dutyData);
+                entities.SaveChanges();
+
+                duty.Id = dutyData.Id;
+                return duty;
+            }
+        }
+
         public void RemoveGame(int gameId)
         {
             using (var entities = Database.GetEntities())
@@ -79,17 +97,24 @@ namespace TeamKeep.Services
 
         private void RemoveGame(DatabaseEntities entities, int gameId, bool saveChanges = true)
         {
-            entities.GameDatas.DeleteObject(entities.GameDatas.Single(x => x.Id == gameId));
-            entities.GameLocationDatas.DeleteObject(entities.GameLocationDatas.Single(x => x.GameId == gameId));
-            foreach (var abData in entities.AvailabilityDatas.Where(x => x.EventId == gameId).ToList())
+            // Remove availabilities
+            foreach (var data in entities.AvailabilityDatas.Where(x => x.EventId == gameId).ToList())
             {
-                entities.DeleteObject(abData);
+                entities.DeleteObject(data);
             }
 
-            if (saveChanges)
+            // Remove duties
+            foreach (var data in entities.GameDutyDatas.Where(x => x.GameId == gameId).ToList())
             {
-                entities.SaveChanges();
+                entities.DeleteObject(data);
             }
+
+            entities.SaveChanges(); // Must save here or foreign keys will cause error
+
+            entities.GameLocationDatas.DeleteObject(entities.GameLocationDatas.Single(x => x.GameId == gameId));
+            entities.GameDatas.DeleteObject(entities.GameDatas.Single(x => x.Id == gameId));
+
+            if (saveChanges) entities.SaveChanges();
         }
 
         public Game UpdateGate(Game teamEvent)

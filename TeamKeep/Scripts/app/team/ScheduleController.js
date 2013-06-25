@@ -4,16 +4,9 @@
     $scope.editable = Team.Editable;
     $scope.updating = function () { return Team.updating; };
     $scope.seasons = Team.Seasons;
-    
-    $scope.eventTypeIcon = function (eventType) {
-        switch (eventType) {
-            case 0: return "icon-vs"; // vs.
-            case 1: return "icon-bullhorn"; // practice
-            case 2: return "icon-calendar-empty"; // meeting
-            case 3: return "icon-group"; // celebration/party
-            default: return "icon-blank"; // blank
-        }
-    };
+    $scope.players = Team.playersWithName();
+
+    $scope.eventTypeIcon = Team.eventTypeIcon;
 
     $scope.eventTypeTooltip = function (eventType) {
         switch (eventType) {
@@ -91,6 +84,7 @@
     $scope.removeEvent = function(event) {
         Team.removeEvent(event);
     };
+    
     $scope.move = function(event, season) {
         var currentParent = _.find(Team.Seasons, function (other) { return other.Id == event.SeasonId; });
         currentParent.Games.splice(_.findIndex(currentParent.Games, function (other) { return other.Id == event.Id; }), 1);
@@ -113,6 +107,25 @@
         if (++event.Type > 4) {
             event.Type = 0;
         } 
+    };
+    
+    // Duties
+
+    $scope.dutyName = "";
+    $scope.dutyPlayerId = $scope.players[0].Id;
+    
+    $scope.selectDutyEvent = function (event) {
+        $scope.dutyEvent = event;
+    };
+
+    $scope.addDuty = function () {
+        console.log($scope.dutyName);
+        Team.addEventDuty($scope.dutyEvent, $scope.dutyPlayerId, $scope.dutyName)
+            .success(function () {
+                // TODO controller shouldn't be handling view stuff
+                $("#alert-modal").fadeAlert("show", "'" + $scope.dutyName + "' duty was successfully added", "alert-success");
+                $("#duty-modal").modal("hide");
+            });
     };
 
     // Sorting

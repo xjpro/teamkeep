@@ -272,6 +272,22 @@ namespace TeamKeep.Models.DataModels
             }
         }
         private ObjectSet<UserSettingsData> _UserSettingsDatas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<GameDutyData> GameDutyDatas
+        {
+            get
+            {
+                if ((_GameDutyDatas == null))
+                {
+                    _GameDutyDatas = base.CreateObjectSet<GameDutyData>("GameDutyDatas");
+                }
+                return _GameDutyDatas;
+            }
+        }
+        private ObjectSet<GameDutyData> _GameDutyDatas;
 
         #endregion
 
@@ -379,6 +395,14 @@ namespace TeamKeep.Models.DataModels
         public void AddToUserSettingsDatas(UserSettingsData userSettingsData)
         {
             base.AddObject("UserSettingsDatas", userSettingsData);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the GameDutyDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToGameDutyDatas(GameDutyData gameDutyData)
+        {
+            base.AddObject("GameDutyDatas", gameDutyData);
         }
 
         #endregion
@@ -868,6 +892,210 @@ namespace TeamKeep.Models.DataModels
         private global::System.Byte _Type;
         partial void OnTypeChanging(global::System.Byte value);
         partial void OnTypeChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DatabaseModel", Name="GameDutyData")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class GameDutyData : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new GameDutyData object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="gameId">Initial value of the GameId property.</param>
+        /// <param name="playerId">Initial value of the PlayerId property.</param>
+        public static GameDutyData CreateGameDutyData(global::System.Int32 id, global::System.Int32 gameId, global::System.Int32 playerId)
+        {
+            GameDutyData gameDutyData = new GameDutyData();
+            gameDutyData.Id = id;
+            gameDutyData.GameId = gameId;
+            gameDutyData.PlayerId = playerId;
+            return gameDutyData;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 GameId
+        {
+            get
+            {
+                return _GameId;
+            }
+            set
+            {
+                OnGameIdChanging(value);
+                ReportPropertyChanging("GameId");
+                _GameId = StructuralObject.SetValidValue(value, "GameId");
+                ReportPropertyChanged("GameId");
+                OnGameIdChanged();
+            }
+        }
+        private global::System.Int32 _GameId;
+        partial void OnGameIdChanging(global::System.Int32 value);
+        partial void OnGameIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PlayerId
+        {
+            get
+            {
+                return _PlayerId;
+            }
+            set
+            {
+                OnPlayerIdChanging(value);
+                ReportPropertyChanging("PlayerId");
+                _PlayerId = StructuralObject.SetValidValue(value, "PlayerId");
+                ReportPropertyChanged("PlayerId");
+                OnPlayerIdChanged();
+            }
+        }
+        private global::System.Int32 _PlayerId;
+        partial void OnPlayerIdChanging(global::System.Int32 value);
+        partial void OnPlayerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Byte> Type
+        {
+            get
+            {
+                return _Type;
+            }
+            set
+            {
+                OnTypeChanging(value);
+                ReportPropertyChanging("Type");
+                _Type = StructuralObject.SetValidValue(value, "Type");
+                ReportPropertyChanged("Type");
+                OnTypeChanged();
+            }
+        }
+        private Nullable<global::System.Byte> _Type;
+        partial void OnTypeChanging(Nullable<global::System.Byte> value);
+        partial void OnTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true, "Name");
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, true, "Description");
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Byte> Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                OnStatusChanging(value);
+                ReportPropertyChanging("Status");
+                _Status = StructuralObject.SetValidValue(value, "Status");
+                ReportPropertyChanged("Status");
+                OnStatusChanged();
+            }
+        }
+        private Nullable<global::System.Byte> _Status;
+        partial void OnStatusChanging(Nullable<global::System.Byte> value);
+        partial void OnStatusChanged();
 
         #endregion
 

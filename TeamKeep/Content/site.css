@@ -348,6 +348,10 @@ body input[readonly='readonly'] {
 .table-container td.fullheading i {
     cursor: pointer;
 }
+.table-container td.heading {
+    padding: 4px 5px 4px 15px;
+    font-weight: bold;
+}
 .table-container td.fullinfo {
     padding: 20px 0;
     text-align: center;

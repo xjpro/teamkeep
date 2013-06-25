@@ -87,9 +87,5 @@
             });
         }
     };
-
-    $scope.selectEvent = function (event) {
-        Team.selectedEvent = event;
-    };
-
+    
 }]);

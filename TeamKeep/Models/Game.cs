@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using TeamKeep.Models.DataModels;
 
@@ -59,5 +60,7 @@ namespace TeamKeep.Models
                 return address.ToString().Trim();
             }
         }
+
+        public List<GameDutyData> Duties { get; set; }
     }
 }

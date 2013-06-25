@@ -14,6 +14,20 @@
         var players = _.flatten(Team.PlayerGroups, "Players");
         return _.filter(players, function (player) { return player.Email != null; });
     };
+    Team.playersWithName = function () {
+        var players = _.flatten(Team.PlayerGroups, "Players");
+        return _.filter(players, function (player) { return player.FirstName || player.LastName; });
+    };
+    
+    Team.eventTypeIcon = function (eventType) {
+        switch (eventType) {
+            case 0: return "icon-vs"; // vs.
+            case 1: return "icon-bullhorn"; // practice
+            case 2: return "icon-calendar-empty"; // meeting
+            case 3: return "icon-group"; // celebration/party
+            default: return "icon-blank"; // blank
+        }
+    };
 
     Team.saveSettings = function () {
         return $http.put(Team.uri + "/settings", {
@@ -58,6 +72,18 @@
             
                 Team.updating = false;
             });
+    };
+
+    Team.addEventDuty = function(event, playerId, name) {
+        Team.updating = true;
+
+        console.log(name);
+        return $http.post(Team.uri + "/events/" + event.Id + "/duties", {
+            playerId: playerId,
+            name: name
+        }).success(function(duty) {
+            Team.updating = false;
+        });
     };
     
     Team.removeEvent = function (event) {

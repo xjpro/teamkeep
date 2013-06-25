@@ -8,6 +8,7 @@
         <EntityContainer Name="DatabaseModelStoreContainer">
           <EntitySet Name="AvailabilityData" EntityType="DatabaseModel.Store.AvailabilityData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GameData" EntityType="DatabaseModel.Store.GameData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GameDutyData" EntityType="DatabaseModel.Store.GameDutyData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GameLocationData" EntityType="DatabaseModel.Store.GameLocationData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MessageData" EntityType="DatabaseModel.Store.MessageData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PlayerData" EntityType="DatabaseModel.Store.PlayerData" store:Type="Tables" Schema="dbo" />
@@ -46,6 +47,18 @@
           <Property Name="AllowedPoints" Type="smallint" />
           <Property Name="TiePoints" Type="smallint" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameDutyData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GameId" Type="int" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="tinyint" />
         </EntityType>
         <EntityType Name="GameLocationData">
           <Key>
@@ -185,6 +198,7 @@
           <EntitySet Name="MessageDatas" EntityType="DatabaseModel.MessageData" />
           <EntitySet Name="UserDatas" EntityType="DatabaseModel.UserData" />
           <EntitySet Name="UserSettingsDatas" EntityType="DatabaseModel.UserSettingsData" />
+          <EntitySet Name="GameDutyDatas" EntityType="DatabaseModel.GameDutyData" />
         </EntityContainer>
         <EntityType Name="GameData">
           <Key>
@@ -332,6 +346,18 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <Property Type="Boolean" Name="ShowTutorial" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameDutyData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="GameId" Nullable="false" />
+          <Property Type="Int32" Name="PlayerId" Nullable="false" />
+          <Property Type="Byte" Name="Type" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Byte" Name="Status" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -495,6 +521,19 @@
               <MappingFragment StoreEntitySet="UserSettingsData">
                 <ScalarProperty Name="ShowTutorial" ColumnName="ShowTutorial" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameDutyDatas">
+            <EntityTypeMapping TypeName="DatabaseModel.GameDutyData">
+              <MappingFragment StoreEntitySet="GameDutyData">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -42,7 +42,7 @@
         <tbody ng-hide="seasons.length > 0">
             <tr>
                 <td class="fullinfo" colspan="{{columns.length}}">
-                    No games have been posted for this team
+                    No events have been posted for this team
                 </td>
             </tr>
         </tbody>
@@ -59,13 +59,14 @@
             </tr>
 
             <tr ng-hide="season.Games.length > 0">
-                <td class="fullinfo" colspan="{{columns.length}}">There are no games in this season</td>
+                <td class="fullinfo" colspan="{{columns.length}}">There are no events in this season</td>
             </tr>
 
             <tr ng-repeat="game in season.Games">
                 <td class="button" ng-show="columns[0].visible">
                     <a id="dropLabel" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabel">
+                        <li><a tabindex="-1" data-toggle="modal" data-target="#duty-modal" ng-click="selectDutyEvent(game)"> Add duty</a></li>
                         <li class="dropdown-submenu">
                             <a tabindex="-1">Move to</a>
                             <ul class="dropdown-menu">
@@ -158,4 +159,27 @@
             <button class="btn btn-primary" data-dismiss="modal" ng-click="removeSeason(selectedSeason)">Yes, please delete</button>
         </div>
     </div>
+    <form id="duty-modal" class="modal hide fade" ng-submit="addDuty()">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3><i class="{{eventTypeIcon(dutyEvent.Type)}}"></i> {{dutyEvent.OpponentName}}</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                {{dutyEvent.When}}
+            </p>
+            <div>
+                <label>Assigned to</label>
+                <select ng-model="dutyPlayerId" ng-options="player.Id as player.FirstName + ' ' + player.LastName for player in players"></select>                    
+            </div>
+            <div>
+                <label>Short description</label>
+                <input type="text" ng-model="dutyName" placeholder="Bring snacks, score game, etc."/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button type="submit" class="btn btn-primary" spinner="evaluating">Create duty</button>
+        </div>
+    </form>
 </div>

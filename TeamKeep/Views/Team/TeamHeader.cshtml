@@ -7,9 +7,9 @@
                 <i class="icon-pencil"></i> Edit banner
             </div>
             <div id="team-functions" class="btn-group" ng-switch="messageButtonEnabled()">
-                <a ng-switch-when="true" class="btn btn-info" data-toggle="tab" href="#compose" ng-click="messageButton()">Message team</a>
+                <a ng-switch-when="true" class="btn btn-info" href="#/compose" ng-click="messageButton()">Message team</a>
                 <button ng-switch-when="false" class="btn btn-info disabled" title="Will become available once you've added a team member email to your roster">Message team</button>
-                <a class="btn btn-info" data-toggle="tab" href="#settings" onclick="javascript:location.hash='settings';"><i class="icon-cog"></i></a>
+                <a class="btn btn-info" href="#/settings"><i class="icon-cog"></i></a>
             </div>
         </div>
 
@@ -68,7 +68,6 @@
                 <button type="submit" class="btn btn-success" spinner="evaluating">Set email</button>
             </div>
         </form>
-
     </div>
     <ul id="team-nav" class="container">
         <li><a href="#/schedule">Schedule</a></li>
@@ -82,6 +81,7 @@
                 <a ng-switch-when="true" href="#/availability">Availability</a>
                 <a ng-switch-when="false" class="disabled" title="Will become available once you've added a dated event to your schedule and one member to your roster">Availability</a>
             </li>
+            <li><a href="#/duties">Duties</a></li>
             <li><a href="#/messages">Messages</a></li>
         }
     </ul>
@@ -144,15 +144,5 @@
         $("#team-banner").hover( // Show edit button when banner is hovered
             function () { $("#team-banner .hover-edit").show(); },
             function () { $("#team-banner .hover-edit").hide(); });
-        
-
-        $("body").on("click", "[data-toggle='tab'][href!='']", function() {
-            // When in mobile view, automatically scroll down when nav buttons are clicked
-            if ($(window).width() <= 767) {
-                $("html, body").animate({
-                    scrollTop: $("#team-header").offset().top + $("#team-header").outerHeight()
-                }, 0);
-            }
-        });
     });
 </script>

@@ -119,6 +119,7 @@ namespace TeamKeep.Services
                         }
 
                         game.Location = entities.GameLocationDatas.Single(x => x.GameId == game.Id);
+                        game.Duties = entities.GameDutyDatas.Where(x => x.GameId == game.Id).ToList();
                     }
                 }
 

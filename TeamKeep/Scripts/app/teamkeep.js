@@ -17,6 +17,10 @@
                 templateUrl: "/Scripts/app/partials/availability-request.html",
                 controller: "AvailabilityRequestController"
             })
+            .when("/duties", {
+                templateUrl: "/Scripts/app/partials/duties.html",
+                controller: "DutiesController"
+            })
             .when("/messages", {
                 templateUrl: "/Scripts/app/partials/messages.html",
                 controller: "MessagesController"
@@ -36,7 +40,8 @@
             .otherwise({ redirectTo: "/schedule" });
     }])
     .run(["$rootScope", "$location", function ($rootScope, $location) {
-        $rootScope.$on("$routeChangeStart", function (scope, next, curr) {
+
+        $rootScope.$on("$routeChangeStart", function () {
             $("#team-nav li").removeClass("active");
             $("#team-nav li:has(a[href='#" + $location.path() + "'])").addClass("active");
         });
