@@ -6,27 +6,28 @@
     <table when-focused="preventSorting">
         <thead>
             <tr>
-                <th class="icon"></th>
-                <th class="icon"></th>
-                <th class="name">Assigned to</th>
-                <th class="max">Duty</th>
+                <th class="button"></th>
+                <th class="name"><a>Assigned to</a></th>
+                <th class="max"><a>Duty</a></th>
             </tr>
         </thead>
         <tbody ng-hide="events.length > 0">
             <tr>
-                <td class="fullinfo" colspan="5">
+                <td class="fullinfo" colspan="3">
                     No events have been posted for this team
                 </td>
             </tr>
         </tbody>
         <tbody ng-repeat="event in events">
             <tr>
-                <td class="heading" colspan="4">
-                    <span>
+                <td class="heading" colspan="3">
+                    <h6>
                         <i ng-class="eventTypeIcon(event.Type)"></i> &nbsp; {{ event.OpponentName || '[Untitled]' }}
+                    </h6>
+                    <span>
+                        {{ (event.When) ? '| ' + event.When : '' }}
                     </span>
                     <div class="pull-right">
-                        {{ event.When }}
                         <button class="btn btn-mini"><i class="icon-plus-sign-alt"></i> Add</button>
                     </div>
                 </td>
@@ -36,11 +37,8 @@
                 <td class="button">
                     <a id="dropLabel" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabel">
-                        <li><a tabindex="-1" ng-click="">Remove</a></li>
+                        <li><a tabindex="-1" ng-click="removeDuty(duty)">Remove</a></li>
                     </ul>
-                </td>
-                <td class="icon">
-                    
                 </td>
                 <td class="name">
                     <button class="btn btn-link dropdown-toggle" data-toggle="dropdown" tabindex="-1">

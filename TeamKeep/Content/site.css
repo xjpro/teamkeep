@@ -350,7 +350,13 @@ body input[readonly='readonly'] {
 }
 .table-container td.heading {
     padding: 4px 5px 4px 15px;
+}
+.table-container td.heading h6 {
+    display: inline-block;
+    margin: 0;
+    font-size: 1em;
     font-weight: bold;
+    color: #666;
 }
 .table-container td.fullinfo {
     padding: 20px 0;
@@ -408,8 +414,12 @@ body input[readonly='readonly'] {
     width: 130px;
 }
 .table-container table th.name,
-.table-container table td.name input {
+.table-container table td.name input,
+.table-container table td.name button {
     width: 230px;
+}
+.table-container table td.name button {
+    text-align: left;
 }
 .table-container table th.lastname,
 .table-container table td.lastname input {
@@ -595,7 +605,7 @@ body input[readonly='readonly'] {
 #schedule .icon .dropdown-menu i {
     margin-right: 10px;
 }
-#schedule .icon-vs {
+.table-container .icon-vs {
     display: inline-block;
     width: 18px;
     height: 15px;

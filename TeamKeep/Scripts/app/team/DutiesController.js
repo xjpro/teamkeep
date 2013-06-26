@@ -6,7 +6,11 @@
     
     $scope.playerName = function(playerId) {
         var player = _.find($scope.players, function (p) { return p.Id == playerId; });
-        return player.FirstName + " " + player.LastName;
+        return (player.FirstName + " " + player.LastName).substr(0, 27);
+    };
+
+    $scope.removeDuty = function (duty) {
+        Team.removeEventDuty(duty);
     };
 
 }]);

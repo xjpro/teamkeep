@@ -32,35 +32,6 @@ namespace TeamKeep.Controllers
             return Json(game, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult CreateDuty(int teamId, int eventId, GameDutyData duty)
-        {
-            var activeUser = GetActiveUser(Request);
-            var team = _teamService.GetTeam(teamId);
-            if (!team.Owners.Exists(x => x.Id == activeUser.Id))
-            {
-                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team");
-            }
-
-            var evt = _gameService.GetGame(eventId);
-
-            if (teamId != _gameService.GetSeason(evt.SeasonId).TeamId)
-            {
-                throw new HttpException((int)HttpStatusCode.BadRequest, "Requested season does not belong to this team");
-            }
-
-            if (string.IsNullOrEmpty(duty.Name))
-            {
-                Response.StatusCode = 400;
-                return Json("Please provide a name for this duty");    
-            }
-
-            duty.GameId = eventId;
-            duty = _gameService.AddEventDuty(duty);
-
-            return Json(duty, JsonRequestBehavior.AllowGet);
-        }
-
         [HttpPut]
         public JsonResult Update(Game game)
         {

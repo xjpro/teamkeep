@@ -74,18 +74,6 @@
             });
     };
 
-    Team.addEventDuty = function(event, playerId, name) {
-        Team.updating = true;
-
-        console.log(name);
-        return $http.post(Team.uri + "/events/" + event.Id + "/duties", {
-            playerId: playerId,
-            name: name
-        }).success(function(duty) {
-            Team.updating = false;
-        });
-    };
-    
     Team.removeEvent = function (event) {
         Team.updating = true;
 
@@ -94,6 +82,27 @@
                 var parentSeason = _.find(Team.Seasons, function (season) { return season.Id == event.SeasonId; });
                 parentSeason.Games.splice(_.findIndex(parentSeason.Games, function(otherEvent) { return otherEvent.Id == event.Id; }), 1);
 
+                Team.updating = false;
+            });
+    };
+
+    Team.addEventDuty = function (event, playerId, name) {
+        Team.updating = true;
+
+        return $http.post(Team.uri + "/events/" + event.Id + "/duties", {
+            playerId: playerId,
+            name: name
+        }).success(function (duty) {
+            event.Duties.push(duty);
+            Team.updating = false;
+        });
+    };
+
+    Team.removeEventDuty = function (duty) {
+        Team.updating = true;
+
+        return $http.delete(Team.uri + "/events/" + duty.EventId + "/duties/" + duty.Id)
+            .success(function () {
                 Team.updating = false;
             });
     };
