@@ -192,8 +192,6 @@ namespace TeamKeep.Services
                 entities.DeleteObject(abData);
             }
 
-            entities.SaveChanges(); // Have to save here to for FK reasons
-
             entities.DeleteObject(entities.PlayerDatas.Single(x => x.Id == playerId));
 
             if(saveChanges) 

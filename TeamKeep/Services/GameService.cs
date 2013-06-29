@@ -72,6 +72,7 @@ namespace TeamKeep.Services
                 game.Id = gameData.Id;
                 game.DateTime = (game.Date) != null ? ((DateTime)game.Date).ToString("MMM d, yyyy, h:mm tt") : null;
                 game.Location = gameLocationData;
+                game.Duties = new List<EventDuty>();
 
                 return game;
             }
@@ -88,18 +89,18 @@ namespace TeamKeep.Services
         private void RemoveGame(DatabaseEntities entities, int gameId, bool saveChanges = true)
         {
             // Remove availabilities
-            foreach (var data in entities.AvailabilityDatas.Where(x => x.EventId == gameId).ToList())
+            foreach (var data in entities.AvailabilityDatas.Where(x => x.EventId == gameId))
             {
                 entities.DeleteObject(data);
             }
 
             // Remove duties
-            foreach (var data in entities.GameDutyDatas.Where(x => x.GameId == gameId).ToList())
+            foreach (var data in entities.GameDutyDatas.Where(x => x.GameId == gameId))
             {
                 entities.DeleteObject(data);
             }
 
-            entities.SaveChanges(); // Must save here or foreign keys will cause error
+            entities.SaveChanges();
 
             entities.GameLocationDatas.DeleteObject(entities.GameLocationDatas.Single(x => x.GameId == gameId));
             entities.GameDatas.DeleteObject(entities.GameDatas.Single(x => x.Id == gameId));

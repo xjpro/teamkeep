@@ -964,7 +964,7 @@ body input[readonly='readonly'] {
 #availability-next { 
     right: 0;
 }
-#availability tbody td.icon span {
+#availability tbody td.icon {
     cursor: pointer;
 }
 

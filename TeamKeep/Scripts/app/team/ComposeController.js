@@ -8,18 +8,15 @@
         return _.filter(members, function(member) { return member.selected; });
     };
 
-    $scope.toggleGroupSelected = function(group) {
-        if (!group.selected) {
-            group.selected = true;
-            _.each(group.Players, function(member) { member.selected = true; });
-        } else {
-            group.selected = false;
-            _.each(group.Players, function (member) { member.selected = false; });
-        }
-    };
-    $scope.toggleSelected = function(member) {
-        member.selected = true;
-    };
+    angular.forEach($scope.groups, function (group) {
+        $scope.$watch(function () { return group.selected; }, function (value) {
+            if (value) {
+                _.each(group.Players, function (member) { member.selected = true; });
+            } else {
+                _.each(group.Players, function (member) { member.selected = false; });
+            }
+        });
+    });
 
     $scope.sendMessage = function() {
 

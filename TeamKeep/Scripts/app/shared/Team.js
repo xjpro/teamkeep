@@ -7,7 +7,7 @@
         Privacy: {}
     };
 
-    Team.uri = "/teams/" + Team.Id + "/" + Team.Name;
+    Team.uri = "/teams/" + Team.Id + "/" + Team.Name.replace(/\s+/g, "");
     Team.updating = false;
 
     Team.playersWithEmail = function () {
@@ -219,7 +219,7 @@
                 function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
         });
     });
-    // Privacy or Settings
+    // Name, Privacy and Settings
     $rootScope.$watch(function () { return Team.Name + _.map(Team.Privacy) + _.map(Team.Settings); }, function (value, oldValue) {
         if (angular.equals(value, oldValue)) return;
         Team.saveSettings();

@@ -1,10 +1,18 @@
-﻿angular.module("teamkeep").controller("AvailabilityRequestController", ["$scope", "$routeParams", "$http", "Team", function ($scope, $routeParams, $http, Team) {
+﻿angular.module("teamkeep").controller("AvailabilityRequestController", ["$scope", "$routeParams", "$http", "$location", "Team", function ($scope, $routeParams, $http, $location, Team) {
 
     $scope.groups = Team.PlayerGroups;
     $scope.event = _(Team.Seasons).flatten("Games").find(function(event) { return event.Id == $routeParams.eventId; });
     $scope.requesting = false;
 
-    $scope.eventHeading = Team.Name + ' vs. ' + ($scope.event.OpponentName || '[To Be Determined]');
+    $scope.eventHeading = (function () {
+        switch ($scope.event.Type) {
+            case 0: return Team.Name + ' vs. ' + ($scope.event.OpponentName || '[To Be Determined]');
+            case 1: return "Practice — " + $scope.event.OpponentName;
+            case 2: return "Meeting — " + $scope.event.OpponentName;
+            case 3: return "Party — " + $scope.event.OpponentName;
+            default: return Team.Name + " — " + $scope.event.OpponentName;
+        }
+    })();
     $scope.eventWhen = (!$scope.event.DateTime) ? '[To Be Determined]' : moment($scope.event.DateTime).format("dddd MMMM Do, YYYY @ h:mma");
     $scope.eventWhere = (function () {
         if (!$scope.event.Location) return '[To Be Determined]';
@@ -22,18 +30,15 @@
         return _.filter(members, function(member) { return member.selected; });
     };
 
-    $scope.toggleGroupSelected = function(group) {
-        if (!group.selected) {
-            group.selected = true;
-            _.each(group.Players, function(member) { member.selected = true; });
-        } else {
-            group.selected = false;
-            _.each(group.Players, function (member) { member.selected = false; });
-        }
-    };
-    $scope.toggleSelected = function(member) {
-        member.selected = true;
-    };
+    angular.forEach($scope.groups, function(group) {
+        $scope.$watch(function () { return group.selected; }, function(value) {
+            if (value) {
+                _.each(group.Players, function(member) { member.selected = true; });
+            } else {
+                _.each(group.Players, function (member) { member.selected = false; });
+            }
+        });
+    });
 
     $scope.availabilityEmailSent = function (member) {
         var ab = _.find(member.Availability, function (otherAb) { return otherAb.EventId == $scope.event.Id; });
@@ -63,6 +68,8 @@
             
             $("#alert-modal").fadeAlert("show", "Availability requests sent successfully", "alert-success"); // TODO should go in directive or view?
             $scope.requesting = false;
+
+            $location.path("/availability");
         })
         .error(function(errorMessage) {
             $("#alert-modal").fadeAlert("show", JSON.parse(errorMessage), "alert-error"); // TODO should go in directive or view?
