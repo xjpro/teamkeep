@@ -3,7 +3,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TeamKeep.Models;
-using TeamKeep.Models.DataModels;
 
 namespace TeamKeep.Controllers
 {

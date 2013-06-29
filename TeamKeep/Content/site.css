@@ -418,8 +418,14 @@ body input[readonly='readonly'] {
 .table-container table td.name button {
     width: 230px;
 }
-.table-container table td.name button {
+.table-container table td button {
+    color: #666;
     text-align: left;
+    text-decoration: none;
+}
+.table-container table td button:hover {
+    color: #666;
+    text-decoration: none;
 }
 .table-container table th.lastname,
 .table-container table td.lastname input {
@@ -617,6 +623,29 @@ body input[readonly='readonly'] {
     content: ' ';
 }
 
+#duties thead a {
+    cursor: default;
+    text-decoration: none;
+}
+
+.list-content-box {
+    margin-bottom: 10px;
+    border: solid #999;
+    border-width: 1px;
+}
+.list-content-box .heading {
+    padding: 5px 0 5px 10px;
+    border-bottom: solid #999 1px;
+}
+.list-content-box .heading h6 {
+    display: inline-block;
+    margin: 0;
+    font-size: 1em;
+    font-weight: bold;
+    color: #666;
+}
+
+
 /* Mobile table 
     http://css-tricks.com/responsive-data-tables/
 */
@@ -686,9 +715,9 @@ body input[readonly='readonly'] {
     #roster td:nth-of-type(5):before { content: "Phone"; border-right: dotted #ccc 1px; }
     #roster td:nth-of-type(6):before { content: "Email"; border-right: dotted #ccc 1px; }
 
-    #messages td:nth-of-type(1) { padding-left: 0; }
-    #messages td:nth-of-type(2):before { content: "Date"; border-right: dotted #ccc 1px; }
-    #messages td:nth-of-type(3):before { content: "Subject"; border-right: dotted #ccc 1px; }
+    #duties td:nth-of-type(1) { padding-left: 5px; }
+    #duties td:nth-of-type(2):before { content: "Assigned to"; border-right: dotted #ccc 1px; }
+    #duties td:nth-of-type(3):before { content: "Duty"; border-right: dotted #ccc 1px; }
 
     /* magic for event type icon*/
     #schedule td:nth-of-type(6) {

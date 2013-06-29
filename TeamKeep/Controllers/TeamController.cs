@@ -174,6 +174,19 @@ namespace TeamKeep.Controllers
                         throw new HttpException((int) HttpStatusCode.BadRequest, "Cannot submit updates for non-matching team id");
                     }
                     _gameService.UpdateGate(teamEvent);
+
+                    // And their duties
+                    if (teamEvent.Duties != null)
+                    {
+                        foreach (var duty in teamEvent.Duties)
+                        {
+                            if (duty.EventId != teamEvent.Id)
+                            {
+                                throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot submit updates for non-matching event id");    
+                            }
+                            _gameService.UpdateEventDuty(duty);
+                        }
+                    }
                 }
             }
 

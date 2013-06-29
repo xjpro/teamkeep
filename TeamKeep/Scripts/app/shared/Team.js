@@ -22,9 +22,9 @@
     Team.eventTypeIcon = function (eventType) {
         switch (eventType) {
             case 0: return "icon-vs"; // vs.
-            case 1: return "icon-bullhorn"; // practice
-            case 2: return "icon-calendar-empty"; // meeting
-            case 3: return "icon-group"; // celebration/party
+            case 1: return "icon-bar-chart"; // practice
+            case 2: return "icon-calendar"; // meeting
+            case 3: return "icon-trophy"; // celebration/party
             default: return "icon-blank"; // blank
         }
     };
@@ -103,6 +103,8 @@
 
         return $http.delete(Team.uri + "/events/" + duty.EventId + "/duties/" + duty.Id)
             .success(function () {
+                var parent = _.find(_.flatten(Team.Seasons, "Games"), function(event) { return event.Id == duty.EventId; });
+                parent.Duties.splice(_.findIndex(parent.Duties, function (other) { return other.Id == duty.Id; }), 1);
                 Team.updating = false;
             });
     };
@@ -213,7 +215,7 @@
         });
     });
     // Privacy or Settings
-    $rootScope.$watch(function () { return Team.Name + _.map(viewData.Team.Privacy) + _.map(viewData.Team.Settings); }, function (value, oldValue) {
+    $rootScope.$watch(function () { return Team.Name + _.map(Team.Privacy) + _.map(Team.Settings); }, function (value, oldValue) {
         if (angular.equals(value, oldValue)) return;
         Team.saveSettings();
     }, true);

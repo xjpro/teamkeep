@@ -6,6 +6,8 @@ using TeamKeep.App_Start;
 using log4net;
 using System.Web;
 using System.Web.Optimization;
+using Newtonsoft.Json;
+using System.Net.Http.Formatting;
 
 namespace TeamKeep
 {
@@ -19,6 +21,7 @@ namespace TeamKeep
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            // XML formatting
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }
 

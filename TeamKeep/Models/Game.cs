@@ -61,6 +61,6 @@ namespace TeamKeep.Models
             }
         }
 
-        public List<GameDutyData> Duties { get; set; }
+        public List<EventDuty> Duties { get; set; }
     }
 }

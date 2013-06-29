@@ -195,6 +195,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Entities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventDuty.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\ServiceResponses\EmailConfirmationsServiceResponse.cs" />
     <Compile Include="Models\TeamUpdate.cs" />

@@ -26,6 +26,14 @@ namespace TeamKeep.Services
                 var gameData = entities.GameDatas.Single(x => x.Id == gameId);
                 var game = new Game(gameData);
                 game.Location = entities.GameLocationDatas.Single(x => x.GameId == game.Id);
+                game.Duties = entities.GameDutyDatas.Where(x => x.GameId == gameId).Select(x => new EventDuty 
+                { 
+                    Id = x.Id, 
+                    EventId = x.GameId, 
+                    PlayerId = x.PlayerId,
+                    Name = x.Name 
+                }).ToList();
+
                 return game;
             }
         }
@@ -66,24 +74,6 @@ namespace TeamKeep.Services
                 game.Location = gameLocationData;
 
                 return game;
-            }
-        }
-
-        public GameDutyData AddEventDuty(GameDutyData duty)
-        {
-            using (var entities = Database.GetEntities())
-            {
-                var dutyData = new GameDutyData
-                {
-                    GameId = duty.GameId,
-                    PlayerId = duty.PlayerId,
-                    Name = duty.Name
-                };
-                entities.GameDutyDatas.AddObject(dutyData);
-                entities.SaveChanges();
-
-                duty.Id = dutyData.Id;
-                return duty;
             }
         }
 
@@ -271,6 +261,52 @@ namespace TeamKeep.Services
                     season.Order = order;
                     order++;
                 }
+                entities.SaveChanges();
+            }
+        }
+
+        public EventDuty AddEventDuty(EventDuty duty)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var dutyData = new GameDutyData
+                {
+                    GameId = duty.EventId,
+                    PlayerId = duty.PlayerId,
+                    Name = duty.Name
+                };
+                entities.GameDutyDatas.AddObject(dutyData);
+                entities.SaveChanges();
+
+                duty.Id = dutyData.Id;
+                return duty;
+            }
+        }
+
+        public EventDuty GetEventDuty(int dutyId)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                return new EventDuty(entities.GameDutyDatas.Single(x => x.Id == dutyId));
+            }    
+        }
+
+        public void UpdateEventDuty(EventDuty duty)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                var dutyData = entities.GameDutyDatas.Single(x => x.Id == duty.Id);
+                dutyData.PlayerId = duty.PlayerId;
+                dutyData.Name = duty.Name;
+                entities.SaveChanges();
+            }
+        }
+
+        public void RemoveEventDuty(int dutyId)
+        {
+            using (var entities = Database.GetEntities())
+            {
+                entities.GameDutyDatas.DeleteObject(entities.GameDutyDatas.Single(x => x.Id == dutyId));
                 entities.SaveChanges();
             }
         }

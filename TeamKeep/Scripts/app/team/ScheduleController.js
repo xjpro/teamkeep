@@ -119,7 +119,6 @@
     };
 
     $scope.addDuty = function () {
-        console.log($scope.dutyName);
         Team.addEventDuty($scope.dutyEvent, $scope.dutyPlayerId, $scope.dutyName)
             .success(function () {
                 // TODO controller shouldn't be handling view stuff

@@ -73,8 +73,8 @@ namespace TeamKeep.App_Start
             routes.MapRoute("GameDelete", "games/{gameId}", new { controller = "Game", action = "Delete" }, new { httpMethod = new HttpMethodConstraint("DELETE") });
             routes.MapRoute("GameConfirmations", "games/{gameId}/confirmations", new { controller = "Game", action = "SendConfirmations" }, new { httpMethod = new HttpMethodConstraint("POST") });
 
-            routes.MapRoute("DutyCreate", "teams/{teamId}/{teamName}/events/{eventId}/duties", new { controller = "Duty", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
-            routes.MapRoute("DutyDelete", "teams/{teamId}/{teamName}/events/{eventId}/duties/{id}", new { controller = "Duty", action = "Delete" }, new { httpMethod = new HttpMethodConstraint("DELETE") });
+            routes.MapRoute("DutyCreate", "teams/{teamId}/{teamName}/events/{eventId}/duties", new { controller = "EventDuty", action = "Create" }, new { httpMethod = new HttpMethodConstraint("POST") });
+            routes.MapRoute("DutyDelete", "teams/{teamId}/{teamName}/events/{eventId}/duties/{id}", new { controller = "EventDuty", action = "Delete" }, new { httpMethod = new HttpMethodConstraint("DELETE") });
 
             // Default
             routes.MapRoute("Default", "{*whatever}", new { controller = "Public", action = "NotFound" }, new { httpMethod = new HttpMethodConstraint("GET") });
