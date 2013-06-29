@@ -18,7 +18,7 @@ namespace TeamKeep.Models
 
         public int Id { get; set; }
         public int EventId { get; set; }
-        public int PlayerId { get; set; }
+        public int? PlayerId { get; set; }
         public string Name { get; set; }
     }
 }

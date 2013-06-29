@@ -152,6 +152,11 @@
                 var parent = _.find(Team.PlayerGroups, function (candidate) { return candidate.Id == player.GroupId; });
                 parent.Players.splice(_.findIndex(parent.Players, function (other) { return other.Id == player.Id; }), 1);
 
+                // Reassign duties
+                _(viewData.Team.Seasons).flatten("Games").flatten("Duties").filter(function (duty) { return duty.PlayerId == 87; }).each(function (duty) {
+                    duty.PlayerId = null;
+                });
+
                 Team.updating = false;
             });
     };

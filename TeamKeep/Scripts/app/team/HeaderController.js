@@ -48,11 +48,9 @@
     $scope.messageButtonEnabled = function () {
         return Team.playersWithEmail().length > 0;
     };
-
-    $scope.availabilityVisible = function () {
+    $scope.availabilityEnabled = function () {
         var players = _.flatten(Team.PlayerGroups, 'Players');
         var eventsWithDate = _.filter(_.flatten(Team.Seasons, 'Games'), function (event) { return moment(event.DateTime) != null; });
         return players.length > 0 && eventsWithDate.length > 0;
     };
-
 }]);

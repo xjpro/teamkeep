@@ -3,7 +3,7 @@
         <div class="column-select pull-left">
             <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown">
-                    Columns <span class="caret"></span>
+                    Columns <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
                     <li ng-repeat="column in columns" ng-show="column.toggleable">
@@ -162,15 +162,17 @@
     <form id="duty-modal" class="modal hide fade" ng-submit="addDuty()">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3><i class="{{eventTypeIcon(dutyEvent.Type)}}"></i> {{dutyEvent.OpponentName}}</h3>
+            <h3><i class="{{eventTypeIcon(dutyEvent.Type)}}"></i> {{eventTitle(dutyEvent)}}</h3>
         </div>
         <div class="modal-body">
             <p>
-                {{dutyEvent.When}}
+                {{dutyEvent.DateTime}}
             </p>
             <div>
                 <label>Assigned to</label>
-                <select ng-model="dutyPlayerId" ng-options="player.Id as player.FirstName + ' ' + player.LastName for player in players"></select>                    
+                <select ng-model="dutyPlayerId" ng-options="player.Id as playerName(player.Id) for player in players">
+                    <option value="">Unassigned</option>
+                </select>                    
             </div>
             <div>
                 <label>Short description</label>

@@ -912,13 +912,11 @@ namespace TeamKeep.Models.DataModels
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="gameId">Initial value of the GameId property.</param>
-        /// <param name="playerId">Initial value of the PlayerId property.</param>
-        public static GameDutyData CreateGameDutyData(global::System.Int32 id, global::System.Int32 gameId, global::System.Int32 playerId)
+        public static GameDutyData CreateGameDutyData(global::System.Int32 id, global::System.Int32 gameId)
         {
             GameDutyData gameDutyData = new GameDutyData();
             gameDutyData.Id = id;
             gameDutyData.GameId = gameId;
-            gameDutyData.PlayerId = playerId;
             return gameDutyData;
         }
 
@@ -980,9 +978,9 @@ namespace TeamKeep.Models.DataModels
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 PlayerId
+        public Nullable<global::System.Int32> PlayerId
         {
             get
             {
@@ -997,8 +995,8 @@ namespace TeamKeep.Models.DataModels
                 OnPlayerIdChanged();
             }
         }
-        private global::System.Int32 _PlayerId;
-        partial void OnPlayerIdChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _PlayerId;
+        partial void OnPlayerIdChanging(Nullable<global::System.Int32> value);
         partial void OnPlayerIdChanged();
     
         /// <summary>

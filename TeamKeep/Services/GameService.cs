@@ -272,7 +272,7 @@ namespace TeamKeep.Services
                 var dutyData = new GameDutyData
                 {
                     GameId = duty.EventId,
-                    PlayerId = duty.PlayerId,
+                    PlayerId = (duty.PlayerId > 0) ? duty.PlayerId : 0,
                     Name = duty.Name
                 };
                 entities.GameDutyDatas.AddObject(dutyData);

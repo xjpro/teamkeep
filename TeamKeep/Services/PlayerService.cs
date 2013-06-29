@@ -180,11 +180,21 @@ namespace TeamKeep.Services
 
         private void RemovePlayer(DatabaseEntities entities, int playerId, bool saveChanges = true)
         {
-            entities.DeleteObject(entities.PlayerDatas.Single(x => x.Id == playerId));
-            foreach (var abData in entities.AvailabilityDatas.Where(x => x.PlayerId == playerId).ToList())
+            // Reassign duties
+            foreach (var dutyData in entities.GameDutyDatas.Where(x => x.PlayerId == playerId))
+            {
+                dutyData.PlayerId = null;
+            }
+
+            // Remove availabilities
+            foreach (var abData in entities.AvailabilityDatas.Where(x => x.PlayerId == playerId))
             {
                 entities.DeleteObject(abData);
             }
+
+            entities.SaveChanges(); // Have to save here to for FK reasons
+
+            entities.DeleteObject(entities.PlayerDatas.Single(x => x.Id == playerId));
 
             if(saveChanges) 
             {

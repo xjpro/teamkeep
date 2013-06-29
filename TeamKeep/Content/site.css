@@ -204,7 +204,7 @@ h3.heading {
 }
 
 ng-view > div{
-    min-height: 245px;
+
 }
 
 #newteam-modal .icon-spin, #login .icon-spin, #reset .icon-spin {

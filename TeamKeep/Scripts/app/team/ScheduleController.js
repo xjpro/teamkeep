@@ -4,8 +4,12 @@
     $scope.editable = Team.Editable;
     $scope.updating = function () { return Team.updating; };
     $scope.seasons = Team.Seasons;
-    $scope.players = Team.playersWithName();
+    $scope.players = _.flatten(Team.PlayerGroups, 'Players');
 
+    $scope.eventTitle = function (event) {
+        if (!event) return "";
+        return event.OpponentName || "[Untitled event]";
+    };
     $scope.eventTypeIcon = Team.eventTypeIcon;
 
     $scope.eventTypeTooltip = function (eventType) {
@@ -112,17 +116,23 @@
     // Duties
 
     $scope.dutyName = "";
-    $scope.dutyPlayerId = $scope.players[0].Id;
+    $scope.dutyPlayerId = null;
     
     $scope.selectDutyEvent = function (event) {
         $scope.dutyEvent = event;
     };
-
+    $scope.playerName = function (playerId) {
+        var player = _.find($scope.players, function (p) { return p.Id == playerId; });
+        if (!player) return "Unassigned";
+        if (!player.FirstName && !player.LastName) return "[Unnamed player]";
+        return ((player.FirstName || "") + " " + (player.LastName || "")).substr(0, 27);
+    };
     $scope.addDuty = function () {
         Team.addEventDuty($scope.dutyEvent, $scope.dutyPlayerId, $scope.dutyName)
             .success(function () {
                 // TODO controller shouldn't be handling view stuff
-                $("#alert-modal").fadeAlert("show", "'" + $scope.dutyName + "' duty was successfully added", "alert-success");
+                var message = ($scope.dutyName && $scope.dutyName.length > 3) ? "'" + $scope.dutyName + "' duty was successfully added" : "Duty was successfully added";
+                $("#alert-modal").fadeAlert("show", message, "alert-success");
                 $("#duty-modal").modal("hide");
             });
     };

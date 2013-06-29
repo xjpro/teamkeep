@@ -1,9 +1,21 @@
 ﻿<div id="duties" class="table-container stacks">
     <div class="table-controls">
-        
+        <div class="pull-left" ng-show="unselectedSeasons.length > 0">
+            <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                {{selectedSeason.Name}} <i class="icon-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li ng-repeat="season in unselectedSeasons">
+                    <a tabindex="-1" ng-click="selectSeason(season)">{{ season.Name }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="pull-right" ng-show="unselectedSeasons.length > 0">
+            <i class="icon-refresh icon-spin" ng-show="updating()"></i> 
+        </div>
         <div style="clear: both;"></div>
     </div>
-    <table when-focused="preventSorting">
+    <table>
         <thead>
             <tr>
                 <th class="button"></th>
@@ -25,7 +37,7 @@
                         <i ng-class="eventTypeIcon(event.Type)"></i> &nbsp; {{ event.OpponentName || '[Untitled]' }}
                     </h6>
                     <span>
-                        {{ (event.When) ? '&mdash; ' + event.When : '' }}
+                        {{ (event.DateTime) ? '&mdash; ' + event.DateTime : '' }}
                     </span>
                     <div class="pull-right">
                         <button class="btn btn-mini" ng-click="addDuty(event)" title="Add new duty">
@@ -48,8 +60,9 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li ng-repeat="player in players">
-                            <a tabindex="-1" ng-click="assignDuty(duty, player)">{{ player.FirstName + ' ' + player.LastName }}</a>
+                            <a tabindex="-1" ng-click="assignDuty(duty, player)">{{ playerName(player.Id) }}</a>
                         </li>
+                        <li><a tabindex="-1" ng-click="assignDuty(duty, null)">Unassigned</a></li>
                     </ul>
                 </td>
                 <td class="max">

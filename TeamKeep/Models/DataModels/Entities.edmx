@@ -54,7 +54,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="GameId" Type="int" Nullable="false" />
-          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="PlayerId" Type="int" />
           <Property Name="Type" Type="tinyint" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar" MaxLength="100" />
@@ -353,7 +353,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="GameId" Nullable="false" />
-          <Property Type="Int32" Name="PlayerId" Nullable="false" />
+          <Property Type="Int32" Name="PlayerId" />
           <Property Type="Byte" Name="Type" />
           <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Description" MaxLength="100" FixedLength="false" Unicode="false" />

@@ -77,7 +77,7 @@
         }
         @if (Model.Team.Editable)
         {
-            <li ng-switch="availabilityVisible()">
+            <li ng-switch="availabilityEnabled()">
                 <a ng-switch-when="true" href="#/availability">Availability</a>
                 <a ng-switch-when="false" class="disabled" title="Will become available once you've added a dated event to your schedule and one member to your roster">Availability</a>
             </li>
@@ -144,5 +144,7 @@
         $("#team-banner").hover( // Show edit button when banner is hovered
             function () { $("#team-banner .hover-edit").show(); },
             function () { $("#team-banner .hover-edit").hide(); });
+
+        $(document).tooltip({ items: "[title]", track: true });
     });
 </script>
