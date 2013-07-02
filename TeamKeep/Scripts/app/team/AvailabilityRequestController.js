@@ -7,9 +7,7 @@
     $scope.eventHeading = (function () {
         switch ($scope.event.Type) {
             case 0: return Team.Name + ' vs. ' + ($scope.event.OpponentName || '[To Be Determined]');
-            case 1: return "Practice — " + $scope.event.OpponentName;
-            case 2: return "Meeting — " + $scope.event.OpponentName;
-            case 3: return "Party — " + $scope.event.OpponentName;
+            case 1: case 2: case 3: return Team.eventTypeTitle($scope.event.Type) + " — " + $scope.event.OpponentName;
             default: return Team.Name + " — " + $scope.event.OpponentName;
         }
     })();

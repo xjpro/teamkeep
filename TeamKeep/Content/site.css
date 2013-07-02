@@ -349,7 +349,7 @@ body input[readonly='readonly'] {
     cursor: pointer;
 }
 .table-container td.heading {
-    padding: 4px 5px 4px 15px;
+    padding: 4px 5px 4px 10px;
 }
 .table-container td.heading h6 {
     display: inline-block;
@@ -426,6 +426,14 @@ body input[readonly='readonly'] {
 .table-container table td button:hover {
     color: #666;
     text-decoration: none;
+}
+.table-container table th.type,
+.table-container table td.type button,
+.table-container table td.type {
+    
+    width: 70px;
+    text-align: right;
+    
 }
 .table-container table th.lastname,
 .table-container table td.lastname input {
@@ -600,10 +608,10 @@ body input[readonly='readonly'] {
     background: #FFFFD6;
 }
 
-#schedule .icon {
+#schedule .type {
     border-right: 0;
 }
-#schedule .icon .btn {
+#schedule .type .btn {
     text-decoration: none;
     color: #666;
     padding: 4px 6px;

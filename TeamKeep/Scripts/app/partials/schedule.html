@@ -99,17 +99,17 @@
                 <td class="tiepoints digit" ng-show="columns[4].visible">
                     <input class="mod" type="text" ng-model="game.TiePoints" complete-update ng-readonly="!editable" />
                 </td>
-                <td class="icon">
-                    <i ng-if="!editable" title="{{eventTypeTooltip(game.Type)}}" ng-class="eventTypeIcon(game.Type)"></i>
+                <td class="type">
+                    <span ng-if="!editable">{{eventTypeTitle(game.Type)}}</span>
                     <button ng-if="editable" class="btn btn-link dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-                        <i ng-class="eventTypeIcon(game.Type)"></i>
+                        {{eventTypeTitle(game.Type)}}
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a tabindex="-1" ng-click="game.Type = 0"><i class="icon-vs"></i> Game</a></li>
-                        <li><a tabindex="-1" ng-click="game.Type = 1"><i class="icon-bar-chart"></i> Practice</a></li>
-                        <li><a tabindex="-1" ng-click="game.Type = 2"><i class="icon-calendar"></i> Meeting</a></li>
-                        <li><a tabindex="-1" ng-click="game.Type = 3"><i class="icon-trophy"></i> Celebration</a></li>
-                        <li><a tabindex="-1" ng-click="game.Type = 99"><i class="icon-blank"></i> None</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 0">vs.</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 1">Practice</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 2">Meeting</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 3">Party</a></li>
+                        <li><a tabindex="-1" ng-click="game.Type = 99">None</a></li>
                     </ul>
                 </td>
                 <td class="max">
@@ -162,7 +162,7 @@
     <form id="duty-modal" class="modal hide fade" ng-submit="addDuty()">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3><i class="{{eventTypeIcon(dutyEvent.Type)}}"></i> {{eventTitle(dutyEvent)}}</h3>
+            <h3>{{ eventTypeTitle(dutyEvent.Type) + (dutyEvent.Type != 0 ? ' &mdash; ' : '&nbsp;') + dutyEvent.OpponentName || '[Untitled]' }}</h3>
         </div>
         <div class="modal-body">
             <p>

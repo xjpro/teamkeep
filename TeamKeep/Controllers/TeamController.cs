@@ -50,6 +50,12 @@ namespace TeamKeep.Controllers
                     return View("TeamPrivateHome", viewModel);
                 }
 
+                // Hide duties
+                foreach (var teamEvent in team.Seasons.SelectMany(season => season.Games))
+                {
+                    teamEvent.Duties = new List<EventDuty>();
+                }
+
                 // Hide messages in public view
                 team.Messages = new List<Message>();
 

@@ -4,8 +4,15 @@
     $scope.players = _.flatten(Team.PlayerGroups, 'Players');
     $scope.updating = function () { return Team.updating; };
     $scope.events = [];
-    $scope.eventTypeIcon = Team.eventTypeIcon;   
-    
+    $scope.eventTypeTitle = Team.eventTypeTitle;   
+    $scope.eventHeading = function (event) {
+        switch (event.Type) {
+            case 0: return 'vs. ' + (event.OpponentName || '[To Be Determined]');
+            case 1: case 2: case 3: return Team.eventTypeTitle(event.Type) + " — " + event.OpponentName;
+            default: return Team.Name + " — " + event.OpponentName;
+        }
+    };
+
     $scope.selectedSeason = null;
     $scope.unselectedSeasons = [];
     $scope.selectSeason = function (season) {

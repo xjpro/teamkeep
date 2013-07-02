@@ -33,11 +33,9 @@
         <tbody ng-repeat="event in events | orderBy:eventPredicate">
             <tr>
                 <td class="heading" colspan="3">
-                    <h6>
-                        <i ng-class="eventTypeIcon(event.Type)"></i> &nbsp; {{ event.OpponentName || '[Untitled]' }}
-                    </h6>
+                    <h6>{{eventHeading(event)}}</h6>
                     <span>
-                        {{ (event.DateTime) ? '&mdash; ' + event.DateTime : '' }}
+                        {{ (event.DateTime) ? '@ ' + event.DateTime : '' }}
                     </span>
                     <div class="pull-right">
                         <button class="btn btn-mini" ng-click="addDuty(event)" title="Add new duty">

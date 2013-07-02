@@ -42,6 +42,13 @@
     .run(["$rootScope", "$location", function ($rootScope, $location) {
 
         $rootScope.$on("$routeChangeStart", function () {
+
+            if (!viewData.Team.Editable) { // Lock out everything but schedule and roster
+                if ($location.path() != "/schedule" || ($location.path() == "/roster" && !viewData.Privacy.Roster)) {
+                    $location.path("/schedule");
+                }
+            }
+
             $("#team-nav li").removeClass("active");
             $("#team-nav li:has(a[href='#" + $location.path() + "'])").addClass("active");
         });

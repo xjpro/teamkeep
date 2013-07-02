@@ -18,14 +18,13 @@
         var players = _.flatten(Team.PlayerGroups, "Players");
         return _.filter(players, function (player) { return player.FirstName || player.LastName; });
     };
-    
-    Team.eventTypeIcon = function (eventType) {
+    Team.eventTypeTitle = function (eventType) {
         switch (eventType) {
-            case 0: return "icon-vs"; // vs.
-            case 1: return "icon-bar-chart"; // practice
-            case 2: return "icon-calendar"; // meeting
-            case 3: return "icon-trophy"; // celebration/party
-            default: return "icon-blank"; // blank
+            case 0: return "vs."; // vs.
+            case 1: return "Practice"; // practice
+            case 2: return "Meeting"; // meeting
+            case 3: return "Party"; // party
+            default: return "None"; // blank
         }
     };
 

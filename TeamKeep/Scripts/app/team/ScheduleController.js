@@ -6,21 +6,7 @@
     $scope.seasons = Team.Seasons;
     $scope.players = _.flatten(Team.PlayerGroups, 'Players');
 
-    $scope.eventTitle = function (event) {
-        if (!event) return "";
-        return event.OpponentName || "[Untitled event]";
-    };
-    $scope.eventTypeIcon = Team.eventTypeIcon;
-
-    $scope.eventTypeTooltip = function (eventType) {
-        switch (eventType) {
-            case 0: return "Game"; // vs.
-            case 1: return "Practice"; // practice
-            case 2: return "Meeting"; // meeting
-            case 3: return "Celebration"; // meeting
-            default: return "None"; // blank
-        }
-    };
+    $scope.eventTypeTitle = Team.eventTypeTitle;
 
     $scope.locations = _(Team.Seasons).flatten("Games").flatten("Location");
 
@@ -230,7 +216,7 @@
             sortType: "TiePoints"
         },
         {
-            cssClass: "icon",
+            cssClass: "type",
             name: "",
             visible: true,
             toggleable: false
