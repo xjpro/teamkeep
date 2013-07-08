@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("LoginController", ["$scope", "User", function ($scope, User) {
+﻿angular.module("teamkeep-public").controller("LoginController", ["$scope", "User", function ($scope, User) {
 
     $scope.loginEvaluating = false;
     $scope.loginError = "";

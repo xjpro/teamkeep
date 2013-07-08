@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("TutorialController", ["$scope", "User", function ($scope, User) {
+﻿angular.module("teamkeep").controller("TutorialController", ["$scope", "$location", "$timeout", "User", function ($scope, $location, $timeout, User) {
     
     $scope.steps = [
         {
@@ -10,36 +10,35 @@
         },
         {
             heading: "Team roster",
-            content: "<p>Let's start with the roster section. This is where you'll list the players on your team and their contact information.</p>",
+            content: "<p>Let's start with the roster section. This is where you'll list the members of your team and their contact information.</p>",
             next: true,
             target: "#team-banner h1",
-            pane: "roster"
+            path: "/roster"
         },
         {
-            content: "<p>Click +Player to add a new player to your roster.</p>" +
-                "<p>Players can be organized into different groups. A common approach would be to put your everyday players into an 'Active' group and " +
+            content: "<p>Click +Member to add a new member to your roster.</p>" +
+                "<p>Members can be organized into different groups. A common approach would be to put your everyday players into an 'Active' group and " +
                 "substitutes into a group labeled 'Subs'.</p>" +
-                "<p>Add your first player to continue &mdash;</p>",
+                "<p>Add your first member to continue &mdash;</p>",
             target: "#roster .table-controls button",
             glowTarget: "#roster .table-controls button",
-            pane: "roster",
-            side: "topleft",
-            nextTrigger: "teamkeep.newplayer"
+            path: "/roster",
+            side: "topleft"
         },
         {
-            content: "<p>Excellent! A new player was added to your roster and the changes were uploaded automatically.</p>" +
-                "<p>As you enter in player names and contact information we will continue to save any changes.</p>" +
+            content: "<p>Excellent! A new member was added to your roster and the changes were uploaded automatically.</p>" +
+                "<p>As you enter in member names and contact information we will continue to save any changes.</p>" +
                 "<p>Fill out as much of your roster as you'd like then click Next to continue the tour &mdash;</p>",
             next: true,
             target: "#team-banner h1",
-            pane: "roster"
+            path: "/roster"
         },
         {
-            content: "<p>The edit button <i class='icon-edit highlight'></i> opens a context menu with additional options for a particular player.</p>",
+            content: "<p>The edit button <i class='icon-edit highlight'></i> opens a context menu with additional options for a particular team member.</p>",
             next: true,
-            target: "#roster tbody tr:eq(1) td:first",
-            glowTarget: "#roster tbody i.icon-edit",
-            pane: "roster",
+            target: "#roster tbody:visible:first td.button:first",
+            glowTarget: "#roster tbody:visible:first td.button:first",
+            path: "/roster",
             side: "topright"
         },
         {
@@ -47,40 +46,39 @@
             content: "<p>Next up is the schedule section. This is where you'll list your team's events.</p>",
             next: true,
             target: "#team-banner h1",
-            pane: "schedule"
+            path: "/schedule"
         },
         {
-            content: "<p>Click +Game to add an event to your schedule. " +
+            content: "<p>Click +Event to add an event to your schedule. " +
                 "Events are organized into seasons. You can add the event to an existing season or start a new one.</p>" +
                 "<p>Add your first event to continue &mdash;</p>",
             target: "#schedule .table-controls button",
             glowTarget: "#schedule .table-controls button",
-            pane: "schedule",
-            side: "topleft",
-            nextTrigger: "teamkeep.newevent"
+            path: "/schedule",
+            side: "topleft"
         },
         {
             content: "<p>Nicely done! The new event was added to your schedule and the changes were uploaded automatically.</p>" +
                 "<p>Fill out as much of your schedule as you'd like then click Next to continue the tour &mdash;</p>",
             next: true,
             target: "#team-functions",
-            pane: "schedule",
+            path: "/schedule",
             side: "left"
         },
         {
             heading: "Availability",
             content: "<p>In the availability section you can mark attendance for events on your schedule. At a glance you can see " +
-                "how many players will be attending a particular game, who most often shows up, and know if an important position needs a substitute.</p>",
+                "how many players will be attending a particular event, who most often shows up, and know if an important position needs a substitute.</p>",
             next: true,
             target: "#team-banner h1",
-            pane: "availability"
+            path: "/availability"
         },
         {
-            content: "<p>Click the boxes under an event date to cycle through attendance options manually or have Teamkeep send players " +
+            content: "<p>Click the boxes under an event date to cycle through attendance options manually or have Teamkeep send team members " +
                 "an email requesting their attendance by clicking the blue envelope <i class='icon-envelope highlight'></i> underneath a particular event (for future events only).</p>",
             next: true,
-            target: "#availability tbody tr:eq(1) td.icon:first",
-            pane: "availability",
+            target: "#availability tbody:first tr:eq(1) td.icon:first",
+            path: "/availability",
             side: "left"
         },
         {
@@ -89,14 +87,14 @@
             next: true,
             target: "#team-functions .btn:first",
             glowTarget: "#team-functions .btn:first",
-            pane: "schedule",
+            path: "/schedule",
             side: "left"
         },
         {
             content: "<p>Need to message select members only? Choose who will recieve a message by checking the box next to their name.</p>",
             next: true,
             target: "#compose .player-group:first",
-            pane: "compose",
+            path: "/compose",
             side: "left"
         },
         {
@@ -105,7 +103,7 @@
             next: true,
             target: "#team-functions",
             glowTarget: "#team-functions .btn:last",
-            pane: "settings",
+            path: "/settings",
             side: "left"
         },
         {
@@ -114,12 +112,11 @@
                 "not hesitate to send us an email at <a href='mailto:info@teamkeep.com'>info@teamkeep.com</a>.</p><p>Thanks for choosing Teamkeep!</p>",
             close: true,
             target: "#team-banner h1",
-            pane: "schedule"
+            path: "/schedule"
         }
     ];
 
     var stepIndex = -1;
-    var currentPane;
     $scope.next = function () {
 
         if (stepIndex >= 0) {
@@ -127,75 +124,71 @@
         }
         
         var step = $scope.steps[++stepIndex];
-        var stepElement = $(".tutorial-step:eq(" + stepIndex + ")");
-        
-        // Set pane
-        if (step.pane && currentPane != step.pane) {
-            var paneLink = $("[href='#" + step.pane + "']");
-            if (paneLink.length === 0) {
-                return $scope.next();
-            }
-            paneLink.click();
-            currentPane = step.pane;
-        }
-
         step.active = true;
 
-        // Position
-        var $target = $(step.target);
-        var top = $target.offset().top;
-        var left = $target.offset().left;
+        // Set path
+        if (step.path && $location.path() != step.path) {
+            $location.path(step.path);
+        }
 
-        if (step.side === "left") {
-            top -= stepElement.height() / 2;
-            left -= stepElement.outerWidth() + 15;
-        }
-        else if (step.side === "top") {
-        }
-        else if (step.side === "topleft") {
-            top -= stepElement.height() + $target.height() + 5;
-            left -= stepElement.width() - $target.width();
-        }
-        else if (step.side === "topright") {
-            top -= stepElement.height() + $target.height() + 5;
-            left += $target.width();
-        }
-        else {
-            top -= stepElement.height() / 2;
-            left += $target.width() + 10;
-        }
-        step.position = { top: top + "px", left: left + "px" };
-        // End position
-
-        // Highlight a target
-        if (step.glowTarget) {
-
-            var i = 0;
-            var maxIterations = 3;
-            var startGlow = function () {
-                $(step.glowTarget).animate({
-                    opacity: "0.25"
-                }, function () {
-                    $(step.glowTarget).animate({
-                        opacity: "1"
-                    }, function () {
-                        if (i++ < maxIterations) {
-                            startGlow();
-                        }
-                    });
-                    
-                });
-            };
-            startGlow();
-        }
-        // End highlight
+        var stepElement = $(".tutorial-step:eq(" + stepIndex + ")");
         
-        if (step.nextTrigger) {
-            $(document).one(step.nextTrigger, function () {
-                $scope.$apply($scope.next);
-            });            
-        }
+        $timeout(function () { // Defer so we know we've navigated to new path
+
+            // Position
+            var $target = $(step.target);
+            var top = $target.offset().top;
+            var left = $target.offset().left;
+
+            if (step.side === "left") {
+                top -= stepElement.height() / 2;
+                left -= stepElement.outerWidth() + 15;
+            }
+            else if (step.side === "top") {
+            }
+            else if (step.side === "topleft") {
+                top -= stepElement.height() + $target.height() + 5;
+                left -= stepElement.width() - $target.width();
+            }
+            else if (step.side === "topright") {
+                top -= stepElement.height() + $target.height() + 5;
+                left += $target.width();
+            }
+            else {
+                top -= stepElement.height() / 2;
+                left += $target.width() + 10;
+            }
+            step.position = { top: top + "px", left: left + "px" };
+            // End position
+
+            // Highlight a target
+            if (step.glowTarget) {
+
+                var i = 0;
+                var maxIterations = 3;
+                var startGlow = function () {
+                    $(step.glowTarget).animate({
+                        opacity: "0.25"
+                    }, function () {
+                        $(step.glowTarget).animate({
+                            opacity: "1"
+                        }, function () {
+                            if (i++ < maxIterations) {
+                                startGlow();
+                            }
+                        });
+
+                    });
+                };
+                startGlow();
+            }
+            // End highlight
+
+        });
     };
+
+    $scope.$on("teamkeep.newplayer", $scope.next);
+    $scope.$on("teamkeep.newevent", $scope.next);
 
     $scope.close = function () {
         $scope.steps[stepIndex].active = false;

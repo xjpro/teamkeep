@@ -242,8 +242,10 @@
     <Content Include="Libraries\log4net.dll" />
     <Content Include="Libraries\Quartz.dll" />
     <Content Include="Libraries\WebGrease.dll" />
-    <Content Include="Scripts\app\login\LoginController.js" />
-    <Content Include="Scripts\app\login\RegisterController.js" />
+    <Content Include="Scripts\app-public\login\User.js" />
+    <Content Include="Scripts\app-public\teamkeep-public.js" />
+    <Content Include="Scripts\app-public\login\LoginController.js" />
+    <Content Include="Scripts\app-public\login\RegisterController.js" />
     <Content Include="Scripts\app\partials\availability-request.html" />
     <Content Include="Scripts\app\partials\availability.html" />
     <Content Include="Scripts\app\partials\compose.html" />

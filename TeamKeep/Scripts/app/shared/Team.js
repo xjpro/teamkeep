@@ -69,6 +69,7 @@
                 parentSeason.Games.push(event);
                 $rootScope.$watch(function () { return event; }, function (value, oldValue) { queueChange("events", event, value, oldValue); }, true);
             
+                $rootScope.$broadcast("teamkeep.newevent");
                 Team.updating = false;
             });
     };
@@ -139,6 +140,7 @@
                 $rootScope.$watch(function () { return player.LastName + player.FirstName + player.Position + player.Phone + player.Email + _.flatten(player.Availability, "AdminStatus"); },
                     function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
                 
+                $rootScope.$broadcast("teamkeep.newplayer");
                 Team.updating = false;
             });
     };

@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("RegisterController", ["$scope", "User", function ($scope, User) {
+﻿angular.module("teamkeep-public").controller("RegisterController", ["$scope", "User", function ($scope, User) {
 
     $scope.evaluating = false;
     $scope.error = "";

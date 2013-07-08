@@ -704,6 +704,7 @@ body input[readonly='readonly'] {
 		left: 6px;
 		width: 105px; 
 		white-space: nowrap;
+        text-align: left;
 	}
 
     #schedule td:nth-of-type(1) { padding-left: 0; }
@@ -711,7 +712,7 @@ body input[readonly='readonly'] {
     #schedule td:nth-of-type(3):before { content: "Scored"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(4):before { content: "Allowed"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(5):before { content: "Tie"; border-right: dotted #ccc 1px; }
-    #schedule td:nth-of-type(6):before { content: ""; border-right: dotted #ccc 1px; }
+    #schedule td:nth-of-type(6):before { content: "Type"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(7):before { content: "Title"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(8):before { content: "Location"; border-right: dotted #ccc 1px; }
     #schedule td:nth-of-type(9):before { content: "Arena"; border-right: dotted #ccc 1px; }
@@ -726,15 +727,6 @@ body input[readonly='readonly'] {
     #duties td:nth-of-type(1) { padding-left: 5px; }
     #duties td:nth-of-type(2):before { content: "Assigned to"; border-right: dotted #ccc 1px; }
     #duties td:nth-of-type(3):before { content: "Duty"; border-right: dotted #ccc 1px; }
-
-    /* magic for event type icon*/
-    #schedule td:nth-of-type(6) {
-        display: inline;
-        position: absolute;
-        padding: 0;
-        margin: 2px 0 0 118px;
-    }
-    #schedule td:nth-of-type(7) input { margin-left: 47px; }
 }
 
 #team-banner {
