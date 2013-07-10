@@ -16,10 +16,10 @@
             path: "/roster"
         },
         {
-            content: "<p>Click +Member to add a new member to your roster.</p>" +
+            content: "<p>Click +Member to add a member to your roster.</p>" +
                 "<p>Members can be organized into different groups. A common approach would be to put your everyday players into an 'Active' group and " +
                 "substitutes into a group labeled 'Subs'.</p>" +
-                "<p>Add your first member to continue &mdash;</p>",
+                "<p>Add a team member to continue &mdash;</p>",
             target: "#roster .table-controls button",
             glowTarget: "#roster .table-controls button",
             path: "/roster",
@@ -27,7 +27,7 @@
         },
         {
             content: "<p>Excellent! A new member was added to your roster and the changes were uploaded automatically.</p>" +
-                "<p>As you enter in member names and contact information we will continue to save any changes.</p>" +
+                "<p>As you enter in name and contact information we will continue to save any changes.</p>" +
                 "<p>Fill out as much of your roster as you'd like then click Next to continue the tour &mdash;</p>",
             next: true,
             target: "#team-banner h1",

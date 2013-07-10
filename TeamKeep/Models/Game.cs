@@ -7,6 +7,15 @@ namespace TeamKeep.Models
 {
     public class Game : GameData
     {
+        public enum EventType
+        {
+            Game = 0,
+            Practice = 1,
+            Meeting = 2,
+            Party = 3,
+            Other = 99
+        }
+
         public Game()
         {
         }

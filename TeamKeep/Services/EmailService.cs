@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using TeamKeep.Models.DataModels;
 using log4net;
 using System;
@@ -81,7 +82,66 @@ namespace TeamKeep.Services
             var replyEmail = "https://teamkeep.com/rsvp?token=" + abRequest.Data.Token;
 
             var body = new StringBuilder();
-            body.Append(string.Format("<h2>{0} vs. {1}</h2>", abRequest.TeamName, abRequest.Event.OpponentName ?? "[To Be Determined]"));
+
+            Game.EventType type;
+            Enum.TryParse(abRequest.Event.Type.ToString(CultureInfo.InvariantCulture), out type);
+
+            switch (type)
+            {
+                case Game.EventType.Game:
+                    if (string.IsNullOrEmpty(abRequest.Event.OpponentName))
+                    {
+                        body.Append(string.Format("<h2>{0} vs. [To Be Determined]</h2>", abRequest.TeamName));
+                    }
+                    else
+                    {
+                        body.Append(string.Format("<h2>{0} vs. {1}</h2>", abRequest.TeamName, abRequest.Event.OpponentName));
+                    }
+                    break;
+                case Game.EventType.Practice:
+                    if (string.IsNullOrEmpty(abRequest.Event.OpponentName))
+                    {
+                        body.Append("<h2>Practice</h2>");
+                    }
+                    else
+                    {
+                        body.Append(string.Format("<h2>Practice &mdash; {0}</h2>", abRequest.Event.OpponentName));
+                    }
+                    break;
+                case Game.EventType.Meeting:
+                    if (string.IsNullOrEmpty(abRequest.Event.OpponentName))
+                    {
+                        body.Append("<h2>Meeting</h2>");
+                    }
+                    else
+                    {
+                        body.Append(string.Format("<h2>Meeting &mdash; {0}</h2>", abRequest.Event.OpponentName));
+                    }
+                    break;
+                case Game.EventType.Party:
+                    if (string.IsNullOrEmpty(abRequest.Event.OpponentName))
+                    {
+                        body.Append("<h2>Party</h2>");
+                    }
+                    else
+                    {
+                        body.Append(string.Format("<h2>Party &mdash; {0}</h2>", abRequest.Event.OpponentName));
+                    }
+                    break;
+                default:
+                    if (string.IsNullOrEmpty(abRequest.Event.OpponentName))
+                    {
+                        body.Append(string.Format("<h2>{0}</h2>", abRequest.TeamName));
+                    }
+                    else
+                    {
+                        body.Append(string.Format("<h2>{0} &mdash; {1}</h2>", abRequest.TeamName, abRequest.Event.OpponentName));
+                    }
+                    
+                    break;
+            }
+
+            //body.Append(string.Format("<h2>{0} vs. {1}</h2>", abRequest.TeamName, abRequest.Event.OpponentName ?? "[To Be Determined]"));
             //body.Append(string.Format("<p>{0}</p>", "The event description would go here, if there was one."));
 
             body.Append("<table>");
@@ -113,8 +173,29 @@ namespace TeamKeep.Services
             // And now for the Teamkeep parts
             body.Append(string.Format("<hr/><p>This message sent on behalf of {0} by Teamkeep.com</p>", abRequest.TeamName));
 
-            Enqueue(abRequest.Email, "[" + abRequest.TeamName + "] vs. " + (abRequest.Event.OpponentName ?? "TBD") + " @ " + abRequest.Event.When, 
-                body.ToString(), "teamkeep-noreply@teamkeep.com", null);
+            string subject = "[" + abRequest.TeamName + "] ";
+            switch (type)
+            {
+                case Game.EventType.Game:
+                    subject += "vs. " + (abRequest.Event.OpponentName ?? "TBD");
+                    break;
+                case Game.EventType.Practice:
+                    subject += "Practice" + (!string.IsNullOrEmpty(abRequest.Event.OpponentName) ? " — " + abRequest.Event.OpponentName : string.Empty);
+                    break;
+                case Game.EventType.Meeting:
+                    subject += "Meeting" + (!string.IsNullOrEmpty(abRequest.Event.OpponentName) ? " — " + abRequest.Event.OpponentName : string.Empty);
+                    break;
+                case Game.EventType.Party:
+                    subject += "Party" + (!string.IsNullOrEmpty(abRequest.Event.OpponentName) ? " — " + abRequest.Event.OpponentName : string.Empty);
+                    break;
+                default:
+                    subject += abRequest.Event.OpponentName ?? string.Empty;
+                    break;
+            }
+
+            subject += " @ " + abRequest.Event.When;
+
+            Enqueue(abRequest.Email, subject, body.ToString(), "teamkeep-noreply@teamkeep.com", null);
 
             if (AutomaticallySend) SendQueuedMessages();
         }

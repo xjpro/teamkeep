@@ -1,4 +1,4 @@
-﻿var teamkeep = angular.module("teamkeep", [])
+﻿angular.module("teamkeep", [])
     .config(["$routeProvider", function ($routeProvider) {
         $routeProvider
             .when("/schedule", {
