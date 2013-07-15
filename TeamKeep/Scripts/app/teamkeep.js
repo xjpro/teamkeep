@@ -44,7 +44,8 @@
         $rootScope.$on("$routeChangeStart", function () {
 
             if (!viewData.Team.Editable) { // Lock out everything but schedule and roster
-                if ($location.path() != "/schedule" || ($location.path() == "/roster" && !viewData.Privacy.Roster)) {
+                if (($location.path() != "/schedule" && $location.path() != "/roster") ||
+                    ($location.path() == "/roster" && !viewData.Team.Privacy.Roster)) {
                     $location.path("/schedule");
                 }
             }
