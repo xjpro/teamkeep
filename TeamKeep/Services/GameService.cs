@@ -70,7 +70,6 @@ namespace TeamKeep.Services
                 entities.SaveChanges();
 
                 game.Id = gameData.Id;
-                game.DateTime = (game.Date) != null ? ((DateTime)game.Date).ToString("MMM d, yyyy, h:mm tt") : null;
                 game.Location = gameLocationData;
                 game.Duties = new List<EventDuty>();
 

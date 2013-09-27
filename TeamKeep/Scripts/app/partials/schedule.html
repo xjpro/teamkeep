@@ -1,187 +1,220 @@
-﻿<div id="schedule" class="table-container stacks">
-    <div class="table-controls">
-        <div class="column-select pull-left">
-            <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown">
-                    Columns <i class="icon-caret-down"></i>
+<header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" ng-click="toggleSidebar()">
+            <i class="icon-reorder"></i>
+        </a>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-pencil"></i>
                 </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="label-item">Add event to...</li>
+                    <li ng-repeat="season in seasons"><a ng-click="addTo(season)">{{season.Name}}</a></li>
+                    <li><a ng-click="addTo(null)">New season</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row table-controls hidden-xs">
+        <div class="col-md-6">
+            <div ng-show="selectedItems().length > 0">
+                <button class="btn btn-default" ng-click="removeItems()" title="Remove">
+                    <i class="icon-trash"></i>
+                </button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Move">
+                        <i class="icon-folder-open"></i> <i class="icon-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="label-item">Move to...</li>
+                        <li role="presentation" class="divider"></li>
+                        <li ng-repeat="season in seasons"><a ng-click="moveItems(season)">{{season.Name}}</a></li>
+                        <li><a ng-click="moveItems(null)">New season</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dropdown pull-right">
+                <button class="btn btn-primary" data-toggle="dropdown">
+                    <i class="icon-pencil"></i> Add Event
+                </button>
                 <ul class="dropdown-menu">
-                    <li ng-repeat="column in columns" ng-show="column.toggleable">
-                        <a ng-class="{active: column.visible}" stop-event="click" ng-click="column.visible = !column.visible">
-                            {{column.toggleName || column.name}}
-                        </a>
+                    <li class="label-item">
+                        Add to...
+                    </li>
+                    <li role="presentation" class="divider"></li>
+                    <li ng-repeat="season in seasons">
+                        <a ng-click="addTo(season)">{{season.Name}}</a>
+                    </li>
+                    <li>
+                        <a ng-click="addTo(null)">New season</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="season-select pull-right" ng-if="editable">
-            <i class="icon-refresh icon-spin" ng-show="updating()"></i> 
-            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                <i class="icon-plus-sign-alt"></i> Event
-            </button>
-            <ul class="dropdown-menu">
-                <li><label class="heading">Add to &mdash;</label></li>
-                <li class="divider"></li>
-                <li ng-repeat="season in seasons">
-                    <a tabindex="-1" ng-click="addEvent(season)">{{season.Name}}</a>
-                </li>
-                <li><a tabindex="-1" ng-click="addEvent()">New season</a></li>
-            </ul>
-        </div>
-        <div style="clear: both;"></div>
     </div>
-    <table last-tab-event="addEvent(-1)" when-focused="preventSorting">
-        <thead>
-            <tr>
-                <th class="{{column.cssClass}}" ng-repeat="column in columns" ng-show="column.visible"
-                    ng-class="{'sort-up': sortType == column.sortType && reverse == false, 'sort-down': sortType == column.sortType && reverse == true}">
-                    <a title="{{column.toolTip}}" ng-click="sortBy('{{column.sortType}}')">{{column.name}}</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody ng-hide="seasons.length > 0">
-            <tr>
-                <td class="fullinfo" colspan="{{columns.length}}">
-                    No events have been posted for this team
-                </td>
-            </tr>
-        </tbody>
-        <tbody ng-repeat="season in seasons | orderBy:'Order'" season-id="{{season.Id}}">
-            <tr>
-                <td class="fullheading" colspan="{{columns.length}}">
-                    <input class="mod" type="text" ng-model="season.Name" complete-update ng-readonly="!editable" />
-                    <div class="options pull-right" ng-if="editable">
-                        <i class="icon-circle-arrow-up" title="Move season up" ng-show="season.Order != 0" ng-click="changeSeasonOrder(season, season.Order - 1)"></i>
-                        <i class="icon-circle-arrow-down" title="Move season down" ng-show="season.Order != seasons.length-1" ng-click="changeSeasonOrder(season, season.Order + 1)"></i>
-                        <i class="icon-trash" title="Delete season" data-toggle="modal" data-target="#season-delete-modal" ng-click="selectSeason(season)"></i>
-                    </div>
-                </td>
-            </tr>
+    <div class="row">
 
-            <tr ng-hide="season.Games.length > 0">
-                <td class="fullinfo" colspan="{{columns.length}}">There are no events in this season</td>
-            </tr>
-
-            <tr ng-repeat="game in season.Games">
-                <td class="button" ng-show="columns[0].visible">
-                    <a id="dropLabel" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabel">
-                        <li><a tabindex="-1" data-toggle="modal" data-target="#duty-modal" ng-click="selectDutyEvent(game)"> Add duty</a></li>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1">Move to</a>
-                            <ul class="dropdown-menu">
-                                <li ng-repeat="moveSeason in seasons" ng-hide="moveSeason == season">
-                                    <a tabindex="-1" ng-click="move(game, moveSeason)">{{moveSeason.Name}}</a>
-                                </li>
-                                <li class="divider" ng-if="seasons.length > 1"></li>
-                                <li>
-                                    <a tabindex="-1" ng-click="move(game)">New season</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!--li><a tabindex="-1">Mark as cancelled</a></!--li-->
-                        <li><a tabindex="-1" ng-click="removeEvent(game)">Remove</a></li>
-                    </ul>
-                </td>
-                <td class="date" ng-show="columns[1].visible">
-                    <input ng-if="isMobile" class="mod" type="datetime-local" ng-model="game.DateTime" ng-readonly="!editable" />
-                    <span ng-if="!isMobile" ng-switch="editable">
-                        <input ng-switch-when="true" class="mod" type="text" ng-model="game.DateTime" datetime-picker ng-readonly="false" />
-                        <input ng-switch-when="false" class="mod" type="text" ng-model="game.DateTime" ng-readonly="true" />
-                    </span>
-                </td>
-                <td class="hometeam-points digit" ng-show="columns[2].visible">
-                    <input class="mod" type="text" ng-model="game.ScoredPoints" complete-update ng-readonly="!editable" />
-                </td>
-                <td class="awayteam-points digit" ng-show="columns[3].visible">
-                    <input class="mod" type="text" ng-model="game.AllowedPoints" complete-update ng-readonly="!editable" />
-                </td>
-                <td class="tiepoints digit" ng-show="columns[4].visible">
-                    <input class="mod" type="text" ng-model="game.TiePoints" complete-update ng-readonly="!editable" />
-                </td>
-                <td class="type">
-                    <span ng-if="!editable">{{eventTypeTitle(game.Type)}}</span>
-                    <button ng-if="editable" class="btn btn-link dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-                        {{eventTypeTitle(game.Type)}}
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a tabindex="-1" ng-click="game.Type = 0">vs.</a></li>
-                        <li><a tabindex="-1" ng-click="game.Type = 1">Practice</a></li>
-                        <li><a tabindex="-1" ng-click="game.Type = 2">Meeting</a></li>
-                        <li><a tabindex="-1" ng-click="game.Type = 3">Party</a></li>
-                        <li><a tabindex="-1" ng-click="game.Type = 99">None</a></li>
-                    </ul>
-                </td>
-                <td class="max">
-                    <input class="mod" type="text" ng-model="game.OpponentName" complete-update ng-readonly="!editable" />
-                </td>
-                <td class="location" ng-show="columns[7].visible">
-                    <input location-editor class="mod" type="text" locid="{{game.Location.Id}}" value="{{locationDisplay(game.Location)}}" readonly="readonly" />
-                    <div class="editor" ng-if="editable || showLocationEditor(game.Location)">
-                        <div ng-if="editable || game.Location.Description">
-                            <label>Name</label>
-                            <location-typeahead model="game.Location.Description" locations="locations" />
+        <table class="table table-bordered table-striped col-md-12">
+            <thead>
+                <tr>
+                    <th class="column-icon hidden-xs"></th>
+                    <th class="column-date">
+                        <a ng-click="sortBy('DateTime')">Date</a>
+                        <i ng-class="sortIcon" ng-show="sortType == 'DateTime'"></i>
+                    </th>
+                    <th class="column-results hidden-xs">
+                        <a ng-click="sortBy('Results')">Results</a>
+                        <i ng-class="sortIcon" ng-show="sortType == 'Results'"></i>
+                    </th>
+                    <th>
+                        <a ng-click="sortBy('OpponentName')">Title</a>
+                        <i ng-class="sortIcon" ng-show="sortType == 'OpponentName'"></i>
+                    </th>
+                    <th>
+                        <a ng-click="sortBy('Location')">Location</a>
+                        <i ng-class="sortIcon" ng-show="sortType == 'Location'"></i>
+                    </th>
+                    <th class="column-duties hidden-xs"></th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="season in seasons | orderBy:'Order'">
+                <tr>
+                    <td colspan="6" class="heading">
+                        <input type="text" ng-model="season.Name" />
+                        <div class="pull-right">
+                            <a title="Move season up" ng-show="season.Order != 0" ng-click="changeCollectionOrder(season, season.Order - 1)">
+                                <i class="icon-circle-arrow-up"></i>
+                            </a>
+                            <a title="Move season down" ng-show="season.Order != seasons.length-1" ng-click="changeCollectionOrder(season, season.Order + 1)">
+                                <i class="icon-circle-arrow-down"></i>
+                            </a>
+                            <a title="Remove season" ng-click="removeCollection(season)">
+                                <i class="icon-trash"></i>
+                            </a>
                         </div>
-                        <div ng-if="editable || game.Location.Street">
-                            <label>Street</label>
-                            <input type="text" class="js-street" ng-model="game.Location.Street" complete-update ng-readonly="!editable" />
+                    </td>
+                </tr>
+                <tr ng-class="{selected: event.Selected}" ng-click="editItem(event)" ng-repeat-start="event in season.Games">
+                    <td class="column-icon dropdown hidden-xs">
+                        <input type="checkbox" ng-model="event.Selected" />
+                    </td>
+                    <td class="column-date dropdown" edit-dropdown>
+                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{event | eventDate}}</a>
+                        <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <div class="datepicker well pull-left" ng-model="event.DateTime">
+                                <datepicker show-weeks="false"></datepicker>
+                            </div>
+                            <div class="pull-right">
+                                <clockpicker ng-model="event.DateTime"></clockpicker>
+                            </div>
                         </div>
-                        <div ng-if="editable || game.Location.City">
-                            <label>City</label>
-                            <input type="text" class="js-city" ng-model="game.Location.City" complete-update ng-readonly="!editable" />
-                        </div>
-                        <div ng-if="editable || game.Location.Postal">
-                            <label>Zip</label>
-                            <input type="text" class="js-postal" ng-model="game.Location.Postal" complete-update ng-readonly="!editable" />
-                        </div>
-                        <div>
-                            <button class="btn pull-right">Done</button>
-                        </div>
-                    </div>
-                </td>
-                <td class="sublocation" ng-show="columns[8].visible">
-                    <input class="mod" type="text" ng-model="game.Location.InternalLocation" complete-update ng-readonly="!editable" />
-                </td>
-            </tr>            
-        </tbody>
-    </table>
-    <div id="season-delete-modal" class="modal hide fade">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Are you sure?</h3>
-        </div>
-        <div class="modal-body">
-            <p>Deleting this season will also remove all the games it contains.</p>
-            <p>This cannot be undone.</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-primary" data-dismiss="modal" ng-click="removeSeason(selectedSeason)">Yes, please delete</button>
-        </div>
+                    </td>
+                    <td class="column-results dropdown hidden-xs" edit-dropdown>
+                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{event | eventResults}}</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li class="form-group">
+                                <label>Scored</label>
+                                <input type="number" class="form-control" ng-model="event.ScoredPoints" placeholder="Points scored" />
+                            </li>
+                            <li class="form-group">
+                                <label>Allowed</label>
+                                <input type="number" class="form-control" ng-model="event.AllowedPoints" placeholder="Points allowed" />
+                            </li>
+                            <li class="form-group">
+                                <label>Tied</label>
+                                <input type="number" class="form-control" ng-model="event.TiePoints" placeholder="Tied" />
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="dropdown" edit-dropdown>
+                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{event | eventTitle}}</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control" ng-model="event.OpponentName" placeholder="Untitled"/>
+                            </li>
+                            <li class="form-group">
+                                <label>Event type</label>
+                                <input type="number" class="form-control" ng-model="event.Type"/>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="dropdown" edit-dropdown>
+                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{event | eventLocation}}</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li class="form-group">
+                                <label>Description</label>
+                                <input type="text" class="form-control" ng-model="event.Location.Description" placeholder="Short description" />
+                            </li>
+                            <li class="form-group">
+                                <label>Street</label>
+                                <input type="text" class="form-control" ng-model="event.Location.Street" placeholder="Street address" />
+                            </li>
+                            <li class="form-group">
+                                <label>City</label>
+                                <input type="text" class="form-control" ng-model="event.Location.City" placeholder="City" />
+                            </li>
+                            <!--<li class="form-group">
+                                <label>Postal</label>
+                                <input type="text" class="form-control" ng-model="event.Location.Postal"/>
+                            </li>-->
+                            <li class="form-group">
+                                <label>Arena</label>
+                                <input type="text" class="form-control" ng-model="event.Location.InternalLocation" placeholder="Rink, field, room, etc." />
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="column-duties hidden-xs text-right" ng-class="{active: event.ShowDuties}">
+                        <button class="btn btn-default btn-xs" ng-class="{active: event.ShowDuties}" ng-click="toggleDuties(event)">
+                            <i class="icon-caret-down"></i> {{event.Duties.length}} {{event.Duties.length == 1 ? 'duty' : 'duties'}} 
+                        </button>
+                    </td>
+                </tr>
+                <tr ng-if="event.ShowDuties" ng-repeat-end>
+                    <td class="duties" colspan="6">
+                        <header>
+                            <h4>Event duties</h4>
+                            <button class="btn btn-sm btn-default" ng-click="addEventDuty(event)">
+                                <i class="icon-plus"></i> Add duty
+                            </button>
+                        </header>
+                        <p ng-show="event.Duties.length == 0">
+                            This event currently has no duties attached to it.
+                        </p>
+                        <ul>
+                            <li class="dropdown" ng-repeat="duty in event.Duties" edit-dropdown>
+                                <a data-toggle="dropdown" data-target="#" tabindex="1">
+                                    {{memberName(duty.PlayerId) || 'Unassigned'}} &mdash;
+                                    {{duty.Name || 'New duty'}}
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <li class="form-group">
+                                        <label>Assigned to</label>
+                                        <select class="form-control" ng-model="duty.PlayerId" ng-options="member.Id as (member | playerName) for member in members">
+                                        </select>
+                                    </li>
+                                    <li class="form-group">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" ng-model="duty.Name" placeholder="Short description" />
+                                    </li>
+                                    <li class="pull-right">
+                                        <button class="btn btn-sm btn-warning" ng-click="removeEventDuty(duty)">
+                                            Remove
+                                        </button>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
     </div>
-    <form id="duty-modal" class="modal hide fade" ng-submit="addDuty()">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>{{ eventTypeTitle(dutyEvent.Type) + (dutyEvent.Type != 0 ? ' &mdash; ' : '&nbsp;') + dutyEvent.OpponentName || '[Untitled]' }}</h3>
-        </div>
-        <div class="modal-body">
-            <p>
-                {{dutyEvent.DateTime}}
-            </p>
-            <div>
-                <label>Assigned to</label>
-                <select ng-model="dutyPlayerId" ng-options="player.Id as playerName(player.Id) for player in players">
-                    <option value="">Unassigned</option>
-                </select>                    
-            </div>
-            <div>
-                <label>Short description</label>
-                <input type="text" ng-model="dutyName" placeholder="Bring snacks, score game, etc."/>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button type="submit" class="btn btn-primary" spinner="evaluating">Create duty</button>
-        </div>
-    </form>
 </div>

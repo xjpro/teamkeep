@@ -73,7 +73,7 @@ namespace TeamKeep.Controllers
                 }
             }
 
-            return View("TeamHome", viewModel);
+            return View(viewModel);
         }
 
         [HttpGet]

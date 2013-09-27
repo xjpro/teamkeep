@@ -233,58 +233,72 @@
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap-responsive.css" />
+    <Content Include="Content\angular-clockpicker.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Emails\availability.htm" />
-    <Content Include="Emails\welcome.htm" />
+    <Content Include="Content\semantic.css" />
     <Content Include="Libraries\Common.Logging.dll" />
     <Content Include="Libraries\DotNetOpenAuth.dll" />
     <Content Include="Libraries\log4net.dll" />
     <Content Include="Libraries\Quartz.dll" />
     <Content Include="Libraries\WebGrease.dll" />
+    <Content Include="Scripts\angular-clockpicker.js" />
+    <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\app-public\login\User.js" />
     <Content Include="Scripts\app-public\teamkeep-public.js" />
     <Content Include="Scripts\app-public\login\LoginController.js" />
     <Content Include="Scripts\app-public\login\RegisterController.js" />
-    <Content Include="Scripts\app\partials\availability-request.html" />
+    <Content Include="Scripts\app-old\partials\availability-request.html" />
+    <Content Include="Scripts\app-old\partials\availability.html" />
+    <Content Include="Scripts\app-old\partials\compose.html" />
+    <Content Include="Scripts\app-old\partials\duties.html" />
+    <Content Include="Scripts\app-old\partials\message.html" />
+    <Content Include="Scripts\app-old\partials\messages.html" />
+    <Content Include="Scripts\app-old\partials\roster.html" />
+    <Content Include="Scripts\app-old\partials\schedule.html" />
+    <Content Include="Scripts\app-old\partials\settings.html" />
+    <Content Include="Scripts\app-old\shared\radioButton.js" />
+    <Content Include="Scripts\app-old\shared\Team.js" />
+    <Content Include="Scripts\app-old\shared\spinner.js" />
+    <Content Include="Scripts\app-old\teamkeep-directives.js" />
+    <Content Include="Scripts\app-old\team\AlertsController.js" />
+    <Content Include="Scripts\app-old\team\AvailabilityController.js" />
+    <Content Include="Scripts\app-old\team\AvailabilityRequestController.js" />
+    <Content Include="Scripts\app-old\team\ComposeController.js" />
+    <Content Include="Scripts\app-old\team\DutiesController.js" />
+    <Content Include="Scripts\app-old\team\MessageController.js" />
+    <Content Include="Scripts\app-old\team\MessagesController.js" />
+    <Content Include="Scripts\app-old\team\RosterController.js" />
+    <Content Include="Scripts\app-old\team\ScheduleController.js" />
+    <Content Include="Scripts\app-old\team\SettingsController.js" />
+    <Content Include="Scripts\app-old\team\HeaderController.js" />
+    <Content Include="Scripts\app-old\tutorial\TutorialController.js" />
+    <Content Include="Scripts\app-old\shared\User.js" />
+    <Content Include="Scripts\app-old\teamkeep.js" />
     <Content Include="Scripts\app\partials\availability.html" />
-    <Content Include="Scripts\app\partials\compose.html" />
-    <Content Include="Scripts\app\partials\duties.html" />
-    <Content Include="Scripts\app\partials\message.html" />
-    <Content Include="Scripts\app\partials\messages.html" />
+    <Content Include="Scripts\app\partials\roster-member.html" />
     <Content Include="Scripts\app\partials\roster.html" />
+    <Content Include="Scripts\app\partials\schedule-event.html" />
     <Content Include="Scripts\app\partials\schedule.html" />
-    <Content Include="Scripts\app\partials\settings.html" />
-    <Content Include="Scripts\app\shared\radioButton.js" />
-    <Content Include="Scripts\app\shared\Team.js" />
-    <Content Include="Scripts\app\shared\spinner.js" />
     <Content Include="Scripts\app\teamkeep-directives.js" />
-    <Content Include="Scripts\app\team\AlertsController.js" />
-    <Content Include="Scripts\app\team\AvailabilityController.js" />
-    <Content Include="Scripts\app\team\AvailabilityRequestController.js" />
-    <Content Include="Scripts\app\team\ComposeController.js" />
-    <Content Include="Scripts\app\team\DutiesController.js" />
-    <Content Include="Scripts\app\team\MessageController.js" />
-    <Content Include="Scripts\app\team\MessagesController.js" />
-    <Content Include="Scripts\app\team\RosterController.js" />
-    <Content Include="Scripts\app\team\ScheduleController.js" />
-    <Content Include="Scripts\app\team\SettingsController.js" />
-    <Content Include="Scripts\app\team\HeaderController.js" />
-    <Content Include="Scripts\app\tutorial\TutorialController.js" />
-    <Content Include="Scripts\app\shared\User.js" />
     <Content Include="Scripts\app\teamkeep.js" />
+    <Content Include="Scripts\app\team\AvailabilityController.js" />
+    <Content Include="Scripts\app\team\DutiesController.js" />
+    <Content Include="Scripts\app\team\GroupedTableDecorator.js" />
+    <Content Include="Scripts\app\team\RosterMemberController.js" />
+    <Content Include="Scripts\app\team\SortingDecorator.js" />
+    <Content Include="Scripts\app\team\RosterController.js" />
+    <Content Include="Scripts\app\team\ScheduleEventController.js" />
+    <Content Include="Scripts\app\team\HeaderController.js" />
+    <Content Include="Scripts\app\team\ScheduleController.js" />
+    <Content Include="Scripts\app\team\Team.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Content\font-awesome.css" />
-    <Content Include="Scripts\jquery.autosize.js" />
-    <Content Include="Scripts\jquery.bottom-modal.js" />
-    <Content Include="Scripts\teamkeep.js" />
-    <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
-    <Content Include="Scripts\knockout.mapping.js" />
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Content\site.css" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\ui-bootstrap.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -376,12 +390,24 @@
   <ItemGroup>
     <Content Include="Views\User\VerifyThanks.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\icons.svg" />
+    <Content Include="Content\fonts\icons.ttf" />
+    <Content Include="Content\fonts\icons.woff" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\Sitemap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\FeaturesHomepage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Team\Home.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,56 +1,103 @@
-﻿angular.module("teamkeep", [])
-    .config(["$routeProvider", function ($routeProvider) {
+angular.module("teamkeep", ["ngRoute", "ui.bootstrap", "ui.clockpicker"])
+    .config(function($routeProvider) {
         $routeProvider
             .when("/schedule", {
                 templateUrl: "/Scripts/app/partials/schedule.html",
                 controller: "ScheduleController"
             })
+            .when("/schedule/events/:eventId", {
+                templateUrl: "/Scripts/app/partials/schedule-event.html",
+                controller: "ScheduleEventController"
+            })
             .when("/roster", {
                 templateUrl: "/Scripts/app/partials/roster.html",
                 controller: "RosterController"
+            })
+            .when("/roster/members/:memberId", {
+                templateUrl: "/Scripts/app/partials/roster-member.html",
+                controller: "RosterMemberController"
             })
             .when("/availability", {
                 templateUrl: "/Scripts/app/partials/availability.html",
                 controller: "AvailabilityController"
             })
-            .when("/availability/:eventId/request", {
-                templateUrl: "/Scripts/app/partials/availability-request.html",
-                controller: "AvailabilityRequestController"
-            })
-            .when("/duties", {
-                templateUrl: "/Scripts/app/partials/duties.html",
-                controller: "DutiesController"
-            })
-            .when("/messages", {
-                templateUrl: "/Scripts/app/partials/messages.html",
-                controller: "MessagesController"
-            })
-            .when("/messages/:messageId", {
-                templateUrl: "/Scripts/app/partials/message.html",
-                controller: "MessageController"
-            })
-            .when("/compose", {
-                templateUrl: "/Scripts/app/partials/compose.html",
-                controller: "ComposeController"
-            })
-            .when("/settings", {
-                templateUrl: "/Scripts/app/partials/settings.html",
-                controller: "SettingsController"
-            })
             .otherwise({ redirectTo: "/schedule" });
-    }])
-    .run(["$rootScope", "$location", function ($rootScope, $location) {
-
-        $rootScope.$on("$routeChangeStart", function () {
-
-            if (!viewData.Team.Editable) { // Lock out everything but schedule and roster
-                if (($location.path() != "/schedule" && $location.path() != "/roster") ||
-                    ($location.path() == "/roster" && !viewData.Team.Privacy.Roster)) {
-                    $location.path("/schedule");
-                }
-            }
-
-            $("#team-nav li").removeClass("active");
-            $("#team-nav li:has(a[href='#" + $location.path() + "'])").addClass("active");
+    })
+    .run(function ($rootScope, $window) {
+        
+        $rootScope.windowWidth = $window.outerWidth;
+        $rootScope.isMobile = $rootScope.windowWidth < 767;
+        angular.element($window).bind("resize", function() {
+            $rootScope.windowWidth = $window.outerWidth;
+            $rootScope.isMobile = $rootScope.windowWidth < 767;
+            $rootScope.$apply("windowWidth");
         });
-    }]);
+
+        $rootScope.toggleSidebar = function() {
+            $rootScope.$broadcast("$toggleSidebar");
+        };
+    })
+    .directive("teamkeepSidebar", function() {
+        return {
+            restrict: "E,A",
+            scope: {
+                visible: "=teamkeepSidebar",
+                overlay: "=overlay"
+            },
+            controller: function($scope, $element) {
+                $scope.$watch("visible", function(value) {
+                    if (value) {
+                        $($element).show();
+                        if (!$scope.overlay) {
+                            $("body").addClass("pushed");
+                        }
+                    } else {
+                        $($element).hide();
+                        if (!$scope.overlay) {
+                            $("body").removeClass("pushed");
+                        }
+                    }
+                });
+            }
+        };
+    })
+    .directive("editDropdown", function() {
+        return {
+            restrict: "E,A",
+            link: function(scope, element) {
+                var menu = $(element).find(".dropdown-menu");
+                menu.click(function(evt) {
+                    evt.stopPropagation();
+                })
+                .keydown(function(evt) {
+                    if (evt.which === 13) {
+                        $("body").click();
+                    }
+                });
+
+                $(element).click(function () { // Open even when the box is empty
+                    if (!scope.isMobile) {
+
+                        $(element).find(".dropdown-menu").css({
+                            top: "-" + menu.outerHeight() + "px"
+                        });
+
+                        $(this).find("[data-toggle]").dropdown("toggle");
+
+                        return false;
+                    }
+                });
+            }
+        };
+    })
+    .directive("navDropdown", function () {
+        return {
+            restrict: "E,A",
+            link: function (scope, element) {
+                var menu = $(element).find(".dropdown-menu");
+                menu.css({
+                    left: "-" + menu.width() + "px"
+                });
+            }
+        };
+    });

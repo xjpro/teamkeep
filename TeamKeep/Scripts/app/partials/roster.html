@@ -1,117 +1,140 @@
-﻿<div id="roster" class="table-container stacks">
-    <div class="table-controls">
-        <div class="column-select pull-left" ng-if="editable && hasToggleableColumn">
-            <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown">
-                    Columns <i class="icon-caret-down"></i>
+<header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" ng-click="toggleSidebar()">
+            <i class="icon-reorder"></i>
+        </a>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-pencil"></i>
                 </a>
-                <ul class="dropdown-menu">
-                    <li ng-repeat="column in columns" ng-show="column.toggleable">
-                        <a ng-class="{active: column.visible}" stop-event="click" ng-click="column.visible = !column.visible">
-                            {{column.toggleName || column.name}}
-                        </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="label-item">Add member to...</li>
+                    <li ng-repeat="group in groups">
+                        <a ng-click="addTo(group)">{{group.Name}}</a>
                     </li>
+                    <li><a ng-click="addTo(null)">New group</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row table-controls hidden-xs">
+        <div class="col-md-6">
+            <div ng-show="selectedItems().length > 0">
+                <button class="btn btn-default" ng-click="removeItems()" title="Remove">
+                    <i class="icon-trash"></i>
+                </button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Move">
+                        <i class="icon-folder-open"></i> <i class="icon-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="label-item">Move to...</li>
+                        <li role="presentation" class="divider"></li>
+                        <li ng-repeat="group in groups"><a ng-click="moveItems(group)">{{group.Name}}</a></li>
+                        <li><a ng-click="moveItems(null)">New group</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dropdown pull-right">
+                <button class="btn btn-primary" data-toggle="dropdown">
+                    <i class="icon-pencil"></i> Add Member
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="label-item">Add to...</li>
+                    <li role="presentation" class="divider"></li>
+                    <li ng-repeat="group in groups">
+                        <a ng-click="addTo(group)">{{group.Name}}</a>
+                    </li>
+                    <li><a ng-click="addTo(null)">New group</a></li>
                 </ul>
             </div>
         </div>
-        
-        <div class="group-select pull-right" ng-show="editable">
-            <i class="icon-refresh icon-spin" ng-show="updating()"></i>
-            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                <i class="icon-plus-sign-alt"></i> Member
-            </button>
-            <ul class="dropdown-menu">
-                <li><label class="heading">Add to &mdash;</label></li>
-                <li class="divider"></li>
-                <li ng-repeat="group in groups">
-                    <a tabindex="-1" ng-click="addPlayer(group)">{{group.Name}}</a>
-                </li>
-                <li><a tabindex="-1" ng-click="addPlayer()">New grouping</a></li>
-            </ul>
-        </div>
-        <div style="clear: both;"></div>
     </div>
-    <table last-tab-event="addPlayer(-1)" when-focused="preventSorting">
-        <thead>
-            <tr>
-                <th class="{{column.cssClass}}" ng-repeat="column in columns" ng-show="column.visible"
-                    ng-class="{'sort-up': sortType == column.sortType && reverse == false, 'sort-down': sortType == column.sortType && reverse == true}">
-                    <a title="{{column.toolTip}}" ng-click="sortBy('{{column.sortType}}')">{{column.name}}</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody ng-hide="groups.length > 0">
-            <tr>
-                <td class="fullinfo" colspan="6">
-                    No members have been added to this roster
-                </td>
-            </tr>
-        </tbody>
-        <tbody ng-repeat="group in groups | orderBy:'Order'" group-id="{{group.Id}}">
-            <tr>
-                <td class="fullheading" colspan="6">
-                    <input class="mod" type="text" ng-model="group.Name" complete-update ng-readonly="!editable" />
-                    <div class="options pull-right" ng-show="editable">
-                        <i class="icon-circle-arrow-up" title="Move group up" ng-show="group.Order != 0" ng-click="changeGroupOrder(group, group.Order - 1)"></i>
-                        <i class="icon-circle-arrow-down" title="Move group down" ng-show="group.Order != groups.length-1" ng-click="changeGroupOrder(group, group.Order + 1)"></i>
-                        <i class="icon-trash" title="Delete group" data-toggle="modal" data-target="#group-delete-modal" ng-click="selectGroup(group)"></i>
-                    </div>
-                </td>
-            </tr>
-            
-            <tr ng-show="group.Players.length == 0">
-                <td class="fullinfo" colspan="6">There are no members in this grouping</td>
-            </tr>
+    <div class="row">
 
-            <tr ng-repeat="player in group.Players">
-                <td class="button" ng-show="columns[0].visible">
-                    <a id="dropLabelRoster" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#"><i class="icon-edit"></i></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropLabelRoster">
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1">Move to</a>
-                            <ul class="dropdown-menu">
-                                <li ng-repeat="moveGroup in groups" ng-hide="moveGroup == group">
-                                    <a tabindex="-1" ng-click="move(player, moveGroup)">{{moveGroup.Name}}</a>
-                                </li>
-                                <li class="divider" ng-if="groups.length > 1"></li>
-                                <li>
-                                    <a tabindex="-1" ng-click="move(player)">New grouping</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a tabindex="-1" ng-click="removePlayer(player)">Remove</a></li>
-                    </ul>
-                </td>
-                <td  class="lastname" ng-show="columns[1].visible">
-                    <input type="text" class="mod" ng-model="player.LastName" complete-update ng-readonly="!editable" />
-                </td>
-                <td class="max">
-                    <input type="text" class="mod" ng-model="player.FirstName" complete-update ng-readonly="!editable" />
-                </td>
-                <td  class="position" ng-show="columns[3].visible">
-                    <input type="text" class="mod" ng-model="player.Position" complete-update ng-readonly="!editable" />
-                </td>
-                <td class="phone" ng-show="columns[4].visible">
-                    <input type="tel" class="mod" ng-model="player.Phone" complete-update ng-readonly="!editable" />
-                </td>
-                <td class="email" ng-show="columns[5].visible">
-                    <input type="email" class="mod" ng-model="player.Email" complete-update ng-readonly="!editable" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div id="group-delete-modal" class="modal hide fade">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Are you sure?</h3>
-        </div>
-        <div class="modal-body">
-            <p>Deleting this group will also remove all the players it contains.</p>
-            <p>This cannot be undone.</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-primary" data-dismiss="modal" ng-click="removeGroup(selectedGroup)">Yes, please delete</button>
-        </div>
+        <table class="table table-bordered table-striped col-md-12">
+            <thead>
+                <tr>
+                    <th class="column-icon hidden-xs"></th>
+                    <th class="column-name">
+                        <a ng-click="sortBy('Name')">Name</a>
+                        <i ng-class="sortIcon" ng-show="sortType == 'Name'"></i>
+                    </th>
+                    <th class="column-position hidden-xs">
+                        <a ng-click="sortBy('Position')">Position</a>
+                        <i ng-class="sortIcon" ng-show="sortType == 'Position'"></i>
+                    </th>
+                    <th class="column-contact">
+                        <a ng-click="sortBy('Contact')">Contact</a>
+                        <i ng-class="sortIcon" ng-show="sortType == 'Contact'"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="group in groups | orderBy:'Order'">
+                <tr>
+                    <td colspan="4" class="heading">
+                        <input type="text" ng-model="group.Name" />
+                        <div class="pull-right">
+                            <a title="Move group up" ng-show="group.Order != 0" ng-click="changeCollectionOrder(group, group.Order - 1)">
+                                <i class="icon-circle-arrow-up"></i>
+                            </a>
+                            <a title="Move group down" ng-show="group.Order != group.length-1" ng-click="changeCollectionOrder(group, group.Order + 1)">
+                                <i class="icon-circle-arrow-down"></i>
+                            </a>
+                            <a title="Remove group" ng-click="removeCollection(group)">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-class="{selected: player.Selected}" ng-click="editItem(player)" ng-repeat="player in group.Players">
+                    <td class="column-icon dropdown hidden-xs">
+                        <input type="checkbox" ng-model="player.Selected" />
+                    </td>
+                    <td class="dropdown" edit-dropdown>
+                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{player | playerName}}</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li class="form-group">
+                                <label>First name</label>
+                                <input type="text" class="form-control" ng-model="player.FirstName"/>
+                            </li>
+                            <li class="form-group">
+                                <label>Last name</label>
+                                <input type="text" class="form-control" ng-model="player.LastName"/>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="dropdown hidden-xs" edit-dropdown>
+                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{player.Position}}</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li class="form-group">
+                                <label>Position</label>
+                                <input type="text" class="form-control" ng-model="player.Position" placeholder="None"/>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="dropdown" edit-dropdown>
+                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{player | playerContact}}</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li class="form-group">
+                                <label>Phone</label>
+                                <input type="text" class="form-control" ng-model="player.Phone"/>
+                            </li>
+                            <li class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" ng-model="player.Email"/>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
     </div>
 </div>

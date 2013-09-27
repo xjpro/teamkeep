@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamKeep", "TeamKeep\TeamKeep.csproj", "{415BFD3B-3FA1-40BE-A9C0-77D93A8ED9F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamkeep", "Teamkeep\Teamkeep.csproj", "{415BFD3B-3FA1-40BE-A9C0-77D93A8ED9F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,8 +11,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{415BFD3B-3FA1-40BE-A9C0-77D93A8ED9F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{415BFD3B-3FA1-40BE-A9C0-77D93A8ED9F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{415BFD3B-3FA1-40BE-A9C0-77D93A8ED9F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{415BFD3B-3FA1-40BE-A9C0-77D93A8ED9F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{415BFD3B-3FA1-40BE-A9C0-77D93A8ED9F5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{415BFD3B-3FA1-40BE-A9C0-77D93A8ED9F5}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
