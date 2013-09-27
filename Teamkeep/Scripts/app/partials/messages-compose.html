@@ -1,0 +1,43 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <form ng-submit="sendMessage()">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Subject" />
+                    <textarea rows="8" autosize class="form-control" ng-model="content" placeholder="Message content"></textarea>
+                </div>
+            
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-success">Send message</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-5">
+            <h3 class="heading">Recipients</h3>
+            <ul class="unstyled" ng-repeat="group in groups" ng-show="group.Players.length > 0">
+                <li class="player-group">
+                    <label class="checkbox heading">
+                        <input type="checkbox" ng-model="group.selected" /> 
+                        <h5>{{group.Name}}</h5>
+                    </label>
+                    <ul>
+                        <li ng-repeat="member in group.Players" ng-switch="!availabilityEmailSent(member) && member.Email != null">
+                            <label class="checkbox" ng-switch-when="true">
+                                <input type="checkbox" ng-model="member.selected"/> 
+                                <span>{{member | playerName}}</span>
+                                <small>{{member.Email}}</small>
+                            </label>   
+                            <label class="disabled" title="{{(member.Email != null) ? 'Request already sent' : 'Email address required'}}" ng-switch-when="false">
+                                <i class="icon-envelope"></i>
+                                <span>{{member | fullName}}</span>
+                                <small>{{member.Email}}</small>
+                            </label>  
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+</div>

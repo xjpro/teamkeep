@@ -1,4 +1,4 @@
-angular.module("teamkeep", ["ngRoute", "ui.bootstrap", "ui.clockpicker"])
+angular.module("teamkeep", ["ngRoute", "ngSanitize", "ui.bootstrap", "ui.clockpicker"])
     .config(function($routeProvider) {
         $routeProvider
             .when("/schedule", {
@@ -20,6 +20,14 @@ angular.module("teamkeep", ["ngRoute", "ui.bootstrap", "ui.clockpicker"])
             .when("/availability", {
                 templateUrl: "/Scripts/app/partials/availability.html",
                 controller: "AvailabilityController"
+            })
+            .when("/messages", {
+                templateUrl: "/Scripts/app/partials/messages.html",
+                controller: "MessagesController"
+            })
+            .when("/compose", {
+                templateUrl: "/Scripts/app/partials/messages-compose.html",
+                controller: "MessagesComposeController"
             })
             .otherwise({ redirectTo: "/schedule" });
     })

@@ -281,3 +281,31 @@ form fieldset legend {
 .duties .dropdown-menu {
     padding: 3px 8px;
 }
+
+/* messages */
+.messages li {
+    position: relative;
+    margin: 15px;
+    padding: 5px 15px 10px 15px;
+    border: solid #aaa 1px;
+    border-radius: 5px;
+}
+.messages li.selected {
+    /*background-color: #FFFFD6 !important;*/
+}
+.messages h3 {
+    text-decoration: underline;
+}
+.messages .message-date {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+.messages .message-to {
+    margin-bottom: 15px;
+}
+.messages .message-to span {
+    padding: 2px 10px;
+    border: solid #ddd 1px;
+    border-radius: 1px;
+}

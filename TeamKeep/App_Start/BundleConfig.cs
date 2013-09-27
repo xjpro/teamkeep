@@ -19,6 +19,8 @@ namespace TeamKeep.App_Start
                 "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/js").Include(
+                "~/Scripts/angular-route.js",
+                "~/Scripts/angular-sanitize.js",
                 "~/Scripts/lodash.js",
                 "~/Scripts/moment.js",
                 "~/Scripts/bootstrap.js",

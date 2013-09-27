@@ -1,0 +1,28 @@
+
+<div class="container">
+    <div class="row table-controls hidden-xs">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right">
+                <a class="btn btn-primary" href="#/compose">
+                    <i class="icon-pencil"></i> New message
+                </a>
+            </div>
+        </div>
+    </div>
+    <ol class="messages list-unstyled">
+        <li ng-class="{selected: message.Selected}" ng-click="message.Selected = true" ng-repeat="message in messages | orderBy:datePredicate:true">
+            <h3>{{message.Subject}}</h3>
+            <div class="message-date">
+                {{message.DateTime}}
+            </div>
+            <div class="message-to">
+                To: <span>{{message.To}}</span>
+            </div>
+            <div ng-bind-html="message.Content">
+
+            </div>
+        </li>
+    </ol>
+</div>
