@@ -275,6 +275,7 @@
     <Content Include="Scripts\app-old\shared\User.js" />
     <Content Include="Scripts\app-old\teamkeep.js" />
     <Content Include="Scripts\app\partials\availability.html" />
+    <Content Include="Scripts\app\partials\settings.html" />
     <Content Include="Scripts\app\partials\messages-compose.html" />
     <Content Include="Scripts\app\partials\messages.html" />
     <Content Include="Scripts\app\partials\roster-member.html" />
@@ -284,6 +285,7 @@
     <Content Include="Scripts\app\teamkeep-directives.js" />
     <Content Include="Scripts\app\teamkeep.js" />
     <Content Include="Scripts\app\team\AvailabilityController.js" />
+    <Content Include="Scripts\app\team\SettingsController.js" />
     <Content Include="Scripts\app\team\MessagesComposeController.js" />
     <Content Include="Scripts\app\team\MessagesController.js" />
     <Content Include="Scripts\app\team\GroupedTableDecorator.js" />

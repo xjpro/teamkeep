@@ -29,6 +29,10 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "ui.bootstrap", "ui.clockpi
                 templateUrl: "/Scripts/app/partials/messages-compose.html",
                 controller: "MessagesComposeController"
             })
+            .when("/settings", {
+                templateUrl: "/Scripts/app/partials/settings.html",
+                controller: "SettingsController"
+            })
             .otherwise({ redirectTo: "/schedule" });
     })
     .run(function ($rootScope, $window) {
