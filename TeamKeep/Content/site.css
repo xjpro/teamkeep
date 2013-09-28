@@ -312,8 +312,15 @@ form fieldset legend {
 }
 
 /* compose player-group list */
+.dropdown-recipients {
+    padding: 10px 15px;
+    border: solid #ccc;
+    border-width: 0 1px 1px 1px;
+    border-radius: 0 0 5px 5px;
+    margin-bottom: 10px;
+}
 .player-groups {
-    overflow: hidden;
+    overflow: hidden;    
 }
 .player-groups h5 {
     border-bottom: solid #aaa 1px;

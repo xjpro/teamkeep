@@ -90,4 +90,14 @@
                 });
             }
         };
+    })
+    .directive("recipientsDropdown", function () {
+        return {
+            restrict: "EA",
+            controller: function ($scope, $element) {
+                $element.click(function () {
+
+                });
+            }
+        };
     });

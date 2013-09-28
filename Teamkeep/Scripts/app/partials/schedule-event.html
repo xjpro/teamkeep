@@ -1,0 +1,74 @@
+<header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
+    <div class="container">
+        <div class="navbar-left">
+            <a class="btn btn-info" href="#/schedule">
+                <i class="icon-chevron-sign-left"></i> Schedule
+            </a>
+        </div>
+        <div class="nav navbar-nav navbar-right">
+            <a class="navbar-brand" ng-click="removeEvent(event)">
+                <i class="icon-trash"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <form>
+        <fieldset>
+            <legend>Description</legend>
+            <div class="form-group col-xs-12 col-md-8">
+                <label>Title</label>
+                <input type="text" class="form-control" ng-model="event.OpponentName" />
+            </div>
+            <div class="form-group col-xs-12 col-md-4">
+                <label>Event type</label>
+                <input type="number" class="form-control" ng-model="event.Type" />
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>When</legend>
+            <div class="form-group col-xs-12 col-md-6">
+                <label>Date</label>
+                <input type="datetime" class="form-control" ng-model="event.DateTime" />
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Where</legend>
+            <div class="form-group col-xs-12 col-md-6">
+                <label>Name</label>
+                <input type="text" class="form-control" ng-model="event.Location.Description" />
+            </div>
+            <div class="form-group col-xs-12 col-md-6">
+                <label>Street</label>
+                <input type="text" class="form-control" ng-model="event.Location.Street" />
+            </div>
+            <div class="form-group col-xs-12 col-md-6">
+                <label>City</label>
+                <input type="text" class="form-control" ng-model="event.Location.City" />
+            </div>
+            <div class="form-group col-xs-12 col-md-6">
+                <label>Arena/Rink/Field</label>
+                <input type="text" class="form-control" ng-model="event.Location.InternalLocation"/>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Result</legend>
+            <div class="form-group col-xs-4 col-md-2">
+                <label>Scored</label>
+                <input type="number" class="form-control" ng-model="event.ScoredPoints" />
+            </div>    
+            <div class="form-group col-xs-4 col-md-2">
+                <label>Allowed</label>
+                <input type="number" class="form-control" ng-model="event.AllowedPoints" />
+            </div>
+            <div class="form-group col-xs-4 col-md-2">
+                <label>Tied</label>
+                <input type="number" class="form-control" ng-model="event.TiePoints" />
+            </div>
+        </fieldset>
+    </form>
+</div>

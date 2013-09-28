@@ -29,38 +29,41 @@
     <div class="buffered row">
         <div class="col-md-12">
             <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">To</span>
+                    <div type="text" class="form-control" ng-click="recipientsDropdown = true">{{recipients()}}</div>
+                </div>
+                <div class="dropdown-recipients" ng-show="recipientsDropdown">
+                    <ul class="list-unstyled player-groups" ng-repeat="group in groups | orderBy:'Order'">
+                        <li>
+                            <label class="checkbox">
+                                <input type="checkbox" ng-click="toggleGroup(group)" /> 
+                                <h5>{{group.Name}}</h5>
+                            </label>
+                            <ul class="list-unstyled">
+                                <li class="col-xs-12 col-sm-6 col-md-3" ng-repeat="member in group.Players" ng-switch="member.Email.length > 0">
+                                    <label class="checkbox" ng-switch-when="true">
+                                        <input type="checkbox" ng-model="member.Selected"/> 
+                                        <span>{{member | playerName}}</span>
+                                        <small>{{member.Email}}</small>
+                                    </label>   
+                                    <label ng-switch-when="false">
+                                        <i class="icon-ban-circle"></i>
+                                        <span>{{member | playerName}}</span>
+                                        <small>No email specified</small>
+                                    </label>   
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="text-right">
+                        <button class="btn" ng-click="recipientsDropdown = false">Close</button>
+                    </div>
+                </div>
+
                 <input type="text" class="form-control" ng-model="message.subject" placeholder="Message subject" />
                 <textarea rows="8" autosize class="form-control" ng-model="message.content" placeholder="Message content"></textarea>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="heading">Recipients</h3>
-            <ul class="list-unstyled player-groups" ng-repeat="group in groups | orderBy:'Order'">
-                <li>
-                    <label class="checkbox">
-                        <input type="checkbox" ng-click="toggleGroup(group)" /> 
-                        <h5>{{group.Name}}</h5>
-                    </label>
-                    <ul class="list-unstyled">
-                        <li class="col-xs-12 col-sm-6 col-md-3" ng-repeat="member in group.Players" ng-switch="member.Email.length > 0">
-                            <label class="checkbox" ng-switch-when="true">
-                                <input type="checkbox" ng-model="member.Selected"/> 
-                                <span>{{member | playerName}}</span>
-                                <small>{{member.Email}}</small>
-                            </label>   
-                            <label ng-switch-when="false">
-                                <i class="icon-ban-circle"></i>
-                                <span>{{member | playerName}}</span>
-                                <small>No email specified</small>
-                            </label>   
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-        
+    </div>       
 </div>

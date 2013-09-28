@@ -4,6 +4,13 @@
     $scope.sending = false;
     $scope.message = {};
 
+    $scope.recipients = function () {
+        var str = [];
+        _(Team.PlayerGroups).flatten("Players").select(function (member) { return member.Selected && member.Email; }).each(function (member) {
+            str.push(member.Email + "; ");
+        });
+        return str.join('');
+    };
     $scope.toggleGroup = function (group) {
         group.Selected = !group.Selected;
         
