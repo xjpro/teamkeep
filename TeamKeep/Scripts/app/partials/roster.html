@@ -76,6 +76,13 @@
                     </th>
                 </tr>
             </thead>
+            <tbody ng-if="groups.length == 0">
+                <tr>
+                    <td colspan="6" class="text-center">
+                        No groups have been created for this team
+                    </td>
+                </tr>
+            </tbody>
             <tbody ng-repeat="group in groups | orderBy:'Order'">
                 <tr>
                     <td colspan="4" class="heading">

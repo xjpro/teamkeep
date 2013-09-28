@@ -1,11 +1,10 @@
-﻿angular.module("teamkeep").controller("AvailabilityController", ["$scope", "Team", function ($scope, Team) {
+﻿angular.module("teamkeep").controller("AvailabilityController", function ($scope, Team) {
 
-    $scope.groups = Team.PlayerGroups;
+    $scope.groups = _.select(Team.PlayerGroups, function (group) { return group.Players.length > 0; });
 
     $scope.allEvents = function () {
-        var events = _.flatten(Team.Seasons, "Games");
-        var filtered = _.filter(events, function (event) { return event.DateTime; });
-        return _.sortBy(filtered, function(event) { return new Date(event.DateTime); });
+        return _(Team.Seasons).flatten("Games")
+            .filter(function (event) { return event.DateTime; }).sortBy(function (event) { return new Date(event.DateTime); }).value();
     };
     $scope.events = function () {
         var events = $scope.allEvents();
@@ -87,5 +86,4 @@
             });
         }
     };
-    
-}]);
+});

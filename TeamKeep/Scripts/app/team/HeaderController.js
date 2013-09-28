@@ -9,7 +9,9 @@ angular.module("teamkeep").controller("HeaderController", function($scope, Team)
     $scope.$on("$toggleSidebar", function() {
         $scope.sidebarActive = !$scope.sidebarActive;
     });
-    $scope.$on("$routeChangeSuccess", function() {
-        $scope.sidebarActive = false;
+    $scope.$on("$routeChangeSuccess", function () {
+        if ($scope.isMobile) {
+            $scope.sidebarActive = false;
+        }
     });
 });

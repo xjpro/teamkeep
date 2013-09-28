@@ -83,6 +83,13 @@
                     <th class="column-duties hidden-xs"></th>
                 </tr>
             </thead>
+            <tbody ng-if="seasons.length == 0">
+                <tr>
+                    <td colspan="6" class="text-center">
+                        No seasons have been created for this team
+                    </td>
+                </tr>
+            </tbody>
             <tbody ng-repeat="season in seasons | orderBy:'Order'">
                 <tr>
                     <td colspan="6" class="heading">
