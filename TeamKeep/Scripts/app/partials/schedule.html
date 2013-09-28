@@ -100,6 +100,11 @@
                         </div>
                     </td>
                 </tr>
+                <tr ng-if="season.Games.length == 0">
+                    <td colspan="6" class="text-center">
+                        No events have been posted to this season
+                    </td>
+                </tr>
                 <tr ng-class="{selected: event.Selected}" ng-click="editItem(event)" ng-repeat-start="event in season.Games">
                     <td class="column-icon dropdown hidden-xs">
                         <input type="checkbox" ng-model="event.Selected" />

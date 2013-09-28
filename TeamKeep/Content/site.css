@@ -3,7 +3,7 @@
 .navbar-left {
     float: left;
 }
-.navbar-left .btn, .navbar-right .dropdown-menu {
+.navbar .btn, .navbar-right .dropdown-menu {
     margin-top: 8px !important;
 }
 .navbar-right .dropdown-toggle, .navbar-right > a {

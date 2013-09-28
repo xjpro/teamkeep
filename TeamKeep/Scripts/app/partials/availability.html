@@ -1,4 +1,12 @@
-﻿<div id="availability">
+﻿<header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" ng-click="toggleSidebar()">
+            <i class="icon-reorder"></i>
+        </a>
+    </div>
+</header>
+
+<div id="availability">
     <div class="table-controls">
         <button class="prev btn btn-link" ng-disabled="eventsIndex <= 0" ng-click="eventsIndex = eventsIndex - eventsShown">
             <i class="icon-chevron-left" ng-show="showPrevious()"></i>

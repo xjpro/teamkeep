@@ -93,6 +93,11 @@
                         </div>
                     </td>
                 </tr>
+                <tr ng-if="group.Players.length == 0">
+                    <td colspan="4" class="text-center">
+                        No members have been added to this group
+                    </td>
+                </tr>
                 <tr ng-class="{selected: player.Selected}" ng-click="editItem(player)" ng-repeat="player in group.Players">
                     <td class="column-icon dropdown hidden-xs">
                         <input type="checkbox" ng-model="player.Selected" />

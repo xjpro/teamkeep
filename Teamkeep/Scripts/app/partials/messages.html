@@ -1,3 +1,15 @@
+<header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" ng-click="toggleSidebar()">
+            <i class="icon-reorder"></i>
+        </a>
+        <div class="nav navbar-nav navbar-right">
+            <a class="navbar-brand" href="#/compose">
+                <i class="icon-pencil"></i>
+            </a>
+        </div>
+    </div>
+</header>
 
 <div class="container">
     <div class="row table-controls hidden-xs">
@@ -11,7 +23,10 @@
             </div>
         </div>
     </div>
-    <ol class="messages list-unstyled">
+    <ol class="buffered messages list-unstyled">
+        <div class="text-center" ng-if="messages.length == 0">
+            No messages have been recorded
+        </div>
         <li ng-class="{selected: message.Selected}" ng-click="message.Selected = true" ng-repeat="message in messages | orderBy:datePredicate:true">
             <h3>{{message.Subject}}</h3>
             <div class="message-date">
