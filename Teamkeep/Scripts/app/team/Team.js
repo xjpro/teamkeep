@@ -214,10 +214,52 @@
             return datetime.format("MMM D h:mma");
         };
     })
-    .filter("eventResults", function () {
+    .filter("eventLongDate", function () {
         return function (event) {
-            if (!event.ScoredPoints && !event.AllowedPoints && !event.TiePoints) return null;
-            return (event.ScoredPoints || "0") + "-" + (event.AllowedPoints || "0") + "-" + (event.TiePoints || "0");
+            if (!event.DateTime) return null;
+            var datetime = moment(event.DateTime);
+            return datetime.format("dddd MMM D, YYYY h:mma");
+        };
+    })
+    .filter("eventResults", function () {
+        return function (event, viewType) {
+            switch (viewType) {
+                case 0: // Score
+                    if (!event.ScoredPoints && !event.AllowedPoints) return null;
+                    return (event.ScoredPoints || "0") + "-" + (event.AllowedPoints || "0");
+                case 1: // Tournament
+                    if (!event.ScoredPoints && !event.AllowedPoints && !event.TiePoints) return null;
+                    return (event.ScoredPoints || "0") + "-" + (event.AllowedPoints || "0") + "-" + (event.TiePoints || "0");
+                case 2: // Win, loss
+                    break; 
+            }
+            return null;
+        };
+    })
+    .filter("eventResultsScoreLabel", function () {
+        return function (viewType) {
+            switch (viewType) {
+                case 0: // Score
+                    return "Scored";
+                case 1: // Tournament
+                    return "Wins";
+                case 2: // Win, loss
+                    break;
+            }
+            return null;
+        };
+    })
+    .filter("eventResultsAllowedLabel", function () {
+        return function (viewType) {
+            switch (viewType) {
+                case 0: // Score
+                    return "Allowed";
+                case 1: // Tournament
+                    return "Losses";
+                case 2: // Win, loss
+                    break;
+            }
+            return null;
         };
     })
     .filter("eventTitle", function () {
@@ -243,11 +285,16 @@
         };
     })
     .filter("eventLocation", function () {
-        return function (event) {
+        return function (event, prepend, showArena) {
+
+            if (typeof showArena === "undefined") {
+                showArena = true;
+            }
+
             var location = [];
             if (event.Location.Description) {
                 location.push(event.Location.Description);
-                if (event.Location.InternalLocation) {
+                if (showArena && event.Location.InternalLocation) {
                     location.push(" : " + event.Location.InternalLocation);
                 }
             }
@@ -261,15 +308,28 @@
                 if (event.Location.Postal) {
                     location.push(", " + event.Location.Postal);
                 }
-                if (event.Location.InternalLocation) {
+                if (showArena && event.Location.InternalLocation) {
                     location.push(" : " + event.Location.InternalLocation);
                 }
-            }    
-            return location.join('');
+            }
+
+            var locationString = location.join('');
+
+            if (!locationString.length) return locationString;
+            return (prepend ? prepend + " " : "") + locationString
         };
     })
     .filter("playerName", function () {
-        return function (player) {
+        return function (player, showLastName) {
+
+            if (typeof showLastName === "undefined") {
+                showLastName = true;
+            }
+
+            if (!showLastName) {
+                return player.FirstName || "New member";
+            }
+
             if (!player.FirstName && !player.LastName) {
                 return "New member";
             }

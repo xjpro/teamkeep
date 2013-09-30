@@ -1,6 +1,7 @@
 ﻿angular.module("teamkeep").controller("AvailabilityController", function ($scope, Team) {
 
     $scope.groups = _.select(Team.PlayerGroups, function (group) { return group.Players.length > 0; });
+    $scope.showPosition = Team.Settings.PositionColumn;
 
     $scope.allEvents = function () {
         return _(Team.Seasons).flatten("Games")

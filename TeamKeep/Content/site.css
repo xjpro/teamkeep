@@ -64,7 +64,7 @@ body.pushed .navbar-fixed-top {
 }
 
 /* global stuff */
-a {
+a, button {
     cursor: pointer;
 }
 .dropdown-menu .label-item {
@@ -73,11 +73,21 @@ a {
     color: #aaa;
 }
 .banner {
+    position: relative;
     height: 200px;
     background-repeat: no-repeat;
     background-position: center top;
     background-color: #aaa;
     background-size: auto 100%;
+}
+.banner h1 {
+    position: absolute;
+    bottom: 5px;
+    margin-left: 25px;
+    color: #fff;
+    font-family: 'Fjalla One';
+    font-size: 42pt;
+    text-shadow: black 0.1em 0.1em 0.2em;
 }
 .buffered { 
     margin-top: 20px;
@@ -342,4 +352,7 @@ form fieldset legend {
 }
 #settings .form-group label {
     width: 125px;
+}
+#settings .form-group select {
+    width: 225px;
 }

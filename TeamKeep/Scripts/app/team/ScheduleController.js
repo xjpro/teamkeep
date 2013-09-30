@@ -10,12 +10,13 @@ angular.module("teamkeep").controller("ScheduleController", function ($scope, $f
     SortingDecorator.decorate($scope, "DateTime");
     
     $scope.seasons = Team.Seasons;
+    $scope.settings = Team.Settings;
     $scope.members = _.flatten(Team.PlayerGroups, "Players");
     $scope.memberName = function (memberId) {
         var member = _.find($scope.members, function (member) { return member.Id == memberId; });
         return member ? $filter("playerName")(member) : null;
     };
-
+    
     $scope.addEventDuty = Team.Seasons.addEventDuty;
     $scope.removeEventDuty = Team.Seasons.removeEventDuty;
     $scope.toggleDuties = function (event) {
@@ -23,5 +24,8 @@ angular.module("teamkeep").controller("ScheduleController", function ($scope, $f
         _(Team.Seasons).flatten("Games").reject(function (other) { return !other.ShowDuties || other.Id == event.Id; }).each(function (event) {
             event.ShowDuties = false;
         });
+    };
+    $scope.closeDuties = function () {
+        $("body").click();
     };
 });

@@ -17,29 +17,29 @@
     <form>
         <fieldset>
             <legend>General</legend>
-            <div class="form-group col-xs-12 col-md-8">
-                <label>First name</label>
+            <div class="form-group col-xs-12 col-md-6">
+                <label>{{settings.LastNameColumn ? 'First name' : 'Name'}}</label>
                 <input type="text" class="form-control" ng-model="member.FirstName" />
             </div>
-            <div class="form-group col-xs-12 col-md-4">
+            <div class="form-group col-xs-12 col-md-6" ng-if="settings.LastNameColumn">
                 <label>Last name</label>
                 <input type="text" class="form-control" ng-model="member.LastName" />
             </div>
-            <div class="form-group col-xs-12 col-md-4">
+            <div class="form-group col-xs-12 col-md-12" ng-if="settings.PositionColumn">
                 <label>Position</label>
                 <input type="text" class="form-control" ng-model="member.Position" />
             </div>
         </fieldset>
         
-        <fieldset>
+        <fieldset ng-if="settings.EmailColumn || settings.PhoneColumn">
             <legend>Contact</legend>
-            <div class="form-group col-xs-12 col-md-6">
-                <label>Phone</label>
-                <input type="text" class="form-control" ng-model="member.Phone" />
-            </div>
-            <div class="form-group col-xs-12 col-md-6">
+            <div class="form-group col-xs-12 col-md-6" ng-if="settings.EmailColumn">
                 <label>Email</label>
                 <input type="text" class="form-control" ng-model="member.Email" />
+            </div>
+            <div class="form-group col-xs-12 col-md-6" ng-if="settings.PhoneColumn">
+                <label>Phone</label>
+                <input type="text" class="form-control" ng-model="member.Phone" />
             </div>
         </fieldset>
     </form>

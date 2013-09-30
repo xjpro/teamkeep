@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("MessagesComposeController", function ($scope, $http, $location, Team) {
+﻿angular.module("teamkeep").controller("MessagesComposeController", function ($scope, $routeParams, $http, $location, Team) {
 
     $scope.groups = _.where(Team.PlayerGroups, function(group) { return group.Players.length > 0; });
     $scope.sending = false;
@@ -11,6 +11,7 @@
         });
         return str.join('');
     };
+    
     $scope.toggleGroup = function (group) {
         group.Selected = !group.Selected;
         
@@ -18,6 +19,22 @@
             member.Selected = group.Selected;
         });
     };
+
+    // Availability
+    $scope.availabilityEvents = _(Team.Seasons).flatten("Games")
+        .select(function (event) {
+            return event.DateTime && moment(event.DateTime).isAfter(moment());
+        })
+        .sortBy(function (event) {
+            return new Date(event.DateTime);
+        }).value();
+
+    $scope.selectedEvent = _.find($scope.availabilityEvents, function (event) { return event.Id == $routeParams.event; });
+    $scope.requestAvailability = true;
+    if (!$scope.selectedEvent) {
+        $scope.selectedEvent = $scope.availabilityEvents[0] || null;
+        $scope.requestAvailability = false;
+    }
 
     $scope.sendMessage = function () {
         

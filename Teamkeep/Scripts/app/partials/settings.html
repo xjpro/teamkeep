@@ -26,6 +26,10 @@
         <fieldset class="col-xs-12 col-md-6 bordered">
             <legend>Columns</legend>
             <div class="form-group">
+                <label title="Set to private to hide your team site from the public">Results</label>
+                <select class="form-control" ng-model="settings.ResultsView" ng-options="option.value as option.name for option in resultsViewOptions"></select>
+            </div>
+            <div class="form-group">
                 <label title="Set to private to hide your team site from the public">Arena</label>
                 <radio-button model="settings.ArenaColumn" true-text="Show" false-text="Hide"></radio-button>
             </div>

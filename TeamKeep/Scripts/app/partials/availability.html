@@ -25,7 +25,7 @@
 
                 <th class="angled column-icon" ng-repeat="event in events() | orderBy:eventPredicate">    
                     <span ng-switch on="isPast(event)">
-                        <a href="#/availability/{{event.Id}}/request" ng-switch-when="false">
+                        <a href="#/compose?event={{event.Id}}" ng-switch-when="false">
                             <span>{{event | eventDate}}</span>
                             <button class="btn btn-link">
                                 <i class="icon-envelope" title="Email availability request"></i>

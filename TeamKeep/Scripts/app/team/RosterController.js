@@ -10,5 +10,5 @@ angular.module("teamkeep").controller("RosterController", function ($scope, Team
     SortingDecorator.decorate($scope, "Name");
     
     $scope.groups = Team.PlayerGroups;
-
+    $scope.settings = Team.Settings;
 });

@@ -2,7 +2,7 @@
 <html ng-app="teamkeep">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans|Fjalla+One" />
         @Styles.Render("~/Content/css")
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
@@ -14,26 +14,17 @@
             
             <div data-spy="affix" data-offset-top="0" teamkeep-sidebar="sidebarActive">
                 <ul class="nav nav-stacked">
-                    <li class="active">
-                        <a href="#/schedule">Schedule</a>
-                    </li>
-                    <li>
-                        <a href="#/roster">Roster</a>
-                    </li>
-                    <li>
-                        <a href="#/availability">Availability</a>
-                    </li>
-                    <li>
-                        <a href="#/messages">Messaging</a>
-                    </li>
-                    <li>
-                        <a href="#/settings">Settings</a>
-                    </li>
+                    <li class="active"><a href="#/schedule">Schedule</a></li>
+                    <li><a href="#/roster">Roster</a></li>
+                    <li><a href="#/availability">Availability</a></li>
+                    <li><a href="#/messages">Messaging</a></li>
+                    <li><a href="#/settings">Settings</a></li>
                 </ul>
             </div>
             
             <div class="container hidden-xs">
                 <div class="row banner" ng-style="{'background-image': 'url(' + bannerImage + ')'}">
+                    <h1>{{name}}</h1>
                 </div>
             </div>
 

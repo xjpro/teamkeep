@@ -49,7 +49,7 @@
                 <label>City</label>
                 <input type="text" class="form-control" ng-model="event.Location.City" />
             </div>
-            <div class="form-group col-xs-12 col-md-6">
+            <div class="form-group col-xs-12 col-md-6" ng-if="settings.ArenaColumn">
                 <label>Arena/Rink/Field</label>
                 <input type="text" class="form-control" ng-model="event.Location.InternalLocation"/>
             </div>
@@ -58,15 +58,15 @@
         <fieldset>
             <legend>Result</legend>
             <div class="form-group col-xs-4 col-md-2">
-                <label>Scored</label>
+                <label>{{settings.ResultsView | eventResultsScoreLabel}}</label>
                 <input type="number" class="form-control" ng-model="event.ScoredPoints" />
             </div>    
             <div class="form-group col-xs-4 col-md-2">
-                <label>Allowed</label>
+                <label>{{settings.ResultsView | eventResultsAllowedLabel}}</label>
                 <input type="number" class="form-control" ng-model="event.AllowedPoints" />
             </div>
-            <div class="form-group col-xs-4 col-md-2">
-                <label>Tied</label>
+            <div class="form-group col-xs-4 col-md-2" ng-if="settings.ResultsView == 1">
+                <label>Ties</label>
                 <input type="number" class="form-control" ng-model="event.TiePoints" />
             </div>
         </fieldset>

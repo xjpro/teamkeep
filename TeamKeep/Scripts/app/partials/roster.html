@@ -66,11 +66,11 @@
                         <a ng-click="sortBy('Name')">Name</a>
                         <i ng-class="sortIcon" ng-show="sortType == 'Name'"></i>
                     </th>
-                    <th class="column-position hidden-xs">
+                    <th class="column-position hidden-xs" ng-if="settings.PositionColumn">
                         <a ng-click="sortBy('Position')">Position</a>
                         <i ng-class="sortIcon" ng-show="sortType == 'Position'"></i>
                     </th>
-                    <th class="column-contact">
+                    <th class="column-contact" ng-if="settings.EmailColumn || settings.PhoneColumn">
                         <a ng-click="sortBy('Contact')">Contact</a>
                         <i ng-class="sortIcon" ng-show="sortType == 'Contact'"></i>
                     </th>
@@ -110,19 +110,19 @@
                         <input type="checkbox" ng-model="player.Selected" />
                     </td>
                     <td class="dropdown" edit-dropdown>
-                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{player | playerName}}</a>
+                        <a data-toggle="dropdown" data-target="#" tabindex="1">{{player | playerName:settings.LastNameColumn}}</a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
-                                <label>First name</label>
+                                <label>{{settings.LastNameColumn ? 'First name' : 'Name'}}</label>
                                 <input type="text" class="form-control" ng-model="player.FirstName"/>
                             </li>
-                            <li class="form-group">
+                            <li class="form-group" ng-if="settings.LastNameColumn">
                                 <label>Last name</label>
                                 <input type="text" class="form-control" ng-model="player.LastName"/>
                             </li>
                         </ul>
                     </td>
-                    <td class="dropdown hidden-xs" edit-dropdown>
+                    <td class="dropdown hidden-xs" ng-if="settings.PositionColumn" edit-dropdown>
                         <a data-toggle="dropdown" data-target="#" tabindex="1">{{player.Position}}</a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
@@ -131,16 +131,16 @@
                             </li>
                         </ul>
                     </td>
-                    <td class="dropdown" edit-dropdown>
+                    <td class="dropdown" ng-if="settings.EmailColumn || settings.PhoneColumn" edit-dropdown>
                         <a data-toggle="dropdown" data-target="#" tabindex="1">{{player | playerContact}}</a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <li class="form-group">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" ng-model="player.Phone"/>
-                            </li>
-                            <li class="form-group">
+                            <li class="form-group" ng-if="settings.EmailColumn">
                                 <label>Email</label>
                                 <input type="text" class="form-control" ng-model="player.Email"/>
+                            </li>
+                            <li class="form-group" ng-if="settings.PhoneColumn">
+                                <label>Phone</label>
+                                <input type="text" class="form-control" ng-model="player.Phone"/>
                             </li>
                         </ul>
                     </td>

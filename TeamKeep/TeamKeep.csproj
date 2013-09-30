@@ -235,7 +235,6 @@
     </Content>
     <Content Include="Content\angular-clockpicker.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\semantic.css" />
     <Content Include="Libraries\Common.Logging.dll" />
     <Content Include="Libraries\DotNetOpenAuth.dll" />
     <Content Include="Libraries\log4net.dll" />

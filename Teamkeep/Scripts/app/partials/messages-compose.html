@@ -65,5 +65,26 @@
                 <textarea rows="8" autosize class="form-control" ng-model="message.content" placeholder="Message content"></textarea>
             </div>
         </div>
-    </div>       
+    </div>     
+    
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <input type="checkbox" ng-model="requestAvailability" /> 
+                <strong>Request availability for</strong> <select ng-model="selectedEvent" ng-options="event as (event | eventLongDate) for event in availabilityEvents"></select>
+            </p>
+            <div ng-show="requestAvailability">
+                <p>
+                    Team availability will be requested for
+                </p>
+                <ul>
+                    <li><strong>{{selectedEvent | eventTitle}}</strong></li>
+                    <li>{{selectedEvent | eventDate}} {{selectedEvent | eventLocation:'@'}}</li>
+                </ul>
+            </div>
+
+            
+        </div>
+    </div>
+      
 </div>

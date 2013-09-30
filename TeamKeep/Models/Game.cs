@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Web.Script.Serialization;
 using TeamKeep.Models.DataModels;
 
 namespace TeamKeep.Models
@@ -37,6 +38,7 @@ namespace TeamKeep.Models
         public string DateTime { get; set; }
 
         //http://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
+        [ScriptIgnore]
         public string When
         {
             get
@@ -47,6 +49,7 @@ namespace TeamKeep.Models
         }
 
         public GameLocationData Location { get; set; }
+        [ScriptIgnore]
         public string Where
         {
             get
