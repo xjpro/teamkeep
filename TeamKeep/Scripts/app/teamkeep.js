@@ -49,7 +49,7 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "ui.bootstrap", "ui.clockpi
             $rootScope.$broadcast("$toggleSidebar");
         };
     })
-    .directive("teamkeepSidebar", function() {
+    .directive("teamkeepSidebar", function($rootScope) {
         return {
             restrict: "E,A",
             scope: {
@@ -68,6 +68,14 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "ui.bootstrap", "ui.clockpi
                         if (!$scope.overlay) {
                             $("body").removeClass("pushed");
                         }
+                    }
+                });
+
+                $element.find("a").click(function () {
+                    if ($rootScope.isMobile) {
+                        $scope.$apply(function () {
+                            $scope.visible = false;
+                        });
                     }
                 });
             }

@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@model TeamKeep.Models.ViewModels.TeamViewModel
+<!DOCTYPE html>
 <html ng-app="teamkeep">
     <head>
+        <title>@Model.Team.Name — Teamkeep</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans|Fjalla+One" />
         @Styles.Render("~/Content/css")
@@ -14,7 +16,7 @@
             
             <div data-spy="affix" data-offset-top="0" teamkeep-sidebar="sidebarActive">
                 <ul class="nav nav-stacked">
-                    <li class="active"><a href="#/schedule">Schedule</a></li>
+                    <li><a href="#/schedule">Schedule</a></li>
                     <li><a href="#/roster">Roster</a></li>
                     <li><a href="#/availability">Availability</a></li>
                     <li><a href="#/messages">Messaging</a></li>
