@@ -91,7 +91,7 @@
                             <a title="Move group up" ng-show="group.Order != 0" ng-click="changeCollectionOrder(group, group.Order - 1)">
                                 <i class="icon-circle-arrow-up"></i>
                             </a>
-                            <a title="Move group down" ng-show="group.Order != group.length-1" ng-click="changeCollectionOrder(group, group.Order + 1)">
+                            <a title="Move group down" ng-show="group.Order != groups.length-1" ng-click="changeCollectionOrder(group, group.Order + 1)">
                                 <i class="icon-circle-arrow-down"></i>
                             </a>
                             <a title="Remove group" ng-click="removeCollection(group)">
@@ -114,11 +114,11 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
                                 <label>{{settings.LastNameColumn ? 'First name' : 'Name'}}</label>
-                                <input type="text" class="form-control" ng-model="player.FirstName"/>
+                                <input type="text" class="form-control" ng-model="player.FirstName" complete-update />
                             </li>
                             <li class="form-group" ng-if="settings.LastNameColumn">
                                 <label>Last name</label>
-                                <input type="text" class="form-control" ng-model="player.LastName"/>
+                                <input type="text" class="form-control" ng-model="player.LastName" complete-update />
                             </li>
                         </ul>
                     </td>
@@ -127,7 +127,7 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
                                 <label>Position</label>
-                                <input type="text" class="form-control" ng-model="player.Position" placeholder="None"/>
+                                <input type="text" class="form-control" placeholder="None" ng-model="player.Position" complete-update />
                             </li>
                         </ul>
                     </td>
@@ -136,11 +136,11 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group" ng-if="settings.EmailColumn">
                                 <label>Email</label>
-                                <input type="text" class="form-control" ng-model="player.Email"/>
+                                <input type="text" class="form-control" ng-model="player.Email" complete-update />
                             </li>
                             <li class="form-group" ng-if="settings.PhoneColumn">
                                 <label>Phone</label>
-                                <input type="text" class="form-control" ng-model="player.Phone"/>
+                                <input type="text" class="form-control" ng-model="player.Phone" complete-update />
                             </li>
                         </ul>
                     </td>

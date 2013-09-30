@@ -14,5 +14,8 @@ angular.module("teamkeep").controller("SettingsController", function ($scope, Te
         if (!value) {
             $scope.newName = Team.Name;
         }
+        else {
+            Team.Name = $scope.newName;
+        }
     });
 });

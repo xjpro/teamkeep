@@ -64,7 +64,7 @@ body.pushed .navbar-fixed-top {
 }
 
 /* global stuff */
-a, button {
+a, button, [ng-click] {
     cursor: pointer;
 }
 .dropdown-menu .label-item {
@@ -354,5 +354,6 @@ form fieldset legend {
     width: 125px;
 }
 #settings .form-group select {
-    width: 225px;
+    display: inline-block;
+    width: 200px;
 }

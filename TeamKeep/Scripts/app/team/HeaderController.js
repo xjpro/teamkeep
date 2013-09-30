@@ -1,7 +1,7 @@
 angular.module("teamkeep").controller("HeaderController", function($scope, Team) {
     $scope.sidebarActive = false;
     $scope.title = "Schedule";
-    $scope.name = Team.Name;
+    $scope.name = function () { return Team.Name };
     $scope.bannerImage = "/TeamBanners/" + Team.BannerImage;
 
     $scope.$watch("isMobile", function(value) {

@@ -149,7 +149,7 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
                                 <label>Title</label>
-                                <input type="text" class="form-control" ng-model="event.OpponentName" placeholder="Untitled"/>
+                                <input type="text" class="form-control" placeholder="Untitled" ng-model="event.OpponentName" complete-update />
                             </li>
                             <li class="form-group">
                                 <label>Event type</label>
@@ -162,15 +162,15 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
                                 <label>Description</label>
-                                <input type="text" class="form-control" ng-model="event.Location.Description" placeholder="Short description" />
+                                <input type="text" class="form-control" placeholder="Short description" ng-model="event.Location.Description" complete-update />
                             </li>
                             <li class="form-group">
                                 <label>Street</label>
-                                <input type="text" class="form-control" ng-model="event.Location.Street" placeholder="Street address" />
+                                <input type="text" class="form-control" placeholder="Street address" ng-model="event.Location.Street" complete-update />
                             </li>
                             <li class="form-group">
                                 <label>City</label>
-                                <input type="text" class="form-control" ng-model="event.Location.City" placeholder="City" />
+                                <input type="text" class="form-control" placeholder="City" ng-model="event.Location.City" complete-update />
                             </li>
                             <!--<li class="form-group">
                                 <label>Postal</label>
@@ -178,7 +178,7 @@
                             </li>-->
                             <li class="form-group" ng-if="settings.ArenaColumn">
                                 <label>Arena</label>
-                                <input type="text" class="form-control" ng-model="event.Location.InternalLocation" placeholder="Rink, field, room, etc." />
+                                <input type="text" class="form-control" placeholder="Rink, field, room, etc." ng-model="event.Location.InternalLocation" complete-update />
                             </li>
                         </ul>
                     </td>
@@ -213,7 +213,7 @@
                                     </li>
                                     <li class="form-group">
                                         <label>Description</label>
-                                        <input type="text" class="form-control" ng-model="duty.Name" placeholder="Short description" />
+                                        <input type="text" class="form-control" placeholder="Short description" ng-model="duty.Name" complete-update />
                                     </li>
                                     <li class="pull-right">
                                         <button class="btn btn-sm btn-warning" ng-click="removeEventDuty(duty)">

@@ -19,7 +19,7 @@
             <legend>Description</legend>
             <div class="form-group col-xs-12 col-md-8">
                 <label>Title</label>
-                <input type="text" class="form-control" ng-model="event.OpponentName" />
+                <input type="text" class="form-control" ng-model="event.OpponentName" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-4">
                 <label>Event type</label>
@@ -30,8 +30,8 @@
         <fieldset>
             <legend>When</legend>
             <div class="form-group col-xs-12 col-md-6">
-                <label>Date</label>
-                <input type="datetime" class="form-control" ng-model="event.DateTime" />
+                <label>Date &amp; Time</label>
+                <input type="datetime-local" class="form-control" ng-model="event.DateTime" />
             </div>
         </fieldset>
         
@@ -39,19 +39,19 @@
             <legend>Where</legend>
             <div class="form-group col-xs-12 col-md-6">
                 <label>Name</label>
-                <input type="text" class="form-control" ng-model="event.Location.Description" />
+                <input type="text" class="form-control" ng-model="event.Location.Description" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-6">
                 <label>Street</label>
-                <input type="text" class="form-control" ng-model="event.Location.Street" />
+                <input type="text" class="form-control" ng-model="event.Location.Street" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-6">
                 <label>City</label>
-                <input type="text" class="form-control" ng-model="event.Location.City" />
+                <input type="text" class="form-control" ng-model="event.Location.City" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-6" ng-if="settings.ArenaColumn">
                 <label>Arena/Rink/Field</label>
-                <input type="text" class="form-control" ng-model="event.Location.InternalLocation"/>
+                <input type="text" class="form-control" ng-model="event.Location.InternalLocation" complete-update />
             </div>
         </fieldset>
         

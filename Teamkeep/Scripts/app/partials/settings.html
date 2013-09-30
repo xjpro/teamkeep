@@ -13,16 +13,17 @@
     </div>
 </header>
 
-<div id="settings" class="buffered container">
-    <div class="row">
+<div id="settings" class="container">
+    <div class="buffered row">
         <fieldset class="col-md-12">
             <legend>General</legend>
-            <div class="form-group col-xs-12 col-md-8">
+            <div class="form-group col-xs-12 col-md-6">
                 <label>Team name</label>
-                <input type="text" class="form-control" ng-model="newName" />
+                <input type="text" class="form-control" ng-model="newName" complete-update />
             </div>
         </fieldset>
-        
+    </div>
+    <div class="buffered row">
         <fieldset class="col-xs-12 col-md-6 bordered">
             <legend>Columns</legend>
             <div class="form-group">
@@ -62,6 +63,6 @@
                 <radio-button model="privacy.Roster" true-text="Public" false-text="Private"></radio-button>
             </div>
         </fieldset>
-        
     </div>
+
 </div>
