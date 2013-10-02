@@ -1,11 +1,15 @@
 ﻿@{
-    Layout = "~/Views/Shared/PublicMaster.cshtml";
+    ViewBag.App = "teamkeep-public";
     ViewBag.Title = "Free Sports Team Management Software";
     ViewBag.Description = "Manage your sports team online for free with Teamkeep. Captains and coaches can organize their games, practices, and roster with our easy to learn interface and keep their team members informed with a home page viewable from any device.";
+    Layout = "~/Views/Shared/Master.cshtml";
 }
+
+@Html.Partial("~/Views/Public/Header.cshtml")
+
 <div class="container" ng-controller="LoginController">
-    <div class="row-fluid showcase">
-        <div class="span7 hidden-phone">
+    <div class="row showcase">
+        <div class="col-md-7 hidden-xs">
             <p>
                 Teamkeep organizes your team's schedule and roster so you can focus on being a great coach or team captain.
                 It's absolutely <em>free</em>, takes just seconds to setup, and is incredibly simple to use.
@@ -18,9 +22,9 @@
                 <a data-toggle="modal" data-target="#register-modal">Get started now</a>
             </p>
         </div>
-        <div class="span5">
+        <div class="col-md-5">
 
-            <h4 class="hidden-phone">Login</h4>
+            <h3 class="hidden-xs">Login</h3>
             <div>
                 <form ng-submit="loginUser()">
                     
@@ -28,13 +32,15 @@
                         <span>{{loginError}}</span>
                     </div>
 
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-user"></i></span>
-                        <input type="text" placeholder="Username" ng-model="username" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-key"></i></span>
-                        <input type="password" placeholder="Password" ng-model="password" />
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                            <input type="text" class="form-control" placeholder="Username" ng-model="username" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon-key"></i></span>
+                            <input type="password" class="form-control" placeholder="Password" ng-model="password" />
+                        </div>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-success" spinner="loginEvaluating">
@@ -48,48 +54,49 @@
 
                 <h4>Or sign in with</h4>
                 <div>
-                    <button type="button" class="btn fb-login"><i class="icon-facebook-sign"></i> Facebook</button>
-                    <a class="btn" href="/login/openid/google"><i class="icon-google-plus-sign"></i> Google</a>
+                    <button type="button" class="btn btn-default fb-login"><i class="icon-facebook-sign"></i> Facebook</button>
+                    <a class="btn btn-default" href="/login/openid/google"><i class="icon-google-plus-sign"></i> Google</a>
                 </div>
             </div>           
         </div>
     </div>
     
-    <form id="reset-modal" class="modal hide fade" ng-submit="resetPassword()">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Password reset</h3>
-        </div>
-        <div class="modal-body">
-            <div class="alert alert-error" ng-show="resetError">
-                <span>{{resetError}}</span>
-            </div>
-            <div>
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span>
-                    <input type="text" placeholder="Username" ng-model="username"/>
+    <form id="reset-modal" class="modal fade" ng-submit="resetPassword()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title">Password reset</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-error" ng-show="resetError">
+                        <span>{{resetError}}</span>
+                    </div>
+                    <div>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-user"></i></span>
+                            <input type="text" placeholder="Username" ng-model="username"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <button type="submit" class="btn btn-success" spinner="resetEvaluating">Send reset email</button>
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button type="submit" class="btn btn-success" spinner="resetEvaluating">Send reset email</button>
-        </div>
     </form>
 
-    <div class="row hidden-phone">
-        <div id="features-carousel" class="span7 carousel slide">
+    <div class="row hidden-xs">
+        <div id="features-carousel" class="col-md-7 carousel slide">
             <ol class="carousel-indicators">
                 <li data-target="#features-carousel" data-slide-to="0" class="active"></li>
                 <li data-target="#features-carousel" data-slide-to="1"></li>
                 <li data-target="#features-carousel" data-slide-to="2"></li>
             </ol>
-            <!-- Carousel items -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <div class="carousel-image">
-                        <img src="/img/promo1.png" alt="Teamkeep interface"/>
-                    </div>
+                    <img src="/img/promo1.png" alt="Teamkeep interface"/>
                     <div class="carousel-caption">
                         <h4>Intuitive Interface</h4>
                         <p>
@@ -99,9 +106,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <div class="carousel-image">
-                        <img src="/img/promo2.png" alt="Teamkeep team pages"/>
-                    </div>
+                    <img src="/img/promo2.png" alt="Teamkeep team pages"/>
                     <div class="carousel-caption">
                         <h4>Team Home Page</h4>
                         <p>
@@ -112,9 +117,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <div class="carousel-image">
-                        <img src="/img/promo4.png" alt="Teamkeep availability"/>
-                    </div>
+                    <img src="/img/promo4.png" alt="Teamkeep availability"/>
                     <div class="carousel-caption">
                         <h4>Availability</h4>
                         <p>
@@ -125,9 +128,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <div class="carousel-image">
-                        <img src="/img/promo3.png" alt="Teamkeep responsive design"/>
-                    </div>
+                    <img src="/img/promo3.png" alt="Teamkeep responsive design"/>
                     <div class="carousel-caption">
                         <h4>Responsive Design</h4>
                         <p>
@@ -138,120 +139,119 @@
                     </div>
                 </div>
             </div>
-            <!-- Carousel nav -->
             <a class="carousel-control left" href="#features-carousel" data-slide="prev">&lsaquo;</a>
             <a class="carousel-control right" href="#features-carousel" data-slide="next">&rsaquo;</a>
         </div>
-        <div class="span5">
+        <div class="col-md-5">
             
             <h3>Features</h3>
 
-            <div class="accordion" id="features-accordion">
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse1">
+            <div id="features-accordion" class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse1">
                             Roster <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
-                    <div id="collapse1" class="collapse">
-                        <div class="accordion-inner">
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body">
                             Have a lot of phone numbers and emails to keep track of? Organize your player information including positions and more.
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse2">
                             Schedule <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
-                    <div id="collapse2" class="collapse">
-                        <div class="accordion-inner">
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body">
                             Post your team's upcoming events, track your current record, and access your schedule while on the go.
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse3">
                             Home page <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
                     <div id="collapse3" class="collapse in">
-                        <div class="accordion-inner">
+                        <div class="panel-body">
                             Instantly publish a team home page where members and fans alike can view your up-to-date schedule and roster information.
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse6">
                             Customization <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
-                    <div id="collapse6" class="collapse">
-                        <div class="accordion-inner">
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body">
                             Personalize your home page with a picture or banner of your team.
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse4">
                             Availability <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
-                    <div id="collapse4" class="collapse">
-                        <div class="accordion-inner">
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body">
                             Track player availability for upcoming events and request confirmations via email.
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse-duties">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse-duties">
                             Duties <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
-                    <div id="collapse-duties" class="collapse">
-                        <div class="accordion-inner">
+                    <div id="collapse-duties" class="panel-collapse collapse">
+                        <div class="panel-body">
                             Track who needs to bring gear or snacks, coach the game, and other event responsibilites.
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse5">
                             Messaging <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
-                    <div id="collapse5" class="collapse">
-                        <div class="accordion-inner">
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body">
                             Send team updates on the go! With Teamkeep you can message your entire team in one step from any device.
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse7">
                             Device support <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
-                    <div id="collapse7" class="collapse">
-                        <div class="accordion-inner">
+                    <div id="collapse7" class="panel-collapse collapse">
+                        <div class="panel-body">
                             Every device is supported! Teamkeep's responsive interface automatically resizes to fit 
                             any screen size. Mobile, tablet, or desktop &mdash; it's all supported.
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse8">
                             Privacy <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
-                    <div id="collapse8" class="collapse">
-                        <div class="accordion-inner">
+                    <div id="collapse8" class="panel-collapse collapse">
+                        <div class="panel-body">
                             Built in privacy controls keep your information safe. You control what is publicly available.
                         </div>
                     </div>
@@ -260,8 +260,8 @@
             
         </div>
     </div>
-    <div class="row-fluid hidden-phone">
-        <div class="span12">
+    <div class="row hidden-xs">
+        <div class="col-md-12">
             <h3 class="text-center">
                 Get started with Teamkeep
             </h3>
@@ -271,9 +271,3 @@
         </div>
     </div>
 </div>
-<script>
-    $(function () {
-        $("input[placeholder='Username']").focus();
-        $(document).tooltip({ items: "a[title]", track: true });
-    });
-</script>

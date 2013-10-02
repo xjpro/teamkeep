@@ -1,45 +1,15 @@
 ﻿<!DOCTYPE html>
-<html ng-app="teamkeep">
+<html ng-app="@ViewBag.App">
     <head>
-        <title>@ViewBag.Title | Teamkeep</title>
-        @Html.Partial("Includes")
+        <title>@ViewBag.Title — Teamkeep</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans|Fjalla+One" />
+        @Styles.Render("~/Content/css")
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+        @Scripts.Render("~/Scripts/js")
     </head>
     <body>
-        <script>
-            var viewData = @Html.Raw(Json.Encode(Model));
-        </script>
-        
-        <div id="header">
-            @Html.Partial("Header")    
-        </div>
-        @if (ViewBag.TeamHeader != null && ViewBag.TeamHeader)
-        {
-            @Html.Partial("~/Views/Team/TeamHeader.cshtml")
-        }
-        
-        @RenderBody()   
-        @Html.Partial("Footer")
-        @Html.Partial("Alerts")
-        
-        <div class="errorbar" ng-controller="AlertsController" ng-show="verificationVisible()">
-            
-            <div class="container">
-                
-                <span class="close" ng-click="closeVerification = true">
-                    <i class="icon-remove"></i>
-                </span>
-
-                <h4 class="hidden-phone">Hey there!</h4>
-                <p>
-                    Looks like you haven't verified your email yet:
-                </p>
-                <ul>
-                    <li ng-show="!resent"><a ng-click="resendVerification()">Resend verification email</a></li>
-                    <li><a ng-click="checkVerification()">Okay, I've verified</a></li>
-                </ul> 
-            </div>
-
-        </div>
-
+        @RenderBody()
     </body>
 </html>

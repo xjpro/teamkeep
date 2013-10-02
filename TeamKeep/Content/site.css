@@ -51,6 +51,9 @@ body.pushed {
 body.pushed .navbar-fixed-top {
     left: 250px
 }
+.input-group-addon {
+    max-width: 36px;
+}
 
 /* the sidebar */
 .affix {
@@ -91,6 +94,22 @@ a, button, [ng-click] {
 }
 .buffered { 
     margin-top: 20px;
+}
+.showcase {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border: solid #d5d5d5 1px;
+    border-radius: 6px;
+    background: #e9e9e9;
+    font-size: 14pt;
+}
+.showcase hr {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #fff;
+}
+.showcase form {
+    max-width: 300px;
 }
 
 /* specifying column widths */
@@ -356,4 +375,9 @@ form fieldset legend {
 #settings .form-group select {
     display: inline-block;
     width: 200px;
+}
+
+/* public styles */
+#features img {
+    width: 100%;
 }

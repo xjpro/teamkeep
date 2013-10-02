@@ -1,16 +1,19 @@
 ﻿@{
+    ViewBag.App = "teamkeep-public";
     ViewBag.Title = "Features";
     ViewBag.Description = "The features of Teamkeep, a free online sports team management site. Track your team's games and roster; publish a team home page absolutely free.";
     Layout = "~/Views/Shared/PublicMaster.cshtml";
 }
 
-<div id="features" class="container main">
+@Html.Partial("~/Views/Public/Header.cshtml")
+
+<div id="features" class="container">
 
      <div class="row">
-        <div class="span4">
+        <div class="col-md-4">
             <img src="/img/promo-schedule.png" />
         </div>
-        <div class="span8">
+        <div class="col-md-8">
             <h2>Scheduling</h2>
             <p>
                 Teamkeep scheduling makes it easy to keep all of your game and event information up to date.
@@ -25,10 +28,10 @@
     </div>
 
     <div class="row">
-        <div class="span4">
+        <div class="col-md-4">
             <img src="/img/promo-roster.png" />
         </div>
-        <div class="span8">
+        <div class="col-md-8">
             <h2>Roster</h2>
             <p>
                 Organize your team positions, phone numbers, emails and more into an organized roster.
@@ -43,10 +46,10 @@
     </div>
 
     <div class="row">
-        <div class="span4">
+        <div class="col-md-4">
             <img src="/img/promo-homepage.png" />
         </div>
-        <div class="span8">
+        <div class="col-md-8">
             <h2><a href="/features/free-team-website">Team website</a></h2>
             <p>
                 When viewed publicly, your page becomes a customizable team home page.
@@ -62,10 +65,10 @@
     </div>
 
     <div class="row">
-        <div class="span4">
+        <div class="col-md-4">
             <img src="/img/promo-ab.png" />
         </div>
-        <div class="span8">
+        <div class="col-md-8">
             <h2>Availability</h2>
             <p>
                 Need to know when your players are available? Teamkeep's availability tracks it all.
@@ -80,10 +83,10 @@
     </div>
 
     <div class="row">
-        <div class="span4">
+        <div class="col-md-4">
             <img src="/img/promo-duties.gif" />
         </div>
-        <div class="span8">
+        <div class="col-md-8">
             <h2>Duties</h2>
             <p>
                 Track responsibilities for team events.
@@ -97,10 +100,10 @@
     </div>
 
     <div class="row">
-        <div class="span4">
+        <div class="col-md-4">
             <img src="/img/promo-mobile.png" />
         </div>
-        <div class="span8">
+        <div class="col-md-8">
             <h2>Mobile access</h2>
             <p>
                 Teamkeep's interface automatically resizes to fit any screen size.

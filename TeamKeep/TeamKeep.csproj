@@ -242,10 +242,10 @@
     <Content Include="Libraries\WebGrease.dll" />
     <Content Include="Scripts\angular-clockpicker.js" />
     <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\app-public\login\User.js" />
-    <Content Include="Scripts\app-public\teamkeep-public.js" />
-    <Content Include="Scripts\app-public\login\LoginController.js" />
-    <Content Include="Scripts\app-public\login\RegisterController.js" />
+    <Content Include="Scripts\app\login\User.js" />
+    <Content Include="Scripts\app\teamkeep-public.js" />
+    <Content Include="Scripts\app\login\LoginController.js" />
+    <Content Include="Scripts\app\login\RegisterController.js" />
     <Content Include="Scripts\app-old\partials\availability-request.html" />
     <Content Include="Scripts\app-old\partials\availability.html" />
     <Content Include="Scripts\app-old\partials\compose.html" />
@@ -381,7 +381,7 @@
     <Content Include="Views\Public\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Public\PublicHeader.cshtml" />
+    <Content Include="Views\Public\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Login\OpenIdComplete.cshtml" />

@@ -27,8 +27,10 @@ namespace TeamKeep.App_Start
                 "~/Scripts/angular-clockpicker.js",
                 "~/Scripts/ui-bootstrap.js",
                 "~/Scripts/app/teamkeep.js",
+                "~/Scripts/app/teamkeep-public.js",
                 "~/Scripts/app/teamkeep-directives.js")
-                .IncludeDirectory("~/Scripts/app/team", "*.js"));
+                .IncludeDirectory("~/Scripts/app/team", "*.js")
+                .IncludeDirectory("~/Scripts/app/login", "*.js"));
         }
     }
 }
