@@ -49,36 +49,19 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "ui.bootstrap", "ui.clockpi
             $rootScope.$broadcast("$toggleSidebar");
         };
     })
-    .directive("teamkeepSidebar", function($rootScope) {
-        return {
-            restrict: "E,A",
-            scope: {
-                visible: "=teamkeepSidebar",
-                overlay: "=overlay"
-            },
-            controller: function($scope, $element) {
-                $scope.$watch("visible", function(value) {
-                    if (value) {
-                        $($element).show();
-                        if (!$scope.overlay) {
-                            $("body").addClass("pushed");
-                        }
-                    } else {
-                        $($element).hide();
-                        if (!$scope.overlay) {
-                            $("body").removeClass("pushed");
-                        }
-                    }
-                });
+    .directive("teamkeepSidebar", function() {
+        return function (scope, element, attrs) {
 
-                $element.find("a").click(function () {
-                    if ($rootScope.isMobile) {
-                        $scope.$apply(function () {
-                            $scope.visible = false;
-                        });
-                    }
-                });
-            }
+            scope.$watch(attrs.teamkeepSidebar, function (value) {
+                if (value) {
+                    $(element).show();
+                    $("body").addClass("pushed");
+                } else {
+                    $(element).hide();
+                    $("body").removeClass("pushed");
+                }
+            });
+
         };
     })
     .directive("editDropdown", function() {

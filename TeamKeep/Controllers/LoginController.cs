@@ -23,7 +23,7 @@ namespace TeamKeep.Controllers
             var authToken = _userService.GetAuthToken(user.Id);
 
             login.AuthToken = authToken;
-            login.Redirect = "/home";
+            login.Redirect = (user.ActiveTeamId != null) ? "/teams/" + user.ActiveTeamId : "/home";
 
             return Json(login);
         }
@@ -51,8 +51,9 @@ namespace TeamKeep.Controllers
 
                         var user = _userService.GetUser(login);
                         var authToken = _userService.GetAuthToken(user.Id);
+                        var redirectPath = (user.ActiveTeamId != null) ? "/teams/" + user.ActiveTeamId : "/home";
 
-                        return View("OpenIdComplete", new Login { AuthToken = authToken, Redirect = "/home" });
+                        return View("OpenIdComplete", new Login { AuthToken = authToken, Redirect = redirectPath });
                     }
                     else
                     {

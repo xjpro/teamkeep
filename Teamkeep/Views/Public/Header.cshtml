@@ -1,15 +1,15 @@
 ﻿<div id="front-header" class="buffered container nophonepad">
     <div class="row">
-        <div class="col-md-6">
+        <div class="logo col-xs-6 col-md-6">
             <a href="/">
                 <img src="/img/logo.png" alt="Teamkeep" />
             </a>
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-6 col-md-6">
             <ul class="nav nav-pills pull-right">
-                <li><a href="/">Home</a></li>
-                <li><a href="/features">Features</a></li>
-                <li><a href="/about">About</a></li>
+                <li><a class="hidden-xs" href="/">Home</a></li>
+                <li><a class="hidden-xs" href="/features">Features</a></li>
+                <li><a class="hidden-xs" href="/about">About</a></li>
                 <li class="hidden-xs"><a href="http://teamkeep.tumblr.com">Blog</a></li>
                 <li>
                     <button id="register-button" class="btn btn-primary" data-toggle="modal" data-target="#register-modal">Create an account</button>    
@@ -26,25 +26,22 @@
                     </div>
                     <div class="modal-body">
             
-                        <div class="alert alert-error" ng-show="error">
+                        <div class="alert alert-danger" ng-show="error">
                             <span>{{error}}</span>
                         </div>
-                        <div>
-                            <div class="input-prepend">
-                                <span class="add-on"><i class="icon-user"></i></span>
-                                <input type="text" tabindex="1" placeholder="Username" ng-model="username"/>
+
+                        <div class="form-group form-group-sm">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-user"></i></span>
+                                <input type="text" class="form-control" tabindex="1" placeholder="Username" ng-model="username"/>
                             </div>
-                        </div>
-                        <div>
-                            <div class="input-prepend">
-                                <span class="add-on"><i class="icon-envelope"></i></span>
-                                <input type="email" tabindex="1" placeholder="Email" ng-model="email"/>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-envelope"></i></span>
+                                <input type="email" class="form-control" tabindex="1" placeholder="Email" ng-model="email"/>
                             </div>
-                        </div>
-                        <div>
-                            <div class="input-prepend">
-                                <span class="add-on"><i class="icon-key"></i></span>
-                                <input type="password" tabindex="1" placeholder="Password" ng-model="password"/>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-key"></i></span>
+                                <input type="password" class="form-control" tabindex="1" placeholder="Password" ng-model="password"/>
                             </div>
                         </div>
                     </div>

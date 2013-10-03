@@ -2,14 +2,13 @@
     ViewBag.App = "teamkeep-public";
     ViewBag.Title = "Features";
     ViewBag.Description = "The features of Teamkeep, a free online sports team management site. Track your team's games and roster; publish a team home page absolutely free.";
-    Layout = "~/Views/Shared/PublicMaster.cshtml";
+    ViewBag.UseHeaderFooter = true;
+    Layout = "~/Views/Shared/Master.cshtml";
 }
 
-@Html.Partial("~/Views/Public/Header.cshtml")
+<div class="buffered container">
 
-<div id="features" class="container">
-
-     <div class="row">
+     <div class="buffered row">
         <div class="col-md-4">
             <img src="/img/promo-schedule.png" />
         </div>
@@ -27,7 +26,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="buffered row">
         <div class="col-md-4">
             <img src="/img/promo-roster.png" />
         </div>
@@ -45,7 +44,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="buffered row">
         <div class="col-md-4">
             <img src="/img/promo-homepage.png" />
         </div>
@@ -64,7 +63,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="buffered row">
         <div class="col-md-4">
             <img src="/img/promo-ab.png" />
         </div>
@@ -82,7 +81,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="buffered row">
         <div class="col-md-4">
             <img src="/img/promo-duties.gif" />
         </div>
@@ -99,7 +98,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="buffered row">
         <div class="col-md-4">
             <img src="/img/promo-mobile.png" />
         </div>

@@ -1,12 +1,14 @@
 ﻿@{
+    ViewBag.App = "teamkeep-public";
     ViewBag.Title = "About";
     ViewBag.Description = "Additional information about Teamkeep, a free online sports team management site. Track your team's games and roster; publish a team home page absolutely free.";
-    Layout = "~/Views/Shared/PublicMaster.cshtml";
+    ViewBag.UseHeaderFooter = true;
+    Layout = "~/Views/Shared/Master.cshtml";
 }
 
-<div class="container main">
+<div class="buffered container">
     <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
 
             <h1>More Information</h1>
 

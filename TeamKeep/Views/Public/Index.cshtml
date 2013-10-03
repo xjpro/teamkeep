@@ -2,14 +2,13 @@
     ViewBag.App = "teamkeep-public";
     ViewBag.Title = "Free Sports Team Management Software";
     ViewBag.Description = "Manage your sports team online for free with Teamkeep. Captains and coaches can organize their games, practices, and roster with our easy to learn interface and keep their team members informed with a home page viewable from any device.";
+    ViewBag.UseHeaderFooter = true;
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
-@Html.Partial("~/Views/Public/Header.cshtml")
-
 <div class="container" ng-controller="LoginController">
-    <div class="row showcase">
-        <div class="col-md-7 hidden-xs">
+    <div class="row well well-lg">
+        <div class="col-md-7 hidden-xs hidden-sm lead">
             <p>
                 Teamkeep organizes your team's schedule and roster so you can focus on being a great coach or team captain.
                 It's absolutely <em>free</em>, takes just seconds to setup, and is incredibly simple to use.
@@ -23,16 +22,15 @@
             </p>
         </div>
         <div class="col-md-5">
-
             <h3 class="hidden-xs">Login</h3>
             <div>
                 <form ng-submit="loginUser()">
                     
-                    <div class="alert alert-error" ng-show="loginError">
+                    <div class="alert alert-danger" ng-show="loginError">
                         <span>{{loginError}}</span>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group form-group-sm">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="icon-user"></i></span>
                             <input type="text" class="form-control" placeholder="Username" ng-model="username" />
@@ -61,7 +59,7 @@
         </div>
     </div>
     
-    <form id="reset-modal" class="modal fade" ng-submit="resetPassword()">
+    <form id="reset-modal" class="modal fade" ng-submit="sendResetPassword()">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -69,26 +67,26 @@
                     <h3 class="modal-title">Password reset</h3>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-error" ng-show="resetError">
-                        <span>{{resetError}}</span>
+                    <div class="alert alert-danger" ng-show="resetError">
+                        <span>{{sendResetError}}</span>
                     </div>
-                    <div>
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-user"></i></span>
-                            <input type="text" placeholder="Username" ng-model="username"/>
+                    <div class="form-group form-group-sm">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                            <input type="text" class="form-control" placeholder="Username" ng-model="username"/>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                    <button type="submit" class="btn btn-success" spinner="resetEvaluating">Send reset email</button>
+                    <button type="submit" class="btn btn-success" spinner="sendResetEvaluating">Send reset email</button>
                 </div>
             </div>
         </div>
     </form>
 
     <div class="row hidden-xs">
-        <div id="features-carousel" class="col-md-7 carousel slide">
+        <div id="features-carousel" class="col-md-7 carousel">
             <ol class="carousel-indicators">
                 <li data-target="#features-carousel" data-slide-to="0" class="active"></li>
                 <li data-target="#features-carousel" data-slide-to="1"></li>
@@ -149,7 +147,7 @@
             <div id="features-accordion" class="panel-group">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse1">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse1">
                             Roster <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
@@ -161,7 +159,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse2">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse2">
                             Schedule <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
@@ -173,7 +171,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse3">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse3">
                             Home page <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
@@ -185,7 +183,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse6">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse6">
                             Customization <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
@@ -197,7 +195,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse4">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse4">
                             Availability <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
@@ -209,7 +207,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse-duties">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse-duties">
                             Duties <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
@@ -221,7 +219,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse5">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse5">
                             Messaging <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
@@ -233,7 +231,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse7">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse7">
                             Device support <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>
@@ -246,7 +244,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#features-accordion" href="#collapse8">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse8">
                             Privacy <i class="pull-right icon-check icon-2x"></i>
                         </a>
                     </div>

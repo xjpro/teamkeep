@@ -6,8 +6,6 @@
         Verified: true
     };
 
-    User.uri = "/users/" + User.Id;
-
     User.login = function(username, password) {
         return $http.post("/login", {
             username: username.trim(),

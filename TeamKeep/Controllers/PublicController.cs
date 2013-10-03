@@ -14,7 +14,7 @@ namespace TeamKeep.Controllers
             var user = this.GetActiveUser(this.Request);
             if (user != null)
             {
-                return Redirect("/home");
+                return Redirect(user.ActiveTeamId != null ? "/teams/" + user.ActiveTeamId : "/home");
             }
             return View();
         }

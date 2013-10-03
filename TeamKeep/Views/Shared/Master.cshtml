@@ -10,6 +10,14 @@
         @Scripts.Render("~/Scripts/js")
     </head>
     <body>
+        @if (ViewBag.UseHeaderFooter != null && ViewBag.UseHeaderFooter != false)
+        {
+            @Html.Partial("~/Views/Public/Header.cshtml")
+        }
         @RenderBody()
+        @if (ViewBag.UseHeaderFooter != null && ViewBag.UseHeaderFooter != false)
+        {
+            @Html.Partial("Footer")    
+        }
     </body>
 </html>
