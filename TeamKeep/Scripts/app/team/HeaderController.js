@@ -15,6 +15,9 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
         User.logout();
     };
 
+    $scope.$watch("sidebarActive", function (value) {
+        console.log("sidebarActive is now " + value);
+    }, true);
     $scope.$watch("isMobile", function(value) {
         $scope.sidebarActive = !value;
     }, true);

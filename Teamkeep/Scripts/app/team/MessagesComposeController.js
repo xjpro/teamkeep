@@ -78,4 +78,9 @@
         });*/
     };
 
+    $scope.$watch("selectedEvent", function (value, oldValue) {
+        if(angular.equals(value, oldValue)) return;
+        $scope.requestAvailability = true;
+    });
+
 });

@@ -15,7 +15,10 @@
             <i class="icon-chevron-right" ng-show="showNext()"></i>
         </button>
     </div>
-    <table class="table table-bordered table-striped" availability-autosize events-shown="eventsShown">
+    <div class="buffered text-center" ng-if="events().length == 0">
+        Team has not posted any events and/or does not have any members on its roster
+    </div>
+    <table class="table table-bordered table-striped" availability-autosize events-shown="eventsShown" ng-if="events().length > 0">
         <thead>
             <tr>
                 <th>&nbsp;</th>
@@ -36,6 +39,13 @@
                 </th>
             </tr>
         </thead>
+        <tbody ng-if="groups.length == 0">
+            <tr>
+                <td class="text-center" colspan="50">
+                    No members have been added to this team
+                </td>
+            </tr>
+        </tbody>
         <tbody ng-repeat="group in groups | orderBy:'Order'">
             <tr>
                 <td class="heading" colspan="50">{{group.Name}}</td>
