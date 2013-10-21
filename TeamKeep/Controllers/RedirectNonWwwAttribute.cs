@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class RedirectNonWwwAttribute : FilterAttribute, IAuthorizationFilter
     {

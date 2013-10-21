@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using TeamKeep.Models;
-using TeamKeep.Models.DataModels;
-using TeamKeep.Models.ServiceResponses;
+using Teamkeep.Models;
+using Teamkeep.Models.DataModels;
+using Teamkeep.Models.ServiceResponses;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public class UserService
     {

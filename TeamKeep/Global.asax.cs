@@ -2,14 +2,14 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using TeamKeep.App_Start;
+using Teamkeep.App_Start;
 using log4net;
 using System.Web;
 using System.Web.Optimization;
 using Newtonsoft.Json;
 using System.Net.Http.Formatting;
 
-namespace TeamKeep
+namespace Teamkeep
 {
     public class MvcApplication : System.Web.HttpApplication
     {

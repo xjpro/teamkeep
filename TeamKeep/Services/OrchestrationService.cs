@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TeamKeep.Models;
+using Teamkeep.Models;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public class OrchestrationService
     {

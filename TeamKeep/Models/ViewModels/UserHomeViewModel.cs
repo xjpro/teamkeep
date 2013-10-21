@@ -1,4 +1,4 @@
-﻿namespace TeamKeep.Models.ViewModels
+﻿namespace Teamkeep.Models.ViewModels
 {
     public class UserHomeViewModel : BaseViewModel
     {

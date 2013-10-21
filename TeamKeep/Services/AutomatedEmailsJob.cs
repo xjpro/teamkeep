@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Quartz;
-using TeamKeep.Models;
-using TeamKeep.Models.DataModels;
+using Teamkeep.Models;
+using Teamkeep.Models.DataModels;
 using System.Collections.Generic;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public class AutomatedEmailsJob : IJob
     {

@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using TeamKeep.Models;
-using TeamKeep.Models.DataModels;
+using Teamkeep.Models;
+using Teamkeep.Models.DataModels;
 using System;
 using System.Collections.Generic;
-using TeamKeep.Models.ServiceResponses;
+using Teamkeep.Models.ServiceResponses;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public class GameService
     {

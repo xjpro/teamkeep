@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
-using TeamKeep.Models.DataModels;
+using Teamkeep.Models.DataModels;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public static class Database
     {

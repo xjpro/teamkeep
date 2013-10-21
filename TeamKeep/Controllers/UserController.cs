@@ -2,12 +2,12 @@
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TeamKeep.Models.DataModels;
-using TeamKeep.Models.ViewModels;
-using TeamKeep.Models;
-using TeamKeep.Services;
+using Teamkeep.Models.DataModels;
+using Teamkeep.Models.ViewModels;
+using Teamkeep.Models;
+using Teamkeep.Services;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class UserController : ViewController
     {

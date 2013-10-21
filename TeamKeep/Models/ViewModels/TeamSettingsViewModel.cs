@@ -1,6 +1,6 @@
-﻿using TeamKeep.Models.DataModels;
+﻿using Teamkeep.Models.DataModels;
 
-namespace TeamKeep.Models.ViewModels
+namespace Teamkeep.Models.ViewModels
 {
     public class TeamSettingsViewModel
     {

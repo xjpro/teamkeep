@@ -1,7 +1,7 @@
 ﻿using System.Net.Mime;
 using System.Web.Mvc;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class ClientErrorHandler : FilterAttribute, IExceptionFilter
     {

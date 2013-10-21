@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace TeamKeep.App_Start
+namespace Teamkeep.App_Start
 {
     public class BundleConfig
     {

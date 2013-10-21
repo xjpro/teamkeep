@@ -1,7 +1,7 @@
 ﻿using Quartz;
 using Quartz.Impl;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public static class AutomatedScheduler
     {

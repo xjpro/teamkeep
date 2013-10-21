@@ -1,6 +1,6 @@
 ﻿using System.Web.Script.Serialization;
 
-namespace TeamKeep.Models
+namespace Teamkeep.Models
 {
     public class Login
     {

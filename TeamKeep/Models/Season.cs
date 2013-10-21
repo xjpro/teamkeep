@@ -1,7 +1,7 @@
-﻿using TeamKeep.Models.DataModels;
+﻿using Teamkeep.Models.DataModels;
 using System.Collections.Generic;
 
-namespace TeamKeep.Models
+namespace Teamkeep.Models
 {
     public class Season : SeasonData
     {

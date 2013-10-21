@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TeamKeep.Models;
-using TeamKeep.Models.DataModels;
+using Teamkeep.Models;
+using Teamkeep.Models.DataModels;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class PlayerController : ViewController
     {

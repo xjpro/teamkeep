@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Linq;
-using TeamKeep.Models.DataModels;
+using Teamkeep.Models.DataModels;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,9 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using TeamKeep.Models;
+using Teamkeep.Models;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public class EmailService
     {

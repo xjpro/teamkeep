@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class TokenAuthorizeAttribute : AuthorizeAttribute
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TeamKeep.Models.DataModels;
+using Teamkeep.Models.DataModels;
 
-namespace TeamKeep.Models.ServiceResponses
+namespace Teamkeep.Models.ServiceResponses
 {
     public class EmailConfirmationsServiceResponse : ServiceResponse
     {

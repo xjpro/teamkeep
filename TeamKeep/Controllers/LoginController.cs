@@ -1,11 +1,11 @@
 ﻿using System.Web.Mvc;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using DotNetOpenAuth.OpenId.RelyingParty;
-using TeamKeep.Models;
+using Teamkeep.Models;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using System.Web;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class LoginController : ViewController
     {

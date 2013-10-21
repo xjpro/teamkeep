@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace TeamKeep.App_Start
+namespace Teamkeep.App_Start
 {
     public class FilterConfig
     {

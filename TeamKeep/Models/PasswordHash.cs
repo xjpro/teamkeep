@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace TeamKeep.Models
+namespace Teamkeep.Models
 {
     // http://csharptest.net/470/another-example-of-how-to-store-a-salted-password-hash/
     public class PasswordHash

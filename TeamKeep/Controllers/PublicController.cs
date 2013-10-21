@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Web.Mvc;
-using TeamKeep.Models.ViewModels;
+using Teamkeep.Models.ViewModels;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class PublicController : ViewController
     {

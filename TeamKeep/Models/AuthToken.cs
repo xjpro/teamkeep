@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace TeamKeep.Models
+namespace Teamkeep.Models
 {
     public class AuthToken
     {

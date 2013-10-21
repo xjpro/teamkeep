@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace TeamKeep.App_Start
+namespace Teamkeep.App_Start
 {
     public class RouteConfig
     {

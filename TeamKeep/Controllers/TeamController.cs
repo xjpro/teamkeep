@@ -4,14 +4,14 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
-using TeamKeep.Models.DataModels;
-using TeamKeep.Models.ViewModels;
-using TeamKeep.Models;
+using Teamkeep.Models.DataModels;
+using Teamkeep.Models.ViewModels;
+using Teamkeep.Models;
 using System;
-using TeamKeep.Services;
+using Teamkeep.Services;
 using System.Collections.Generic;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class TeamController : ViewController
     {

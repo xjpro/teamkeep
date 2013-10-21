@@ -1,4 +1,4 @@
-﻿namespace TeamKeep.Models.ServiceResponses
+﻿namespace Teamkeep.Models.ServiceResponses
 {
     public class ServiceResponse
     {

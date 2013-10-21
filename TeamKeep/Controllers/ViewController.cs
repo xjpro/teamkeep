@@ -1,9 +1,9 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using TeamKeep.Models;
-using TeamKeep.Services;
+using Teamkeep.Models;
+using Teamkeep.Services;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public abstract class ViewController : Controller
     {

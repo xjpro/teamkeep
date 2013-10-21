@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using TeamKeep.Models;
-using TeamKeep.Models.DataModels;
+using Teamkeep.Models;
+using Teamkeep.Models.DataModels;
 using System.Collections.Generic;
 using System;
-using TeamKeep.Models.ViewModels;
+using Teamkeep.Models.ViewModels;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public class TeamService
     {

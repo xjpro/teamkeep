@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace TeamKeep.Models
+namespace Teamkeep.Models
 {
     public class TeamUpdate
     {

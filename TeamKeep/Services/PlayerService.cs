@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using TeamKeep.Models;
-using TeamKeep.Models.DataModels;
+using Teamkeep.Models;
+using Teamkeep.Models.DataModels;
 using System.Linq;
 
-namespace TeamKeep.Services
+namespace Teamkeep.Services
 {
     public class PlayerService
     {

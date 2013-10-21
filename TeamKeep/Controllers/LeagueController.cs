@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
-using TeamKeep.Models;
+using Teamkeep.Models;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class LeagueController : ApiController
     {

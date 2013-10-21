@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TeamKeep.Models;
+using Teamkeep.Models;
 
-namespace TeamKeep.Controllers
+namespace Teamkeep.Controllers
 {
     public class EventDutyController : ViewController
     {

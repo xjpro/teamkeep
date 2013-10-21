@@ -1,4 +1,4 @@
-﻿namespace TeamKeep.Models
+﻿namespace Teamkeep.Models
 {
     public class PasswordReset
     {

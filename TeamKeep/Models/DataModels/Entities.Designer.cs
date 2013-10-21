@@ -17,7 +17,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
-namespace TeamKeep.Models.DataModels
+namespace Teamkeep.Models.DataModels
 {
     #region Contexts
     
