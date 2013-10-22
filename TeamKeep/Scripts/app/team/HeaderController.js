@@ -2,6 +2,8 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
     $scope.teams = User.Teams;
     $scope.sidebarActive = false;
     $scope.title = "Schedule";
+
+    $scope.id = Team.Id;
     $scope.name = function () { return Team.Name };
     $scope.bannerImage = "/TeamBanners/" + Team.BannerImage;
 
@@ -10,6 +12,11 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
             $scope.sidebarActive = false;
         }
         $location.path(path);
+
+        switch (path) {
+            case 'messages': $scope.title = "Messaging"; break;
+            default: $scope.title = path.charAt(0).toUpperCase() + path.slice(1); break;
+        }
     };
     $scope.logout = function () {
         User.logout();

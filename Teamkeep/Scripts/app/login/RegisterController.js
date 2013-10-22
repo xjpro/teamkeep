@@ -27,7 +27,7 @@
 
         User.register($scope.username, $scope.email, $scope.password)
             .success(function(login) {
-                TeamKeep.signIn(login.AuthToken, login.Redirect);
+                Teamkeep.signIn(login.AuthToken, login.Redirect);
             })
             .error(function (error) {
                 $scope.error = JSON.parse(error);

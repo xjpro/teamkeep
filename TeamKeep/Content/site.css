@@ -28,6 +28,12 @@
 .nav-stacked-lg {
     font-size: 14pt;
 }
+.nav-stacked .active {
+    background: #dedede;
+}
+.nav-stacked .active a {
+    color: #000;
+}
 
 /* clockpicker adjustments */
 .ui-clockpicker a {

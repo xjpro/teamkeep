@@ -18,7 +18,7 @@
 
         User.login($scope.username, $scope.password)
             .success(function (login) {
-                TeamKeep.signIn(login.AuthToken, login.Redirect);
+                Teamkeep.signIn(login.AuthToken, login.Redirect);
             }).error(function (error) {
                 $scope.loginError = JSON.parse(error);
                 $scope.loginEvaluating = false;

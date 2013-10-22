@@ -1,5 +1,5 @@
 angular.module("teamkeep", ["ngRoute", "ngSanitize", "ui.bootstrap", "ui.clockpicker"])
-    .config(function($routeProvider) {
+    .config(function ($routeProvider) {
         $routeProvider
             .when("/schedule", {
                 templateUrl: "/Scripts/app/partials/schedule.html",

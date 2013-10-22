@@ -31,7 +31,7 @@
         return {
             restrict: "EA",
             replace: true,
-            template:   "<span class='btn-group' data-toggle='buttons-radio'>" +
+            template: "<span class='btn-group' data-toggle='buttons-radio'>" +
                         "<button class='btn btn-sm' ng-click='model = !model' ng-class='{active: model}'>{{trueText}}</button>" +
                         "<button class='btn btn-sm' ng-click='model = !model' ng-class='{active: !model}'>{{falseText}}</button>" +
                         "</span>",
@@ -97,6 +97,27 @@
             controller: function ($scope, $element) {
                 $element.click(function () {
 
+                });
+            }
+        };
+    })
+    .directive("newteamModal", function () {
+        return {
+            replace: true,
+            templateUrl: "/Scripts/app/partials/newteam-modal.html",
+            controller: function ($scope, $element, $attrs) {
+                var options = $scope.$eval($attrs.newteamModal);
+                $scope.open = options.open || false;
+
+                $scope.teamType = "sports";
+                $scope.teamPublic = true;
+                $scope.teamPopulate = true;
+                $scope.createTeam = function () {
+                    console.log($scope.teamType, $scope.teamName, $scope.teamPublic, $scope.teamPopulate);
+                };
+
+                $scope.$watch("open", function (value) {
+                    value ? $($element).modal("show") : $($element).modal("hide");
                 });
             }
         };
