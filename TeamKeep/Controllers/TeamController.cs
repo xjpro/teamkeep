@@ -33,7 +33,8 @@ namespace Teamkeep.Controllers
                 if (activeUser.ActiveTeamId != teamId && team.CanEdit(activeUser.Id))
                 {
                     activeUser.ActiveTeamId = teamId;
-                    _userService.SetActiveTeamId(activeUser.Id, teamId);
+                    activeUser.LastSeen = DateTime.Now;
+                    activeUser = _userService.UpdateUser(activeUser);
                 }
 
                 activeUser.Settings = _userService.GetUserSettings(activeUser.Id);
@@ -83,6 +84,25 @@ namespace Teamkeep.Controllers
             var redirect = (team != null) ? team.Url : string.Format("/teams/{0}/Unknown", teamId);
             Response.Redirect(redirect);
             return null;
+        }
+
+        [HttpGet]
+        public ActionResult HomeEmpty()
+        {
+            var user = this.GetActiveUser(this.Request);
+
+            if (user == null)
+            {
+                Response.Redirect("/");
+            }
+            else if (user.ActiveTeamId != null)
+            {
+                Response.Redirect("/teams/" + user.ActiveTeamId);
+            }
+
+            var viewModel = new TeamViewModel { User = user };
+
+            return View("Home", viewModel);
         }
 
         [HttpPost]

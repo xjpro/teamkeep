@@ -244,7 +244,7 @@
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\app\login\TeamController.js" />
     <Content Include="Scripts\app\login\User.js" />
-    <Content Include="Scripts\app\partials\newteam-modal.html" />
+    <Content Include="Scripts\app\partials\create-team-modal.html" />
     <Content Include="Scripts\app\teamkeep-public.js" />
     <Content Include="Scripts\app\login\LoginController.js" />
     <Content Include="Scripts\app\login\RegisterController.js" />

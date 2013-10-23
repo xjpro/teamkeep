@@ -1,5 +1,14 @@
 ﻿angular.module("teamkeep")
     .factory("Team", function ($rootScope, $http, $timeout) {
+
+        if (!window.viewData.Team) {
+            window.viewData.Team = {
+                Name: "",
+                Seasons: [],
+                PlayerGroups: []
+            };
+        }
+
         var Team = window.viewData.Team;
         
         // Split date and time

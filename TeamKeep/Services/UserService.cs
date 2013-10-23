@@ -117,6 +117,7 @@ namespace Teamkeep.Services
             using (var entities = Database.GetEntities())
             {
                 var userData = entities.UserDatas.Single(x => x.Id == user.Id);
+                userData.ActiveTeamId = user.ActiveTeamId;
                 userData.LastSeen = user.LastSeen;
                 entities.SaveChanges();
                 return user;

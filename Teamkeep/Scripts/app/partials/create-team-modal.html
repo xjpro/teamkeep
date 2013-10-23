@@ -1,8 +1,8 @@
-﻿<form id="newteam-modal" class="modal" ng-submit="createTeam()">
+﻿<form id="create-team-modal" class="modal" ng-submit="createTeam()">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header hidden-xs">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-if="dismissable">&times;</button>
                 <h3 class="modal-title">New team</h3>
             </div>
             <div class="modal-body">
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn" data-dismiss="modal" aria-hidden="true" tabindex="2">Cancel</button>
+                <button type="button" class="btn" data-dismiss="modal" aria-hidden="true" tabindex="2" ng-if="dismissable">Cancel</button>
                 <button type="submit" class="btn btn-primary" tabindex="1">
                     <i class="icon-spinner icon-spin"></i> Create
                 </button>

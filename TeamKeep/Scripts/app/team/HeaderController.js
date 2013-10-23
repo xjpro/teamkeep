@@ -1,6 +1,8 @@
 angular.module("teamkeep").controller("HeaderController", function ($scope, $location, Team, User) {
     $scope.teams = User.Teams;
     $scope.sidebarActive = false;
+    $scope.createTeamModalActive = false;
+    $scope.createTeamModalDismissable = true;
     $scope.title = "Schedule";
 
     $scope.id = Team.Id;
@@ -31,4 +33,9 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
     $scope.$on("$toggleSidebar", function() {
         $scope.sidebarActive = !$scope.sidebarActive;
     });
+
+    if (User.Teams.length == 0) {
+        $scope.createTeamModalActive = true;
+        $scope.createTeamModalDismissable = false;
+    }
 });

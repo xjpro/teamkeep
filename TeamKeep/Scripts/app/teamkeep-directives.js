@@ -101,13 +101,13 @@
             }
         };
     })
-    .directive("newteamModal", function () {
+    .directive("createTeamModal", function () {
         return {
             replace: true,
-            templateUrl: "/Scripts/app/partials/newteam-modal.html",
+            templateUrl: "/Scripts/app/partials/create-team-modal.html",
             controller: function ($scope, $element, $attrs) {
-                var options = $scope.$eval($attrs.newteamModal);
-                $scope.open = options.open || false;
+                $scope.open = $scope.$eval($attrs.createTeamModal);
+                $scope.dismissable = $scope.$eval($attrs.dismissable);
 
                 $scope.teamType = "sports";
                 $scope.teamPublic = true;
@@ -116,9 +116,14 @@
                     console.log($scope.teamType, $scope.teamName, $scope.teamPublic, $scope.teamPopulate);
                 };
 
-                $scope.$watch("open", function (value) {
-                    value ? $($element).modal("show") : $($element).modal("hide");
+                $scope.$watch("open", function (visible) {
+
+                    var modalKeyboard = $scope.dismissable;
+                    var modalBackdrop = $scope.dismissable ? "fade" : "static";
+
+                    $($element).modal({ backdrop: modalBackdrop, keyboard: modalKeyboard, show: visible });
                 });
+
             }
         };
     });

@@ -53,7 +53,7 @@ namespace Teamkeep.Controllers
 
             // Redirect new user to home
             login.AuthToken = authToken;
-            login.Redirect = "/home";
+            login.Redirect = "/teams";
     
             _emailService.EmailWelcome(user.Email, user.Username, user.VerifyCode);
 
@@ -63,18 +63,9 @@ namespace Teamkeep.Controllers
         [HttpGet]
         public ActionResult Home()
         {
-            var activeUser = this.GetActiveUser(this.Request);
-            if (activeUser == null)
-            {
-                Response.Redirect("/");
-                return null;
-            }
-
-            activeUser.LastSeen = DateTime.Now;
-            activeUser = _userService.UpdateUser(activeUser);
-
-            var viewModel = new UserHomeViewModel { User = activeUser };
-            return View("Home", viewModel);
+            // Old route, redirect to new functionality
+            Response.Redirect("/teams");
+            return null;
         }
 
         [HttpGet]
@@ -139,7 +130,7 @@ namespace Teamkeep.Controllers
 
             var authToken = _userService.GetAuthToken(user.Id);
 
-            return Json(new Login { AuthToken = authToken, Redirect = "/home"});
+            return Json(new Login { AuthToken = authToken, Redirect = "/teams" });
         }
 
         [HttpPost]
