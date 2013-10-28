@@ -97,7 +97,22 @@ namespace Teamkeep.Controllers
             }
             else if (user.ActiveTeamId != null)
             {
-                if (_teamService.GetTeam((int) user.ActiveTeamId) != null)
+                if (_teamService.GetTeam((int)user.ActiveTeamId) == null)
+                {
+                    // If active team id is somehow not a real team, correct this 
+                    var otherTeams = _teamService.GetTeams(user);
+                    if (otherTeams.Count() > 0)
+                    {
+                        user.ActiveTeamId = otherTeams.First().Id;
+                    }
+                    else
+                    {
+                        user.ActiveTeamId = null;
+                    }
+                    _userService.UpdateUser(user);
+                }
+
+                if (user.ActiveTeamId != null)
                 {
                     Response.Redirect("/teams/" + user.ActiveTeamId);
                 }
