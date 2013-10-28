@@ -42,6 +42,17 @@
             }
         };
     })
+    .directive("spinning", function () {
+        return {
+            restrict: "A",
+            replace: true,
+            transclude: true,
+            template: "<button ng-transclude><i class='icon-spinner icon-spin' ng-show='spinning'></i> </button>",
+            scope: {
+                spinning: '='
+            }
+        };
+    })
     .directive("availabilityAutosize", function ($rootScope) {
         return {
             restrict: "EA",
@@ -101,7 +112,7 @@
             }
         };
     })
-    .directive("createTeamModal", function () {
+    .directive("createTeamModal", function ($http) {
         return {
             replace: true,
             templateUrl: "/Scripts/app/partials/create-team-modal.html",
@@ -113,7 +124,18 @@
                 $scope.teamPublic = true;
                 $scope.teamPopulate = true;
                 $scope.createTeam = function () {
-                    console.log($scope.teamType, $scope.teamName, $scope.teamPublic, $scope.teamPopulate);
+                    if (!$scope.teamName || $scope.teamName.length < 3) {
+                        $scope.errorMessage = "Please include a team name";
+                        return;
+                    }
+                    $http.post("/teams", {
+                        type: $scope.teamType,
+                        name: $scope.teamName,
+                        makePublic: $scope.teamPublic,
+                        prepopulate: $scope.teamPopulate
+                    }).success(function (response) {
+                        window.location = "/teams/" + response.Id;
+                    });
                 };
 
                 $scope.$watch("open", function (visible) {

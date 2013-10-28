@@ -39,10 +39,14 @@
                     </button>
                 </div>
         
+                <div class="alert alert-danger" ng-show="errorMessage">
+                    {{errorMessage}}
+                </div>
+
                 <div class="form-group form-group-sm">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="icon-star"></i></span>
-                        <input type="text" class="form-control" placeholder="Team name" ng-model="teamName" tabindex="1">
+                        <input type="text" class="form-control" placeholder="Team name" ng-model="teamName" tabindex="1" required="required">
                     </div>
                 </div>
         
@@ -61,8 +65,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" data-dismiss="modal" aria-hidden="true" tabindex="2" ng-if="dismissable">Cancel</button>
-                <button type="submit" class="btn btn-primary" tabindex="1">
-                    <i class="icon-spinner icon-spin"></i> Create
+                <button type="submit" class="btn btn-primary" tabindex="1" spinning="false">
+                    Create
                 </button>
             </div>
         </div>
