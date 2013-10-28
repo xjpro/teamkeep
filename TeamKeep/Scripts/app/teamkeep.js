@@ -33,6 +33,10 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "ui.bootstrap", "ui.clockpi
                 templateUrl: "/Scripts/app/partials/settings.html",
                 controller: "SettingsController"
             })
+            .when("/user", {
+                templateUrl: "/Scripts/app/partials/user-settings.html",
+                controller: "UserSettingsController"
+            })
             .otherwise({ redirectTo: "/schedule" });
     })
     .run(function ($rootScope, $window) {

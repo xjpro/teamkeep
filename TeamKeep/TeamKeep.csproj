@@ -244,6 +244,7 @@
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\app\login\TeamController.js" />
     <Content Include="Scripts\app\login\User.js" />
+    <Content Include="Scripts\app\partials\user-settings.html" />
     <Content Include="Scripts\app\partials\create-team-modal.html" />
     <Content Include="Scripts\app\teamkeep-public.js" />
     <Content Include="Scripts\app\login\LoginController.js" />
@@ -286,6 +287,7 @@
     <Content Include="Scripts\app\teamkeep-directives.js" />
     <Content Include="Scripts\app\teamkeep.js" />
     <Content Include="Scripts\app\team\AvailabilityController.js" />
+    <Content Include="Scripts\app\team\UserSettingsController.js" />
     <Content Include="Scripts\app\team\SettingsController.js" />
     <Content Include="Scripts\app\team\MessagesComposeController.js" />
     <Content Include="Scripts\app\team\MessagesController.js" />

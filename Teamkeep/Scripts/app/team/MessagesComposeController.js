@@ -1,4 +1,8 @@
-﻿angular.module("teamkeep").controller("MessagesComposeController", function ($scope, $routeParams, $http, $location, Team) {
+﻿angular.module("teamkeep").controller("MessagesComposeController", function ($scope, $routeParams, $http, $location, Team, User) {
+
+    if (!User.Verified) {
+        $location.path("/user");
+    }
 
     $scope.groups = _.where(Team.PlayerGroups, function(group) { return group.Players.length > 0; });
     $scope.sending = false;

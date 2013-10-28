@@ -1,0 +1,32 @@
+<header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
+    <div class="container">
+        <div class="navbar-left">
+            <a class="btn btn-info" href="#/schedule">
+                <i class="icon-chevron-sign-left"></i> User Settings
+            </a>
+        </div>
+    </div>
+</header>
+
+<div id="settings" class="container">
+    <div class="buffered row" ng-show="!verified">
+        <div class="alert alert-danger">
+            <p>
+                <strong>Warning!</strong> You have not yet verified your email &mdash; messaging features are disabled
+            </p>
+            <p>
+                <a ng-hide="verificationSent" ng-click="resendVerification()">Resend verification email</a>
+                <strong ng-show="verificationSent">Sent verification email to {{email}}</strong>
+            </p>
+        </div>
+    </div>
+    <div class="buffered row">
+        <fieldset class="col-md-12">
+            <legend>User settings</legend>
+            <div class="form-group col-xs-12 col-md-6">
+                <label>Email</label>
+                <input type="text" class="form-control" ng-model="email" disabled="disabled" />
+            </div>
+        </fieldset>
+    </div>
+</div>

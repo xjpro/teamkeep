@@ -3,23 +3,14 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
     $scope.sidebarActive = false;
     $scope.createTeamModalActive = false;
     $scope.createTeamModalDismissable = true;
-    $scope.title = "Schedule";
 
     $scope.id = Team.Id;
     $scope.name = function () { return Team.Name };
     $scope.bannerImage = "/TeamBanners/" + (Team.BannerImage || "defaultbanner.jpg");
 
-    $scope.goto = function (path) {
-        if ($scope.isMobile) {
-            $scope.sidebarActive = false;
-        }
-        $location.path(path);
+    $scope.userTitle = User.Username;
+    $scope.userVerified = User.Verified;
 
-        switch (path) {
-            case 'messages': $scope.title = "Messaging"; break;
-            default: $scope.title = path.charAt(0).toUpperCase() + path.slice(1); break;
-        }
-    };
     $scope.logout = function () {
         User.logout();
     };
@@ -33,9 +24,25 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
     $scope.$on("$toggleSidebar", function() {
         $scope.sidebarActive = !$scope.sidebarActive;
     });
+    $scope.$on("$routeChangeSuccess", function (next, current) {
+
+        if ($scope.isMobile) {
+            $scope.sidebarActive = false;
+        }
+
+        var matches = /\/([^\/]*)/.exec(current.$$route.originalPath);
+        var firstPath = matches[1];
+
+        switch (firstPath) {
+            case "messages": $scope.title = "Messaging"; break;
+            case "user": $scope.title = "User Settings"; break;
+            default: $scope.title = firstPath.charAt(0).toUpperCase() + firstPath.slice(1); break;
+        }
+    });
 
     if (User.Teams.length == 0) {
         $scope.createTeamModalActive = true;
         $scope.createTeamModalDismissable = false;
     }
+    
 });
