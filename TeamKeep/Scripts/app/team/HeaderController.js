@@ -7,7 +7,7 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
 
     $scope.id = Team.Id;
     $scope.name = function () { return Team.Name };
-    $scope.bannerImage = "/TeamBanners/" + Team.BannerImage;
+    $scope.bannerImage = "/TeamBanners/" + (Team.BannerImage || "defaultbanner.jpg");
 
     $scope.goto = function (path) {
         if ($scope.isMobile) {
