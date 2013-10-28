@@ -97,7 +97,10 @@ namespace Teamkeep.Controllers
             }
             else if (user.ActiveTeamId != null)
             {
-                Response.Redirect("/teams/" + user.ActiveTeamId);
+                if (_teamService.GetTeam((int) user.ActiveTeamId) != null)
+                {
+                    Response.Redirect("/teams/" + user.ActiveTeamId);
+                }
             }
 
             var viewModel = new TeamViewModel { User = user };
@@ -365,6 +368,18 @@ namespace Teamkeep.Controllers
             }
 
             _teamService.RemoveTeam(id);
+
+            var otherTeams = _teamService.GetTeams(activeUser);
+            if (otherTeams.Count() == 0)
+            {
+                activeUser.ActiveTeamId = null;
+            }
+            else
+            {
+                activeUser.ActiveTeamId = otherTeams.First().Id;
+            }
+            _userService.UpdateUser(activeUser);
+
             return Json(null);
         }
 

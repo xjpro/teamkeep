@@ -1,4 +1,4 @@
-angular.module("teamkeep").controller("SettingsController", function ($scope, Team) {
+angular.module("teamkeep").controller("SettingsController", function ($scope, $http, Team) {
     $scope.newName = Team.Name;
     $scope.settings = Team.Settings;
     $scope.privacy = Team.Privacy;
@@ -18,4 +18,11 @@ angular.module("teamkeep").controller("SettingsController", function ($scope, Te
             Team.Name = $scope.newName;
         }
     });
+
+    $scope.deleteTeam = function () {
+        $http.delete(Team.uri)
+            .success(function () {
+                window.location = "/teams"
+            });
+    };
 });
