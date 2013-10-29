@@ -16,7 +16,14 @@ angular.module("teamkeep").controller("ScheduleController", function ($scope, $f
         var member = _.find($scope.members, function (member) { return member.Id == memberId; });
         return member ? $filter("playerName")(member) : null;
     };
-    
+    $scope.eventTypes = [
+        { name: "Game", value: 0 },
+        { name: "Practice", value: 1 },
+        { name: "Meeting", value: 2 },
+        { name: "Party", value: 3 },
+        { name: "None", value: 99 }
+    ];
+
     $scope.addEventDuty = Team.Seasons.addEventDuty;
     $scope.removeEventDuty = Team.Seasons.removeEventDuty;
     $scope.toggleDuties = function (event) {

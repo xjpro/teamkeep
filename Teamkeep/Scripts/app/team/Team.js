@@ -355,7 +355,7 @@
         return function (player) {
             var contact = [];
             if (player.Phone) {
-                contact.push(player.Phone + ", ");
+                contact.push(player.Phone + " / ");
             }
             contact.push(player.Email || "");
             return contact.join('').replace(/,\s$/, "");
