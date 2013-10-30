@@ -60,43 +60,26 @@
             transclude: true,
             template: "<table ng-transclude></table>",
             scope: {
+                eventsCount: "=eventsCount",
                 eventsShown: "=eventsShown"
             },
             controller: function ($scope, $element) {
-                $rootScope.$watch("windowWidth", function (value) {
-                    // TODO find values programatically
-                    if (value < 450) {
-                        if ($scope.eventsShown != 2) {
-                            $scope.eventsShown = 2;
-                            $("#availability .prev").css({ right: "135px" });
-                            $element.find(".position").hide();
-                        }
+                $rootScope.$watch("windowWidth", function (windowWidth) {
+                    var availableSpace = $element.outerWidth();
+                    if (windowWidth < 1000) {
+                        availableSpace -= 400;
+                        $scope.eventsShown = Math.floor(availableSpace / 25);
+                        $element.find(".column-position").hide();
+                        
+                    } else {
+                        availableSpace -= 600;
+                        $scope.eventsShown = Math.floor(availableSpace / 25);
+                        $element.find(".column-position").show();
                     }
-                    else if (value < 775) {
-                        if ($scope.eventsShown != 5) {
-                            $scope.eventsShown = 5;
-                            $("#availability .prev").css({ right: "255px" });
-                            $element.find(".position").hide();
-                        }
-                    }
-                    else if (value < 975) {
-                        if ($scope.eventsShown != 7) {
-                            $scope.eventsShown = 7;
-                            $("#availability .prev").css({ right: "335px" });
-                            $element.find(".position").show();
-                        }
-                    }
-                    else if (value < 1175) {
-                        if ($scope.eventsShown != 10) {
-                            $scope.eventsShown = 10;
-                            $("#availability .prev").css({ right: "457px" });
-                            $element.find(".position").show();
-                        }
-                    }
-                    else if ($scope.eventsShown != 15) {
-                        $scope.eventsShown = 15;
-                        $("#availability .prev").css({ right: "655px" });
-                        $element.find(".position").show();
+                });
+                $scope.$watch("eventsCount", function (value) {
+                    if (!value) {
+                        $element.hide();
                     }
                 });
             }

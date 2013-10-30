@@ -292,12 +292,15 @@ form fieldset legend {
 }
 #availability .prev, #availability .next {
     position: absolute;
-    top: 50px;
+    top: 6px;
     text-decoration: none;
     z-index: 1000;
 }
+#availability .prev {
+    right: 40px;
+}
 #availability .next {
-    right: 0;
+    right: 5px;
 }
 
 /* duties */

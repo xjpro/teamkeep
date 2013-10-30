@@ -1,41 +1,20 @@
-﻿angular.module("teamkeep").controller("AvailabilityController", function ($scope, Team) {
+﻿angular.module("teamkeep").controller("AvailabilityController", function ($scope, $filter, Team) {
 
     $scope.groups = _.select(Team.PlayerGroups, function (group) { return group.Players.length > 0; });
     $scope.showPosition = Team.Settings.PositionColumn;
 
-    $scope.allEvents = function () {
-        return _(Team.Seasons).flatten("Games")
-            .filter(function (event) { return event.DateTime; }).sortBy(function (event) { return new Date(event.DateTime); }).value();
-    };
-    $scope.events = function () {
-        var events = $scope.allEvents();
-
-        // create a current page (10 events)
-        var begin = Math.max(0, $scope.eventsIndex);
-        if (begin > events.length - $scope.eventsShown) begin = Math.max(0, events.length - $scope.eventsShown);
-        var end = Math.min(events.length, begin + $scope.eventsShown);
-
-        var pageOfEvents = [];
-        for (var i = begin; i < end; i++) {
-            pageOfEvents.push(events[i]);
-        }
-        return pageOfEvents;
-    };
-    $scope.isPast = function (event) {
-        return moment(event.DateTime).isBefore(moment());
-    };
+    $scope.allEvents = _(Team.Seasons).flatten("Games").filter(function (event) { return event.DateTime; }).sortBy(function (event) { return new Date(event.DateTime); }).value();
+    $scope.eventsPage = [];
 
     $scope.eventsShown = 10;
-    $scope.eventsIndex = _.findIndex($scope.allEvents(), function (event) { return !$scope.isPast(event); });
+    $scope.eventsIndex = _.findIndex($scope.allEvents, function (event) { return !$filter("isPast")(event); });
 
     $scope.showNext = function () {
-        return $scope.allEvents().length > $scope.eventsShown;
+        return $scope.allEvents.length > $scope.eventsShown;
     };
     $scope.showPrevious = function () {
-        return $scope.allEvents().length > $scope.eventsShown;
+        return $scope.allEvents.length > $scope.eventsShown;
     };
-    $scope.showPosition = Team.Settings.PositionColumn;
-    
     $scope.eventPredicate = function (event) {
         return (event.DateTime) ? new Date(event.DateTime) : new Date(0);
     };
@@ -72,6 +51,7 @@
         }
     };
     $scope.rotateAvailability = function (player, event) {
+        
         var availability = availabilityForPlayer(player, event);
         if (availability) {
             if (availability.AdminStatus + 1 > 3) {
@@ -86,5 +66,23 @@
                 AdminStatus: 1
             });
         }
+    };
+
+    $scope.$watch("eventsIndex + eventsShown", function() {
+        // create a current page (10 events)
+        var begin = Math.max(0, $scope.eventsIndex);
+        if (begin > $scope.allEvents.length - $scope.eventsShown) begin = Math.max(0, $scope.allEvents.length - $scope.eventsShown);
+        var end = Math.min($scope.allEvents.length, begin + $scope.eventsShown);
+
+        var pageOfEvents = [];
+        for (var i = begin; i < end; i++) {
+            pageOfEvents.push($scope.allEvents[i]);
+        }
+        $scope.eventsPage = pageOfEvents;
+    });
+})
+.filter("isPast", function() {
+    return function(event) {
+        return moment(event.DateTime).isBefore(moment());
     };
 });

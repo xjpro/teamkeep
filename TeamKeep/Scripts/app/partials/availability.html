@@ -8,26 +8,26 @@
 
 <div id="availability">
     <div class="table-controls">
-        <button class="prev btn btn-link" ng-disabled="eventsIndex <= 0" ng-click="eventsIndex = eventsIndex - eventsShown">
-            <i class="icon-chevron-left" ng-show="showPrevious()"></i>
+        <button class="prev btn btn-default btn-sm" ng-disabled="eventsIndex <= 0" ng-show="showPrevious()" ng-click="eventsIndex = eventsIndex - eventsShown">
+            <i class="icon-chevron-left"></i>
         </button>
-        <button class="next btn btn-link" ng-disabled="allEvents().length - eventsIndex <= eventsShown" ng-click="eventsIndex = eventsIndex + eventsShown">
-            <i class="icon-chevron-right" ng-show="showNext()"></i>
+        <button class="next btn btn-default btn-sm" ng-disabled="allEvents.length - eventsIndex <= eventsShown" ng-show="showNext()" ng-click="eventsIndex = eventsIndex + eventsShown">
+            <i class="icon-chevron-right"></i>
         </button>
     </div>
-    <div class="buffered text-center" ng-if="events().length == 0">
+    <div class="buffered text-center" ng-if="eventsPage.length == 0">
         Team has not posted any events and/or does not have any members on its roster
     </div>
-    <table class="table table-bordered table-striped" availability-autosize events-shown="eventsShown" ng-if="events().length > 0">
+    <table class="table table-bordered table-striped" availability-autosize events-shown="eventsShown" events-count="allEvents.length">
         <thead>
             <tr>
-                <th>&nbsp;</th>
+                <th class="column-name">&nbsp;</th>
                 <th class="column-position" ng-show="showPosition">&nbsp;</th>
-                <th ng-if="events().length == 0">&nbsp;</th>
-                <th ng-if="events().length == 0">&nbsp;</th>
+                <th ng-if="eventsPage.length == 0">&nbsp;</th>
+                <th ng-if="eventsPage.length == 0">&nbsp;</th>
 
-                <th class="angled column-icon" ng-repeat="event in events() | orderBy:eventPredicate">    
-                    <span ng-switch on="isPast(event)">
+                <th class="angled column-icon" ng-repeat="event in eventsPage | orderBy:eventPredicate">    
+                    <span ng-switch on="event | isPast">
                         <a href="#/compose?event={{event.Id}}" ng-switch-when="false">
                             <span>{{event | eventDate}}</span>
                             <button class="btn btn-link">
@@ -52,8 +52,8 @@
             </tr>
             <tr ng-repeat="player in group.Players | orderBy:'LastName'">
                 <td>{{player | playerName}}</td>
-                <td ng-show="showPosition">{{player.Position}}</td>
-                <td class="column-icon" ng-repeat="event in events()" ng-class="availabilityCss(player, game)" ng-click="rotateAvailability(player, event)">
+                <td class="column-position" ng-show="showPosition">{{player.Position}}</td>
+                <td class="column-icon" ng-repeat="event in eventsPage" ng-class="availabilityCss(player, game)" ng-click="rotateAvailability(player, event)">
                     <span>
                         <i ng-class="availabilityIcon(player, event)"></i>
                     </span>

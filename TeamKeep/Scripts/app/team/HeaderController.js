@@ -26,6 +26,8 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
     });
     $scope.$on("$routeChangeSuccess", function (next, current) {
 
+        if (!current || !current.$$route) return;
+
         if ($scope.isMobile) {
             $scope.sidebarActive = false;
         }
