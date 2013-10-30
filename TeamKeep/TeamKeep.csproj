@@ -249,33 +249,6 @@
     <Content Include="Scripts\app\teamkeep-public.js" />
     <Content Include="Scripts\app\login\LoginController.js" />
     <Content Include="Scripts\app\login\RegisterController.js" />
-    <Content Include="Scripts\app-old\partials\availability-request.html" />
-    <Content Include="Scripts\app-old\partials\availability.html" />
-    <Content Include="Scripts\app-old\partials\compose.html" />
-    <Content Include="Scripts\app-old\partials\duties.html" />
-    <Content Include="Scripts\app-old\partials\message.html" />
-    <Content Include="Scripts\app-old\partials\messages.html" />
-    <Content Include="Scripts\app-old\partials\roster.html" />
-    <Content Include="Scripts\app-old\partials\schedule.html" />
-    <Content Include="Scripts\app-old\partials\settings.html" />
-    <Content Include="Scripts\app-old\shared\radioButton.js" />
-    <Content Include="Scripts\app-old\shared\Team.js" />
-    <Content Include="Scripts\app-old\shared\spinner.js" />
-    <Content Include="Scripts\app-old\teamkeep-directives.js" />
-    <Content Include="Scripts\app-old\team\AlertsController.js" />
-    <Content Include="Scripts\app-old\team\AvailabilityController.js" />
-    <Content Include="Scripts\app-old\team\AvailabilityRequestController.js" />
-    <Content Include="Scripts\app-old\team\ComposeController.js" />
-    <Content Include="Scripts\app-old\team\DutiesController.js" />
-    <Content Include="Scripts\app-old\team\MessageController.js" />
-    <Content Include="Scripts\app-old\team\MessagesController.js" />
-    <Content Include="Scripts\app-old\team\RosterController.js" />
-    <Content Include="Scripts\app-old\team\ScheduleController.js" />
-    <Content Include="Scripts\app-old\team\SettingsController.js" />
-    <Content Include="Scripts\app-old\team\HeaderController.js" />
-    <Content Include="Scripts\app-old\tutorial\TutorialController.js" />
-    <Content Include="Scripts\app-old\shared\User.js" />
-    <Content Include="Scripts\app-old\teamkeep.js" />
     <Content Include="Scripts\app\partials\availability.html" />
     <Content Include="Scripts\app\partials\settings.html" />
     <Content Include="Scripts\app\partials\messages-compose.html" />
@@ -333,9 +306,6 @@
     <Content Include="Views\Shared\Master.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Team\TeamHome.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -369,9 +339,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\Features.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Team\TeamHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Public\NotFound.cshtml" />
