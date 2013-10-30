@@ -45,22 +45,27 @@
         var recipients = _(Team.PlayerGroups).flatten("Players").select(function (member) { return member.Selected && member.Email; }).pluck("Id").value();
         console.log(recipients);
 
-        /*if (recipients.length == 0) {
-            return $("#alert-modal").fadeAlert("show", "Message must have at least one recipient");
+        $scope.error = null;
+        if (recipients.length == 0) {
+            $scope.error = "Message must have at least one recipient";
         }
-        if (!$scope.subject || $scope.subject.trim().length == 0) {
-            return $("#alert-modal").fadeAlert("show", "Please include a message subject");
+        else if (!$scope.requestAvailability && !$scope.message.content) {
+            console.log($scope.message.content);
+            $scope.error= "Please include content for your message";
         }
-        if (!$scope.content || $scope.content.length == 0) {
-            return $("#alert-modal").fadeAlert("show", "Please include content for your message");
-        }*/
+
+        if ($scope.error) {
+            return;
+        }
 
         $scope.sending = true;
 
-        /*$http.post(Team.uri + "/messages", {
+        $http.post(Team.uri + "/messages", {
             recipientPlayerIds: recipients,
             subject: $scope.message.subject,
-            content: $scope.message.content
+            content: $scope.message.content,
+            requestAvailability: $scope.requestAvailability,
+            availabilityEventId: $scope.selectedEvent.Id
         })
         .success(function(message) {
 
@@ -71,15 +76,12 @@
             $scope.message = {};
             $scope.sending = false;
 
-            //$("#alert-modal").fadeAlert("show", "Message sent successfully", "alert-success");
-            
-
-            $location.path("/messages");
+            $location.path("/messages?sent=true");
         })
-        .error(function(errorMessage) {
-            //$("#alert-modal").fadeAlert("show", JSON.parse(errorMessage), "alert-error"); // TODO should go in directive or view?
-            $scope.requesting = false;
-        });*/
+        .error(function (errorMessage) {
+            $scope.error = errorMessage;
+            $scope.sending = false;
+        });
     };
 
     $scope.$watch("selectedEvent", function (value, oldValue) {

@@ -24,5 +24,9 @@ namespace Teamkeep.Models
         public IEnumerable<int> RecipientPlayerIds { get; set; }
         public string TeamName { get; set; }
         public string DateTime { get { return Date.ToString("MMM d, yyyy, h:mm tt"); } }
+
+        public bool RequestAvailability { get; set; }
+        public int AvailabilityEventId { get; set; }
+        public Game AvailabilityEvent { get; set; }
     }
 }

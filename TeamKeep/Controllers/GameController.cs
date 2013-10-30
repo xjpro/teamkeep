@@ -117,31 +117,5 @@ namespace Teamkeep.Controllers
 
             return Json(null, JsonRequestBehavior.AllowGet);
         }
-
-        [HttpPost]
-        public JsonResult SendConfirmations(int gameId, List<int> playerIds)
-        {
-            var activeUser = this.GetActiveUser(this.Request);
-            if (!_gameService.CanEditGame(activeUser.Id, gameId))
-            {
-                throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to send emails for this team");
-            }
-
-            if (playerIds == null || playerIds.Count == 0)
-            {
-                Response.StatusCode = 400;
-                return Json("Specify at least one recipient for confirmation");
-            }
-
-            var serviceResponse = _gameService.SendConfirmationEmails(gameId, playerIds);
-
-            if (serviceResponse.Error)
-            {
-                Response.StatusCode = 400;
-                return Json(serviceResponse.Message);
-            }
-           
-            return Json(serviceResponse);
-        }
     }
 }

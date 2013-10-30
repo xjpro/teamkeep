@@ -311,7 +311,7 @@ namespace Teamkeep.Services
             }
         }
 
-        public EmailConfirmationsServiceResponse SendConfirmationEmails(int gameId, List<int> playerIds)
+        /*public EmailConfirmationsServiceResponse SendConfirmationEmails(int gameId, List<int> playerIds)
         {
             var game = GetGame(gameId);
             if (game == null) return new EmailConfirmationsServiceResponse {Error = true, Message = "Event not found"};
@@ -370,14 +370,14 @@ namespace Teamkeep.Services
                     };
 
                     // Send out the email!
-                    emailService.EmailAvailability(abRequest);
+                    //emailService.EmailAvailability(abRequest);
                     alreadySentEmails.Add(playerData.Email.ToLower());
                 }
             }
 
             emailService.SendQueuedMessages();
             return new EmailConfirmationsServiceResponse { UpdatedAvailabilities = updatedAvailabilites };
-        }
+        }*/
 
     }
 }

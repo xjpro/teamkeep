@@ -10,6 +10,7 @@ using Teamkeep.Models;
 using System;
 using Teamkeep.Services;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Teamkeep.Controllers
 {
@@ -408,16 +409,33 @@ namespace Teamkeep.Controllers
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to send messages for this team");
             }
 
+            if (message.RequestAvailability)
+            {
+                message.AvailabilityEvent = _gameService.GetGame(message.AvailabilityEventId);
+            }
+
             // Check message for errors
             if (string.IsNullOrWhiteSpace(message.Subject))
             {
-                Response.StatusCode = 400;
-                return Json("Message must have a subject");
+                if (message.AvailabilityEvent != null)
+                {
+                    Game.EventType type;
+                    Enum.TryParse(message.AvailabilityEvent.Type.ToString(CultureInfo.InvariantCulture), out type);
+                    message.Subject = EmailService.GetAvailabilitySubject(type, team.Name, message.AvailabilityEvent.OpponentName);
+                }
+                else
+                {
+                    Response.StatusCode = 400;
+                    return Json("Message must have a subject");
+                }
             }
             if (string.IsNullOrWhiteSpace(message.Content))
             {
-                Response.StatusCode = 400;
-                return Json("Message must have some content");
+                if (message.AvailabilityEvent == null)
+                {
+                    Response.StatusCode = 400;
+                    return Json("Message must have some content");
+                }
             }
 
             message.TeamId = id;
