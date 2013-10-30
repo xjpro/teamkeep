@@ -88,6 +88,7 @@ angular.module("teamkeep").service("GroupedTableDecorator", function ($location,
 
         $scope.removeCollection = function (collection) {
             Team[options.collectionName].removeCollection(collection);
+            $(".modal").modal("hide");
         };
     };
 

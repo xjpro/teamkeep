@@ -94,7 +94,7 @@
                             <a title="Move group down" ng-show="group.Order != groups.length-1" ng-click="changeCollectionOrder(group, group.Order + 1)">
                                 <i class="icon-circle-arrow-down"></i>
                             </a>
-                            <a title="Remove group" ng-click="removeCollection(group)">
+                            <a title="Remove group" data-target="#group-delete-modal" open-modal-and="$parent.$parent.selectedGroup = $parent.group">
                                 <i class="icon-trash"></i>
                             </a>
                         </div>
@@ -150,3 +150,29 @@
         
     </div>
 </div>
+
+<form id="group-delete-modal" class="modal fade" ng-submit="removeCollection(selectedGroup)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title">Remove group</h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <strong>Warning!</strong> 
+                </p>
+                <p>
+                    Removing <em>{{selectedGroup.Name}}</em> will also remove the players it contains.
+                </p>
+                <p>
+                    This cannot be undone.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-flat" data-dismiss="modal" aria-hidden="true" tabindex="2">Cancel</button>
+                <button type="submit" class="btn btn-warning" tabindex="1">Remove</button>
+            </div>
+        </div>
+    </div>
+</form>

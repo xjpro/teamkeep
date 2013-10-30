@@ -23,6 +23,11 @@
             </div>
         </div>
     </div>
+    
+    <div class="row" ng-show="sentMessage">
+        <div class="alert alert-success">{{sentMessage}}</div>
+    </div>
+
     <ol class="buffered messages list-unstyled">
         <div class="text-center" ng-if="messages.length == 0">
             No messages have been recorded

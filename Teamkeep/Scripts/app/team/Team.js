@@ -312,20 +312,26 @@
                     location.push(event.Location.Street);
                 }
                 if (event.Location.City) {
-                    location.push(", " + event.Location.City);
+                    if (location.length > 0) {
+                        location.push(", ");
+                    }
+                    location.push(event.Location.City);
                 }
                 if (event.Location.Postal) {
                     location.push(", " + event.Location.Postal);
                 }
                 if (showArena && event.Location.InternalLocation) {
-                    location.push(" : " + event.Location.InternalLocation);
+                    if (location.length > 0) {
+                        location.push(" : ");
+                    }
+                    location.push(event.Location.InternalLocation);
                 }
             }
 
             var locationString = location.join('');
 
             if (!locationString.length) return locationString;
-            return (prepend ? prepend + " " : "") + locationString
+            return (prepend ? prepend + " " : "") + locationString;
         };
     })
     .filter("playerName", function () {

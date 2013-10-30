@@ -425,8 +425,7 @@ namespace Teamkeep.Controllers
                 }
                 else
                 {
-                    Response.StatusCode = 400;
-                    return Json("Message must have a subject");
+                    message.Subject = "Team Message";
                 }
             }
             if (string.IsNullOrWhiteSpace(message.Content))

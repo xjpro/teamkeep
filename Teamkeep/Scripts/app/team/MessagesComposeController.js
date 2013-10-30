@@ -43,14 +43,12 @@
     $scope.sendMessage = function () {
         
         var recipients = _(Team.PlayerGroups).flatten("Players").select(function (member) { return member.Selected && member.Email; }).pluck("Id").value();
-        console.log(recipients);
 
         $scope.error = null;
         if (recipients.length == 0) {
             $scope.error = "Message must have at least one recipient";
         }
         else if (!$scope.requestAvailability && !$scope.message.content) {
-            console.log($scope.message.content);
             $scope.error= "Please include content for your message";
         }
 
@@ -79,7 +77,7 @@
             $location.path("/messages?sent=true");
         })
         .error(function (errorMessage) {
-            $scope.error = errorMessage;
+            $scope.error = $scope.$eval(errorMessage);
             $scope.sending = false;
         });
     };

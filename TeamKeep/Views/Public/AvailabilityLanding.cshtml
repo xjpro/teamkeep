@@ -1,101 +1,81 @@
 ﻿@model Teamkeep.Models.ViewModels.AvailabilityLandingViewModel
 @{
+    ViewBag.App = "teamkeep-public";
     ViewBag.Title = @Model.Title;
+    ViewBag.UseHeaderFooter = true;
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
 @if (Model.AvailabilityRequest != null) 
 {
-    var abData = Model.AvailabilityRequest.Data;
+    <script>
+        var viewData = @Html.Raw(Json.Encode(Model));
+    </script>
+       
     var abEvent = Model.AvailabilityRequest.Event;
     var opponentName = abEvent.OpponentName ?? "[To Be Determined]";
+    var where = abEvent.Where ?? "To Be Determined";
     
-    <div id="ab-landing" class="container main">  
+    <div class="buffered container" ng-controller="AvailabilityLandingController">  
         <div class="row">
-            <div class="span12">
+            <div class="col-md-12">
                 <h1>@Model.AvailabilityRequest.TeamName vs. @opponentName</h1>
+            </div>
+            <div class="col-md-4">
+                
+                <!--
+                TODO: ensure this is the right user by requring their email here
+                <li>
+                    <label>Email</label>
+                    <input type="text" />
+                </li>
+                -->
 
-                <ul id="ab-data">
-                    <!--<li>
-                        <label>Notes</label>
-                        <span>blah blah blah blah blah asdas as lbasdf asd sa sd sa d</span>
-                    </li>-->
-                    @if (abEvent.When != null)
-                    {
-                        <li>
-                            <label>When</label>
-                            <span>@abEvent.When</span>
-                        </li>
-                    }
-                    @if (abEvent.Where != null)
-                    {
-                        <li>
-                            <label>Where</label>
-                            <span>@abEvent.Where</span>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <label>Where</label>
-                            <span>To Be Determined</span>
-                        </li>
-                    }
-                    @if (abEvent.Location != null && !string.IsNullOrWhiteSpace(abEvent.Location.InternalLocation))
-                    {
-                        <li>
-                            <label>Arena</label>
-                            <span>@abEvent.Location.InternalLocation</span>
-                        </li>
-                    }
-                </ul>
-                <div id="replies" class="btn-group">
-                    <button class="btn btn-large btn-success" data-bind="css: { active: Selected() == 1 }, click: function () { Selected(1); }">I'll be there!</button>
-                    <button class="btn btn-large" data-bind="css: { active: Selected() == 2 }, click: function () { Selected(2); }">Can't make it</button>
-                    <button class="btn btn-large" data-bind="css: { active: Selected() == 3 }, click: function () { Selected(3); }">Maybe</button>
+                <div class="form-group">
+                    <label>When</label>
+                    <div class="form-control">
+                        @abEvent.When
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Where</label>
+                    <div class="form-control">
+                        @where
+                    </div>
+                </div>
+                
+                @if (abEvent.Location != null && !string.IsNullOrWhiteSpace(abEvent.Location.InternalLocation))
+                {
+                    <div class="form-group">
+                        <label>Arena</label>
+                        <div class="form-control">
+                            @abEvent.Location.InternalLocation
+                        </div>
+                    </div>
+                }
+
+                <div class="btn-group">
+                    <button class="btn btn-large" 
+                            ng-class="{ 'btn-success': ab.selected, 'btn-flat': !ab.selected }" 
+                            ng-click="selectAvailability(ab)" 
+                            ng-repeat="ab in availabilities">
+                        {{ab.text}}
+                    </button>
                 </div>
     
             </div>
         </div>
     </div>
-    <script>
-        window.viewModel = new function () {
-            var me = this;
-
-            this.Selected = ko.observable(@abData.RepliedStatus);
-            this.Selected.subscribe(function () {
-                $.ajax({
-                    type: "PUT", url: "/rsvp",
-                    data: {
-                        Token: "@abData.Token",
-                        RepliedStatus: me.Selected()
-                    },
-                    success: function () {
-                    }
-                });
-            });
-        };
-        ko.applyBindings(window.viewModel, document.getElementById("ab-landing"));
-
-        if (location.search.indexOf("reply=1") != -1) {
-            $("#replies button:eq(0)").click();
-        }
-        else if (location.search.indexOf("reply=2") != -1) {
-            $("#replies button:eq(1)").click();
-        }
-        else if (location.search.indexOf("reply=3") != -1) {
-            $("#replies button:eq(2)").click();
-        }
-    </script>
 }
 else
 {
-    <div class="container main">
-        <div class="row">
-            <div class="span12">
+    <div class="container">
+        <div class="buffered row">
+            <div class="col-md-12">
                 <h1>Event not found</h1>
                 <p>
-                    The event you've requested could not be found. The event owner may have deleted the event.
+                    The event you've requested could not be found.
                 </p>
             </div>
         </div>

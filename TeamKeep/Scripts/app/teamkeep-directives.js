@@ -32,8 +32,8 @@
             restrict: "EA",
             replace: true,
             template: "<span class='btn-group' data-toggle='buttons-radio'>" +
-                        "<button class='btn btn-sm' ng-click='model = !model' ng-class='{active: model}'>{{trueText}}</button>" +
-                        "<button class='btn btn-sm' ng-click='model = !model' ng-class='{active: !model}'>{{falseText}}</button>" +
+                        "<button class='btn btn-flat btn-sm' ng-click='model = !model' ng-class='{active: model}'>{{trueText}}</button>" +
+                        "<button class='btn btn-flat btn-sm' ng-click='model = !model' ng-class='{active: !model}'>{{falseText}}</button>" +
                         "</span>",
             scope: {
                 model: '=',
@@ -50,6 +50,20 @@
             template: "<button ng-transclude><i class='icon-spinner icon-spin' ng-show='spinning'></i> </button>",
             scope: {
                 spinning: '='
+            }
+        };
+    })
+    .directive("openModalAnd", function() {
+        return {
+            scope: {
+                action: "@openModalAnd"
+            },
+            link: function (scope, element) {
+                element.click(function () {
+                    scope.$apply(scope.action);
+                    console.log(scope);
+                    $(element.attr("data-target")).modal("show");
+                });
             }
         };
     })

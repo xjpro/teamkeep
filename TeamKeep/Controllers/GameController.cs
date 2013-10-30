@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Teamkeep.Models;

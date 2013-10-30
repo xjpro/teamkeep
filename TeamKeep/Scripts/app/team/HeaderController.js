@@ -8,7 +8,7 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
     $scope.name = function () { return Team.Name };
     $scope.bannerImage = "/TeamBanners/" + (Team.BannerImage || "defaultbanner.jpg");
 
-    $scope.userTitle = User.Username;
+    $scope.userTitle = User.Username || User.Email;
     $scope.userVerified = User.Verified;
 
     $scope.logout = function () {

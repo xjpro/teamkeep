@@ -10,8 +10,9 @@
     float: right;
     margin-right: 15px;
 }
-.navbar-right .dropdown-toggle {
+.navbar-right .dropdown-toggle .label-item {
     margin-top: 8px;
+    color: #eee;
 }
 .navbar-right .open .dropdown-toggle {
     margin-top: 0;
@@ -36,6 +37,9 @@
 }
 
 /* clockpicker adjustments */
+.ui-clockpicker {
+    border: none;
+}
 .ui-clockpicker a {
     color: #333;
 }
@@ -48,11 +52,8 @@
 }
 
 /* look at dat body */
-body {
-    font-family: "Open Sans";
-}
 @media (max-width: 768px) {
-    body { padding-top: 51px; }
+    body { padding-top: 53px; }
 }
 body.pushed {
     margin-left: 250px;
@@ -73,11 +74,18 @@ body.pushed .navbar-fixed-top {
     left: 0;
     width: 250px;
     height: 100%;
-    background: #333;
+    border-right: solid #aaa 3px;
+    background: #3e648d;
     z-index: 1030;
 }
+.affix a {
+    color: #fff;
+}
+.affix a:hover {
+    color: #000;
+}
 .affix hr {
-    border-top: 1px solid #999;
+    border-top: 1px solid #aaa;
 }
 
 /* global stuff */
@@ -121,6 +129,16 @@ img {
 .form-group-sm {
     max-width: 275px;
 }
+.btn-flat {
+    border: solid #bbb 1px;
+    color: #444;
+}
+.btn-flat:hover {
+    color: #000;
+}
+.btn-flat.active {
+    color: #999;
+}
 
 /* specifying column widths */
 .column-icon {
@@ -135,7 +153,7 @@ img {
     width: 125px;
 }
 .column-date .dropdown-menu {
-    width: 522px;
+    width: 514px;
     padding: 0;
 }
 .column-date .datepicker td,
