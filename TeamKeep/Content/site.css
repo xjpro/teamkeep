@@ -132,6 +132,7 @@ img {
 .btn-flat {
     border: solid #bbb 1px;
     color: #444;
+    background: none;
 }
 .btn-flat:hover {
     color: #000;

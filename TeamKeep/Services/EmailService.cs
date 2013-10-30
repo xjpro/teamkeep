@@ -29,8 +29,8 @@ namespace Teamkeep.Services
         public void EmailPasswordReset(string email, string username, string resetToken)
         {
             var body = new StringBuilder();
-            body.Append("<p>A password reset was requested for your Teamkeep login. If you did not make this request you may simply ignore this message. ");
-            body.Append("Otherwise, please use to the following link to reset your password: </p>");
+            body.Append("<p>A password reset was requested for your Teamkeep login. If you did not make this request you may simply ignore this message.</p>");
+            body.Append("<p>Please use to the following link to reset your password: </p>");
             body.Append(string.Format("<p><a href='{0}?username={1}&token={2}'>Reset your password</a></p>", "https://teamkeep.com/reset", username, resetToken));
             body.Append("<p>Thank you for using Teamkeep.</p>");
 

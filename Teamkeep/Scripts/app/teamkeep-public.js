@@ -9,7 +9,7 @@ window.Teamkeep = {
     }
 };
 
-angular.module("teamkeep-public", [])
+angular.module("teamkeep-public", ["ngRoute", "teamkeep-directives"])
     .directive("spinner", function () {
         return {
             restrict: 'A',

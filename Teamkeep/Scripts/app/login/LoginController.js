@@ -1,5 +1,10 @@
 ﻿angular.module("teamkeep-public").controller("LoginController", ["$scope", "User", function ($scope, User) {
 
+    var userMatches = /username=([^&]+)&?/.exec(location.search);
+    if (userMatches) {
+        $scope.username = userMatches[1];
+    }
+
     $scope.loginEvaluating = false;
     $scope.loginUser = function () {
 
@@ -37,51 +42,34 @@
 
         $scope.sendResetEvaluating = true;
 
-        User.resetPassword($scope.username)
+        User.requestResetPassword($scope.username)
             .success(function () {
                 document.location = "/resetsent";
             }).error(function (error) {
-                $scope.sendResetError = JSON.parse(error);
+                $scope.sendResetError = $scope.$eval(error);
                 $scope.sendResetEvaluating = false;
             });
     };
 
-    $scope.resetPassword = function() {
-        /*var ResetViewModel = function (data) {
-            var me = this;
-            ko.mapping.fromJS(data, {}, me);
+    $scope.resetPassword = function () {
 
-            this.NewPassword = ko.observable("");
-            this.Reset = function () {
-                $("button").prop("disabled", true);
-                $("button .icon-spin").show();
-                $("#reset-alert").hide();
-                $.ajax({
-                    type: "PUT", url: "/users/password",
-                    data: JSON.stringify({
-                        Username: me.Username(),
-                        ResetToken: me.ResetToken(),
-                        Password: me.NewPassword()
-                    }),
-                    contentType: "application/json",
-                    success: function (response) {
-                        TeamKeep.signIn(response.AuthToken, response.Redirect);
-                    },
-                    error: function (response) {
-                        $("#reset-alert").html(JSON.parse(response.responseText)).show();
-                        $("button").prop("disabled", false);
-                        $("button .icon-spin").hide();
-                    }
-                });
-            };
-        };
+        var tokenMatches = /token=([^&]+)&?/.exec(location.search);
+        if (tokenMatches) {
+            var token = tokenMatches[1];
+        }
+        else {
+            return;
+        }
 
-        var username = location.search.match(/username=([^&]*)/i);
-        var resetHash = location.search.match(/token=([^&]*)/i);
+        $scope.resetEvaluating = true;
 
-        var resetViewData = {
-            Username: (username) ? username[1] : "",
-            ResetToken: (resetHash) ? resetHash[1] : ""
-        };*/
+        User.resetPassword(token, $scope.username, $scope.newPassword)
+            .success(function (response) {
+                location = "/";
+            })
+            .error(function (response) {
+                $scope.resetEvaluating = false;
+                $scope.resetError = $scope.$eval(response);
+            });
     };
 }]);

@@ -21,9 +21,17 @@
         });
     };
 
-    User.resetPassword = function(username) {
+    User.resetPassword = function(resetToken, username, password) {
+        return $http.put("/users/password", {
+            resetToken: resetToken,
+            username: username.trim(),
+            password: password
+        });
+    };
+
+    User.requestResetPassword = function (username) {
         return $http.post("/users/password", {
-           username:  username.trim()
+            username: username.trim(),
         });
     };
 

@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep")
+﻿angular.module("teamkeep-directives", [])
     .directive("completeUpdate", function () {
         return {
             restrict: "A",
