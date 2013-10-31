@@ -1,5 +1,11 @@
-﻿angular.module("teamkeep").factory("User", function() {
-    var User = viewData.User;
+﻿angular.module("teamkeep").factory("User", function () {
+
+    var User = (window.viewData && window.viewData.User) ? window.viewData.User : {
+        Id: 0,
+        Settings: {},
+        Verified: true,
+        Teams: []
+    };
 
     User.logout = function () {
         var now = new Date();

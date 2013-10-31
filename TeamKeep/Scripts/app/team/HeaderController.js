@@ -1,4 +1,8 @@
 angular.module("teamkeep").controller("HeaderController", function ($scope, $location, Team, User) {
+    $scope.editable = Team.Editable;
+    $scope.showRoster = Team.Privacy.Roster;
+    $scope.loggedIn = User.Id != 0;
+
     $scope.teams = User.Teams;
     $scope.sidebarActive = false;
     $scope.createTeamModalActive = false;
@@ -24,15 +28,15 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
     $scope.$on("$toggleSidebar", function() {
         $scope.sidebarActive = !$scope.sidebarActive;
     });
-    $scope.$on("$routeChangeSuccess", function (next, current) {
+    $scope.$on("$routeChangeSuccess", function (ngEvent, next) {
 
-        if (!current || !current.$$route) return;
+        if (!next || !next.$$route) return;
 
         if ($scope.isMobile) {
             $scope.sidebarActive = false;
         }
 
-        var matches = /\/([^\/]*)/.exec(current.$$route.originalPath);
+        var matches = /\/([^\/]*)/.exec(next.$$route.originalPath);
         var firstPath = matches[1];
 
         switch (firstPath) {
@@ -42,7 +46,7 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
         }
     });
 
-    if (User.Teams.length == 0) {
+    if ($scope.isOwner && User.Teams.length == 0) {
         $scope.createTeamModalActive = true;
         $scope.createTeamModalDismissable = false;
     }

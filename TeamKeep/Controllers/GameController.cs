@@ -10,10 +10,10 @@ namespace Teamkeep.Controllers
         [HttpPost]
         public JsonResult Create(Game game)
         {
-            var activeUser = GetActiveUser(Request);
+            var activeUser = this.GetActiveUser(Request);
 
             var team = _teamService.GetTeam(game.HomeTeamId);
-            if (!team.Owners.Exists(x => x.Id == activeUser.Id))
+            if (activeUser == null || !team.Owners.Exists(x => x.Id == activeUser.Id))
             {
                 throw new HttpException((int) HttpStatusCode.Unauthorized, "Not authorized to add games for this team");
             }
@@ -33,9 +33,9 @@ namespace Teamkeep.Controllers
         [HttpPut]
         public JsonResult Update(Game game)
         {
-            var activeUser = GetActiveUser(Request);
+            var activeUser = this.GetActiveUser(Request);
 
-            if (!_gameService.CanEditGame(activeUser.Id, game.Id))
+            if (activeUser == null || !_gameService.CanEditGame(activeUser.Id, game.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit games for this team");
             }
@@ -53,9 +53,9 @@ namespace Teamkeep.Controllers
         [HttpDelete]
         public JsonResult Delete(int gameId)
         {
-            var activeUser = GetActiveUser(Request);
+            var activeUser = this.GetActiveUser(Request);
 
-            if (!_gameService.CanEditGame(activeUser.Id, gameId))
+            if (activeUser == null || !_gameService.CanEditGame(activeUser.Id, gameId))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to delete games for this team");
             }
@@ -68,7 +68,7 @@ namespace Teamkeep.Controllers
         public JsonResult CreateSeason(int teamId, Season season)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to add seasons to this team");
             }
@@ -82,7 +82,7 @@ namespace Teamkeep.Controllers
         public JsonResult UpdateSeason(int teamId, Season season)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to update seasons for this team");
             }
@@ -101,7 +101,7 @@ namespace Teamkeep.Controllers
         public JsonResult DeleteSeason(int teamId, Season season)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to remove seasons from this team");
             }

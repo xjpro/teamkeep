@@ -1,10 +1,11 @@
 ﻿@{
     ViewBag.Title = "Private Team";
+    ViewBag.UseHeaderFooter = true;
     Layout = "~/Views/Shared/Master.cshtml";
 }
 <div class="container">
-    <div class="row">
-        <div class="span8">
+    <div class="buffered row">
+        <div class="col-md-8">
             <h1>Sorry, this page is private!</h1>
             <p>
                 This team has not made their home page public at this time.
@@ -14,8 +15,8 @@
             </p>
             <ol>
                 <li>Login</li>
-                <li>On this team's page, click the gear icon to open team settings</li>
-                <li>Under the 'Privacy' settings, set 'Home page' to public</li>
+                <li>On this team's page, click the Settings menu to open team settings</li>
+                <li>Under the 'Privacy', set 'Home page' to the 'Public' option</li>
             </ol>
         </div>
     </div>

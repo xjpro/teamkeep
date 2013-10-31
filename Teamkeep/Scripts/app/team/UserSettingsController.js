@@ -1,4 +1,9 @@
-angular.module("teamkeep").controller("UserSettingsController", function ($scope, $http, User) {
+angular.module("teamkeep").controller("UserSettingsController", function ($scope, $location, $http, User) {
+
+    if (!User.Id) {
+        $location.path("/schedule");
+    }
+
     $scope.email = User.Email;
     $scope.verificationSent = false;
     $scope.verified = User.Verified;

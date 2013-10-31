@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <div class="btn-group btn-group-horizontal">
-                    <button type="button" class="btn" tabindex="1" ng-class="{active: teamType == 'sports'}" ng-click="teamType = 'sports'">
+                    <button type="button" class="btn btn-default" tabindex="1" ng-class="{active: teamType == 'sports'}" ng-click="teamType = 'sports'">
                         <h4>Sports</h4>
                         <div class="background" style="background-image: url('/img/teamtype-sports.png')"></div>
                         <ul class="hidden-xs">
@@ -17,7 +17,7 @@
                             <li>Points scored results</li>
                         </ul>
                     </button>
-                    <button type="button" class="btn" tabindex="1" ng-class="{active: teamType == 'online'}" ng-click="teamType = 'online'">
+                    <button type="button" class="btn btn-default" tabindex="1" ng-class="{active: teamType == 'online'}" ng-click="teamType = 'online'">
                         <h4>Online</h4>
                         <div class="background" style="background-image: url('/img/teamtype-online.gif')"></div>
                         <ul class="hidden-xs">
@@ -27,7 +27,7 @@
                             <li>Tournament results</li>
                         </ul>
                     </button>
-                    <button type="button" class="btn" tabindex="1" ng-class="{active: teamType == 'club'}" ng-click="teamType = 'club'">
+                    <button type="button" class="btn btn-default" tabindex="1" ng-class="{active: teamType == 'club'}" ng-click="teamType = 'club'">
                         <h4>Club</h4>
                         <div class="background" style="background-image: url('/img/teamtype-club.png')"></div>
                         <ul class="hidden-xs">
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-flat" data-dismiss="modal" aria-hidden="true" tabindex="2" ng-if="dismissable">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true" tabindex="2" ng-if="dismissable">Cancel</button>
                 <button type="submit" class="btn btn-primary" tabindex="1" spinning="false">
                     Create
                 </button>

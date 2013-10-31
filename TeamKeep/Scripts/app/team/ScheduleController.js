@@ -8,7 +8,8 @@ angular.module("teamkeep").controller("ScheduleController", function ($scope, $f
         itemCollectionId: "SeasonId"
     });
     SortingDecorator.decorate($scope, "DateTime");
-    
+
+    $scope.editable = Team.Editable;
     $scope.seasons = Team.Seasons;
     $scope.settings = Team.Settings;
     $scope.members = _.flatten(Team.PlayerGroups, "Players");

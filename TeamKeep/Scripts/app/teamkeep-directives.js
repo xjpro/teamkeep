@@ -31,12 +31,12 @@
         return {
             restrict: "EA",
             replace: true,
-            template: "<span class='btn-group' data-toggle='buttons-radio'>" +
-                        "<button class='btn btn-flat btn-sm' ng-click='model = !model' ng-class='{active: model}'>{{trueText}}</button>" +
-                        "<button class='btn btn-flat btn-sm' ng-click='model = !model' ng-class='{active: !model}'>{{falseText}}</button>" +
-                        "</span>",
+            template: "<span class='btn-group' data-toggle='buttons'>" +
+                        "<label class='btn btn-default btn-sm' ng-class='{active: model == true}' ng-click='model = true'><input type='radio' />{{trueText}}</label>" +
+                        "<label class='btn btn-default btn-sm' ng-class='{active: model == false}' ng-click='model = false'><input type='radio' />{{falseText}}</label>" +
+                      "</span>",
             scope: {
-                model: '=',
+                model: "=",
                 trueText: '@',
                 falseText: '@'
             }
@@ -78,18 +78,23 @@
                 eventsShown: "=eventsShown"
             },
             controller: function ($scope, $element) {
-                $rootScope.$watch("windowWidth", function (windowWidth) {
+
+                function adjust() {
                     var availableSpace = $element.outerWidth();
-                    if (windowWidth < 1000) {
+                    if ($scope.windowWidth < 1000) {
                         availableSpace -= 400;
                         $scope.eventsShown = Math.floor(availableSpace / 25);
                         $element.find(".column-position").hide();
-                        
+
                     } else {
                         availableSpace -= 600;
                         $scope.eventsShown = Math.floor(availableSpace / 25);
                         $element.find(".column-position").show();
                     }
+                }
+
+                $rootScope.$watch("windowWidth", function (windowWidth) {
+                    adjust();
                 });
                 $scope.$watch("eventsCount", function (value) {
                     if (!value) {

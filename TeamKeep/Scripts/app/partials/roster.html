@@ -21,7 +21,7 @@
 </header>
 
 <div class="container">
-    <div class="row table-controls hidden-xs">
+    <div class="row table-controls hidden-xs" ng-if="editable">
         <div class="col-md-6">
             <div ng-show="selectedItems().length > 0">
                 <button class="btn btn-default" ng-click="removeItems()" title="Remove">
@@ -87,7 +87,7 @@
                 <tr>
                     <td colspan="4" class="heading">
                         <input type="text" ng-model="group.Name" />
-                        <div class="pull-right">
+                        <div class="pull-right" ng-if="editable">
                             <a title="Move group up" ng-show="group.Order != 0" ng-click="changeCollectionOrder(group, group.Order - 1)">
                                 <i class="icon-circle-arrow-up"></i>
                             </a>
@@ -111,23 +111,23 @@
                     </td>
                     <td class="dropdown" edit-dropdown>
                         <a data-toggle="dropdown" data-target="#" tabindex="1">{{player | playerName:settings.LastNameColumn}}</a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" ng-if="editable">
                             <li class="form-group">
                                 <label>{{settings.LastNameColumn ? 'First name' : 'Name'}}</label>
-                                <input type="text" class="form-control" ng-model="player.FirstName" complete-update />
+                                <input type="text" class="form-control" ng-model="player.FirstName" ng-disabled="!editable" complete-update />
                             </li>
                             <li class="form-group" ng-if="settings.LastNameColumn">
                                 <label>Last name</label>
-                                <input type="text" class="form-control" ng-model="player.LastName" complete-update />
+                                <input type="text" class="form-control" ng-model="player.LastName" ng-disabled="!editable" complete-update />
                             </li>
                         </ul>
                     </td>
                     <td class="dropdown hidden-xs" ng-if="settings.PositionColumn" edit-dropdown>
                         <a data-toggle="dropdown" data-target="#" tabindex="1">{{player.Position}}</a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" ng-if="editable">
                             <li class="form-group">
                                 <label>Position</label>
-                                <input type="text" class="form-control" placeholder="None" ng-model="player.Position" complete-update />
+                                <input type="text" class="form-control" placeholder="None" ng-model="player.Position" ng-disabled="!editable" complete-update />
                             </li>
                         </ul>
                     </td>
@@ -136,11 +136,11 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group" ng-if="settings.EmailColumn">
                                 <label>Email</label>
-                                <input type="text" class="form-control" ng-model="player.Email" complete-update />
+                                <input type="text" class="form-control" ng-model="player.Email" ng-disabled="!editable" complete-update />
                             </li>
                             <li class="form-group" ng-if="settings.PhoneColumn">
                                 <label>Phone</label>
-                                <input type="text" class="form-control" ng-model="player.Phone" complete-update />
+                                <input type="text" class="form-control" ng-model="player.Phone" ng-disabled="!editable" complete-update />
                             </li>
                         </ul>
                     </td>
@@ -170,7 +170,7 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-flat" data-dismiss="modal" aria-hidden="true" tabindex="2">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true" tabindex="2">Cancel</button>
                 <button type="submit" class="btn btn-warning" tabindex="1">Remove</button>
             </div>
         </div>

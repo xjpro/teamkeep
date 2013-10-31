@@ -52,14 +52,14 @@
 }
 
 /* look at dat body */
+body {
+    font-family: "Open Sans";
+}
 @media (max-width: 768px) {
     body { padding-top: 53px; }
 }
-body.pushed {
+body.pushed, body.pushed .navbar-fixed-top {
     margin-left: 250px;
-}
-body.pushed .navbar-fixed-top {
-    left: 250px
 }
 .input-group-addon {
     max-width: 36px;
@@ -69,7 +69,8 @@ body.pushed .navbar-fixed-top {
 }
 
 /* the sidebar */
-.affix {
+.sidebar {
+    position: fixed;
     top: 0;
     left: 0;
     width: 250px;
@@ -78,14 +79,17 @@ body.pushed .navbar-fixed-top {
     background: #3e648d;
     z-index: 1030;
 }
-.affix a {
+.sidebar a {
     color: #fff;
 }
-.affix a:hover {
+.sidebar a:hover {
     color: #000;
 }
-.affix hr {
-    border-top: 1px solid #aaa;
+.sidebar ul {
+    border-bottom: 1px solid #aaa;
+}
+.sidebar ul:last-child {
+    border-bottom: none;
 }
 
 /* global stuff */
@@ -129,16 +133,20 @@ img {
 .form-group-sm {
     max-width: 275px;
 }
-.btn-flat {
+.btn-default {
     border: solid #bbb 1px;
     color: #444;
-    background: none;
+    background: #eee;
 }
-.btn-flat:hover {
+.btn-default:hover {
     color: #000;
 }
-.btn-flat.active {
+.btn-default.active {
     color: #999;
+}
+[disabled='disabled'] {
+    background: #fff !important;
+    cursor: default !important;
 }
 
 /* specifying column widths */
@@ -243,7 +251,7 @@ th.angled > span > a {
     position: absolute;
     white-space: nowrap;
     -moz-transform: rotate(45deg) translate(-122px, 70px);
-    -webkit-transform: rotate(45deg) translate(-108px, 34px);
+    -webkit-transform: rotate(45deg) translate(-110px, 36px);
     -o-transform: rotate(45deg) translate(-105px, 56px);
     -ms-transform: rotate(45deg) translate(-121px, 71px);
     border: 0;
@@ -291,8 +299,11 @@ th.angled:last-child > span > a:after {
 }
 th.angled button {
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     right: -23px;
+}
+th.angled button:hover {
+    text-decoration: none;
 }
 
 /* giving some function to fieldsets in forms */
@@ -421,6 +432,7 @@ form fieldset legend {
     margin: 0 2px;
     border-radius: 0;
     text-align: left;
+    color: #999;
 }
 .btn-group-horizontal button .background {
     display: block;
@@ -450,6 +462,9 @@ form fieldset legend {
 }
 .btn-group-horizontal button.active h4 {
     color: #0aaaf1;
+}
+.btn-group-horizontal button.active {
+    color: #333;
 }
 .btn-group-horizontal ul {
     list-style: none;

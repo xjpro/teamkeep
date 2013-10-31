@@ -49,7 +49,7 @@ namespace Teamkeep.Controllers
                 if (!team.Privacy.HomePage) // Team home page is not public
                 {
                     viewModel.Team = null;
-                    return View("TeamPrivateHome", viewModel);
+                    return View("PrivateHome", viewModel);
                 }
 
                 // Hide duties
@@ -191,7 +191,7 @@ namespace Teamkeep.Controllers
         {
             var activeUser = this.GetActiveUser(this.Request);
             Team team = _teamService.GetTeam(id);
-            if (!team.CanEdit(activeUser.Id))
+            if (activeUser == null || !team.CanEdit(activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team");
             }
@@ -278,7 +278,7 @@ namespace Teamkeep.Controllers
         {
             var activeUser = this.GetActiveUser(this.Request);
             Team team = _teamService.GetTeam(id);
-            if (!team.CanEdit(activeUser.Id))
+            if (activeUser == null || !team.CanEdit(activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team's announcement");
             }
@@ -291,7 +291,7 @@ namespace Teamkeep.Controllers
         public JsonResult UpdateSettings(int id, TeamSettingsViewModel teamSettings)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(id, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(id, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team's settings");
             }
@@ -310,7 +310,7 @@ namespace Teamkeep.Controllers
         {
             var activeUser = this.GetActiveUser(this.Request);
             var team = _teamService.GetTeam(id);
-            if (!team.CanEdit(activeUser.Id))
+            if (activeUser == null || !team.CanEdit(activeUser.Id))
             {
                 throw new HttpException((int) HttpStatusCode.Unauthorized, "Not authorized to edit this team's banner");
             }
@@ -378,7 +378,7 @@ namespace Teamkeep.Controllers
         public JsonResult Delete(int id)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(id, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(id, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to delete this team");
             }
@@ -404,7 +404,7 @@ namespace Teamkeep.Controllers
         {
             var activeUser = this.GetActiveUser(this.Request);
             var team = _teamService.GetTeam(id);
-            if (!team.CanEdit(activeUser.Id))
+            if (activeUser == null || !team.CanEdit(activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to send messages for this team");
             }
@@ -451,7 +451,7 @@ namespace Teamkeep.Controllers
         {
             var activeUser = this.GetActiveUser(this.Request);
             var team = _teamService.GetTeam(id);
-            if (!team.CanEdit(activeUser.Id))
+            if (activeUser == null || !team.CanEdit(activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to send messages for this team");
             }

@@ -12,7 +12,7 @@ namespace Teamkeep.Controllers
         public JsonResult CreateGroup(int teamId, PlayerGroup playerGroup)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to add player groups to this team");
             }
@@ -26,7 +26,7 @@ namespace Teamkeep.Controllers
         public JsonResult UpdateGroup(int teamId, PlayerGroup playerGroup)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit player groups for this team");
             }
@@ -45,7 +45,7 @@ namespace Teamkeep.Controllers
         public JsonResult DeleteGroup(int teamId, PlayerGroup playerGroup)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to delete player groups for this team");
             }
@@ -59,7 +59,7 @@ namespace Teamkeep.Controllers
         public JsonResult Create(int teamId, Player player)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to add players to this team roster");
             }
@@ -79,7 +79,7 @@ namespace Teamkeep.Controllers
         public JsonResult Update(int teamId, Player player)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team roster");
             }
@@ -103,7 +103,7 @@ namespace Teamkeep.Controllers
         public JsonResult Delete(int teamId, Player player)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to delete players on this team roster");
             }
@@ -127,7 +127,7 @@ namespace Teamkeep.Controllers
         public JsonResult UpdateAvailability(int teamId, int playerId, AvailabilityData availability)
         {
             var activeUser = this.GetActiveUser(this.Request);
-            if (!_teamService.CanEdit(teamId, activeUser.Id))
+            if (activeUser == null || !_teamService.CanEdit(teamId, activeUser.Id))
             {
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Not authorized to edit this team");
             }

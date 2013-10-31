@@ -39,8 +39,9 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.
             })
             .otherwise({ redirectTo: "/schedule" });
     })
-    .run(function ($rootScope, $window) {
+    .run(function ($rootScope, $window, $location, Team) {
         
+        //$rootScope.publicView = User.Id == 0 || User
         $rootScope.windowWidth = $window.outerWidth;
         $rootScope.isMobile = $rootScope.windowWidth < 767;
         angular.element($window).bind("resize", function() {
@@ -52,6 +53,20 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.
         $rootScope.toggleSidebar = function() {
             $rootScope.$broadcast("$toggleSidebar");
         };
+
+        $rootScope.$on("$routeChangeSuccess", function (ngEvent, next) {
+            if (!next || !next.$$route) return;
+            var matches = /\/([^\/]*)/.exec(next.$$route.originalPath);
+            var firstPath = matches[1];
+
+            if (!Team.Editable) {
+                console.log(firstPath);
+                if (firstPath == "schedule" || (firstPath == "roster" && Team.Privacy.Roster)) {
+                    return;
+                }
+                $location.path("/schedule");
+            }
+        });
     })
     .directive("teamkeepSidebar", function() {
         return function (scope, element, attrs) {

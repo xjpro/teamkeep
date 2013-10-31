@@ -198,7 +198,7 @@
         angular.forEach(Team.Seasons, function (season) {
             $rootScope.$watch(function () { return season.Name + season.Order; }, function (value, oldValue) { queueChange("seasons", season, value, oldValue); }, true);
             angular.forEach(season.Games, function (event) {
-                $rootScope.$watch(function () { return _.omit(event, "Selected"); },
+                $rootScope.$watch(function () { return _.omit(event, "Selected", "ShowDuties"); },
                     function (value, oldValue) { queueChange("events", event, value, oldValue); }, true);
             });
         });

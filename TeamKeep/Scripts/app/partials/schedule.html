@@ -19,7 +19,7 @@
 </header>
 
 <div class="container">
-    <div class="row table-controls hidden-xs">
+    <div class="row table-controls hidden-xs" ng-if="editable">
         <div class="col-md-6">
             <div ng-show="selectedItems().length > 0">
                 <button class="btn btn-default" ng-click="removeItems()" title="Remove">
@@ -94,7 +94,7 @@
                 <tr>
                     <td colspan="6" class="heading">
                         <input type="text" ng-model="season.Name" />
-                        <div class="pull-right">
+                        <div class="pull-right" ng-if="editable">
                             <a title="Move season up" ng-show="season.Order != 0" ng-click="changeCollectionOrder(season, season.Order - 1)">
                                 <i class="icon-circle-arrow-up"></i>
                             </a>
@@ -118,9 +118,9 @@
                     </td>
                     <td class="column-date dropdown" edit-dropdown>
                         <a data-toggle="dropdown" data-target="#" tabindex="1">{{event | eventDate}}</a>
-                        <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <div class="dropdown-menu" role="menu" aria-labelledby="dLabel" ng-if="editable">
                             <div class="datepicker well pull-left" ng-model="event.DateTime">
-                                <datepicker show-weeks="false"></datepicker>
+                                <datepicker show-weeks="false" ></datepicker>
                             </div>
                             <div class="pull-right">
                                 <clockpicker ng-model="event.DateTime"></clockpicker>
@@ -132,15 +132,15 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
                                 <label>{{settings.ResultsView | eventResultsScoreLabel}}</label>
-                                <input type="number" class="form-control" ng-model="event.ScoredPoints" placeholder="Points scored" min="-999" max="999" />
+                                <input type="number" class="form-control" ng-model="event.ScoredPoints" ng-disabled="!editable" placeholder="Points scored" min="-999" max="999" />
                             </li>
                             <li class="form-group">
                                 <label>{{settings.ResultsView | eventResultsAllowedLabel}}</label>
-                                <input type="number" class="form-control" ng-model="event.AllowedPoints" placeholder="Points allowed" min="-999" max="999" />
+                                <input type="number" class="form-control" ng-model="event.AllowedPoints" ng-disabled="!editable" placeholder="Points allowed" min="-999" max="999" />
                             </li>
                             <li class="form-group" ng-if="settings.ResultsView == 1">
                                 <label>Ties</label>
-                                <input type="number" class="form-control" ng-model="event.TiePoints" placeholder="Tied" min="-999" max="999" />
+                                <input type="number" class="form-control" ng-model="event.TiePoints" ng-disabled="!editable" placeholder="Tied" min="-999" max="999" />
                             </li>
                         </ul>
                     </td>
@@ -149,11 +149,11 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
                                 <label>Title</label>
-                                <input type="text" class="form-control" placeholder="Untitled" ng-model="event.OpponentName" complete-update />
+                                <input type="text" class="form-control" placeholder="Untitled" ng-model="event.OpponentName" ng-disabled="!editable" complete-update />
                             </li>
                             <li class="form-group">
                                 <label>Event type</label>
-                                <select class="form-control" ng-model="event.Type" ng-options="type.value as type.name for type in eventTypes"></select>
+                                <select class="form-control" ng-model="event.Type" ng-options="type.value as type.name for type in eventTypes" ng-disabled="!editable"></select>
                             </li>
                         </ul>
                     </td>
@@ -162,15 +162,15 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li class="form-group">
                                 <label>Description</label>
-                                <input type="text" class="form-control" placeholder="Short description" ng-model="event.Location.Description" complete-update />
+                                <input type="text" class="form-control" placeholder="Short description" ng-model="event.Location.Description" ng-disabled="!editable" complete-update />
                             </li>
                             <li class="form-group">
                                 <label>Address</label>
-                                <input type="text" class="form-control" placeholder="Street address" ng-model="event.Location.Street" complete-update />
+                                <input type="text" class="form-control" placeholder="Street address" ng-model="event.Location.Street" ng-disabled="!editable" complete-update />
                             </li>
                             <li class="form-group">
                                 <label>City</label>
-                                <input type="text" class="form-control" placeholder="City" ng-model="event.Location.City" complete-update />
+                                <input type="text" class="form-control" placeholder="City" ng-model="event.Location.City" ng-disabled="!editable" complete-update />
                             </li>
                             <!--<li class="form-group">
                                     <label>Postal</label>
@@ -178,12 +178,12 @@
                                 </li>-->
                             <li class="form-group" ng-if="settings.ArenaColumn">
                                 <label>Arena</label>
-                                <input type="text" class="form-control" placeholder="Rink, field, room, etc." ng-model="event.Location.InternalLocation" complete-update />
+                                <input type="text" class="form-control" placeholder="Rink, field, room, etc." ng-model="event.Location.InternalLocation" ng-disabled="!editable" complete-update />
                             </li>
                         </ul>
                     </td>
                     <td class="column-duties hidden-xs text-right" ng-class="{active: event.ShowDuties}">
-                        <button class="btn btn-flat btn-xs" ng-class="{active: event.ShowDuties}" ng-click="toggleDuties(event)">
+                        <button class="btn btn-default btn-xs" ng-class="{active: event.ShowDuties}" ng-click="toggleDuties(event)">
                             <i class="icon-caret-down"></i> {{event.Duties.length}} {{event.Duties.length == 1 ? 'duty' : 'duties'}} 
                         </button>
                     </td>
@@ -192,7 +192,7 @@
                     <td class="duties" colspan="6">
                         <header>
                             <h4>Event duties</h4>
-                            <button class="btn btn-sm btn-default" ng-click="addEventDuty(event)">
+                            <button class="btn btn-sm btn-default" ng-click="addEventDuty(event)" ng-if="editable">
                                 <i class="icon-plus"></i> Add duty
                             </button>
                         </header>
@@ -253,7 +253,7 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-flat" data-dismiss="modal" aria-hidden="true" tabindex="2">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true" tabindex="2">Cancel</button>
                 <button type="submit" class="btn btn-warning" tabindex="1">Remove</button>
             </div>
         </div>

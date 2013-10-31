@@ -309,7 +309,7 @@
     <Content Include="Views\Shared\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Team\TeamPrivateHome.cshtml" />
+    <Content Include="Views\Team\PrivateHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
