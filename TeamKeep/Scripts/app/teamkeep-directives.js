@@ -66,7 +66,7 @@
             }
         };
     })
-    .directive("availabilityAutosize", function ($rootScope) {
+    .directive("availabilityAutosize", function ($rootScope, $timeout) {
         return {
             restrict: "EA",
             replace: true,
@@ -76,29 +76,39 @@
                 eventsCount: "=eventsCount",
                 eventsShown: "=eventsShown"
             },
-            controller: function ($scope, $element) {
+            link: function (scope, element) {
 
                 function adjust() {
-                    var availableSpace = $element.outerWidth();
-                    if ($scope.windowWidth < 1000) {
-                        availableSpace -= 400;
-                        $scope.eventsShown = Math.floor(availableSpace / 25);
-                        $element.find(".column-position").hide();
+
+                    var availableSpace = element.outerWidth();
+
+                    if ($rootScope.windowWidth < 350) {
+                        scope.eventsShown = 2;
+                        element.find(".column-position").hide();
+                    }
+                    else if ($rootScope.windowWidth < 1000) {
+                        availableSpace -= 290;
+                        scope.eventsShown = Math.floor(availableSpace / 25);
+                        element.find(".column-position").hide();
 
                     } else {
-                        availableSpace -= 600;
-                        $scope.eventsShown = Math.floor(availableSpace / 25);
-                        $element.find(".column-position").show();
+                        availableSpace -= 550;
+                        scope.eventsShown = Math.floor(availableSpace / 25);
+                        element.find(".column-position").show();
                     }
                 }
 
                 $rootScope.$watch("windowWidth", function (windowWidth) {
                     adjust();
                 });
-                $scope.$watch("eventsCount", function (value) {
+                scope.$watch("eventsCount", function (value) {
                     if (!value) {
-                        $element.hide();
+                        element.hide();
                     }
+                });
+
+                $timeout(function () {
+                    adjust(); // Initial trigger after everything is drawn
                 });
             }
         };
@@ -124,7 +134,6 @@
             link: function (scope, element) {
                 var menu = $(element).find(".dropdown-menu");
                 menu.click(function (evt) {
-                    console.log('c');
                     evt.stopPropagation();
                 })
                 .keydown(function (evt) {

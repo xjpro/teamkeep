@@ -255,10 +255,10 @@ th.angled {
 th.angled > span > a {
     position: absolute;
     white-space: nowrap;
-    -moz-transform: rotate(45deg) translate(-122px, 70px);
+    -moz-transform: rotate(45deg) translate(-123px, 47px);
     -webkit-transform: rotate(45deg) translate(-110px, 36px);
-    -o-transform: rotate(45deg) translate(-105px, 56px);
-    -ms-transform: rotate(45deg) translate(-121px, 71px);
+    -o-transform: rotate(45deg) translate(-110px, 36px);
+    -ms-transform: rotate(45deg) translate(-123px, 47px);
     border: 0;
     padding: 7px;
     height: inherit;

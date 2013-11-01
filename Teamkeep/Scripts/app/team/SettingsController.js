@@ -20,9 +20,12 @@ angular.module("teamkeep").controller("SettingsController", function ($scope, $h
     });
 
     $scope.deleteTeam = function () {
-        $http.delete(Team.uri)
-            .success(function () {
-                window.location = "/teams"
-            });
+        $http({
+            method: "DELETE",
+            url: Team.uri
+        })
+        .success(function () {
+            window.location = "/teams"
+        });
     };
 });

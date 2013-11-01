@@ -40,12 +40,16 @@
         Team.Seasons.removeCollection = function (season) {
             Team.updating = true;
 
-            return $http.delete(Team.uri + "/seasons/" + season.Id, { id: season.Id })
-                .success(function () {
-                    Team.Seasons.splice(_.findIndex(Team.Seasons, function (otherSeason) { return otherSeason.Id == season.Id; }), 1);
-                    _.each(Team.Seasons, function (other, index) { other.Order = index; });
-                    Team.updating = false;
-                });
+            return $http({
+                method: "DELETE",
+                url: Team.uri + "/seasons/" + season.Id,
+                data: { id: season.Id }
+            })
+            .success(function () {
+                Team.Seasons.splice(_.findIndex(Team.Seasons, function (otherSeason) { return otherSeason.Id == season.Id; }), 1);
+                _.each(Team.Seasons, function (other, index) { other.Order = index; });
+                Team.updating = false;
+            });
         };
 
         Team.Seasons.addItem = function (toSeasonId) {
@@ -66,13 +70,16 @@
             event.ShowDuties = false;
             Team.updating = true;    
 
-            return $http.delete("/games/" + event.Id)
-                .success(function () {
-                    var parentSeason = _.find(Team.Seasons, function (season) { return season.Id == event.SeasonId; });
-                    parentSeason.Games.splice(_.findIndex(parentSeason.Games, function (otherEvent) { return otherEvent.Id == event.Id; }), 1);
+            return $http({
+                method: "DELETE", 
+                url: "/games/" + event.Id
+            })
+            .success(function () {
+                var parentSeason = _.find(Team.Seasons, function (season) { return season.Id == event.SeasonId; });
+                parentSeason.Games.splice(_.findIndex(parentSeason.Games, function (otherEvent) { return otherEvent.Id == event.Id; }), 1);
 
-                    Team.updating = false;
-                });
+                Team.updating = false;
+            });
         };
 
         Team.Seasons.addEventDuty = function (event) {
@@ -88,12 +95,15 @@
         Team.Seasons.removeEventDuty = function (duty) {
             Team.updating = true;
 
-            return $http.delete(Team.uri + "/events/" + duty.EventId + "/duties/" + duty.Id)
-                .success(function () {
-                    var parent = _.find(_.flatten(Team.Seasons, "Games"), function (event) { return event.Id == duty.EventId; });
-                    parent.Duties.splice(_.findIndex(parent.Duties, function (other) { return other.Id == duty.Id; }), 1);
-                    Team.updating = false;
-                });
+            return $http({
+                method: "DELETE",
+                url: Team.uri + "/events/" + duty.EventId + "/duties/" + duty.Id
+            })
+            .success(function () {
+                var parent = _.find(_.flatten(Team.Seasons, "Games"), function (event) { return event.Id == duty.EventId; });
+                parent.Duties.splice(_.findIndex(parent.Duties, function (other) { return other.Id == duty.Id; }), 1);
+                Team.updating = false;
+            });
         };
 
         Team.PlayerGroups.addCollection = function (name) {
@@ -109,12 +119,16 @@
         Team.PlayerGroups.removeCollection = function (group) {
             Team.updating = true;
 
-            return $http.delete(Team.uri + "/groups/" + group.Id, { id: group.Id })
-                .success(function () {
-                    Team.PlayerGroups.splice(_.findIndex(Team.PlayerGroups, function (otherGroup) { return otherGroup.Id == group.Id; }), 1);
-                    _.each(Team.PlayerGroups, function (other, index) { other.Order = index; });
-                    Team.updating = false;
-                });
+            return $http({
+                method: "DELETE",
+                url: Team.uri + "/groups/" + group.Id,
+                data: { id: group.Id }
+            })
+            .success(function () {
+                Team.PlayerGroups.splice(_.findIndex(Team.PlayerGroups, function (otherGroup) { return otherGroup.Id == group.Id; }), 1);
+                _.each(Team.PlayerGroups, function (other, index) { other.Order = index; });
+                Team.updating = false;
+            });
         };
 
         Team.PlayerGroups.addItem = function (parentId) {
@@ -135,18 +149,21 @@
         Team.PlayerGroups.removeItem = function (player) {
             Team.updating = true;
 
-            return $http.delete(Team.uri + "/players/" + player.Id)
-                .success(function () {
-                    var parent = _.find(Team.PlayerGroups, function (candidate) { return candidate.Id == player.GroupId; });
-                    parent.Players.splice(_.findIndex(parent.Players, function (other) { return other.Id == player.Id; }), 1);
+            return $http({
+                method: "DELETE",
+                url: Team.uri + "/players/" + player.Id
+            })
+            .success(function () {
+                var parent = _.find(Team.PlayerGroups, function (candidate) { return candidate.Id == player.GroupId; });
+                parent.Players.splice(_.findIndex(parent.Players, function (other) { return other.Id == player.Id; }), 1);
 
-                    // Reassign duties
-                    _(Team.Seasons).flatten("Games").flatten("Duties").filter(function (duty) { return duty.PlayerId == 87; }).each(function (duty) {
-                        duty.PlayerId = null;
-                    });
-
-                    Team.updating = false;
+                // Reassign duties
+                _(Team.Seasons).flatten("Games").flatten("Duties").filter(function (duty) { return duty.PlayerId == 87; }).each(function (duty) {
+                    duty.PlayerId = null;
                 });
+
+                Team.updating = false;
+            });
         };
         
         Team.saveSettings = function () {

@@ -41,13 +41,13 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.
     })
     .run(function ($rootScope, $window, $location, Team) {
 
-        //$rootScope.publicView = User.Id == 0 || User
         $rootScope.windowWidth = $window.outerWidth;
-        $rootScope.isMobile = $rootScope.windowWidth < 767;
+        $rootScope.isMobile = $rootScope.windowWidth <= 767;
         angular.element($window).bind("resize", function () {
             $rootScope.windowWidth = $window.outerWidth;
-            $rootScope.isMobile = $rootScope.windowWidth < 767;
+            $rootScope.isMobile = $rootScope.windowWidth <= 767;
             $rootScope.$apply("windowWidth");
+            $rootScope.$apply("isMobile");
         });
 
         $rootScope.toggleSidebar = function () {
