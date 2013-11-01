@@ -3,7 +3,7 @@
         <a class="navbar-brand" ng-click="toggleSidebar()">
             <i class="icon-reorder"></i>
         </a>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right" ng-if="editable">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <i class="icon-pencil"></i>
@@ -63,7 +63,7 @@
         <table class="table table-bordered table-striped col-md-12">
             <thead>
                 <tr>
-                    <th class="column-icon hidden-xs"></th>
+                    <th class="column-icon hidden-xs" ng-if="editable"></th>
                     <th class="column-date">
                         <a ng-click="sortBy('DateTime')">Date</a>
                         <i ng-class="sortIcon" ng-show="sortType == 'DateTime'"></i>
@@ -113,7 +113,7 @@
                     </td>
                 </tr>
                 <tr ng-class="{selected: event.Selected}" ng-click="editItem(event)" ng-repeat-start="event in season.Games">
-                    <td class="column-icon dropdown hidden-xs">
+                    <td class="column-icon dropdown hidden-xs" ng-if="editable">
                         <input type="checkbox" ng-model="event.Selected" />
                     </td>
                     <td class="column-date dropdown" edit-dropdown>

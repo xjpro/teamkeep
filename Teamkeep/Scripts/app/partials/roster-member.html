@@ -5,7 +5,7 @@
                 <i class="icon-chevron-sign-left"></i> Roster
             </a>
         </div>
-        <div class="nav navbar-nav navbar-right">
+        <div class="nav navbar-nav navbar-right" ng-if="editable">
             <a class="navbar-brand" ng-click="removeMember(member)">
                 <i class="icon-trash"></i>
             </a>
@@ -19,15 +19,15 @@
             <legend>General</legend>
             <div class="form-group col-xs-12 col-md-6">
                 <label>{{settings.LastNameColumn ? 'First name' : 'Name'}}</label>
-                <input type="text" class="form-control" ng-model="member.FirstName" complete-update />
+                <input type="text" class="form-control" ng-model="member.FirstName" ng-disabled="!editable" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-6" ng-if="settings.LastNameColumn">
                 <label>Last name</label>
-                <input type="text" class="form-control" ng-model="member.LastName" complete-update />
+                <input type="text" class="form-control" ng-model="member.LastName" ng-disabled="!editable" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-12" ng-if="settings.PositionColumn">
                 <label>Position</label>
-                <input type="text" class="form-control" ng-model="member.Position" complete-update />
+                <input type="text" class="form-control" ng-model="member.Position" ng-disabled="!editable" complete-update />
             </div>
         </fieldset>
         
@@ -35,11 +35,11 @@
             <legend>Contact</legend>
             <div class="form-group col-xs-12 col-md-6" ng-if="settings.EmailColumn">
                 <label>Email</label>
-                <input type="text" class="form-control" ng-model="member.Email" complete-update />
+                <input type="text" class="form-control" ng-model="member.Email" ng-disabled="!editable" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-6" ng-if="settings.PhoneColumn">
                 <label>Phone</label>
-                <input type="text" class="form-control" ng-model="member.Phone" complete-update />
+                <input type="text" class="form-control" ng-model="member.Phone" ng-disabled="!editable" complete-update />
             </div>
         </fieldset>
     </form>

@@ -5,7 +5,7 @@
                 <i class="icon-chevron-sign-left"></i> Schedule
             </a>
         </div>
-        <div class="nav navbar-nav navbar-right">
+        <div class="nav navbar-nav navbar-right" ng-if="editable">
             <a class="navbar-brand" ng-click="removeEvent(event)">
                 <i class="icon-trash"></i>
             </a>
@@ -19,11 +19,11 @@
             <legend>Description</legend>
             <div class="form-group col-xs-12 col-md-8">
                 <label>Title</label>
-                <input type="text" class="form-control" ng-model="event.OpponentName" complete-update />
+                <input type="text" class="form-control" ng-model="event.OpponentName" ng-disabled="!editable" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-4">
                 <label>Event type</label>
-                <input type="number" class="form-control" ng-model="event.Type" />
+                <input type="number" class="form-control" ng-model="event.Type" ng-disabled="!editable" />
             </div>
         </fieldset>
         
@@ -31,7 +31,7 @@
             <legend>When</legend>
             <div class="form-group col-xs-12 col-md-6">
                 <label>Date &amp; Time</label>
-                <input type="datetime-local" class="form-control" ng-model="event.DateTime" />
+                <input type="datetime-local" class="form-control" ng-model="event.DateTime" ng-disabled="!editable" />
             </div>
         </fieldset>
         
@@ -39,19 +39,19 @@
             <legend>Where</legend>
             <div class="form-group col-xs-12 col-md-6">
                 <label>Name</label>
-                <input type="text" class="form-control" ng-model="event.Location.Description" complete-update />
+                <input type="text" class="form-control" ng-model="event.Location.Description" ng-disabled="!editable" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-6">
                 <label>Street</label>
-                <input type="text" class="form-control" ng-model="event.Location.Street" complete-update />
+                <input type="text" class="form-control" ng-model="event.Location.Street" ng-disabled="!editable" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-6">
                 <label>City</label>
-                <input type="text" class="form-control" ng-model="event.Location.City" complete-update />
+                <input type="text" class="form-control" ng-model="event.Location.City" ng-disabled="!editable" complete-update />
             </div>
             <div class="form-group col-xs-12 col-md-6" ng-if="settings.ArenaColumn">
                 <label>Arena/Rink/Field</label>
-                <input type="text" class="form-control" ng-model="event.Location.InternalLocation" complete-update />
+                <input type="text" class="form-control" ng-model="event.Location.InternalLocation" ng-disabled="!editable" complete-update />
             </div>
         </fieldset>
         
@@ -59,15 +59,15 @@
             <legend>Result</legend>
             <div class="form-group col-xs-4 col-md-2">
                 <label>{{settings.ResultsView | eventResultsScoreLabel}}</label>
-                <input type="number" class="form-control" ng-model="event.ScoredPoints" />
+                <input type="number" class="form-control" ng-model="event.ScoredPoints" ng-disabled="!editable" />
             </div>    
             <div class="form-group col-xs-4 col-md-2">
                 <label>{{settings.ResultsView | eventResultsAllowedLabel}}</label>
-                <input type="number" class="form-control" ng-model="event.AllowedPoints" />
+                <input type="number" class="form-control" ng-model="event.AllowedPoints" ng-disabled="!editable" />
             </div>
             <div class="form-group col-xs-4 col-md-2" ng-if="settings.ResultsView == 1">
                 <label>Ties</label>
-                <input type="number" class="form-control" ng-model="event.TiePoints" />
+                <input type="number" class="form-control" ng-model="event.TiePoints" ng-disabled="!editable" />
             </div>
         </fieldset>
     </form>
