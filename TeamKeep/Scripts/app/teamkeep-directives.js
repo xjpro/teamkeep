@@ -143,9 +143,7 @@
                         });
 
                         if (!dropMenu.is(":visible")) {
-
                             $(this).find("[data-toggle]").dropdown("toggle");
-
                         }
 
                         return false;
@@ -198,6 +196,49 @@
                     $($element).modal({ backdrop: modalBackdrop, keyboard: modalKeyboard, show: visible });
                 });
 
+            }
+        };
+    })
+    .directive("bannerModal", function ($http, Team) {
+        return {
+            replace: true,
+            templateUrl: "/Scripts/app/partials/banner-modal.html",
+            controller: function ($scope, $element, $attrs) {
+
+                $scope.editBanner = function () {
+
+                    if ($("#banner-file").val().length === 0) {
+                        $scope.errorMessage = "Please select a valid image file";
+                        return;
+                    }
+
+                    $scope.errorMessage = "";
+                    $scope.bannerUploading = true;
+
+                    var file = document.getElementById("banner-file").files[0];
+
+                    // http://holyhoehle.wordpress.com/2010/09/19/uploading-files-using-ajax/
+                    // TODO use $http instead
+                    $.ajax({
+                        type: "PUT", url: Team.uri + "/banner",
+                        processData: false,
+                        data: file,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("Cache-Control", "no-cache");
+                            xhr.setRequestHeader("X-File-Name", file.name);
+                            xhr.setRequestHeader("Content-Type", "multipart/form-data");
+                        },
+                        success: function () {
+                            window.location.reload();
+                        },
+                        error: function (response) {
+                            $scope.$apply(function () {
+                                $scope.errorMessage = $scope.$eval(response.responseText);
+                                $scope.bannerUploading = false;
+                            });
+                        }
+                    });
+                };
             }
         };
     });

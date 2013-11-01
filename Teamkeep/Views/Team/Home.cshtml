@@ -54,10 +54,14 @@
     <div class="container hidden-xs">
         <div class="row banner" ng-style="{'background-image': 'url(' + bannerImage + ')'}">
             <h1>{{name()}}</h1>
+            <div class="btn-group push-right">
+                <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#banner-modal">Edit banner</button>
+            </div>
         </div>
     </div>
 
     <div create-team-modal="createTeamModalActive" dismissable="createTeamModalDismissable"></div>
+    <div banner-modal></div>
 
 </div>
 <div ng-view></div>

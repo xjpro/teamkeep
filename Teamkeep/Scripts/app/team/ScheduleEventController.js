@@ -2,6 +2,13 @@ angular.module("teamkeep").controller("ScheduleEventController", function($scope
     $scope.event = _.find(_.flatten(Team.Seasons, "Games"), function (event) { return event.Id == $routeParams.eventId; });
     $scope.editable = Team.Editable;
     $scope.settings = Team.Settings;
+    $scope.eventTypes = [
+        { name: "Game", value: 0 },
+        { name: "Practice", value: 1 },
+        { name: "Meeting", value: 2 },
+        { name: "Party", value: 3 },
+        { name: "None", value: 99 }
+    ];
     $scope.removeEvent = function (event) {
         Team.Seasons.removeItem(event);
         $location.path("/schedule");

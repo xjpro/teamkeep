@@ -1,0 +1,30 @@
+﻿<form id="banner-modal" class="modal fade" ng-submit="editBanner()">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header hidden-xs">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title">Edit banner</h3>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" ng-show="errorMessage">
+                    {{errorMessage}}
+                </div>
+                <p>
+                    Please resize images so as to not exceed 2MB in size. 
+                    For best results banner images should be wide, short images (height around 200 pixels).
+                    <input type="file" id="banner-file" class="hide" />
+                </p>
+                <div class="input-group">
+                    <input type="text" id="banner-file-name" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" onclick="$('#banner-file').click();">Browse</button>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true" tabindex="2">Cancel</button>
+                <button type="submit" class="btn btn-success" tabindex="1" spinning="bannerUploading">Set banner</button>
+            </div>
+        </div>
+    </div>
+</form>

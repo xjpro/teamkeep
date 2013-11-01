@@ -244,6 +244,7 @@
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\app\login\AvailabilityLandingController.js" />
     <Content Include="Scripts\app\login\User.js" />
+    <Content Include="Scripts\app\partials\banner-modal.html" />
     <Content Include="Scripts\app\partials\user-settings.html" />
     <Content Include="Scripts\app\partials\create-team-modal.html" />
     <Content Include="Scripts\app\teamkeep-public.js" />

@@ -127,6 +127,11 @@ img {
 .banner h1 a:hover {
     text-decoration: none;
 }
+.banner .btn-group {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
 .buffered { 
     margin-top: 20px;
 }
