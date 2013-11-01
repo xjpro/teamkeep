@@ -1,4 +1,4 @@
-angular.module("teamkeep").controller("HeaderController", function ($scope, $location, Team, User) {
+angular.module("teamkeep").controller("HeaderController", ["$scope", "$location", "Team", "User", function ($scope, $location, Team, User) {
     $scope.editable = Team.Editable;
     $scope.showRoster = Team.Privacy.Roster;
     $scope.loggedIn = User.Id != 0;
@@ -51,4 +51,4 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
         $scope.createTeamModalDismissable = false;
     }
     
-});
+}]);

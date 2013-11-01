@@ -1,4 +1,4 @@
-angular.module("teamkeep").service("GroupedTableDecorator", function ($location, Team) {
+angular.module("teamkeep").service("GroupedTableDecorator", ["$location", "Team", function ($location, Team) {
 
     this.decorate = function ($scope, options) {
         
@@ -92,4 +92,4 @@ angular.module("teamkeep").service("GroupedTableDecorator", function ($location,
         };
     };
 
-});
+}]);

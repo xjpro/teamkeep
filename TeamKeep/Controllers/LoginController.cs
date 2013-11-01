@@ -57,7 +57,7 @@ namespace Teamkeep.Controllers
                     }
                     else
                     {
-                        // TODO Not sure...
+                        return View("OpenIdFailed", new OpenAuthFail { Status = response.Status, Exception = response.Exception });
                     }
                 }
                 else

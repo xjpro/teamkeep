@@ -17,7 +17,7 @@
                 }
             };
 
-            $(function () {
+            /*$(function () {
                 if (window.viewData) {
         
                     var TeamViewModel = function (data) {
@@ -29,7 +29,7 @@
                     }
                     $("#alert-modal").fadeAlert();
                 }
-            });
+            });*/
 
             TeamKeep.signIn(@Html.Raw(Json.Encode(Model.AuthToken)), "@Model.Redirect");
         </script>

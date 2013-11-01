@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("AvailabilityController", function ($scope, $filter, Team) {
+﻿angular.module("teamkeep").controller("AvailabilityController", ["$scope", "$filter", "Team", function ($scope, $filter, Team) {
 
     $scope.groups = _.select(Team.PlayerGroups, function (group) { return group.Players.length > 0; });
     $scope.showPosition = Team.Settings.PositionColumn;
@@ -80,7 +80,7 @@
         }
         $scope.eventsPage = pageOfEvents;
     });
-})
+}])
 .filter("isPast", function() {
     return function(event) {
         return moment(event.DateTime).isBefore(moment());
