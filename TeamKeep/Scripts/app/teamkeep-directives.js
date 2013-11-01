@@ -61,7 +61,6 @@
             link: function (scope, element) {
                 element.click(function () {
                     scope.$apply(scope.action);
-                    console.log(scope);
                     $(element.attr("data-target")).modal("show");
                 });
             }
@@ -99,6 +98,57 @@
                 $scope.$watch("eventsCount", function (value) {
                     if (!value) {
                         $element.hide();
+                    }
+                });
+            }
+        };
+    })
+    .directive("teamkeepSidebar", function () {
+        return function (scope, element, attrs) {
+
+            scope.$watch(attrs.teamkeepSidebar, function (value) {
+                if (value) {
+                    $(element).show();
+                    $("body").addClass("pushed");
+                } else {
+                    $(element).hide();
+                    $("body").removeClass("pushed");
+                }
+            });
+
+        };
+    })
+    .directive("editDropdown", function () {
+        return {
+            restrict: "EA",
+            link: function (scope, element) {
+                var menu = $(element).find(".dropdown-menu");
+                menu.click(function (evt) {
+                    console.log('c');
+                    evt.stopPropagation();
+                })
+                .keydown(function (evt) {
+                    if (evt.which === 13) {
+                        $("body").click();
+                    }
+                });
+
+                $(element).click(function () { // Open even when the box is empty
+                    if (!scope.isMobile) {
+
+                        var dropMenu = $(this).find(".dropdown-menu");
+
+                        dropMenu.css({
+                            top: "-" + dropMenu.outerHeight() + "px"
+                        });
+
+                        if (!dropMenu.is(":visible")) {
+
+                            $(this).find("[data-toggle]").dropdown("toggle");
+
+                        }
+
+                        return false;
                     }
                 });
             }

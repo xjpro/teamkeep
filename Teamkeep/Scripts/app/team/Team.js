@@ -3,9 +3,13 @@
 
         if (!window.viewData.Team) {
             window.viewData.Team = {
+                Mock: true,
                 Name: "",
                 Seasons: [],
-                PlayerGroups: []
+                PlayerGroups: [],
+                Privacy: {
+                    Roster: false
+                }
             };
         }
 

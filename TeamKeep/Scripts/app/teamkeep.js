@@ -40,17 +40,17 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.
             .otherwise({ redirectTo: "/schedule" });
     })
     .run(function ($rootScope, $window, $location, Team) {
-        
+
         //$rootScope.publicView = User.Id == 0 || User
         $rootScope.windowWidth = $window.outerWidth;
         $rootScope.isMobile = $rootScope.windowWidth < 767;
-        angular.element($window).bind("resize", function() {
+        angular.element($window).bind("resize", function () {
             $rootScope.windowWidth = $window.outerWidth;
             $rootScope.isMobile = $rootScope.windowWidth < 767;
             $rootScope.$apply("windowWidth");
         });
 
-        $rootScope.toggleSidebar = function() {
+        $rootScope.toggleSidebar = function () {
             $rootScope.$broadcast("$toggleSidebar");
         };
 
@@ -60,66 +60,10 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.
             var firstPath = matches[1];
 
             if (!Team.Editable) {
-                console.log(firstPath);
                 if (firstPath == "schedule" || (firstPath == "roster" && Team.Privacy.Roster)) {
                     return;
                 }
                 $location.path("/schedule");
             }
         });
-    })
-    .directive("teamkeepSidebar", function() {
-        return function (scope, element, attrs) {
-
-            scope.$watch(attrs.teamkeepSidebar, function (value) {
-                if (value) {
-                    $(element).show();
-                    $("body").addClass("pushed");
-                } else {
-                    $(element).hide();
-                    $("body").removeClass("pushed");
-                }
-            });
-
-        };
-    })
-    .directive("editDropdown", function() {
-        return {
-            restrict: "E,A",
-            link: function(scope, element) {
-                var menu = $(element).find(".dropdown-menu");
-                menu.click(function(evt) {
-                    evt.stopPropagation();
-                })
-                .keydown(function(evt) {
-                    if (evt.which === 13) {
-                        $("body").click();
-                    }
-                });
-
-                $(element).click(function () { // Open even when the box is empty
-                    if (!scope.isMobile) {
-
-                        $(element).find(".dropdown-menu").css({
-                            top: "-" + menu.outerHeight() + "px"
-                        });
-
-                        $(this).find("[data-toggle]").dropdown("toggle");
-
-                        return false;
-                    }
-                });
-            }
-        };
-    })
-    .directive("navDropdown", function () {
-        return {
-            restrict: "E,A",
-            link: function (scope, element) {
-                var menu = $(element).find(".dropdown-menu");
-                menu.css({
-                    left: "-" + menu.width() + "px"
-                });
-            }
-        };
     });

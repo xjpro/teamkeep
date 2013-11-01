@@ -46,7 +46,7 @@ angular.module("teamkeep").controller("HeaderController", function ($scope, $loc
         }
     });
 
-    if ($scope.isOwner && User.Teams.length == 0) {
+    if (Team.Mock && $scope.loggedIn && User.Teams.length == 0) {
         $scope.createTeamModalActive = true;
         $scope.createTeamModalDismissable = false;
     }
