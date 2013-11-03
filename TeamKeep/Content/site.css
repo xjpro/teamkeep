@@ -52,6 +52,9 @@
 }
 
 /* look at dat body */
+html {
+    overflow-x: hidden; /* fixes browsers being dumb about transforms */
+}
 body {
     font-family: "Open Sans";
 }
@@ -256,9 +259,9 @@ th.angled > span > a {
     position: absolute;
     white-space: nowrap;
     -moz-transform: rotate(45deg) translate(-123px, 47px);
-    -webkit-transform: rotate(45deg) translate(-110px, 36px);
+    -webkit-transform: rotate(45deg) translate(-106px, 32px);
     -o-transform: rotate(45deg) translate(-110px, 36px);
-    -ms-transform: rotate(45deg) translate(-123px, 47px);
+    -ms-transform: rotate(45deg) translate(-121px, 47px);
     border: 0;
     padding: 7px;
     height: inherit;
