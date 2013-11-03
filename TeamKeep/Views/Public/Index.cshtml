@@ -229,9 +229,9 @@
         </p>
         <h3>Options (all of which are free)</h3>
         <ul>
-            <li><a class="js-exempt" href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a></li>
-            <li><a class="js-exempt" href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a></li>
-            <li><a class="js-exempt" href="http://windows.microsoft.com/en-us/internet-explorer/ie-9-worldwide-languages">Update your current browser to a supported version</a></li>
+            <li><a class="outdated-browser-link" href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a></li>
+            <li><a class="outdated-browser-link" href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a></li>
+            <li><a class="outdated-browser-link" href="http://windows.microsoft.com/en-us/internet-explorer/ie-9-worldwide-languages">Update your current browser to a supported version</a></li>
         </ul>
     </div>
 </div>
@@ -251,7 +251,7 @@
 
     if (ie < 9) {
         $("#outdated-browser").show();
-        $("body").find("a[href]:not('.js-exempt')").removeAttr("href") // disable links
+        $("body").find("a[href]:not('.outdated-browser-link')").removeAttr("href") // disable links
         $("body").find("[data-toggle]").removeAttr("data-toggle"); // disable bootstrap
         $("html").css({ "overflow": "hidden" }); // disable scrolling
     }
