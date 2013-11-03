@@ -220,3 +220,39 @@
         </div>
     </div>
 </div>
+<div id="outdated-browser" class="alert alert-danger" style="display: none;">
+    <div class="col-md-offset-1 col-md-9">
+        <h1>Outdated browser</h1>
+        <p>
+            It appears you are currently using an outdated version of Internet Explorer. Teamkeep uses advanced
+            rendering to deliver an enhanced user experience, the technology for which only works on up-to-date browsers.
+        </p>
+        <h3>Options (all of which are free)</h3>
+        <ul>
+            <li><a class="js-exempt" href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a></li>
+            <li><a class="js-exempt" href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a></li>
+            <li><a class="js-exempt" href="http://windows.microsoft.com/en-us/internet-explorer/ie-9-worldwide-languages">Update your current browser to a supported version</a></li>
+        </ul>
+    </div>
+</div>
+<script>
+    // http://james.padolsey.com/javascript/detect-ie-in-js-using-conditional-comments/
+    var ie = (function () {
+        var undef,
+            v = 3,
+            div = document.createElement('div'),
+            all = div.getElementsByTagName('i');
+        while (
+            div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+            all[0]
+        );
+        return v > 4 ? v : undef;
+    }());
+
+    if (ie < 9) {
+        $("#outdated-browser").show();
+        $("body").find("a[href]:not('.js-exempt')").removeAttr("href") // disable links
+        $("body").find("[data-toggle]").removeAttr("data-toggle"); // disable bootstrap
+        $("html").css({ "overflow": "hidden" }); // disable scrolling
+    }
+</script>

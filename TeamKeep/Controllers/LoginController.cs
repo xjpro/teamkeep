@@ -71,7 +71,7 @@ namespace Teamkeep.Controllers
                     var request = openAuth.CreateRequest(providerUrl);
                     request.AddExtension(new ClaimsRequest
                     {
-                        Email = DemandLevel.Require
+                        Email = DemandLevel.Request
                     });
                     request.RedirectToProvider();
                     Response.End();

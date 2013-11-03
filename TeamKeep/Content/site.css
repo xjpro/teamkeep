@@ -497,6 +497,12 @@ form fieldset legend {
         border-radius: 0;
     }
 }
+#outdated-browser {
+    position: fixed;
+    top: 0;
+    border-bottom: solid #666 3px;
+    font-size: 150%;
+}
 #footer {
     margin-top: 10px;
     padding-top: 10px;

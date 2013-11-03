@@ -94,7 +94,7 @@
                             <a title="Move group down" ng-show="group.Order != groups.length-1" ng-click="changeCollectionOrder(group, group.Order + 1)">
                                 <i class="icon-circle-arrow-down"></i>
                             </a>
-                            <a title="Remove group" data-target="#group-delete-modal" open-modal-and="$parent.$parent.selectedGroup = $parent.group">
+                            <a title="Remove group" data-target="#group-delete-modal" open-modal-and="$parent.$parent.$parent.selectedGroup = $parent.$parent.group">
                                 <i class="icon-trash"></i>
                             </a>
                         </div>

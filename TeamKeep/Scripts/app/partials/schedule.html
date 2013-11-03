@@ -101,7 +101,7 @@
                             <a title="Move season down" ng-show="season.Order != seasons.length-1" ng-click="changeCollectionOrder(season, season.Order + 1)">
                                 <i class="icon-circle-arrow-down"></i>
                             </a>
-                            <a title="Remove season" data-target="#season-delete-modal" open-modal-and="$parent.$parent.selectedSeason = $parent.season">
+                            <a title="Remove season" data-target="#season-delete-modal" open-modal-and="$parent.$parent.$parent.selectedSeason = $parent.$parent.season">
                                 <i class="icon-trash"></i>
                             </a>
                         </div>

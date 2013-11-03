@@ -29,7 +29,7 @@
     })
     .directive("radioButton", function () {
         return {
-            restrict: "EA",
+            restrict: "A",
             replace: true,
             template: "<span class='btn-group' data-toggle='buttons'>" +
                         "<label class='btn btn-default btn-sm' ng-class='{active: model == true}' ng-click='model = true'><input type='radio' />{{trueText}}</label>" +
@@ -68,7 +68,7 @@
     })
     .directive("availabilityAutosize", function ($rootScope, $timeout) {
         return {
-            restrict: "EA",
+            restrict: "A",
             replace: true,
             transclude: true,
             template: "<table ng-transclude></table>",
@@ -130,7 +130,7 @@
     })
     .directive("editDropdown", function () {
         return {
-            restrict: "EA",
+            restrict: "A",
             link: function (scope, element) {
                 var menu = $(element).find(".dropdown-menu");
                 menu.click(function (evt) {
@@ -157,16 +157,6 @@
 
                         return false;
                     }
-                });
-            }
-        };
-    })
-    .directive("recipientsDropdown", function () {
-        return {
-            restrict: "EA",
-            controller: function ($scope, $element) {
-                $element.click(function () {
-
                 });
             }
         };

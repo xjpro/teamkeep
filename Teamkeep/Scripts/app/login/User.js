@@ -31,7 +31,7 @@
 
     User.requestResetPassword = function (username) {
         return $http.post("/users/password", {
-            username: username.trim(),
+            username: username.trim()
         });
     };
 
