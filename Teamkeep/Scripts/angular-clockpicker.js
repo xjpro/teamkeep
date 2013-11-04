@@ -4,7 +4,7 @@
   }])
   .directive("clockpicker", function () {
       return {
-          restrict: "EA",
+          restrict: "A",
           replace: true,
           templateUrl: "template/clockpicker.html",
           scope: {

@@ -162,7 +162,7 @@ namespace Teamkeep.Services
             using (var entities = Database.GetEntities())
             {
                 var publicTeamUrls = new List<string>();
-                IQueryable<int> publicTeamIds = entities.TeamPrivacyDatas.Where(x => x.HomePage).Select(x => x.TeamId);
+                IQueryable<int> publicTeamIds = entities.TeamPrivacyDatas.Where(x => x.HomePage == true).Select(x => x.TeamId);
                 foreach (var teamId in publicTeamIds)
                 {
                     var team = entities.TeamDatas.SingleOrDefault(x => x.Id == teamId);

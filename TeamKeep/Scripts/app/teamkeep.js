@@ -1,4 +1,4 @@
-angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.clockpicker"])
+angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.bootstrap", "ui.clockpicker"])
     .config(["$routeProvider", function ($routeProvider) {
         $routeProvider
             .when("/schedule", {

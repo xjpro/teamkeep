@@ -226,8 +226,9 @@ namespace Teamkeep.Services
         {
             using (var entities = Database.GetEntities())
             {
-                var abData = entities.AvailabilityDatas.SingleOrDefault(x => x.PlayerId == playerId && x.EventId == availability.EventId);
-                if (abData == null)
+                var playerAbDataList = entities.AvailabilityDatas.Where(x => x.PlayerId == playerId && x.EventId == availability.EventId);
+
+                if (playerAbDataList.Count() == 0) // Create new one
                 {
                     entities.AvailabilityDatas.AddObject(new AvailabilityData
                     {
@@ -239,7 +240,16 @@ namespace Teamkeep.Services
                     entities.SaveChanges();
                     return availability;
                 }
-                
+
+                if(playerAbDataList.Count() > 1) // Remove extra (rare but can happen)
+                {
+                    foreach(var extraAbData in playerAbDataList.OrderBy(x => x.Id).Skip(1))
+                    {
+                        entities.DeleteObject(extraAbData);
+                    }
+                }
+
+                var abData = playerAbDataList.FirstOrDefault();
                 abData.AdminStatus = availability.AdminStatus;
                 abData.RepliedStatus = availability.RepliedStatus;
                 abData.EmailSent = availability.EmailSent;

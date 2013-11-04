@@ -226,6 +226,7 @@
         angular.forEach(Team.PlayerGroups, function (group) {
             $rootScope.$watch(function () { return group.Name + group.Order; }, function (value, oldValue) { queueChange("groups", group, value, oldValue); }, true);
             angular.forEach(group.Players, function (player) {
+                // TODO sends the entire availability for each player changed (all n events)
                 $rootScope.$watch(function () { return _.pick(player, "GroupId", "LastName", "FirstName", "Position", "Phone", "Email") + _.flatten(player.Availability, "AdminStatus"); },
                     function (value, oldValue) { queueChange("players", player, value, oldValue); }, true);
             });
