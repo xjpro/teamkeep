@@ -1,4 +1,4 @@
-angular.module("teamkeep").controller("ScheduleEventController", function($scope, $routeParams, $location, Team) {
+angular.module("teamkeep").controller("ScheduleEventController", ["$scope", "$routeParams", "$location", "Team", function($scope, $routeParams, $location, Team) {
     $scope.event = _.find(_.flatten(Team.Seasons, "Games"), function (event) { return event.Id == $routeParams.eventId; });
     $scope.editable = Team.Editable;
     $scope.settings = Team.Settings;
@@ -18,4 +18,4 @@ angular.module("teamkeep").controller("ScheduleEventController", function($scope
             $location.path("/schedule");
         }
     });
-});
+}]);

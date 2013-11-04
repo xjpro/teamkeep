@@ -1,5 +1,5 @@
-angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.bootstrap", "ui.clockpicker"])
-    .config(function ($routeProvider) {
+angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.clockpicker"])
+    .config(["$routeProvider", function ($routeProvider) {
         $routeProvider
             .when("/schedule", {
                 templateUrl: "/Scripts/app/partials/schedule.html",
@@ -38,8 +38,8 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.
                 controller: "UserSettingsController"
             })
             .otherwise({ redirectTo: "/schedule" });
-    })
-    .run(function ($rootScope, $window, $location, Team) {
+    }])
+    .run(["$rootScope", "$window", "$location", "Team", function ($rootScope, $window, $location, Team) {
 
         $rootScope.windowWidth = $window.outerWidth;
         $rootScope.isMobile = $rootScope.windowWidth <= 767;
@@ -66,4 +66,4 @@ angular.module("teamkeep", ["ngRoute", "ngSanitize", "teamkeep-directives", "ui.
                 $location.path("/schedule");
             }
         });
-    });
+    }]);

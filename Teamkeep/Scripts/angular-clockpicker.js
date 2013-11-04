@@ -1,7 +1,7 @@
 ﻿angular.module("ui.clockpicker", [])
-  .controller("ClockPickerTestController", function ($scope) {
+  .controller("ClockPickerTestController", ["$scope", function ($scope) {
       $scope.time = new Date();
-  })
+  }])
   .directive("clockpicker", function () {
       return {
           restrict: "EA",

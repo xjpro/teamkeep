@@ -43,9 +43,9 @@
         var availability = availabilityForPlayer(player, event);
         if (availability) {
             switch (availability.AdminStatus) {
-                case 1: return "icon-thumbs-up";
-                case 2: return "icon-ban-circle";
-                case 3: return "icon-question-sign";
+                case 1: return "fa fa-thumbs-o-up";
+                case 2: return "fa fa-ban";
+                case 3: return "fa fa-question-circle";
                 default: return "";
             }
         }

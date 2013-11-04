@@ -47,7 +47,7 @@
             restrict: "A",
             replace: true,
             transclude: true,
-            template: "<button ng-transclude><i class='icon-spinner icon-spin' ng-show='spinning'></i> </button>",
+            template: "<button ng-transclude><i class='fa fa-spinner fa-spin' ng-show='spinning'></i> </button>",
             scope: {
                 spinning: '='
             }
@@ -66,7 +66,7 @@
             }
         };
     })
-    .directive("availabilityAutosize", function ($rootScope, $timeout) {
+    .directive("availabilityAutosize", ["$rootScope", "$timeout", function ($rootScope, $timeout) {
         return {
             restrict: "A",
             replace: true,
@@ -112,7 +112,7 @@
                 });
             }
         };
-    })
+    }])
     .directive("teamkeepSidebar", function () {
         return function (scope, element, attrs) {
 
@@ -161,7 +161,7 @@
             }
         };
     })
-    .directive("createTeamModal", function ($http) {
+    .directive("createTeamModal", ["$http", function ($http) {
         return {
             replace: true,
             templateUrl: "/Scripts/app/partials/create-team-modal.html",
@@ -197,8 +197,8 @@
 
             }
         };
-    })
-    .directive("bannerModal", function ($http, Team) {
+    }])
+    .directive("bannerModal", ["$http", "Team", function ($http, Team) {
         return {
             replace: true,
             templateUrl: "/Scripts/app/partials/banner-modal.html",
@@ -240,4 +240,4 @@
                 };
             }
         };
-    });
+    }]);

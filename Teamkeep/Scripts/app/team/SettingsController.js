@@ -1,4 +1,4 @@
-angular.module("teamkeep").controller("SettingsController", function ($scope, $http, Team) {
+angular.module("teamkeep").controller("SettingsController", ["$scope", "$http", "Team", function ($scope, $http, Team) {
     $scope.newName = Team.Name;
     $scope.settings = Team.Settings;
     $scope.privacy = Team.Privacy;
@@ -28,4 +28,4 @@ angular.module("teamkeep").controller("SettingsController", function ($scope, $h
             window.location = "/teams"
         });
     };
-});
+}]);

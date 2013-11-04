@@ -1,4 +1,4 @@
-angular.module("teamkeep").controller("ScheduleController", function ($scope, $filter, Team, GroupedTableDecorator, SortingDecorator) {
+angular.module("teamkeep").controller("ScheduleController", ["$scope", "$filter", "Team", "GroupedTableDecorator", "SortingDecorator", function ($scope, $filter, Team, GroupedTableDecorator, SortingDecorator) {
 
     GroupedTableDecorator.decorate($scope, {
         editPageUrl: "/schedule/events/",
@@ -36,4 +36,4 @@ angular.module("teamkeep").controller("ScheduleController", function ($scope, $f
     $scope.closeDuties = function () {
         $("body").click();
     };
-});
+}]);

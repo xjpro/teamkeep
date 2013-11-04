@@ -1,4 +1,4 @@
-angular.module("teamkeep").controller("UserSettingsController", function ($scope, $location, $http, User) {
+angular.module("teamkeep").controller("UserSettingsController", ["$scope", "$location", "$http", "User", function ($scope, $location, $http, User) {
 
     if (!User.Id) {
         $location.path("/schedule");
@@ -14,4 +14,4 @@ angular.module("teamkeep").controller("UserSettingsController", function ($scope
                 $scope.verificationSent = true;
             });
     };
-});
+}]);

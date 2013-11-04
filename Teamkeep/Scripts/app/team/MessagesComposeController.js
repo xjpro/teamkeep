@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("MessagesComposeController", function ($scope, $routeParams, $http, $location, Team, User) {
+﻿angular.module("teamkeep").controller("MessagesComposeController", ["$scope", "$routeParams", "$http", "$location", "Team", "User", function ($scope, $routeParams, $http, $location, Team, User) {
 
     if (!User.Verified) {
         $location.path("/user");
@@ -87,4 +87,4 @@
         $scope.requestAvailability = true;
     });
 
-});
+}]);

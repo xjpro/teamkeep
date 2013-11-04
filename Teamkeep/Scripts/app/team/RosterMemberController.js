@@ -1,4 +1,4 @@
-angular.module("teamkeep").controller("RosterMemberController", function($scope, $routeParams, $location, Team) {
+angular.module("teamkeep").controller("RosterMemberController", ["$scope", "$routeParams", "$location", "Team", function($scope, $routeParams, $location, Team) {
     $scope.member = _.find(_.flatten(Team.PlayerGroups, "Players"), function (member) { return member.Id == $routeParams.memberId; });
     $scope.editable = Team.Editable;
     $scope.settings = Team.Settings;
@@ -11,4 +11,4 @@ angular.module("teamkeep").controller("RosterMemberController", function($scope,
             $location.path("/roster");
         }
     });
-});
+}]);

@@ -1,4 +1,4 @@
-angular.module("teamkeep").controller("RosterController", function ($scope, Team, GroupedTableDecorator, SortingDecorator) {
+angular.module("teamkeep").controller("RosterController", ["$scope", "Team", "GroupedTableDecorator", "SortingDecorator", function ($scope, Team, GroupedTableDecorator, SortingDecorator) {
 
     GroupedTableDecorator.decorate($scope, {
         editPageUrl: "/roster/members/",
@@ -12,4 +12,4 @@ angular.module("teamkeep").controller("RosterController", function ($scope, Team
     $scope.editable = Team.Editable;
     $scope.groups = Team.PlayerGroups;
     $scope.settings = Team.Settings;
-});
+}]);

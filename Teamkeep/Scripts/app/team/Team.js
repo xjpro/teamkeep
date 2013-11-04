@@ -1,5 +1,5 @@
 ﻿angular.module("teamkeep")
-    .factory("Team", function ($rootScope, $http, $timeout) {
+    .factory("Team", ["$rootScope", "$http", "$timeout", function ($rootScope, $http, $timeout) {
 
         if (!window.viewData.Team) {
             window.viewData.Team = {
@@ -236,7 +236,7 @@
         }, true);
 
         return Team;
-    })
+    }])
     .filter("eventDate", function () {
         return function (event) {
             if (!event.DateTime) return null;

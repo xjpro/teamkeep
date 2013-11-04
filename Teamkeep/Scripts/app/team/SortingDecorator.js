@@ -1,4 +1,4 @@
-angular.module("teamkeep").service("SortingDecorator", function ($filter, Team) {
+angular.module("teamkeep").service("SortingDecorator", ["$filter", "Team", function ($filter, Team) {
 
     this.decorate = function ($scope, startingSort) {
         $scope.sortType = startingSort;
@@ -52,4 +52,4 @@ angular.module("teamkeep").service("SortingDecorator", function ($filter, Team) 
         }, true);
     };
 
-});
+}]);

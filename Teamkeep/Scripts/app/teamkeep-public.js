@@ -8,16 +8,4 @@ window.Teamkeep = {
         document.location = redirect;
     }
 };
-
-angular.module("teamkeep-public", ["ngRoute", "teamkeep-directives"])
-    .directive("spinner", function () {
-        return {
-            restrict: 'A',
-            replace: true,
-            transclude: true,
-            template: "<button ng-transclude><i class='icon-spinner icon-spin' ng-show='spinner'></i> </button>",
-            scope: {
-                spinner: '='
-            }
-        };
-    });
+angular.module("teamkeep-public", ["ngRoute", "teamkeep-directives"]);

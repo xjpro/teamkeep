@@ -1,4 +1,4 @@
-﻿angular.module("teamkeep").controller("MessagesController", function($scope, $location, $routeParams, Team, User) {
+﻿angular.module("teamkeep").controller("MessagesController", ["$scope", "$location", "$routeParams", "Team", "User", function($scope, $location, $routeParams, Team, User) {
 
     if (!User.Verified) {
         $location.path("/user");
@@ -12,4 +12,4 @@
     $scope.datePredicate = function (item) {
         return new Date(item.DateTime);
     };
-});
+}]);
