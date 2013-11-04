@@ -1,12 +1,12 @@
 <header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
     <div class="container">
         <a class="navbar-brand" ng-click="toggleSidebar()">
-            <i class="icon-reorder"></i>
+            <i class="fa fa-reorder"></i>
         </a>
         <ul class="nav navbar-nav navbar-right" ng-if="editable">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-pencil"></i>
+                    <i class="fa fa-pencil"></i>
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <li class="label-item">Add event to...</li>
@@ -22,12 +22,12 @@
     <div class="row table-controls hidden-xs" ng-if="editable">
         <div class="col-md-6">
             <div ng-show="selectedItems().length > 0">
-                <button class="btn btn-default" ng-click="removeItems()" title="Remove">
-                    <i class="icon-trash"></i>
+                <button class="btn btn-default" ng-click="removeItems()" title="Remove selected items">
+                    <i class="fa fa-trash-o"></i>
                 </button>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Move">
-                        <i class="icon-folder-open"></i> <i class="icon-caret-down"></i>
+                        <i class="fa fa-folder-open"></i> <i class="fa fa-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li class="label-item">Move to...</li>
@@ -41,7 +41,7 @@
         <div class="col-md-6">
             <div class="dropdown pull-right">
                 <button class="btn btn-primary" data-toggle="dropdown">
-                    <i class="icon-pencil"></i> Add Event
+                    <i class="fa fa-pencil"></i> Add Event
                 </button>
                 <ul class="dropdown-menu">
                     <li class="label-item">
@@ -96,13 +96,13 @@
                         <input type="text" ng-model="season.Name" />
                         <div class="pull-right" ng-if="editable">
                             <a title="Move season up" ng-show="season.Order != 0" ng-click="changeCollectionOrder(season, season.Order - 1)">
-                                <i class="icon-circle-arrow-up"></i>
+                                <i class="fa fa-circle-arrow-up"></i>
                             </a>
                             <a title="Move season down" ng-show="season.Order != seasons.length-1" ng-click="changeCollectionOrder(season, season.Order + 1)">
-                                <i class="icon-circle-arrow-down"></i>
+                                <i class="fa fa-circle-arrow-down"></i>
                             </a>
                             <a title="Remove season" data-target="#season-delete-modal" open-modal-and="$parent.$parent.$parent.selectedSeason = $parent.$parent.season">
-                                <i class="icon-trash"></i>
+                                <i class="fa fa-trash-o"></i>
                             </a>
                         </div>
                     </td>
@@ -184,7 +184,7 @@
                     </td>
                     <td class="column-duties hidden-xs text-right" ng-class="{active: event.ShowDuties}">
                         <button class="btn btn-default btn-xs" ng-class="{active: event.ShowDuties}" ng-click="toggleDuties(event)">
-                            <i class="icon-caret-down"></i> {{event.Duties.length}} {{event.Duties.length == 1 ? 'duty' : 'duties'}} 
+                            <i class="fa fa-caret-down"></i> {{event.Duties.length}} {{event.Duties.length == 1 ? 'duty' : 'duties'}} 
                         </button>
                     </td>
                 </tr>
@@ -193,7 +193,7 @@
                         <header>
                             <h4>Event duties</h4>
                             <button class="btn btn-sm btn-default" ng-click="addEventDuty(event)" ng-if="editable">
-                                <i class="icon-plus"></i> Add duty
+                                <i class="fa fa-plus"></i> Add duty
                             </button>
                         </header>
                         <p ng-show="event.Duties.length == 0">

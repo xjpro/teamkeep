@@ -1,7 +1,7 @@
 ﻿<header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
     <div class="container">
         <a class="navbar-brand" ng-click="toggleSidebar()">
-            <i class="icon-reorder"></i>
+            <i class="fa fa-reorder"></i>
         </a>
     </div>
 </header>
@@ -9,10 +9,10 @@
 <div id="availability">
     <div class="table-controls">
         <button class="prev btn btn-default btn-sm" ng-disabled="eventsIndex <= 0" ng-show="showPrevious()" ng-click="eventsIndex = eventsIndex - eventsShown">
-            <i class="icon-chevron-left"></i>
+            <i class="fa fa-chevron-left"></i>
         </button>
         <button class="next btn btn-default btn-sm" ng-disabled="allEvents.length - eventsIndex <= eventsShown" ng-show="showNext()" ng-click="eventsIndex = eventsIndex + eventsShown">
-            <i class="icon-chevron-right"></i>
+            <i class="fa fa-chevron-right"></i>
         </button>
     </div>
     <div class="buffered text-center" ng-if="eventsPage.length == 0">
@@ -31,7 +31,7 @@
                         <a href="#/compose?event={{event.Id}}" ng-switch-when="false">
                             <span>{{event | eventDate}}</span>
                             <button class="btn btn-link">
-                                <i class="icon-envelope" title="Email availability request"></i>
+                                <i class="fa fa-envelope-o" title="Email availability request"></i>
                             </button>
                         </a>
                         <a class="past" ng-switch-when="true">{{event | eventDate}}</a>

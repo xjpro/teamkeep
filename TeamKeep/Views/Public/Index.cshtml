@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.App = "teamkeep-public";
-    ViewBag.Title = "Free Sports Team Management Software";
+    ViewBag.Title = "Manage Your Sports Team Online With Teamkeep's Free Team Websites";
     ViewBag.Description = "Manage your sports team online for free with Teamkeep. Captains and coaches can organize their games, practices, and roster with our easy to learn interface and keep their team members informed with a home page viewable from any device.";
     ViewBag.UseHeaderFooter = true;
     Layout = "~/Views/Shared/Master.cshtml";
@@ -17,8 +17,10 @@
                 With time saving features such as availability tracking and team messaging, Teamkeep will save you hours of time
                 and take the guesswork out of team management.
             </p>
-            <p>
-                <a data-toggle="modal" data-target="#register-modal">Get started now</a>
+            <p class="text-center">
+                <strong>
+                    <a data-toggle="modal" data-target="#register-modal">Get started now</a>
+                </strong>
             </p>
         </div>
         <div class="col-md-5">
@@ -32,17 +34,17 @@
 
                     <div class="form-group form-group-sm">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             <input type="text" class="form-control" placeholder="Username" ng-model="username" />
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="icon-key"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
                             <input type="password" class="form-control" placeholder="Password" ng-model="password" />
                         </div>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-success" spinning="loginEvaluating">
-                            Sign in <i class="icon-lock"></i>
+                            Sign in <i class="fa fa-lock"></i>
                         </button>
                         <a class="btn btn-link" data-toggle="modal" data-target="#reset-modal">Forgot your password?</a>   
                     </div>
@@ -52,8 +54,8 @@
 
                 <h4>Or sign in with</h4>
                 <div>
-                    <button type="button" class="btn btn-default fb-login"><i class="icon-facebook-sign"></i> Facebook</button>
-                    <a class="btn btn-default" href="/login/openid/google"><i class="icon-google-plus-sign"></i> Google</a>
+                    <button type="button" class="btn btn-default fb-login"><i class="fa fa-facebook-square"></i> Facebook</button>
+                    <a class="btn btn-default" href="/login/openid/google"><i class="fa fa-google-plus-square"></i> Google</a>
                 </div>
             </div>           
         </div>
@@ -74,7 +76,7 @@
                     </div>
                     <div class="form-group form-group-sm">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             <input type="text" class="form-control" placeholder="Username" ng-model="username"/>
                         </div>
                     </div>
@@ -88,18 +90,50 @@
     </form>
 
     <div class="row hidden-xs">
-        <div class="col-md-7 hidden-sm">
-           <img src="/img/promo-main.jpg" />
+        <div class="col-md-4 text-center">
+            <p>
+                <i class="fa fa-trophy fa-4x"></i>
+            </p>
+            <h2>Schedule & Roster</h2>
+            <p>
+                Your team members and schedule, organized in one place and accessible from wherever you are. 
+                Teamkeep's responsive interface keeps you organized whether you're at home or on the go.
+            <p>
         </div>
+        <div class="col-md-4 text-center">
+            <p>
+                <i class="fa fa-envelope fa-4x"></i>
+            </p>
+            <h2>Availability & Messaging</h2>
+            <p>
+                Track team member availability for your upcoming events and request confirmations via email. Send out event 
+                reminders and other messages to the entire team quickly and easily.
+            <p>
+        </div>
+        <div class="col-md-4 text-center">
+            <p>
+                <i class="fa fa-globe fa-4x"></i>
+            </p>
+            <h2>Team Website</h2>
+            <p>
+                Instantly publish a home page where team members and fans can view up-to-date schedule and roster information
+                and stay connected with your team's progress.
+            <p>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="buffered row hidden-xs">
         <div class="col-md-5">
             
-            <h3>Features</h3>
+            <h2 class="text-center">Full Featured</h2>
 
             <div id="features-accordion" class="panel-group">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse1">
-                            Roster <i class="pull-right icon-check icon-2x"></i>
+                            Roster <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse1" class="panel-collapse collapse">
@@ -111,7 +145,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse2">
-                            Schedule <i class="pull-right icon-check icon-2x"></i>
+                            Schedule <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse2" class="panel-collapse collapse">
@@ -123,19 +157,19 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse3">
-                            Home page <i class="pull-right icon-check icon-2x"></i>
+                            Home page <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse3" class="collapse in">
                         <div class="panel-body">
-                            Instantly publish a team home page where members and fans alike can view your up-to-date schedule and roster information.
+                            Publish a free team website where members and fans can view your team schedule and roster.
                         </div>
                     </div>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse6">
-                            Customization <i class="pull-right icon-check icon-2x"></i>
+                            Customization <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse6" class="panel-collapse collapse">
@@ -147,7 +181,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse4">
-                            Availability <i class="pull-right icon-check icon-2x"></i>
+                            Availability <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse4" class="panel-collapse collapse">
@@ -159,7 +193,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse-duties">
-                            Duties <i class="pull-right icon-check icon-2x"></i>
+                            Duties <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse-duties" class="panel-collapse collapse">
@@ -171,7 +205,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse5">
-                            Messaging <i class="pull-right icon-check icon-2x"></i>
+                            Messaging <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse5" class="panel-collapse collapse">
@@ -183,7 +217,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse7">
-                            Device support <i class="pull-right icon-check icon-2x"></i>
+                            Device support <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse7" class="panel-collapse collapse">
@@ -196,7 +230,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="panel-title" data-toggle="collapse" data-parent="#features-accordion" href="#collapse8">
-                            Privacy <i class="pull-right icon-check icon-2x"></i>
+                            Privacy <i class="pull-right fa fa-check-square-o fa-2x"></i>
                         </a>
                     </div>
                     <div id="collapse8" class="panel-collapse collapse">
@@ -208,14 +242,17 @@
             </div>
             
         </div>
+        <div class="col-md-7 hidden-sm">
+           <img src="/img/promo-main.jpg" />
+        </div>
     </div>
     <div class="row hidden-xs">
         <div class="col-md-12">
-            <h3 class="text-center">
+            <h2 class="text-center">
                 Get started with Teamkeep
-            </h3>
+            </h2>
             <p class="text-center">
-                <button class="btn btn-info btn-large" data-toggle="modal" data-target="#register-modal">Sign up now</button>
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#register-modal">Sign up now</button>
             </p>
         </div>
     </div>

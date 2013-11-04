@@ -48,7 +48,7 @@ angular.module("teamkeep").service("SortingDecorator", function ($filter, Team) 
             _.each(Team.PlayerGroups, function (group) {
                 group.Players = $filter("orderBy")(group.Players, $scope.sortPredicate, $scope.sortReverse);
             });
-            $scope.sortIcon = ($scope.sortReverse) ? "icon-caret-up" : "icon-caret-down";
+            $scope.sortIcon = ($scope.sortReverse) ? "fa fa-caret-up" : "fa fa-caret-down";
         }, true);
     };
 
