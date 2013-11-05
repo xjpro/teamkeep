@@ -1,39 +1,24 @@
 ﻿
 /* ridiculous navbar hacks, todo: probably clean this up */
-.navbar-left {
-    float: left;
+.navbar {
+    min-height: initial;
 }
-.navbar .btn, .navbar-right .dropdown-menu {
-    margin-top: 8px !important;
-}
-.navbar-right .dropdown-toggle, .navbar-right > a {
-    float: right;
-    margin-right: 15px;
-}
-.navbar-right .dropdown-toggle .label-item {
-    margin-top: 8px;
-    color: #eee;
-}
-.navbar-right .open .dropdown-toggle {
-    margin-top: 0;
-}
-.navbar-right.navbar-nav {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-.navbar i {
+.navbar a {
+    display: inline-block;
+    padding: 15px 10px;
+    color: #fff;
     font-size: 18px;
     line-height: 20px;
-    color: #fff;
 }
-.nav-stacked-lg {
+.navbar a:hover {
+    text-decoration: none;
+}
+.navbar .dropdown-menu {
+    top: initial;
+    width: 100%;
+}
+.navbar .dropdown-menu .label-item {
     font-size: 14pt;
-}
-.nav-stacked .active {
-    background: #dedede;
-}
-.nav-stacked .active a {
-    color: #000;
 }
 
 /* clockpicker adjustments */

@@ -1,14 +1,18 @@
 ﻿<header class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
     <div class="container">
-        <div class="navbar-left">
-            <a class="btn btn-info" href="#/messages">
-                <i class="fa fa-chevron-sign-left"></i> Messages
-            </a>
-        </div>
-        <div class="nav navbar-nav navbar-right">
-            <a class="btn btn-success" ng-click="removeMember(member)">
-                Send
-            </a>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="pull-left">
+                    <a href="#/messages">
+                        <i class="fa fa-chevron-circle-left"></i> Messages
+                    </a>
+                </div>
+                <div class="pull-right">
+                    <a class="btn btn-success" ng-click="sendMessage()">
+                        Send
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </header>
