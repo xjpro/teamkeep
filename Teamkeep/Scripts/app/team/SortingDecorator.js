@@ -10,7 +10,7 @@ angular.module("teamkeep").service("SortingDecorator", ["$filter", "Team", funct
                 return (item.DateTime) ? new Date(item.DateTime) : new Date(0);
             }
             else if ($scope.sortType == "Results") {
-                return $filter("eventResults")(item) || "";
+                return $filter("eventResults")(item, Team.ResultsView) || "";
             }
             else if ($scope.sortType == "OpponentName") {
                 return item.OpponentName || "zzz";

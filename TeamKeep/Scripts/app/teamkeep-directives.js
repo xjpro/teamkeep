@@ -45,11 +45,17 @@
     .directive("spinning", function () {
         return {
             restrict: "A",
-            replace: true,
-            transclude: true,
-            template: "<button ng-transclude><i class='fa fa-spinner fa-spin' ng-show='spinning'></i> </button>",
             scope: {
-                spinning: '='
+                show: '=spinning'
+            },
+            link: function (scope, element, attrs) {
+
+                var spinner = angular.element("<i class='fa fa-spinner fa-spin' style='display: none'></i>");
+                $(element).prepend(" ").prepend(spinner);
+
+                scope.$watch("show", function (isVisible) {
+                    isVisible ? spinner.show() : spinner.hide();
+                });
             }
         };
     })
@@ -137,8 +143,8 @@
                     evt.stopPropagation();
                 })
                 .keydown(function (evt) {
-                    if (evt.which === 13) {
-                        $("body").click();
+                    if (evt.which === 13 || evt.which === 27) {
+                        $("body").click(); // close on enter and esc
                     }
                 });
 
@@ -152,7 +158,7 @@
                         });
 
                         if (!dropMenu.is(":visible")) {
-                            $(this).find("[data-toggle]").dropdown("toggle");
+                            $(element).find("[data-toggle]").dropdown("toggle");
                             dropMenu.find("input:first").select();
                         }
 

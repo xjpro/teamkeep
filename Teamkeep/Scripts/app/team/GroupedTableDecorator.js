@@ -8,6 +8,9 @@ angular.module("teamkeep").service("GroupedTableDecorator", ["$location", "Team"
         // collectionNameDisplay - display name of the collection, e.g. "Season" or "Group"
         // itemName - name of items in collection, e.g. "Games" or "Players"
         // itemCollectionId - name of collection id in an item, e.g. "SeasonId" or "GroupId"
+        $scope.updating = function () {
+            return Team.updating;
+        };
 
         $scope.editItem = function (item) {
             if ($scope.isMobile) {
