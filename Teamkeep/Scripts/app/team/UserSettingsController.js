@@ -18,6 +18,7 @@ angular.module("teamkeep").controller("UserSettingsController", ["$scope", "$loc
 
     $scope.saveChanges = function () {
 
+        $scope.successMessage = "";
         $scope.errorMessage = "";
 
         $http.put("/users/" + User.Id + "/email", {
@@ -26,6 +27,9 @@ angular.module("teamkeep").controller("UserSettingsController", ["$scope", "$loc
         .success(function (response) {
             User.Email = response.Email;
             User.Verified = false;
+            $scope.email = User.Email;
+            $scope.newEmail = User.Email;
+            $scope.successMessage = "Your email was updated successfully, check your inbox for verification instructions";
         })
         .error(function (response) {
             $scope.errorMessage = $scope.$eval(response);
