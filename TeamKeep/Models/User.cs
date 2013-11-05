@@ -31,7 +31,7 @@ namespace Teamkeep.Models
 
         [ScriptIgnore]
         public string VerifyCode { get; set; }
-        public bool Verified { get { return VerifyCode == null; } }
+        public bool Verified { get { return Email != null && VerifyCode == null; } }
 
         [ScriptIgnore]
         public string Password { get; set; }

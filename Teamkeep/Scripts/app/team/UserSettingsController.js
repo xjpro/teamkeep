@@ -5,6 +5,7 @@ angular.module("teamkeep").controller("UserSettingsController", ["$scope", "$loc
     }
 
     $scope.email = User.Email;
+    $scope.newEmail = $scope.email;
     $scope.verificationSent = false;
     $scope.verified = User.Verified;
 
@@ -13,5 +14,21 @@ angular.module("teamkeep").controller("UserSettingsController", ["$scope", "$loc
             .success(function () {
                 $scope.verificationSent = true;
             });
+    };
+
+    $scope.saveChanges = function () {
+
+        $scope.errorMessage = "";
+
+        $http.put("/users/" + User.Id + "/email", {
+            email: $scope.newEmail
+        })
+        .success(function (response) {
+            User.Email = response.Email;
+            User.Verified = false;
+        })
+        .error(function (response) {
+            $scope.errorMessage = $scope.$eval(response);
+        });
     };
 }]);

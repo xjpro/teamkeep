@@ -83,6 +83,12 @@ namespace Teamkeep.Controllers
                 throw new HttpException((int) HttpStatusCode.Unauthorized, "Not authorized to edit this user");
             }
 
+            if (!EmailService.IsValidEmail(email))
+            {
+                Response.StatusCode = 400;
+                return Json("Please enter a valid email address");
+            }
+
             var user = _userService.UpdateUserEmail(activeUser.Id, email);
             _emailService.EmailVerification(user.Email, user.VerifyCode);
 

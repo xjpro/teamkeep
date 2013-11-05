@@ -12,7 +12,7 @@ angular.module("teamkeep").controller("HeaderController", ["$scope", "$location"
     $scope.name = function () { return Team.Name };
     $scope.bannerImage = "/TeamBanners/" + (Team.BannerImage || "defaultbanner.jpg");
 
-    $scope.userTitle = User.Username || User.Email;
+    $scope.userTitle = User.Username || User.Email || "User";
     $scope.userVerified = User.Verified;
 
     $scope.logout = function () {

@@ -25,11 +25,19 @@
         </div>
     </div>
     <div class="buffered row">
+        <div class="alert alert-danger" ng-show="errorMessage">
+            {{errorMessage}}
+        </div>
         <fieldset class="col-md-12">
             <legend>User settings</legend>
             <div class="form-group col-xs-12 col-md-6">
-                <label>Email</label>
-                <input type="text" class="form-control" ng-model="email" disabled="disabled" />
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" ng-model="newEmail" />
+                </div>
+                <div ng-show="newEmail != email">
+                    <button class="btn btn-success" ng-click="saveChanges()">Save changes</button>
+                </div>
             </div>
         </fieldset>
     </div>
