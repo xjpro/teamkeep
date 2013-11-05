@@ -153,6 +153,7 @@
 
                         if (!dropMenu.is(":visible")) {
                             $(this).find("[data-toggle]").dropdown("toggle");
+                            dropMenu.find("input:first").select();
                         }
 
                         return false;

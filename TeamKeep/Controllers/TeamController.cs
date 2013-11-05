@@ -162,7 +162,7 @@ namespace Teamkeep.Controllers
                 case "online":
                     settings.Settings.ArenaColumn = false;
                     settings.Settings.LastNameColumn = false;
-                    settings.Settings.PositionColumn = false;
+                    settings.Settings.PositionColumn = true;
                     settings.Settings.PhoneColumn = false;
                     settings.Settings.ResultsView = 1;
                     break;

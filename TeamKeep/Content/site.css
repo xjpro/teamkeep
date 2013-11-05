@@ -64,6 +64,9 @@ body {
 body.pushed, body.pushed .navbar-fixed-top {
     margin-left: 250px;
 }
+body.pushed .container {
+    max-width: 100%;
+}
 .input-group-addon {
     max-width: 36px;
 }
