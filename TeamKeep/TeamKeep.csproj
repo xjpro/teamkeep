@@ -308,9 +308,6 @@
     <Content Include="Views\Shared\Master.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Footer.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Team\PrivateHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -355,9 +352,6 @@
     <Content Include="Views\Public\FacebookLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Alerts.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\User\VerifyThanks.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -381,6 +375,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Login\OpenIdFailed.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Public\Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Public\FeaturesScheduleRoster.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -235,6 +235,10 @@ td.dropdown .form-group label {
     font-size: 10pt;
     font-weight: normal;
 }
+td.text-centered {
+    vertical-align: middle !important;
+    text-align: center;
+}
 
 /* angled columns */
 th.angled {
@@ -472,20 +476,6 @@ form fieldset legend {
 @media (max-width: 767px) {
     #front-header {
         margin-top: -45px;
-    }
-    #front-header .logo {
-        float: right;
-    }
-    #front-header .nav {
-        position: absolute;
-        top: 0;
-        left: 0;      
-    }
-    #front-header .nav button {
-        margin-left: 16px;
-    }
-    .showcase {
-        border-radius: 0;
     }
 }
 #outdated-browser {

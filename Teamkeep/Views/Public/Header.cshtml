@@ -1,18 +1,18 @@
 ﻿<div id="front-header" class="buffered container">
     <div class="row">
-        <div class="logo col-md-5">
+        <div class="col-md-4">
             <a href="/">
                 <img src="/img/logo.png" alt="Teamkeep" />
             </a>
         </div>
-        <div class="col-md-7 lead">
-            <ul class="nav nav-pills text-right">
-                <li><a class="hidden-xs" href="/">Home</a></li>
-                <li><a class="hidden-xs" href="/features">Features</a></li>
-                <li><a class="hidden-xs" href="/about">About</a></li>
+        <div class="col-md-8">
+            <ul class="nav nav-pills" ng-class="{'lead nav-stacked': isMobile, 'pull-right': !isMobile}">
+                <li><a href="/">Home</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/about">About</a></li>
                 <li class="hidden-xs"><a href="http://teamkeep.tumblr.com">Blog</a></li>
-                <li>
-                    <button id="register-button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#register-modal">Create an account</button>    
+                <li class="hidden-xs">
+                    <button id="register-button" class="btn btn-primary" data-toggle="modal" data-target="#register-modal">Create an account</button>    
                 </li>
             </ul>
         </div>

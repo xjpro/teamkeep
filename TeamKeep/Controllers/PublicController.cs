@@ -71,6 +71,18 @@ namespace Teamkeep.Controllers
         }
 
         [HttpGet]
+        public ActionResult FeaturesScheduleRoster()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult FeaturesAvailabilityMessaging()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult NotFound()
         {
             Response.StatusCode = (int) HttpStatusCode.NotFound;

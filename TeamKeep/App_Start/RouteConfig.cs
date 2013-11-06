@@ -17,6 +17,8 @@ namespace Teamkeep.App_Start
             routes.MapRoute("PublicAbout", "about", new { controller = "Public", action = "About" });
             routes.MapRoute("PublicFeatures", "features", new { controller = "Public", action = "Features" });
             routes.MapRoute("PublicFeaturesHomepage", "features/free-team-website", new { controller = "Public", action = "FeaturesHomepage" });
+            routes.MapRoute("PublicFeaturesScheduleRoster", "features/stay-organized", new { controller = "Public", action = "FeaturesScheduleRoster" });
+            routes.MapRoute("PublicFeaturesAvailabilityMessaging", "features/availability-and-messaging", new { controller = "Public", action = "FeaturesAvailabilityMessaging" });
             routes.MapRoute("PublicNotFound", "404", new { controller = "Public", action = "NotFound" });
             routes.MapRoute("Sitemap", "sitemap.xml", new { controller = "Public", action = "Sitemap" });
 
